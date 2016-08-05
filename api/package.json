@@ -1,7 +1,7 @@
 {
-  "name": "tempstars",
+  "name": "tempstars-api",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "tempstars-api.js",
   "scripts": {
     "start": "node .",
     "pretest": "eslint .",
@@ -23,11 +23,7 @@
     "eslint": "^2.5.3",
     "nsp": "^2.1.0"
   },
-  "repository": {
-    "type": "",
-    "url": ""
-  },
   "private": true,
   "license": "UNLICENSED",
-  "description": "tempstars"
+  "description": "tempstars api"
 }
