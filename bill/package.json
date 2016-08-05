@@ -1,5 +1,5 @@
 {
-  "name": "TempStars Billing",
+  "name": "tempstars-bill",
   "description": "TempStars Billing Service",
   "version": "1.0.0",
   "main": "tempstars-bill.js",

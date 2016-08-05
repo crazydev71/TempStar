@@ -13,7 +13,8 @@ var mailer = nodemailer.createTransport( sesTransport({
 
 var message = {
     from: 'billing@tempstars.net',
-    to: 'mbetts@me.com, drjyounger@hotmail.com',
+//    to: 'mbetts@me.com, drjyounger@hotmail.com',
+    to: 'mbetts@me.com',
     subject: 'Billing Service Results',
     text: 'Here are the billing activities...'
 };

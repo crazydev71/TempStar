@@ -1,6 +1,6 @@
 {
   "apps": [{
-    "name": "TempStars Bill",
+    "name": "TempStars Billing",
     "script": "tempstars-bill.js",
     "cwd": "../",
     "watch": true,

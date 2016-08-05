@@ -1,6 +1,6 @@
 {
   "apps": [{
-    "name": "tempstars-api",
+    "name": "TempStars API",
     "script": "tempstars-api.js",
     "cwd": "../",
     "watch": true,
