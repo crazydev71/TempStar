@@ -1,5 +1,5 @@
 {
-  "name": "tempstars-api",
+  "name": "TempStars API",
   "version": "1.0.0",
   "main": "tempstars-api.js",
   "scripts": {
