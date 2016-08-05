@@ -1,0 +1,20 @@
+{
+  "apps": [{
+    "name": "TempStars Bill",
+    "script": "tempstars-bill.js",
+    "cwd": "../",
+    "watch": true,
+    "exec_mode": "cluster_mode",
+    "instances": 1,
+    "cron_restart" : "0 23 * * *",
+    "env_local": {
+      "NODE_ENV": "local"
+    },
+    "env_dev": {
+      "NODE_ENV": "dev"
+    },
+    "env_production": {
+      "NODE_ENV": "production"
+    }
+  }]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "TempStars Billing",
+  "description": "TempStars Billing Service",
+  "version": "1.0.0",
+  "main": "tempstars-bill.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "private": true,
+  "license": "UNLICENSED",
+  "dependencies": {
+    "config": "^1.21.0",
+    "lodash": "^4.14.1",
+    "nodemailer": "^2.5.0",
+    "nodemailer-ses-transport": "^1.4.0"
+  }
+}
