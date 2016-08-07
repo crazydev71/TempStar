@@ -1,0 +1,31 @@
+* {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+input {
+    -webkit-user-select: auto !important;
+    -khtml-user-select: auto !important;
+    -moz-user-select: auto !important;
+    -ms-user-select: auto !important;
+    user-select: auto !important;
+}
+
+.error {
+    color: red !important;
+}
+
+.preloader {
+    position: absolute;
+    margin-left: 10px;
+    margin-top:14px;
+    height: 16px;
+    width: 16px;
+}
+
+.page-content p {
+    margin: 40px;
+}
