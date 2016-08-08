@@ -12,6 +12,7 @@
     "config": "^1.21.0",
     "lodash": "^4.14.1",
     "nodemailer": "^2.5.0",
-    "nodemailer-ses-transport": "^1.4.0"
+    "nodemailer-ses-transport": "^1.4.0",
+    "stripe": "^4.9.0"
   }
 }
