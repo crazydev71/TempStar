@@ -68,7 +68,7 @@ $$('#but').on( 'click', function(e) {
         beforeSend: function(xhr) {
             xhr.setRequestHeader('Authorization', 'Basic ' + window.btoa(unescape(encodeURIComponent('riff' + ':' + 'raff'))));
         },
-        url: 'https://api.tempstars.net/api/Dentists'
+        url: 'https://api.tempstars.net/v2/Dentists'
         //url: 'http://10.0.1.45:3000/api/Dentists'
     });
 
