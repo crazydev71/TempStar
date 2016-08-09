@@ -6,7 +6,7 @@
     "watch": true,
     "exec_mode": "cluster_mode",
     "instances": 1,
-    "cron_restart" : "0 23 * * *",
+    "cron_restart" : "0 4 * * *",
     "env_local": {
       "NODE_ENV": "local"
     },
