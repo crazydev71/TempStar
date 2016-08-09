@@ -1,8 +1,7 @@
 {
   "name": "Dentist",
-  "plural": "Dentists",
   "base": "PersistedModel",
-  "idInjection": true,
+  "idInjection": false,
   "options": {
     "validateUpsert": true
   },

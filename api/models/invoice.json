@@ -1,0 +1,210 @@
+{
+  "name": "Invoice",
+  "base": "PersistedModel",
+  "options": {
+    "idInjection": false,
+    "mysql": {
+      "schema": "tempstars",
+      "table": "Invoice"
+    }
+  },
+  "properties": {
+    "id": {
+      "type": "Number",
+      "required": true,
+      "length": null,
+      "precision": 10,
+      "scale": 0,
+      "id": true,
+      "generated": true,
+      "mysql": {
+        "columnName": "id",
+        "dataType": "int",
+        "dataLength": null,
+        "dataPrecision": 10,
+        "dataScale": 0,
+        "nullable": "N"
+      }
+    },
+    "jobId": {
+      "type": "Number",
+      "required": true,
+      "length": null,
+      "precision": 10,
+      "scale": 0,
+      "mysql": {
+        "columnName": "jobId",
+        "dataType": "int",
+        "dataLength": null,
+        "dataPrecision": 10,
+        "dataScale": 0,
+        "nullable": "N"
+      }
+    },
+    "manualHygienistId": {
+      "type": "Number",
+      "required": true,
+      "length": null,
+      "precision": 10,
+      "scale": 0,
+      "mysql": {
+        "columnName": "manualHygienistId",
+        "dataType": "int",
+        "dataLength": null,
+        "dataPrecision": 10,
+        "dataScale": 0,
+        "nullable": "N"
+      }
+    },
+    "totalHours": {
+      "type": "String",
+      "required": true,
+      "length": null,
+      "precision": 4,
+      "scale": 2,
+      "mysql": {
+        "columnName": "totalHours",
+        "dataType": "decimal",
+        "dataLength": null,
+        "dataPrecision": 4,
+        "dataScale": 2,
+        "nullable": "N"
+      }
+    },
+    "totalUnpaidHours": {
+      "type": "String",
+      "required": true,
+      "length": null,
+      "precision": 4,
+      "scale": 2,
+      "mysql": {
+        "columnName": "totalUnpaidHours",
+        "dataType": "decimal",
+        "dataLength": null,
+        "dataPrecision": 4,
+        "dataScale": 2,
+        "nullable": "N"
+      }
+    },
+    "hourlyRate": {
+      "type": "Number",
+      "required": true,
+      "length": null,
+      "precision": 10,
+      "scale": 0,
+      "mysql": {
+        "columnName": "hourlyRate",
+        "dataType": "int",
+        "dataLength": null,
+        "dataPrecision": 10,
+        "dataScale": 0,
+        "nullable": "N"
+      }
+    },
+    "totalInvoice": {
+      "type": "String",
+      "required": true,
+      "length": null,
+      "precision": 6,
+      "scale": 2,
+      "mysql": {
+        "columnName": "totalInvoice",
+        "dataType": "decimal",
+        "dataLength": null,
+        "dataPrecision": 6,
+        "dataScale": 2,
+        "nullable": "N"
+      }
+    },
+    "hygienistMarkedPaid": {
+      "type": "Number",
+      "required": true,
+      "length": null,
+      "precision": 3,
+      "scale": 0,
+      "mysql": {
+        "columnName": "hygienistMarkedPaid",
+        "dataType": "tinyint",
+        "dataLength": null,
+        "dataPrecision": 3,
+        "dataScale": 0,
+        "nullable": "N"
+      }
+    },
+    "dentistMarkedPaid": {
+      "type": "Number",
+      "required": true,
+      "length": null,
+      "precision": 3,
+      "scale": 0,
+      "mysql": {
+        "columnName": "dentistMarkedPaid",
+        "dataType": "tinyint",
+        "dataLength": null,
+        "dataPrecision": 3,
+        "dataScale": 0,
+        "nullable": "N"
+      }
+    },
+    "sent": {
+      "type": "Number",
+      "required": true,
+      "length": null,
+      "precision": 3,
+      "scale": 0,
+      "mysql": {
+        "columnName": "sent",
+        "dataType": "tinyint",
+        "dataLength": null,
+        "dataPrecision": 3,
+        "dataScale": 0,
+        "nullable": "N"
+      }
+    },
+    "createdOn": {
+      "type": "Date",
+      "required": true,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "createdOn",
+        "dataType": "datetime",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "N"
+      }
+    },
+    "sentOn": {
+      "type": "Date",
+      "required": true,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "sentOn",
+        "dataType": "datetime",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "N"
+      }
+    },
+    "paidOn": {
+      "type": "Date",
+      "required": true,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "paidOn",
+        "dataType": "datetime",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "N"
+      }
+    }
+  }
+}

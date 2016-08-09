@@ -14,26 +14,82 @@
     ]
   },
   "User": {
-    "dataSource": "db",
+    "dataSource": "tempstarsDB",
     "public": false
   },
   "AccessToken": {
-    "dataSource": "db",
+    "dataSource": "tempstarsDB",
     "public": false
   },
   "ACL": {
-    "dataSource": "db",
+    "dataSource": "tempstarsDB",
     "public": false
   },
   "RoleMapping": {
-    "dataSource": "db",
+    "dataSource": "tempstarsDB",
     "public": false
   },
   "Role": {
-    "dataSource": "db",
+    "dataSource": "tempstarsDB",
     "public": false
   },
   "Dentist": {
+    "dataSource": "tempstarsDB",
+    "public": true
+  },
+  "BlockedDentist": {
+    "dataSource": "tempstarsDB",
+    "public": true
+  },
+  "BlockedHygienist": {
+    "dataSource": "tempstarsDB",
+    "public": true
+  },
+  "Invoice": {
+    "dataSource": "tempstarsDB",
+    "public": true
+  },
+  "DentistEvaluation": {
+    "dataSource": "tempstarsDB",
+    "public": true
+  },
+  "Hygienist": {
+    "dataSource": "tempstarsDB",
+    "public": true
+  },
+  "FavouriteDentist": {
+    "dataSource": "tempstarsDB",
+    "public": true
+  },
+  "HygienistEvaluation": {
+    "dataSource": "tempstarsDB",
+    "public": true
+  },
+  "FavouriteHygienist": {
+    "dataSource": "tempstarsDB",
+    "public": true
+  },
+  "DentistDetail": {
+    "dataSource": "tempstarsDB",
+    "public": true
+  },
+  "Job": {
+    "dataSource": "tempstarsDB",
+    "public": true
+  },
+  "PostalCode": {
+    "dataSource": "tempstarsDB",
+    "public": true
+  },
+  "Region": {
+    "dataSource": "tempstarsDB",
+    "public": true
+  },
+  "PartialOffer": {
+    "dataSource": "tempstarsDB",
+    "public": true
+  },
+  "Shift": {
     "dataSource": "tempstarsDB",
     "public": true
   }
