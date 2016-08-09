@@ -15,7 +15,7 @@
   },
   "User": {
     "dataSource": "tempstarsDB",
-    "public": false
+    "public": true
   },
   "AccessToken": {
     "dataSource": "tempstarsDB",
@@ -33,15 +33,15 @@
     "dataSource": "tempstarsDB",
     "public": false
   },
-  "Dentist": {
-    "dataSource": "tempstarsDB",
-    "public": true
-  },
   "BlockedDentist": {
     "dataSource": "tempstarsDB",
     "public": true
   },
   "BlockedHygienist": {
+    "dataSource": "tempstarsDB",
+    "public": true
+  },
+  "Dentist": {
     "dataSource": "tempstarsDB",
     "public": true
   },

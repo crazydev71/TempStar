@@ -1,4 +1,4 @@
 
-module.exports = function(Dentist) {
+module.exports = function( Dentist ){
     Dentist.disableRemoteMethod('createChangeStream', true);
 };
