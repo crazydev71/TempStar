@@ -16,6 +16,41 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `ACL`
+--
+
+DROP TABLE IF EXISTS `ACL`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ACL` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `model` varchar(512) DEFAULT NULL,
+  `property` varchar(512) DEFAULT NULL,
+  `accessType` varchar(512) DEFAULT NULL,
+  `permission` varchar(512) DEFAULT NULL,
+  `principalType` varchar(512) DEFAULT NULL,
+  `principalId` varchar(512) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `AccessToken`
+--
+
+DROP TABLE IF EXISTS `AccessToken`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `AccessToken` (
+  `id` varchar(255) NOT NULL,
+  `ttl` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `userId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `BlockedDentist`
 --
 
@@ -25,9 +60,9 @@ DROP TABLE IF EXISTS `BlockedDentist`;
 CREATE TABLE `BlockedDentist` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `hygienistId` int(11) NOT NULL,
-  `blockedDentistId` int(11) NOT NULL,
+  `dentistId` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `index2` (`hygienistId`,`blockedDentistId`)
+  KEY `index2` (`hygienistId`,`dentistId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -41,7 +76,7 @@ DROP TABLE IF EXISTS `BlockedHygienist`;
 CREATE TABLE `BlockedHygienist` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `dentistId` int(11) NOT NULL,
-  `blockedHygienistId` int(11) NOT NULL,
+  `hygienistId` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -66,16 +101,15 @@ CREATE TABLE `Dentist` (
   `lon` float NOT NULL,
   `regionId` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL,
   `website` varchar(100) NOT NULL,
   `rating` float NOT NULL,
   `billingStatus` int(11) NOT NULL COMMENT 'current, pastdue',
-  `authoUserId` varchar(100) DEFAULT NULL,
+  `auth0UserId` varchar(100) DEFAULT NULL,
   `stripeCustomerId` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `auth0userId_UNIQUE` (`authoUserId`),
+  UNIQUE KEY `auth0userId_UNIQUE` (`auth0UserId`),
   UNIQUE KEY `stripeCustomerId_UNIQUE` (`stripeCustomerId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -139,9 +173,9 @@ DROP TABLE IF EXISTS `FavouriteDentist`;
 CREATE TABLE `FavouriteDentist` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `hygienistId` int(11) NOT NULL,
-  `favDentistId` int(11) NOT NULL,
+  `dentistId` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `hygienistId_favDentistId_index` (`hygienistId`,`favDentistId`)
+  KEY `hygienistId_favDentistId_index` (`hygienistId`,`dentistId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -155,9 +189,9 @@ DROP TABLE IF EXISTS `FavouriteHygienist`;
 CREATE TABLE `FavouriteHygienist` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `dentistId` int(11) NOT NULL,
-  `favHygienistId` int(11) NOT NULL,
+  `hygienistId` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `index2` (`dentistId`,`favHygienistId`)
+  KEY `index2` (`dentistId`,`hygienistId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -189,9 +223,8 @@ CREATE TABLE `Hygienist` (
   `showForHire` tinyint(1) NOT NULL,
   `lastJobIdViewed` int(11) NOT NULL,
   `auth0UserId` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `auth0UserId_UNIQUE` (`auth0UserId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -230,7 +263,6 @@ DROP TABLE IF EXISTS `Invoice`;
 CREATE TABLE `Invoice` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `jobId` int(11) NOT NULL,
-  `manualHygienistId` int(11) NOT NULL,
   `totalHours` decimal(4,2) NOT NULL,
   `totalUnpaidHours` decimal(4,2) NOT NULL,
   `hourlyRate` int(11) NOT NULL,
@@ -241,6 +273,8 @@ CREATE TABLE `Invoice` (
   `createdOn` datetime NOT NULL,
   `sentOn` datetime NOT NULL,
   `paidOn` datetime NOT NULL,
+  `manualHygienistId` int(11) NOT NULL,
+  `manualDentistId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index2` (`jobId`),
   KEY `index3` (`manualHygienistId`)
@@ -332,6 +366,39 @@ CREATE TABLE `Region` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `Role`
+--
+
+DROP TABLE IF EXISTS `Role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(512) NOT NULL,
+  `description` varchar(512) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `RoleMapping`
+--
+
+DROP TABLE IF EXISTS `RoleMapping`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `RoleMapping` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `principalType` varchar(512) DEFAULT NULL,
+  `principalId` varchar(512) DEFAULT NULL,
+  `roleId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `Shift`
 --
 
@@ -352,6 +419,30 @@ CREATE TABLE `Shift` (
   KEY `index2` (`jobId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `User`
+--
+
+DROP TABLE IF EXISTS `User`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `User` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `realm` varchar(512) DEFAULT NULL,
+  `username` varchar(512) DEFAULT NULL,
+  `password` varchar(512) NOT NULL,
+  `credentials` text,
+  `challenges` text,
+  `email` varchar(512) NOT NULL,
+  `emailVerified` tinyint(1) DEFAULT NULL,
+  `verificationToken` varchar(512) DEFAULT NULL,
+  `status` varchar(512) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `lastUpdated` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -362,4 +453,4 @@ CREATE TABLE `Shift` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-08-07 21:25:41
+-- Dump completed on 2016-08-10 19:12:48
