@@ -1,6 +1,6 @@
 {
   "name": "Region",
-  "base": "PersistedModel",  
+  "base": "PersistedModel",
   "options": {
     "idInjection": false,
     "mysql": {
@@ -15,7 +15,8 @@
       "length": null,
       "precision": 10,
       "scale": 0,
-      "id": 1,
+      "id": true,
+      "generated": true,
       "mysql": {
         "columnName": "id",
         "dataType": "int",
