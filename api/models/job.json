@@ -11,12 +11,12 @@
   "properties": {
     "id": {
       "type": "Number",
+      "id": true,
+      "generated": true,
       "required": true,
       "length": null,
       "precision": 10,
       "scale": 0,
-      "id": true,
-      "generated": true,
       "mysql": {
         "columnName": "id",
         "dataType": "int",
@@ -102,7 +102,7 @@
       }
     },
     "hourlyRate": {
-      "type": "String",
+      "type": "Number",
       "required": true,
       "length": null,
       "precision": 6,
@@ -251,5 +251,45 @@
         "nullable": "Y"
       }
     }
-  }
+  },
+  "validations": [],
+  "relations": {
+    "dentist": {
+      "type": "belongsTo",
+      "model": "Dentist",
+      "foreignKey": ""
+    },
+    "hygienist": {
+      "type": "belongsTo",
+      "model": "Hygienist",
+      "foreignKey": ""
+    },
+    "dentistEvaluation": {
+      "type": "hasOne",
+      "model": "DentistEvaluation",
+      "foreignKey": ""
+    },
+    "hygienistEvaluation": {
+      "type": "hasOne",
+      "model": "HygienistEvaluation",
+      "foreignKey": ""
+    },
+    "partialOffers": {
+      "type": "hasMany",
+      "model": "PartialOffer",
+      "foreignKey": ""
+    },
+    "invoice": {
+      "type": "hasOne",
+      "model": "Invoice",
+      "foreignKey": ""
+    },
+    "shifts": {
+      "type": "hasMany",
+      "model": "Shift",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
 }

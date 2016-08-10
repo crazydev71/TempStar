@@ -11,12 +11,12 @@
   "properties": {
     "id": {
       "type": "Number",
+      "id": true,
+      "generated": true,
       "required": true,
       "length": null,
       "precision": 10,
       "scale": 0,
-      "id": true,
-      "generated": true,
       "mysql": {
         "columnName": "id",
         "dataType": "int",
@@ -41,14 +41,14 @@
         "nullable": "N"
       }
     },
-    "favDentistId": {
+    "dentistId": {
       "type": "Number",
       "required": true,
       "length": null,
       "precision": 10,
       "scale": 0,
       "mysql": {
-        "columnName": "favDentistId",
+        "columnName": "dentistId",
         "dataType": "int",
         "dataLength": null,
         "dataPrecision": 10,
@@ -56,5 +56,9 @@
         "nullable": "N"
       }
     }
-  }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
 }

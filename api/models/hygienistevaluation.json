@@ -11,12 +11,12 @@
   "properties": {
     "id": {
       "type": "Number",
+      "id": true,
+      "generated": true,
       "required": true,
       "length": null,
       "precision": 10,
       "scale": 0,
-      "id": true,
-      "generated": true,
       "mysql": {
         "columnName": "id",
         "dataType": "int",
@@ -206,5 +206,9 @@
         "nullable": "N"
       }
     }
-  }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
 }

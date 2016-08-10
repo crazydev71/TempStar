@@ -11,12 +11,12 @@
   "properties": {
     "id": {
       "type": "Number",
+      "id": true,
+      "generated": true,
       "required": true,
       "length": null,
       "precision": 10,
       "scale": 0,
-      "id": true,
-      "generated": true,
       "mysql": {
         "columnName": "id",
         "dataType": "int",
@@ -34,6 +34,21 @@
       "scale": 0,
       "mysql": {
         "columnName": "jobId",
+        "dataType": "int",
+        "dataLength": null,
+        "dataPrecision": 10,
+        "dataScale": 0,
+        "nullable": "N"
+      }
+    },
+    "manualDentistId": {
+      "type": "Number",
+      "required": true,
+      "length": null,
+      "precision": 10,
+      "scale": 0,
+      "mysql": {
+        "columnName": "manualDentistId",
         "dataType": "int",
         "dataLength": null,
         "dataPrecision": 10,
@@ -206,5 +221,15 @@
         "nullable": "N"
       }
     }
-  }
+  },
+  "validations": [],
+  "relations": {
+    "job": {
+      "type": "belongsTo",
+      "model": "Job",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
 }

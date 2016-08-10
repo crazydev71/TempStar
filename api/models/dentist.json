@@ -11,11 +11,11 @@
   "properties": {
     "id": {
       "type": "Number",
+      "id": true,
+      "generated": true,
       "required": true,
       "length": null,
       "precision": 10,
-      "id": true,
-      "generated": true,
       "mysql": {
         "columnName": "id",
         "dataType": "int",
@@ -265,5 +265,43 @@
         "nullable": "Y"
       }
     }
-  }
+  },
+  "validations": [],
+  "relations": {
+    "favouriteHygienists": {
+      "type": "hasMany",
+      "model": "Hygienist",
+      "foreignKey": "dentistId",
+      "through": "FavouriteHygienist"
+    },
+    "detail": {
+      "type": "hasOne",
+      "model": "DentistDetail",
+      "foreignKey": "dentistId"
+    },
+    "dentistEvaluations": {
+      "type": "hasMany",
+      "model": "DentistEvaluation",
+      "foreignKey": "",
+      "through": "Job"
+    },
+    "blockedHygienists": {
+      "type": "hasMany",
+      "model": "Hygienist",
+      "foreignKey": "dentistId",
+      "through": "BlockedHygienist"
+    },
+    "jobs": {
+      "type": "hasMany",
+      "model": "Job",
+      "foreignKey": "dentistId"
+    },
+    "manualInvoices": {
+      "type": "hasMany",
+      "model": "Invoice",
+      "foreignKey": "manualDentistId"
+    }
+  },
+  "acls": [],
+  "methods": {}
 }
