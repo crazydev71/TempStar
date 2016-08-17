@@ -38,6 +38,7 @@ tests
 app/platforms/ios/build/
 app/platforms/ios/www/
 app/platforms/ios/cordova/console.log
+app/platforms/ios/cordova/build-extras.xcconfig
 *.xcuserdatad
 
 # android
