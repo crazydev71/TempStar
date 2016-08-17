@@ -59,9 +59,9 @@ module.exports.metadata =
     "cordova-plugin-device": "1.1.2",
     "cordova-plugin-splashscreen": "3.2.2",
     "cordova-plugin-network-information": "1.2.1",
-    "cordova-plugin-compat": "1.0.0",
     "cordova-plugin-geolocation": "2.2.0",
-    "cordova-plugin-console": "1.0.3"
+    "cordova-plugin-console": "1.0.3",
+    "cordova-plugin-compat": "1.0.0"
 }
 // BOTTOM OF METADATA
 });
