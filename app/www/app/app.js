@@ -328,6 +328,21 @@ app.onPageBeforeInit( 'settings', function( page ) {
     });
 });
 
+app.onPageBeforeInit( 'dentist-settings', function( page ) {
+    $$('.dentist-settings-remove-blocked-button').on( 'click', function(e) {
+        app.confirm('Are you sure?', 'Remove Blocked Hygienist', function() {
+            app.alert( 'All set!' );
+        });
+    });
+
+    $$('.dentist-settings-remove-fav-button').on( 'click', function(e) {
+        app.confirm('Are you sure?', 'Remove Favourite Hygienist', function() {
+            app.alert( 'All set!' );
+        });
+    });
+});
+
+
 $$('.offered-cancel-button').on( 'click', function(e) {
     app.confirm('Are you sure?', 'Cancel Partial Offer', function() {
         app.alert( 'You\'re cancelled!' );
