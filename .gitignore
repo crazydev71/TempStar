@@ -54,5 +54,9 @@ app/platforms/android/CordovaLib/bin
 app/platforms/android/CordovaLib/gen
 app/platforms/android/CordovaLib/local.properties
 
+# browser
+app/platforms/browser/www
+app/platforms/browser/build
+
 # res
 app/resources/signing
