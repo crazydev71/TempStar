@@ -39,6 +39,7 @@ app/platforms/ios/build/
 app/platforms/ios/www/
 app/platforms/ios/cordova/console.log
 app/platforms/ios/cordova/build-extras.xcconfig
+platforms/ios/cordova/build-extras.xcconfig
 *.xcuserdatad
 
 # android
@@ -53,9 +54,10 @@ app/platforms/android/CordovaLib/ant-gen
 app/platforms/android/CordovaLib/bin
 app/platforms/android/CordovaLib/gen
 app/platforms/android/CordovaLib/local.properties
+app/platforms/android/.gradle
 
 # browser
-app/platforms/browser/www
+app/platforms/browser/www/
 app/platforms/browser/build
 
 # res
