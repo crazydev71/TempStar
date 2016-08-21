@@ -15,34 +15,52 @@
     <link rel="stylesheet" href="app/app.css">
   </head>
   <body>
-      <div class="popover popover-office-info">
-          <div class="popover-angle"></div>
-          <div class="popover-inner">
-              office info
-          </div>
-      </div>
+    
+        <!-- office info -->
+        <div class="popover popover-office-info">
+            <div class="popover-angle"></div>
+            <div class="popover-inner">
+                office info
+            </div>
+        </div>
 
-      <div class="popover popover-office-notes">
-          <div class="popover-angle"></div>
-          <div class="popover-inner">
-              office notes
-          </div>
-      </div>
+    
+        <!-- office notes -->
+        <div class="popover popover-office-notes">
+            <div class="popover-angle"></div>
+            <div class="popover-inner">
+                office notes
+            </div>
+        </div>
 
-      <div class="popover popover-hygienist-notes">
-          <div class="popover-angle"></div>
-          <div class="popover-inner">
-              hygienist notes
-          </div>
-      </div>
+    
+        <!-- office full info -->
+        <div class="popover popover-office">
+            <div class="popover-angle"></div>
+            <div class="popover-inner">
+                office info
+                office notes
+            </div>
+        </div>
 
-      <div class="popover popover-office">
-          <div class="popover-angle"></div>
-          <div class="popover-inner">
-              office info
-              office notes
-          </div>
-      </div>
+    
+        <!-- hygienist info -->
+        <div class="popover popover-hygienist-info">
+            <div class="popover-angle"></div>
+            <div class="popover-inner">
+                hygienist info
+            </div>
+        </div>
+
+    
+        <!-- hygienist notes -->
+        <div class="popover popover-hygienist-notes">
+            <div class="popover-angle"></div>
+            <div class="popover-inner">
+                hygienist notes
+            </div>
+        </div>
+
 
     <div class="statusbar-overlay"></div>
     <div class="panel-overlay"></div>
@@ -54,25 +72,27 @@
         </div>
     </div>
 
+    
+        <!-- dentist menu  -->
         <div id="dentist-menu" style="display:none">
             <div class="container menu-right">
-                <img width="100" height="100" style="border-radius:100%" src="https://randomuser.me/api/portraits/med/women/3.jpg">
-                <div class="item-title author profile menu-right">Lisa Johnson</div>
-                <div class="item-subtitle location menu-right">Toronto, Canada</div>
+                <img width="100" src="img/dentist-office.jpg">
+                <div class="item-title author profile menu-right">Stanley Family Dentistry</div>
+                <div class="item-subtitle location menu-right">White Rocks, BC</div>
                 <ul class="menu-right">
-                    <li><a href="dentist.html" class="close-panel">Home</a></li>
-                    <li><a href="profile.html" class="close-panel">Profile</a></li>
+                    <li><a href="dentist/dentist.html" class="close-panel">Home</a></li>
+                    <li><a href="dentist/profile.html" class="close-panel">Profile</a></li>
                     <li>
-                        <a href="jobs.html" class="close-panel">Job History</a>
+                        <a href="dentist/jobs.html" class="close-panel">Job History</a>
                     </li>
                     <li>
-                        <a href="invoices.html" class="close-panel">Invoices</a>
+                        <a href="dentist/invoices.html" class="close-panel">Invoices</a>
                     </li>
                     <li>
-                        <a href="settings.html" class="close-panel">Settings</a>
+                        <a href="dentist/settings.html" class="close-panel">Settings</a>
                     </li>
                     <li>
-                        <a href="support.html" class="close-panel">Support</a>
+                        <a href="dentist/support.html" class="close-panel">Support</a>
                     </li>
                     <li>
                         <a href="#" class="logout-link">Log Out</a>
@@ -86,31 +106,33 @@
             </div>
         </div>
 
+    
+        <!-- hygienist menu -->
         <div id="hygienist-menu" style="display:none">
             <div class="container menu-right center">
                 <a href="hygienist.html" class="close-panel">
-                    <img width="100" height="100" style="border-radius:100%" src="https://randomuser.me/api/portraits/med/women/3.jpg">
+                    <img width="100" height="100" style="border-radius:100%" src="img/user2.jpg">
                 </a>
                 <div class="item-title author profile menu-right">Lisa Johnson</div>
                 <div class="item-subtitle location menu-right">Toronto, Ontario</div>
                 <ul class="menu-right">
                     <li>
-                        <a href="hygienist.html" class="close-panel">Home</a>
+                        <a href="hygienist/hygienist.html" class="close-panel">Home</a>
                     </li>
                     <li>
-                        <a href="profile.html" class="close-panel">Profile</a>
+                        <a href="hygienist/profile.html" class="close-panel">Profile</a>
                     </li>
                     <li>
-                        <a href="jobs.html" class="close-panel">Job History</a>
+                        <a href="hygienist/jobs.html" class="close-panel">Job History</a>
                     </li>
                     <li>
-                        <a href="invoices.html" class="close-panel">Invoices</a>
+                        <a href="hygienist/invoices.html" class="close-panel">Invoices</a>
                     </li>
                     <li>
-                        <a href="settings.html" class="close-panel">Settings</a>
+                        <a href="hygienist/settings.html" class="close-panel">Settings</a>
                     </li>
                     <li>
-                        <a href="support.html" class="close-panel">Support</a>
+                        <a href="hygienist/support.html" class="close-panel">Support</a>
                     </li>
                     <li>
                         <a href="#" class="logout-link" class="link">Log Out</a>
@@ -124,25 +146,107 @@
             </div>
         </div>
 
+
     <div class="views">
-
-        <div class="view view-landing" data-url="landing">
-
-            <!-- <div class="navbar landing" style="background: white  !important; border:none;">
-                <div class="navbar-inner" style="background:white !important; border:none;">
-                    <div class="left">
-                        <a href="index.html" class="back link">
-                            <span class="ti-angle-left"></span>
-                        </a>
+        <div class="view view-main" >
+            
+                <!-- navbar -->
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <div class="left">
+                            <a href="index.html" class="back link">
+                                <span class="ti-angle-left"></span>
+                            </a>
+                        </div>
+                        <div class="center sliding">TempStars</div>
+                        <div class="right">
+                            <a href="#" data-panel="right" class="link icon-only open-panel">
+                                <span class="ti-menu"></span>
+                            </a>
+                        </div>
                     </div>
-                    <div class="center sliding">TempStars</div>
                 </div>
-            </div> -->
-            <!-- <div class="navbar"><div class="navbar-inner"></div></div> -->
 
-            <div class="pages navbar-fixed">
 
-                <div data-page="landing" class="page no-navbar no-toolbar no-swipeback">
+            <div class="pages navbar-through toolbar-fixed">
+
+                <div data-page="landing" class="page no-navbar no-swipeback landing">
+                    <div class="page-content center">
+                        <div class="content-block" style="margin:10px auto;width:300px;">
+                            <img class="centerimg" src="img/logo.jpg">
+                            <!-- <h2>Welcome to TempStars</h2>
+                            <p style="margin-top:-20px">dental hygienist temping done right</p> -->
+                        </div>
+                        <div class="content-block-title">Getting Started</div>
+                        <div class="content-block">
+                            <p class="">TempStars is free for Hygienists.<br>Dentists only pay a small booking fee.</p>
+                            <div class="row" style="margin-top:30px;margin-bottom:50px;">
+                                <div class="col-20">&nbsp;</div>
+                                <div class="col-60">
+                                    <a href="landing/signup.html" data-view=".view-landing" class="button button-big button-round">Create Free Account</a>
+                                </div>
+                                <div class="col-20">&nbsp;</div>
+                            </div>
+                        </div>
+                        <div class="content-block-title">Already have an account? Log In</div>
+                        <div class="content-block">
+                            <form>
+                                <div class="list-block">
+                                  <ul>
+                                    <li class="item-content">
+                                      <div class="item-inner">
+                                        <div class="item-title label">Email</div>
+                                        <div class="item-input">
+                                          <input type="text" name="username" placeholder="your email address"/>
+                                        </div>
+                                      </div>
+                                    </li>
+                                    <li class="item-content">
+                                      <div class="item-inner">
+                                        <div class="item-title label">Password</div>
+                                        <div class="item-input">
+                                          <input type="password" name="password" placeholder="your password"/>
+                                        </div>
+                                      </div>
+                                    </li>
+                                  </ul>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-20">&nbsp;</div>
+                                    <div class="col-60">
+                                        <a id="login-button" href="#" class="button button-big button-round">Log In</a></li>
+                                    </div>
+                                    <div class="col-20">&nbsp;</div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+
+                    <div class="footer toolbar" style="height:70px !important;font-size:.8em;padding-top:20px;background-color:#fff">
+                          <div class="row">
+                              <div class="col-33" style="text-align:center;">
+                                  <a href="landing/forgot-password.html" data-view=".view-landing">Forgot Password?</a>
+                              </div>
+                              <div class="col-33" style="text-align:center;">
+                                  <a href="mailto:support@tempstars.net" class="external">Contact Support</a>
+                              </div>
+                              <div class="col-33" style="text-align:center;">
+                                  <a href="landing/privacy-policy.html" data-view=".view-landing">Privacy Policy</a>
+                                  <!-- <a href="#" data-popup=".popup-privacy" class="open-popup">Privacy Policy</a> -->
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-auto" style="text-align:center;padding:10px;ffffont-size:.8em;">
+                                  Copyright &copy; 201a6 Sudden Turtle Dental Consulting, Inc.
+                              </div>
+                          </div>
+                    </div>
+
+                </div>
+
+                <!-- <div id="old-landing-page" data-page="landing" class="page no-navbar no-toolbar no-swipeback">
                     <div class="page-content center">
                         <div class="content-block">
                             <img class="centerimg" src="img/logo.jpg">
@@ -155,7 +259,7 @@
                             <div class="row">
                                 <div class="col-20">&nbsp;</div>
                                 <div class="col-60">
-                                    <a href="signup.html" data-view=".view-landing" class="button button-big button-round">Create Free Account</a>
+                                    <a href="landing/signup.html" data-view=".view-landing" class="button button-big button-round">Create Free Account</a>
                                 </div>
                                 <div class="col-20">&nbsp;</div>
                             </div>
@@ -165,43 +269,41 @@
                             <div class="row">
                                 <div class="col-20">&nbsp;</div>
                                 <div class="col-60">
-                                    <a href="login.html" data-view=".view-landing" class="button button-big button-round">Log In</a>
+                                    <a href="landing/login.html" data-view=".view-landing" class="button button-big button-round">Log In</a>
                                 </div>
                                 <div class="col-20">&nbsp;</div>
                             </div>
                         </div>
-                        <div class="content-block footer">
-                            Copyright &copy; 2016 TempStars All rights reserved.<br>
-                            <a href="#" data-popup=".popup-privacy" class="open-popup">Privacy Policy</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;<a href="mailto:support@tempstars.net" class="external">Contact Support</a>
+
+                        <div class="footer toolbar" style="height:70px !important;font-size:.8em;padding-top:20px;background-color:#fff">
+                              <div class="row">
+                                  <div class="col-33" style="text-align:center;">
+                                      <a href="landing/forgot-password.html" data-view=".view-landing">Forgot Password?</a>
+                                  </div>
+                                  <div class="col-33" style="text-align:center;">
+                                      <a href="mailto:support@tempstars.net" class="external">Contact Support</a>
+                                  </div>
+                                  <div class="col-33" style="text-align:center;">
+                                      <a href="landing/privacy-policy.html" data-view=".view-landing">Privacy Policy</a>
+                                       <a href="#" data-popup=".popup-privacy" class="open-popup">Privacy Policy</a> --
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-auto" style="text-align:center;padding:10px;ffffont-size:.8em;">
+                                      Copyright &copy; 2016 Sudden Turtle Dental Consulting, Inc.
+                                  </div>
+                              </div>
                         </div>
+
                      </div>
-                </div>
+                </div> -->
+
             </div>
         </div>
-
-        <div class="view view-main" style="display:none">
-            <div class="pages navbar-through">
-                <div class="navbar">
-                    <div class="navbar-inner">
-                        <div class="center sliding">TempStars</div>
-                        <div class="right">
-                            <a href="#" data-panel="right" class="link icon-only open-panel">
-                                <span class="ti-menu"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            <div class="pages navbar-through">
-
-                <div data-page="index" class="page no-navbar no-toolbar no-swipeback">
-                    redirecting...
-                </div>
-            </div>
-        </div>
-
     </div>
 
+    
+    <!-- privacy popup -->
     <div class="popup-overlay"></div>
     <div class="popup popup-privacy">
       <div class="content-block">
@@ -211,6 +313,8 @@
       </div>
     </div>
 
+    
+    <!-- available jobs popup  -->
     <div class="popup popup-available-jobs">
       <div class="content-block">
           <div class="row">
@@ -295,6 +399,8 @@
       </div>
     </div>
 
+    
+    <!-- offered jobs popup -->
     <div class="popup popup-offered-jobs">
       <div class="content-block">
           <div class="row">
@@ -379,6 +485,8 @@
       </div>
     </div>
 
+    
+    <!-- booked jobs popup  -->
     <div class="popup popup-booked-jobs">
       <div class="content-block">
           <div class="row">
@@ -460,6 +568,8 @@
       </div>
     </div>
 
+    
+    <!-- worked jobs popup -->
     <div class="popup popup-completed-jobs">
       <div class="content-block">
           <div class="row">
@@ -545,6 +655,8 @@
       </div>
     </div>
 
+    
+    <!-- denist list template  -->
     <script type="text/template7" id="DentistTemplate">
         {{#each dentists}}
         <li class="item-content">
@@ -553,7 +665,8 @@
           </div>
         </li>
         {{/each}}
-	</script>
+    </script>
+
 
     <script src="cordova.js"></script>
     <script src="app/cordova-bootstrap.js"></script>

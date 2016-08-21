@@ -36,19 +36,14 @@ var mainView = app.addView('.view-main', {
     dynamicNavbar: true,
     domCache: false
 });
-$$('.view-main').hide();
-
-var landingView = app.addView('.view-landing', {
-    dynamicNavbar: false
-});
 
 // Initialize App
 app.init();
 
 // If the user is already logged in, go directly to the main view
 if ( userLoggedIn ) {
-    $$('.view-landing').hide();
-    $$('.view-main').show();
+    $$('#landing-page').hide();
+    //$$('#main-page').show();
     if ( isDentist ) {
         mainView.router.loadPage( { url: 'dentist.html', animatePages: false } );
     }
@@ -56,6 +51,9 @@ if ( userLoggedIn ) {
         mainView.router.loadPage( { url: 'hygienist.html', animatePages: false } );
     }
     setupMenu();
+}
+else {
+    mainView.hideNavbar();    
 }
 
 
@@ -65,7 +63,7 @@ app.onPageInit( 'login', function(page) {
         isDentist = false;
         $$('.view-landing').hide();
         $$('.view-main').show();
-        mainView.router.loadPage( { url: 'hygienist.html', animatePages: false } );
+        mainView.router.loadPage( { url: 'hygienist/hygienist.html', animatePages: false } );
         mainView.router.reloadPage( 'hygienist.html' );
         setupMenu();
     });
@@ -75,7 +73,7 @@ app.onPageInit( 'signup', function(page) {
     $('#signup-button').on( 'click', function(e) {
         userLoggedIn = true;
         isDentist = true;
-        mainView.router.loadPage( { url: 'dentist.html', animatePages: false } );
+        mainView.router.loadPage( { url: 'dentist/dentist.html', animatePages: false } );
         $$('.view-landing').hide();
         $$('.view-main').show();
         setupMenu();
@@ -328,6 +326,21 @@ app.onPageBeforeInit( 'settings', function( page ) {
     });
 });
 
+app.onPageBeforeInit( 'dentist-settings', function( page ) {
+    $$('.dentist-settings-remove-blocked-button').on( 'click', function(e) {
+        app.confirm('Are you sure?', 'Remove Blocked Hygienist', function() {
+            app.alert( 'All set!' );
+        });
+    });
+
+    $$('.dentist-settings-remove-fav-button').on( 'click', function(e) {
+        app.confirm('Are you sure?', 'Remove Favourite Hygienist', function() {
+            app.alert( 'All set!' );
+        });
+    });
+});
+
+
 $$('.offered-cancel-button').on( 'click', function(e) {
     app.confirm('Are you sure?', 'Cancel Partial Offer', function() {
         app.alert( 'You\'re cancelled!' );
@@ -441,6 +454,69 @@ function setupMenu() {
 
 }
 
+app.onPageBeforeInit( 'post-job', function( page ) {
+
+    var jobCalendar = app.calendar({
+        input: '#job-calendar-input',
+        multiple: false
+    });
+
+    var today = new Date();
+
+    var jobStartTime = app.picker({
+        input: '#job-start-time-input',
+        toolbar: false,
+        rotateEffect: true,
+        value: [ '08:00'],
+        cols: [
+            { values: (function() {
+                    var vals = [],
+                        timeStr;
+                    for ( var i = 0; i < 24; i++ ) {
+                        for ( var j = 0; j <  60; j = j + 15 ) {
+                            timeStr = ('00' + i).slice(-2);
+                            timeStr += ':' + ('00' + j).slice(-2);
+                            vals.push( timeStr );
+                        }
+                    }
+                    return vals;
+                })()
+        }]
+    });
+
+    var jobEndTime = app.picker({
+        input: '#job-end-time-input',
+        toolbar: false,
+        rotateEffect: true,
+        value: [ '05:00'],
+        cols: [
+            { values: (function() {
+                    var vals = [],
+                        timeStr;
+                    for ( var i = 0; i < 24; i++ ) {
+                        for ( var j = 0; j <  60; j = j + 15 ) {
+                            timeStr = ('00' + i).slice(-2);
+                            timeStr += ':' + ('00' + j).slice(-2);
+                            vals.push( timeStr );
+                        }
+                    }
+                    return vals;
+                })()
+        }]
+    });
+
+    $$('#job-post-button').on( 'click', function(e) {
+        app.confirm('Are you sure?', 'Post Job', function() {
+            app.alert( 'Job posted!', function() {
+                mainView.router.back( { pageName: 'dentist'});
+            });
+        });
+    });
+
+
+});
+
+
 function logout() {
     // Remove from local storage
     app.closePanel();
@@ -448,7 +524,7 @@ function logout() {
     isDentist = false;
     $$('.view-main').hide();
     $$('.view-landing').show();
-    landingView.router.loadPage( { url: 'login.html', animatePages: false } );
+    landingView.router.loadPage( { url: 'landing/login.html', animatePages: false } );
 }
 
 function setupListeners() {
