@@ -34,6 +34,9 @@ tests
 # Mac
 .DS_Store
 
+# all
+app/www
+
 # iOS
 app/platforms/ios/build/
 app/platforms/ios/www/
