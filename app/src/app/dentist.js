@@ -1,3 +1,4 @@
+'use strict';
 
 $$(document).on( 'ajaxStart', function(e) {
     console.log( 'ajax start' );
