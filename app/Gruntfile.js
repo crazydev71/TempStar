@@ -16,8 +16,8 @@ module.exports = function (grunt) {
             build: {
                 files: [
                     { expand: true, src: '**', dest: 'www/lib/', cwd: 'src/lib/' },
-                    { expand: true, src: '**', dest: 'www/app/', cwd: 'src/app/' },
-                    { expand: true, src: '**', dest: 'www/img/', cwd: 'src/img/' }
+                    { expand: true, src: '**', dest: 'www/img/', cwd: 'src/img/' },
+                    { expand: true, src: 'android.css', dest: 'www/css/', cwd: 'src/app/' }
                 ]
             }
         },
@@ -27,41 +27,84 @@ module.exports = function (grunt) {
                 banner: '<%= banner %>',
                 stripBanners: true
             },
-            dist: {
-                src: ['lib/*.js'],
-                dest: 'dist/tempstars.js'
+            app: {
+                src: ['src/app/*.js','src/pages/*.js','src/pages/landing/*.js'],
+                dest: 'www/js/tempstars.app.js'
+            },
+            dentist: {
+                src: ['src/pages/dentist/*.js'],
+                dest: 'www/js/tempstars.dentist.js'
+            },
+            hygienist: {
+                src: ['src/pages/hygienist/*.js'],
+                dest: 'www/js/tempstars.hygienist.js'
+            },
+            app_css: {
+                src: ['src/app/!(android)*.css','src/pages/*.css','src/pages/landing/*.css'],
+                dest: 'www/css/tempstars.app.css'
+            },
+            dentist_css: {
+                src: ['src/pages/dentist/*.css'],
+                dest: 'www/css/tempstars.dentist.css'
+            },
+            hygienist_css: {
+                src: ['src/pages/hygienist/*.css'],
+                dest: 'www/css/tempstars.hygienist.css'
             }
         },
 
         uglify: {
             options: {
-                banner: '<%= banner %>'
+                banner: '<%= banner %>',
+                mangle: true
             },
-            dist: {
-                src: '<%= concat.dist.dest %>',
-                dest: 'dist/tempstars.min.js'
+            app: {
+                src: 'dist/tempstars.app.js',
+                dest: 'dist/tempstars.app.min.js'
+            },
+            dentist: {
+                src: 'dist/tempstars.dentist.js',
+                dest: 'dist/tempstars.dentist.min.js'
+            },
+            hygienist: {
+                src: 'dist/tempstars.hygienist.js',
+                dest: 'dist/tempstars.hygienist.min.js'
             }
         },
 
         jshint: {
             options: {
-                node: true,
-                curly: true,
-                eqeqeq: true,
-                immed: true,
-                latedef: true,
-                newcap: true,
-                noarg: true,
-                sub: true,
-                undef: true,
-                unused: true,
-                eqnull: true,
+                boss: true,
                 browser: true,
-                globals: { jQuery: true },
-                boss: true
+                curly: true,
+                debug: true,
+                eqeqeq: true,
+                eqnull: true,
+                esversion: 5,
+                expr: true,
+                freeze: true,
+                latedef: true,
+                loopfunc: true,
+                noarg: true,
+                nonew: true,
+                node: true,
+                strict: true,
+                undef: true,
+                unused: 'vars',
+                validthis: true,
+                globals: { $: true, Dom7: true, Template7: true, $$: true },
             },
             gruntfile: {
-                src: 'gruntfile.js'
+                src: 'Gruntfile.js'
+            },
+            app: {
+                src: ['src/app/*.js', 'src/landing/*.js']
+            },
+            dentist: {
+                src: ['src/pages/dentist/*.js']
+            },
+            hygienist: {
+                src: ['src/pages/hygienist/*.js']
             }
         },
 
@@ -86,7 +129,7 @@ module.exports = function (grunt) {
                     includesDir: 'src/includes'
                 },
                 files: [
-                  { src: '**/*', dest: 'www/', cwd: 'src/templates', expand: true }
+                  { src: '**/*.html', dest: 'www/', cwd: 'src/pages', expand: true }
                 ]
             }
         },
@@ -122,10 +165,12 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
 
-    grunt.registerTask( 'default',  ['clean', 'copy', 'includereplace' ]);
+    grunt.registerTask( 'default',  ['clean', 'copy', 'concat', 'includereplace' ]);
     grunt.registerTask( 'serve',    ['connect', 'watch']);
     grunt.registerTask( 'ios',      ['clean', 'copy', 'includereplace', 'exec:run_ios']);
     grunt.registerTask( 'android',  ['clean', 'copy', 'includereplace', 'exec:run_android']);
