@@ -25,7 +25,6 @@ app.onPageInit( 'signup-hygienist', function(page) {
               quality: 80,
               targetWidth: 200,
               targetHeight: 200
-//              cameraDirection: FRONT
         });
     });
 
@@ -46,14 +45,18 @@ app.onPageAfterAnimation( 'signup-hygienist', function( page ) {
         return;
     }
 
-    var el = app.addNotification({
-        title: 'TempStars',
-        message: 'There are ' + num + ' job postings right now!'
-    });
-
     setTimeout( function() {
-        app.closeNotification( el );
-    }, 5000);
+
+        var el = app.addNotification({
+            title: 'TempStars',
+            message: 'There are ' + num + ' job postings right now!'
+        });
+
+        setTimeout( function() {
+            app.closeNotification( el );
+        }, 5000);
+        
+    }, 3000 );
 
 });
 

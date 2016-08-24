@@ -14,7 +14,6 @@ var bootstrap = {
             // TODO switch this to be set at build time
             material: false,
             template7Pages: true,
-            init: false,
             modalTitle: 'TempStars',
             animateNavBackIcon: true
         });
@@ -25,11 +24,7 @@ var bootstrap = {
             domCache: false
         });
 
-        // TODO need index page on page init here?
-
-        // Initialize App
-        app.init();
-
+        // Handle device events
         if ( window.cordova ) {
             this.bindEvents();
         }
