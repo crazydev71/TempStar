@@ -13,7 +13,7 @@
         <div class="page-content">
           <div class="login-screen-title">Create Free Account</div>
           <form id="signup">
-              <div class="list-block inset" style="margin:20px 0 10px 5px;font-size:12px;">
+              <div class="list-block inset" style="margin:20px 0 10px 5px;font-size:13px;">
               <ul>
                   <li class="item-content">
                     <div class="item-inner">
@@ -46,7 +46,8 @@
                   <div class="item-inner">
                     <div class="item-title label">Email</div>
                     <div class="item-input">
-                      <input type="text" name="username" placeholder="email address"/>
+                      <input type="text" name="email" placeholder="email address"/>
+                      <div class="form-error"><div>
                     </div>
                   </div>
                 </li>
@@ -54,12 +55,16 @@
                   <div class="item-inner">
                     <div class="item-title label">Password</div>
                     <div class="item-input">
-                      <input type="password" name="password" placeholder="password must be 6 chars"/>
+                      <input type="password" name="password" placeholder="password must be at least 6 chars"/>
+                      <div class="form-error"><div>
                     </div>
                   </div>
                 </li>
               </ul>
             </div>
+
+            <p style="margin:20px auto;width:250px;text-align:center;color:#888">By creating an account, you agree to our  <a href="landing/terms-of-service.html">Terms of Service</a> and  <a href="landing/privacy-policy.html">Privacy Policy</a>.</p>
+
 
                     <div class="row">
                         <div class="col-20">&nbsp;</div>

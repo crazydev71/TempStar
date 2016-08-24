@@ -15,9 +15,9 @@ module.exports = function (grunt) {
         copy: {
             build: {
                 files: [
-                    { expand: true, src: '**', dest: 'www/lib/', cwd: 'src/lib/' },
-                    { expand: true, src: '**', dest: 'www/img/', cwd: 'src/img/' },
-                    { expand: true, src: 'android.css', dest: 'www/css/', cwd: 'src/app/' }
+                    { cwd: 'src/lib/', src: '**', dest: 'www/lib/', expand: true },
+                    { cwd: 'src/img/', src: '**', dest: 'www/img/', expand: true },
+                    { cwd: 'src/app/', src: 'android.css', dest: 'www/css/', expand: true }
                 ]
             }
         },
@@ -50,6 +50,42 @@ module.exports = function (grunt) {
             hygienist_css: {
                 src: ['src/pages/hygienist/*.css'],
                 dest: 'www/css/tempstars.hygienist.css'
+            }
+        },
+
+        includereplace: {
+            android: {
+                options: {
+                    includesDir: 'src/includes/android'
+                },
+                files: [
+                    { cwd: 'src/pages', src: 'index.html', dest: 'www/', expand: true }
+                ]
+            },
+            ios: {
+                options: {
+                    includesDir: 'src/includes/ios'
+                },
+                files: [
+                    { cwd: 'src/pages', src: 'index.html', dest: 'www/', expand: true }
+                ]
+            },
+            browser: {
+                options: {
+                    includesDir: 'src/includes/browser'
+                },
+                files: [
+                    { cwd: 'src/pages', src: 'index.html', dest: 'www/', expand: true }
+                ]
+            },
+            all: {
+                options: {
+                    includesDir: 'src/includes'
+                },
+                files: [
+                    { cwd: 'www/', src: 'index.html', dest: 'www/', expand: true },
+                    { cwd: 'src/pages', src: '**/!(index)*.html', dest: 'www/', expand: true }
+                ]
             }
         },
 
@@ -123,17 +159,6 @@ module.exports = function (grunt) {
             }
         },
 
-        includereplace: {
-            dist: {
-                options: {
-                    includesDir: 'src/includes'
-                },
-                files: [
-                  { src: '**/*.html', dest: 'www/', cwd: 'src/pages', expand: true }
-                ]
-            }
-        },
-
         exec: {
             run_ios: 'cordova run ios',
             run_android: 'cordova run android',
@@ -170,10 +195,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
-    grunt.registerTask( 'default',  ['clean', 'copy', 'concat', 'includereplace' ]);
+    grunt.registerTask( 'default',  ['clean', 'copy', 'concat',  'includereplace:browser', 'includereplace:all' ]);
     grunt.registerTask( 'serve',    ['connect', 'watch']);
-    grunt.registerTask( 'ios',      ['clean', 'copy', 'includereplace', 'exec:run_ios']);
-    grunt.registerTask( 'android',  ['clean', 'copy', 'includereplace', 'exec:run_android']);
-    grunt.registerTask( 'browser',  ['clean', 'copy', 'includereplace', 'exec:run_browser']);
+    grunt.registerTask( 'ios',      ['clean', 'copy', 'concat', 'includereplace:ios',     'includereplace:all', 'exec:run_ios']);
+    grunt.registerTask( 'android',  ['clean', 'copy', 'concat', 'includereplace:android', 'includereplace:all', 'exec:run_android']);
+    grunt.registerTask( 'browser',  ['clean', 'copy', 'concat', 'includereplace:browser', 'includereplace:all', 'exec:run_browser']);
 
 };

@@ -1,7 +1,6 @@
 <div class="navbar landing">
 
     <div data-page="signup" class="navbar-inner">
-        <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>back</span></a></div>
         <div class="center sliding">TempStars Hygienist</div>
     </div>
 
@@ -11,10 +10,11 @@
     <div data-page="signup-hygienist" class="page landing">
 
         <div class="page-content">
-          <div class="login-screen-title">Account Info</div>
-          <!-- <div class="content-block" style="margin:0px;">
-              <p style="margin:auto;width:250px;text-align:center;">Enter contact info to see job postings</p>
-          </div> -->
+          <div class="login-screen-title">Welcome!</div>
+          <div class="content-block" style="margin:0px;">
+              <p style="margin:auto;width:250px;text-align:center;">Please set up your account</p>
+          </div>
+
           <form>
               <div class="list-block inset" style="margin:10px 0 10px 5px;font-size:12px;">
               <ul>
@@ -74,7 +74,7 @@
                       <div class="item-inner">
                         <div class="item-title label">Cell Phone</div>
                         <div class="item-input">
-                          <input type="text" placeholder="cell phone">
+                          <input type="tel" placeholder="cell phone">
                         </div>
                       </div>
                   </li>
@@ -82,14 +82,33 @@
                       <div class="item-inner">
                         <div class="item-title label">CDHO Number</div>
                         <div class="item-input">
-                          <input type="text" placeholder="CDHO number">
+                          <input type="number" placeholder="CDHO number">
                         </div>
                       </div>
                   </li>
+              </li>
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">Profile Picture</div>
+                    <div class="item-input">
+                      <div id="signup-hygienist-photo-remove" style="display:none;">
+                          <img id="signup-hygienist-photo" src="img/user.jpg" style="width:20px;height:20px">
+                          <a id="signup-hygienist-remove-photo-button" href="#" style="font-size:115%">remove photo</a>
+                      </div>
+                      <div id="signup-hygienist-photo-add">
+                          <a id="signup-hygienist-upload-photo-button" href="#" style="font-size:115%">
+                              <img id="signup-hygienist-photo" src="img/user.jpg" style="width:20px;height:20px">
+                              upload photo</a>
+                          <i style="color:#aaa">(optional)</i>
+                      </div>
+                    </div>
+
+                  </div>
+              </li>
               </ul>
             </div>
 
-                    <div class="row">
+                    <div class="row" style="margin-top:20px;">
                         <div class="col-20">&nbsp;</div>
                         <div class="col-60">
                             <a id="hygienist-done-button" href="#" class="button button-round">Enter</a>
@@ -103,13 +122,11 @@
         <div class="footer toolbar" style="height:70px !important;font-size:.8em;padding-top:20px;background-color:#fff">
               <div class="row">
                   <div class="col-33" style="text-align:center;">
-                      <a href="landing/forgot-password.html">Forgot Password?</a>
-                  </div>
-                  <div class="col-33" style="text-align:center;">
-                      <a href="index.html">Log In</a>
                   </div>
                   <div class="col-33" style="text-align:center;">
                       <a href="mailto:support@tempstars.net" class="external">Contact Support</a>
+                  </div>
+                  <div class="col-33" style="text-align:center;">
                   </div>
               </div>
               <div class="row">
