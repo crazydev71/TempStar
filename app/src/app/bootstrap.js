@@ -1,6 +1,9 @@
 'use strict';
 
-var bootstrap = {
+window.TempStars = window.TempStars || {};
+window.TempStars.Pages = {};
+
+TempStars.bootstrap = {
 
     initialize: function() {
 
@@ -60,4 +63,4 @@ var bootstrap = {
 };
 
 
-bootstrap.initialize();
+TempStars.bootstrap.initialize();

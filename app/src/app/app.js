@@ -4,8 +4,6 @@ var userLoggedIn,
     isDentist;
 
 
-
-
         // If the user is already logged in, go directly to the main view
         if ( userLoggedIn ) {
             //$$('#landing-page').hide();
@@ -25,7 +23,7 @@ function logout() {
     isDentist = false;
     $$('.view-main').hide();
     $$('.view-landing').show();
-    landingView.router.loadPage( { url: 'landing/login.html', animatePages: false } );
+    mainView.router.loadPage( { url: 'index.html', animatePages: false } );
 }
 
 

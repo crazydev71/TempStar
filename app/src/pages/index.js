@@ -1,4 +1,4 @@
-var IndexPage = (function() {
+TempStars.Pages.Index = (function() {
 
     function init() {
 
@@ -23,7 +23,22 @@ var IndexPage = (function() {
     }
 
     function loginButtonHandler(e) {
+        var email = $$('#login-form input[name="email"]').val();
+        var password = $$('#login-form input[name="password"]').val();
 
+        app.showPreloader('Logging In');
+        TempStars.Api.login( email, password )
+        .then(function( results ) {
+            app.hidePreloader();
+            login();
+        })
+        .catch( function( error ) {
+            app.hidePreloader();
+            app.alert( 'login failed' );
+        });
+    }
+
+function realhandler() {
         var constraints = {
             email: {
                 presence: true,
@@ -64,4 +79,4 @@ var IndexPage = (function() {
 
 })();
 
-IndexPage.init();
+TempStars.Pages.Index.init();
