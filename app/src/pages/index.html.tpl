@@ -11,7 +11,7 @@
     <title>TempStars</title>
     <link rel="stylesheet" href="lib/font-awesome/font-awesome.css">
     <link rel="stylesheet" href="lib/themify-icons/themify-icons.css">
-    @@include( 'index.css.html' )
+    @@include( '<%- cssfile %>' )
   </head>
   <body>
     @@include( 'hygienist/popover-office-info.html' )
@@ -52,7 +52,7 @@
                         </div>
                             <div class="content-block-title" style="margin-top:40px;color:#333;font-size:15px;letter-spacing:0.03em;">Getting Started</div>
                         <div class="content-block">
-                            <p style="margin-left:30px !important;font-size:15px;">TempStars is free for Hygienists.<br>Dentists only pay a small booking fee.</p>
+                            <p style="margin-left:35px !important;font-size:15px;">TempStars is free for Hygienists.<br>Dentists only pay a small booking fee.</p>
                             <div class="row" style="margin-top:20px;margin-bottom:0px;">
                                 <div class="col-20">&nbsp;</div>
                                 <div class="col-60">

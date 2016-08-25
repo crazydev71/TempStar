@@ -53,31 +53,41 @@ module.exports = function (grunt) {
             }
         },
 
-        includereplace: {
+        template: {
             android: {
                 options: {
-                    includesDir: 'src/includes/android'
+                    data: {
+                        cssfile: 'android/index.css.html'
+                    }
                 },
-                files: [
-                    { cwd: 'src/pages', src: 'index.html', dest: 'www/', expand: true }
-                ]
+                files: {
+                    'www/index.html': ['src/pages/index.html.tpl']
+                }
             },
             ios: {
                 options: {
-                    includesDir: 'src/includes/ios'
+                    data: {
+                        cssfile: 'ios/index.css.html'
+                    }
                 },
-                files: [
-                    { cwd: 'src/pages', src: 'index.html', dest: 'www/', expand: true }
-                ]
+                files: {
+                    'www/index.html': ['src/pages/index.html.tpl']
+                }
             },
             browser: {
                 options: {
-                    includesDir: 'src/includes/browser'
+                    data: {
+                        cssfile: 'browser/index.css.html'
+                    }
                 },
-                files: [
-                    { cwd: 'src/pages', src: 'index.html', dest: 'www/', expand: true }
-                ]
-            },
+                files: {
+                    'www/index.html': ['src/pages/index.html.tpl']
+                }
+            }
+        },
+
+        includereplace: {
+
             all: {
                 options: {
                     includesDir: 'src/includes'
@@ -194,11 +204,12 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-template');
 
-    grunt.registerTask( 'default',  ['clean', 'copy', 'concat',  'includereplace:browser', 'includereplace:all' ]);
+    grunt.registerTask( 'default',  ['clean', 'copy', 'concat',  'template:browser', 'includereplace' ]);
     grunt.registerTask( 'serve',    ['connect', 'watch']);
-    grunt.registerTask( 'ios',      ['clean', 'copy', 'concat', 'includereplace:ios',     'includereplace:all', 'exec:run_ios']);
-    grunt.registerTask( 'android',  ['clean', 'copy', 'concat', 'includereplace:android', 'includereplace:all', 'exec:run_android']);
-    grunt.registerTask( 'browser',  ['clean', 'copy', 'concat', 'includereplace:browser', 'includereplace:all', 'exec:run_browser']);
+    grunt.registerTask( 'ios',      ['clean', 'copy', 'concat', 'template:ios',     'includereplace', 'exec:run_ios']);
+    grunt.registerTask( 'android',  ['clean', 'copy', 'concat', 'template:android', 'includereplace', 'exec:run_android']);
+    grunt.registerTask( 'browser',  ['clean', 'copy', 'concat', 'template:browser', 'includereplace', 'exec:run_browser']);
 
 };

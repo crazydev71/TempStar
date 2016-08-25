@@ -18,6 +18,7 @@
     "grunt-cordovacli": "^1.0.1",
     "grunt-exec": "^1.0.0",
     "grunt-include-replace": "^5.0.0",
-    "grunt-includes": "^1.0.0"
+    "grunt-includes": "^1.0.0",
+    "grunt-template": "^1.0.0"
   }
 }

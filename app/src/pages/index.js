@@ -15,30 +15,15 @@ TempStars.Pages.Index = (function() {
     }
 
     function login() {
-            userLoggedIn = true;
-            isDentist = false;
-            mainView.router.loadPage( { url: 'hygienist/hygienist.html', animatePages: false } );
-            mainView.router.reloadPage( 'hygienist.html' );
-            setupMenu();
+        userLoggedIn = true;
+        isDentist = false;
+        mainView.router.loadPage( { url: 'hygienist/hygienist.html', animatePages: false } );
+        mainView.router.reloadPage( 'hygienist.html' );
+        setupMenu();
     }
 
     function loginButtonHandler(e) {
-        var email = $$('#login-form input[name="email"]').val();
-        var password = $$('#login-form input[name="password"]').val();
 
-        app.showPreloader('Logging In');
-        TempStars.Api.login( email, password )
-        .then(function( results ) {
-            app.hidePreloader();
-            login();
-        })
-        .catch( function( error ) {
-            app.hidePreloader();
-            app.alert( 'login failed' );
-        });
-    }
-
-function realhandler() {
         var constraints = {
             email: {
                 presence: true,
@@ -50,7 +35,7 @@ function realhandler() {
         };
 
         var formData = app.formToJSON('#login-form');
-        var errors = validate(formData, constraints);
+        var errors = validate(formData, constraints );
         if ( errors ) {
             if ( errors.email ) {
                 $('#login-form input[name="email"]').addClass('error').next().html( errors.email[0] );
@@ -62,16 +47,37 @@ function realhandler() {
         }
 
         app.showPreloader('Logging In');
-        setTimeout(function () {
+        TempStars.Api.login( formData.email, formData.password )
+        .then(function( results ) {
             app.hidePreloader();
             login();
-        }, 2000);
-
+        })
+        .catch( function( error ) {
+            app.hidePreloader();
+            app.alert( 'login failed' );
+        });
     }
 
     function removeError(e) {
         $$(this).removeClass( 'error' ).next().html( '' );
     }
+
+    function setupMenu() {
+        var menuContent;
+        if ( isDentist ) {
+            menuContent = $('#dentist-menu').html();
+        }
+        else {
+            menuContent = $('#hygienist-menu').html();
+        }
+       $('#panel-menu').html(menuContent);
+
+       $('.logout-link').on( 'click', function(e) {
+           app.confirm( 'Are you sure you want to log out?', logout );
+       });
+
+    }
+
 
     return {
         init: init
