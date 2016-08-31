@@ -47,8 +47,8 @@
                 <!-- landing  -->
                 <div data-page="index" class="page no-swipeback landing">
                     <div class="page-content center">
-                        <div class="content-block" style="margin:10px auto;width:150px;">
-                            <img class="centerimg" src="img/logo.jpg" style="width:100px">
+                        <div class="content-block" style="margin:10px auto;width:240px;">
+                            <img class="centerimg" src="img/logo.png" style="width:200px;">
                         </div>
                             <div class="content-block-title" style="margin-top:40px;color:#333;font-size:15px;letter-spacing:0.03em;">Getting Started</div>
                         <div class="content-block">
