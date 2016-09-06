@@ -28,7 +28,7 @@ module.exports = function (grunt) {
                 stripBanners: true
             },
             app: {
-                src: ['src/app/bootstrap.js', 'src/app/!(bootstrap)*.js','src/pages/*.js','src/pages/landing/*.js'],
+                src: ['src/app/bootstrap.js', 'src/app/config.js', 'src/app/!(bootstrap|config)*.js','src/pages/*.js','src/pages/landing/*.js'],
                 dest: 'www/js/tempstars.app.js'
             },
             dentist: {
