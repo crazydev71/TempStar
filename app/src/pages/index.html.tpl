@@ -7,11 +7,12 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; connect-src http://localhost.com:3000 https://localhost:3000"> -->
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'"> -->
-    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'" />
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com http://0.0.0.0:35729" />
     <title>TempStars</title>
     <link rel="stylesheet" href="lib/font-awesome/font-awesome.css">
     <link rel="stylesheet" href="lib/themify-icons/themify-icons.css">
     @@include( '<%- cssfile %>' )
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
   </head>
   <body>
     @@include( 'hygienist/popover-office-info.html' )
@@ -46,13 +47,13 @@
 
                 <!-- landing  -->
                 <div data-page="index" class="page no-swipeback landing">
-                    <div class="page-content center">
-                        <div class="content-block" style="margin:10px auto;width:240px;">
-                            <img class="centerimg" src="img/logo.png" style="width:200px;">
+                    <div class="page-content center" style="padding-top:8px;">
+                        <div class="content-block" style="margin:0 auto;width:240px;">
+                            <img class="centerimg" src="img/logo.png" style="width:150px;">
                         </div>
-                            <div class="content-block-title" style="margin-top:40px;color:#333;font-size:15px;letter-spacing:0.03em;">Getting Started</div>
+                            <div class="content-block-title" style="margin-top:20px;color:#333;font-size:15px;letter-spacing:0.03em;">Getting Started</div>
                         <div class="content-block">
-                            <p style="margin-left:35px !important;font-size:15px;">TempStars is free for Hygienists.<br>Dentists only pay a small booking fee.</p>
+                            <p style="margin-left:35px !important;font-size:13px;">TempStars is free for Hygienists.<br>Dentists only pay a small booking fee.</p>
                             <div class="row" style="margin-top:20px;margin-bottom:0px;">
                                 <div class="col-20">&nbsp;</div>
                                 <div class="col-60">
@@ -65,13 +66,14 @@
                         <div class="content-block" style="margin-top:0;">
                             <form id="login-form">
                                 <div class="list-block inset" style="margin:4px 0 10px 20px;">
+                                    <div class="form-error-msg"></div>
                                   <ul>
                                     <li class="item-content">
                                       <div class="item-inner">
-                                        <div class="item-title label" style="font-size:15px;">Email</div>
+                                        <div class="item-title label">Email</div>
                                         <div class="item-input">
                                           <input type="email" name="email" placeholder="your email address"/>
-                                          <div class="form-error"><div>
+                                          <div class="field-error-msg"><div>
                                         </div>
                                       </div>
                                     </li>
@@ -80,7 +82,7 @@
                                         <div class="item-title label">Password</div>
                                         <div class="item-input">
                                           <input type="password" name="password" placeholder="your password"/>
-                                          <div class="form-error"><div>
+                                          <div class="field-error-msg"><div>
                                         </div>
                                       </div>
                                     </li>
@@ -141,5 +143,8 @@
     <script src="js/tempstars.app.js"></script>
     <script src="js/tempstars.dentist.js"></script>
     <script src="js/tempstars.hygienist.js"></script>
+    <script>
+        TempStars.App.init();
+    </script>
   </body>
 </html>

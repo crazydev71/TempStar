@@ -15,7 +15,7 @@ input {
 }
 
 .error {
-    color: red !important;
+    /*color: red !important;*/
 }
 
 /*.preloader {
@@ -256,11 +256,11 @@ span.badge.bg-red {
 }
 
 .item-input {
-    font-size: 15px;
+    font-size: 12px;
 }
 
 input, select, .label {
-    font-size: 15px !important;
+    font-size: 13px !important;
     font-weight: normal !important;
 }
 
@@ -281,24 +281,68 @@ label.label-checkbox.item-content {
 .label-checkbox .item-inner:after {
     height: 0;
 }
-
+/*
 input.error::-webkit-input-placeholder {
-  color: red;
+  xcolor: red;
+  background-color: lavenderblush;
 }
 input.error :-ms-input-placeholder {
   color: red;
+  background-color: lavenderblush;
 }
 input.error ::-moz-placeholder {
   color: red;
+  background-color: lavenderblush;
   opacity: 1;
 }
 input.error :-moz-placeholder {
   color: red;
+  background-color: lavenderblush;
   opacity: 1;
+}*/
+
+input[name="postalCode"] {
+    text-transform: uppercase;
 }
-.form-error {
+input[name="postalCode"]::-webkit-input-placeholder {
+   text-transform: none;
+}
+input[name="postalCode"]::-moz-placeholder {
+    text-transform: none;
+}
+input[name="postalCode"]:-ms-input-placeholder {
+    text-transform: none;
+}
+input[name="postalCode"]:-moz-placeholder {
+    text-transform: none;
+}
+
+.form-error-msg {
+    margin-top: 10px;
+    padding: 0 20px;
+    color: #dd0000;
+    font-size: 13px;
+    display: none;
+}
+
+.field-error-msg {
     color: #888;
     font-style: italic;
     margin-top: -10px;
     margin-bottom: 10px;
+    color: #dd0000;
+}
+
+p.page-subtitle {
+    margin: auto;
+    width: 250px;
+    text-align: center;
+}
+
+.formfields {
+    margin: 10px 0 10px 5px;
+}
+
+.login-screen-title {
+    margin-top: 4px;
 }

@@ -1,27 +1,70 @@
-'use strict';
 
-var userLoggedIn,
-    isDentist;
+TempStars.App = (function() {
 
+    'use strict';
 
-// If the user is already logged in, go directly to the main view
-if ( userLoggedIn ) {
-    //$$('#landing-page').hide();
-    //$$('#main-page').show();
-    if ( isDentist ) {
-        mainView.router.loadPage( { url: 'dentist.html', animatePages: false } );
-    }
-    else {
-        mainView.router.loadPage( { url: 'hygienist.html', animatePages: false } );
-    }
-}
+    var userLoggedIn,
+        userAuth,
+        userAccount;
 
-function logout() {
-    // Remove from local storage
-    app.closePanel();
-    userLoggedIn = false;
-    isDentist = false;
-    $$('.view-main').hide();
-    $$('.view-landing').show();
-    mainView.router.loadPage( { url: 'index.html', animatePages: false } );
-}
+    return {
+        init: function init() {
+
+            // TODO
+            Stripe.setPublishableKey('pk_test_fPZwN5y87Dx9r3C4FWhdzGVH');
+
+            TempStars.User.autoLogin()
+            .then( function() {
+                TempStars.App.gotoStartingPage();
+            })
+            .catch( function() {
+                // Stay on main page
+                console.log( 'autoLogin failed' );
+            });
+        },
+
+        gotoStartingPage: function gotoStartingPage() {
+            var menuContent;
+
+            if ( TempStars.User.isDentist() ) {
+                if ( TempStars.User.isSetupComplete() ) {
+
+                    // Set up dentist menu
+                    menuContent = $('#dentist-menu').html();
+                    $('#panel-menu').html(menuContent);
+
+                    mainView.router.loadPage( { url: 'dentist/dentist.html', animatePages: false } );
+                }
+                else {
+                    mainView.router.loadPage( { url: 'landing/dentist-signup1.html', animatePages: false } );
+                }
+            }
+            else {
+                if ( TempStars.User.isSetupComplete() ) {
+
+                    // Set up hygienist menu
+                    menuContent = $('#hygienist-menu').html();
+                    $('#panel-menu').html(menuContent);
+
+                    mainView.router.loadPage( { url: 'hygienist/hygienist.html', animatePages: false } );
+                }
+                else {
+                    mainView.router.loadPage( { url: 'landing/hygienist-signup.html', animatePages: false } );
+                }
+            }
+
+        },
+
+        // TODO
+        logout: function logout() {
+            app.formDeleteData('dentist-signup1-form');
+            app.formDeleteData('dentist-signup2-form');
+            app.formDeleteData('dentist-signup3-form');
+            app.formDeleteData('hygienist-signup-form');
+        },
+
+        sendPasswordResetLink: function sendPasswordResetLink() {
+
+        }
+    };
+})();

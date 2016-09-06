@@ -7,20 +7,13 @@ TempStars.Ajax = (function() {
     'use strict';
 
     var initialized = false;
-
-    var userName = 'riff',
-        password = 'raff',
-        baseUrl = "https://api.tempstars.net/v2/",
-        authHeader = 'Basic ' + window.btoa(unescape(encodeURIComponent(userName + ':' + password)));
+    var baseUrl = TempStars.Config.server.baseUrl;
 
     var defaultSettings = {
         cache: false,
         contentType: 'application/json',
         dataType: 'json',
-        timeout: 10 * 1000,
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader('Authorization', authHeader );
-        }
+        timeout: 10 * 1000
     };
 
     function init() {
@@ -48,7 +41,7 @@ TempStars.Ajax = (function() {
         initialized = true;
     }
 
-    function ajax( verb, url, data, settings ) {
+    function ajax( verb, url, data, auth, settings ) {
         return new Promise( function( resolve, reject ) {
 
             // Build base settings
@@ -57,45 +50,54 @@ TempStars.Ajax = (function() {
             // Add verb, url, and data
             var vud = {
                 method: verb,
-                url: baseUrl + url,
-                data: data
+                url: baseUrl + url
             }
-
+            if ( data ) {
+                vud.data = data;
+            }
             var ajaxSettings = _.merge( baseSettings, vud );
 
+            // Add authorization header if provided
+            if ( auth ) {
+                ajaxSettings.beforeSend = function(xhr) {
+                    xhr.setRequestHeader('Authorization', auth );
+                };
+            }
+
+            // Add error and success handlers
             ajaxSettings.error = function( xhr, status ) {
-                return reject( status );
+                reject( status );
             };
 
             ajaxSettings.success = function( data, status, xhr ) {
-                return resolve( data );
+                resolve( data );
             };
 
-            $$.ajax( ajaxSettings );
+            $.ajax( ajaxSettings );
         });
     }
 
     return {
         init: init,
 
-        post: function post( url, data, settings ) {
-			return ajax( 'POST', url, JSON.stringify( data ), settings );
+        post: function post( url, data, auth, settings ) {
+			return ajax( 'POST', url, JSON.stringify( data ), auth, settings );
 		},
 
-		get: function get( url, data, settings ) {
-			return ajax( 'GET', url, data, settings );
+		get: function get( url, data, auth, settings ) {
+			return ajax( 'GET', url, data, auth, settings );
 		},
 
-		patch: function patch( url, data, settings ) {
-			return ajax( 'PUT', url, JSON.stringify( data ), settings );
+		patch: function patch( url, data, auth, settings ) {
+			return ajax( 'PUT', url, JSON.stringify( data ), auth, settings );
 		},
 
-		put: function put( url, data, settings ) {
-			return ajax( 'PUT', url, JSON.stringify( data ), settings );
+		put: function put( url, data, auth, settings ) {
+			return ajax( 'PUT', url, JSON.stringify( data ), auth, settings );
 		},
 
-		del: function del( url, data, settings ) {
-			return ajax( 'DELETE', url, JSON.stringify( data ), settings );
+		del: function del( url, data, auth, settings ) {
+			return ajax( 'DELETE', url, JSON.stringify( data ), auth, settings );
 		}
     };
 

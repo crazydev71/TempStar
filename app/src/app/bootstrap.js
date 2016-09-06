@@ -38,6 +38,7 @@ TempStars.bootstrap = {
 
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+        document.addEventListener("resume", this.onResume, false);
     },
 
     onDeviceReady: function() {
@@ -56,9 +57,12 @@ TempStars.bootstrap = {
 
         // If running on Android, use material theme and change navbar to fixed
         if (isAndroid) {
-              $$('.view.navbar-through').removeClass('navbar-through').addClass('navbar-fixed');
-              $$('.view .navbar').prependTo('.view .page');
+            $$('.view.navbar-through').removeClass('navbar-through').addClass('navbar-fixed');
+            $$('.view .navbar').prependTo('.view .page');
         }
+    },
+
+    onResume: function() {
     }
 };
 

@@ -12,8 +12,9 @@
 
         <div class="page-content">
           <div class="login-screen-title">Create Free Account</div>
-          <form id="signup">
+          <form id="signup-form">
               <div class="list-block inset" style="margin:20px 0 10px 5px;font-size:13px;">
+                  <div class="form-error-msg"></div>
               <ul>
                   <li class="item-content">
                     <div class="item-inner">
@@ -22,7 +23,7 @@
 
                       <div class="item-input">
                           <label class="label-checkbox item-content">
-                              <input id="account-type-hygienist" type="checkbox" name="accountType" value="Hygienist">
+                              <input id="signup-account-type-hygienist" type="checkbox" name="accountType" value="Hygienist">
                               <div class="item-media">
                                 <i class="icon icon-form-checkbox"></i>
                               </div>
@@ -31,7 +32,7 @@
                               </div>
                             </label>
                             <label class="label-checkbox item-content">
-                                <input id="account-type-dentist" type="checkbox" name="accountType" value="Dentist">
+                                <input id="signup-account-type-dentist" type="checkbox" name="accountType" value="Dentist">
                                 <div class="item-media">
                                   <i class="icon icon-form-checkbox"></i>
                                 </div>
@@ -39,6 +40,7 @@
                                   <div class="item-title">Dentist</div>
                                 </div>
                               </label>
+                              <div id="signup-account-error-msg" class="field-error-msg"><div>                              
                       </div>
                     </div>
                   </li>
@@ -47,7 +49,7 @@
                     <div class="item-title label">Email</div>
                     <div class="item-input">
                       <input type="text" name="email" placeholder="email address"/>
-                      <div class="form-error"><div>
+                      <div class="field-error-msg"><div>
                     </div>
                   </div>
                 </li>
@@ -56,7 +58,7 @@
                     <div class="item-title label">Password</div>
                     <div class="item-input">
                       <input type="password" name="password" placeholder="password (at least 6 chars)"/>
-                      <div class="form-error"><div>
+                      <div class="field-error-msg"><div>
                     </div>
                   </div>
                 </li>

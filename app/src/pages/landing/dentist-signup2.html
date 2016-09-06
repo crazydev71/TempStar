@@ -1,6 +1,6 @@
 <div class="navbar landing">
 
-    <div data-page="signup" class="navbar-inner">
+    <div data-page="dentist-signup2" class="navbar-inner">
         <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>back</span></a></div>
         <div class="center sliding">TempStars Dentist</div>
     </div>
@@ -8,23 +8,30 @@
 </div>
 
 <div class="pages navbar-through toolbar-fixed">
-    <div data-page="signup-dentist2" class="page landing">
+    <div data-page="dentist-signup2" class="page landing">
 
         <div class="page-content">
           <div class="login-screen-title">Billing</div>
           <div class="content-block" style="margin:0px;">
-              <p style="margin:auto;width:250px;text-align:center;">The booking fee of $25 is only charged after a hygienist job is finished.</p>
+              <p class="page-subtitle">The booking fee of $25 is only charged after a hygienist finishes a job.</p>
           </div>
 
-          <form>
+          <form id="dentist-signup2-form" class="store-data">
+
+
               <div class="list-block inset" style="margin:20px 0 10px 5px;font-size:12px;">
-                  <div class="right" style="color:#888;padding-right:15px;text-align:right;">Step 2 of 3</div>
+                  <div class="row">
+                    <div class="col-50" style="color:#888;padding-left:15px;text-align:left;"> <span class="ti-lock"></span> SECURE FORM</div>
+                    <div class="col-50" style="color:#888;padding-right:15px;text-align:right;">Step 2 of 3</div>
+                  </div>
+                  <div class="form-error-msg"></div>
               <ul>
                   <li class="item-content">
                     <div class="item-inner">
                       <div class="item-title label">Name On Card</div>
                       <div class="item-input">
-                          <input type="text" size="20" placeholder="cardholder name">
+                          <input type="text" size="20" data-stripe="name" placeholder="cardholder name">
+                          <div class="field-error-msg"><div>
                       </div>
                     </div>
                   </li>
@@ -34,6 +41,7 @@
                       <div class="item-title label">Card Number</div>
                       <div class="item-input">
                           <input type="text" size="20" data-stripe="number" placeholder="card number">
+                          <div class="field-error-msg"><div>
                       </div>
                     </div>
                   </li>
@@ -42,8 +50,9 @@
                     <div class="item-inner">
                       <div class="item-title label">Expiration</div>
                       <div class="item-input">
-                          <input type="text" size="2" data-stripe="exp_month">
-                          <input type="text" size="2" data-stripe="exp_year">
+                         <div class="row">
+                            <input type="text" placeholder="expiration date" data-stripe="exp" readonly id="dentist-signup2-exp-date-field">
+                            <div class="field-error-msg"><div>
                       </div>
                     </div>
                   </li>
@@ -52,7 +61,8 @@
                       <div class="item-inner">
                         <div class="item-title label">Security Code</div>
                         <div class="item-input">
-                            <input type="text" size="4" data-stripe="cvc">
+                            <input type="text" size="4" data-stripe="cvc" placeholder="CVC or CVV code on card">
+                            <div class="field-error-msg"><div>
                         </div>
                       </div>
                   </li>
@@ -63,11 +73,15 @@
                     <div class="row">
                         <div class="col-20">&nbsp;</div>
                         <div class="col-60">
-                            <a id="dentist-enter-button" href="landing/signup-dentist3.html" class="button button-round">Next</a>
+                            <a id="dentist-signup2-done-button" href="#" class="button button-round">Next</a>
                         </div>
                         <div class="col-20">&nbsp;</div>
                     </div>
           </form>
+          <div class="content-block">
+              <img class="centerimg" src="img/geotrust.jpg" style="width:100px;"><br>
+              <img class="centerimg" src="img/stripe.png" style="width:100px;">
+          </div>
           <br><br>
         </div>
 

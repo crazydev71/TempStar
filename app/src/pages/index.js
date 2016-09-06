@@ -4,22 +4,21 @@ TempStars.Pages.Index = (function() {
 
         app.onPageInit( 'index', function( page ) {
             $$('#login-button').on( 'click', loginButtonHandler );
-            $$('#login-form input').on( 'focus', removeError );
+            mainView.hideNavbar();
         }).trigger();
 
         app.onPageBeforeRemove( 'index', function( page ) {
             $$('#login-button').off( 'click', loginButtonHandler );
-            $$('#login-form input').off( 'focus', removeError );
         });
 
-    }
+        app.onPageBeforeAnimation( 'index', function( page ) {
+            mainView.hideNavbar();
+        });
 
-    function login() {
-        userLoggedIn = true;
-        isDentist = false;
-        mainView.router.loadPage( { url: 'hygienist/hygienist.html', animatePages: false } );
-        mainView.router.reloadPage( 'hygienist.html' );
-        setupMenu();
+        // Global handler for menu
+        $$(document).on( 'click', '.logout-link', function(e) {
+            app.confirm( 'Are you sure you want to log out?', TempStars.Menu.logout );
+        });
     }
 
     function loginButtonHandler(e) {
@@ -30,12 +29,18 @@ TempStars.Pages.Index = (function() {
                 email: true
             },
             password: {
-                presence: true,
+                presence: true
             }
         };
 
         var formData = app.formToJSON('#login-form');
         var errors = validate(formData, constraints );
+
+        // Clear errors
+        $$('#login-form .form-error-msg').html('');
+        $$('#login-form .field-error-msg').removeClass( 'error' ).html('');
+
+        // If there are validation errors, show them
         if ( errors ) {
             if ( errors.email ) {
                 $('#login-form input[name="email"]').addClass('error').next().html( errors.email[0] );
@@ -47,37 +52,22 @@ TempStars.Pages.Index = (function() {
         }
 
         app.showPreloader('Logging In');
-        TempStars.Api.login( formData.email, formData.password )
-        .then(function( results ) {
+        TempStars.User.login( formData.email, formData.password )
+        .then(function() {
             app.hidePreloader();
-            login();
+            TempStars.App.gotoStartingPage();
         })
-        .catch( function( error ) {
+        .catch( function( err ) {
             app.hidePreloader();
-            app.alert( 'login failed' );
+            $$('#login-form .form-error-msg')
+                .html('<span class="ti-alert"></span> Login failed. Please try again.')
+                .show();
         });
     }
 
     function removeError(e) {
         $$(this).removeClass( 'error' ).next().html( '' );
     }
-
-    function setupMenu() {
-        var menuContent;
-        if ( isDentist ) {
-            menuContent = $('#dentist-menu').html();
-        }
-        else {
-            menuContent = $('#hygienist-menu').html();
-        }
-       $('#panel-menu').html(menuContent);
-
-       $('.logout-link').on( 'click', function(e) {
-           app.confirm( 'Are you sure you want to log out?', logout );
-       });
-
-    }
-
 
     return {
         init: init

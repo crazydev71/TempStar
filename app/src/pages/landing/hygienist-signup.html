@@ -1,0 +1,169 @@
+<div class="navbar landing">
+
+    <div data-page="signup" class="navbar-inner">
+        <div class="center sliding">TempStars Hygienist</div>
+    </div>
+
+</div>
+
+<div class="pages navbar-through toolbar-fixed">
+    <div data-page="hygienist-signup" class="page landing">
+
+        <div class="page-content">
+          <div class="login-screen-title">Welcome!</div>
+          <div class="content-block" style="margin:0px;">
+              <p class="page-subtitle">Please set up your account<br>
+                  <i id="hygienist-signup-email"></i>
+              </p>
+          </div>
+
+          <form id="hygienist-signup-form">
+              <div class="list-block inset formfields">
+                  <div class="form-error-msg"></div>
+              <ul>
+                  <li class="item-content">
+                    <div class="item-inner">
+                      <div class="item-title label">First Name</div>
+                      <div class="item-input">
+                        <input type="text" name="firstName" placeholder="first name"/>
+                        <div class="field-error-msg"><div>
+                      </div>
+                    </div>
+                  </li>
+
+                  <li class="item-content">
+                    <div class="item-inner">
+                      <div class="item-title label">Last Name</div>
+                      <div class="item-input">
+                        <input type="text" name="lastName" placeholder="last name"/>
+                        <div class="field-error-msg"><div>
+                      </div>
+                    </div>
+                  </li>
+
+                  <li class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title label">Address</div>
+                        <div class="item-input">
+                          <input type="text" name="address" placeholder="address">
+                          <div class="field-error-msg"><div>
+                        </div>
+                      </div>
+                  </li>
+
+                    <li class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title label">City</div>
+                        <div class="item-input">
+                          <input type="text" name="city" placeholder="city">
+                          <div class="field-error-msg"><div>
+                        </div>
+                      </div>
+                  </li>
+
+                    <li class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title label">Province</div>
+                        <div class="item-input">
+                          <select name="province">
+                              <option value="" style="color:green !important;">select province &dtrif; </option>
+                              <option value="AB">Alberta</option>
+                            <option value="BC">British Columbia</option>
+                            <option value="MB">Manitoba</option>
+                            <option value="NB">New Brunswick</option>
+                            <option value="NL">Newfoundland and Labrador</option>
+                            <option value="NT">Northwest Territories</option>
+                            <option value="NS">Nova Scotia</option>
+                            <option value="NU">Nunavut</option>
+                            <option value="ON">Ontario</option>
+                            <option value="PE">Prince Edward Island</option>
+                            <option value="QC">Quebec</option>
+                            <option value="SK">Saskatchewan</option>
+                            <option value="YT">Yukon</option>
+                          </select>
+                          <div class="field-error-msg"><div>
+                        </div>
+                      </div>
+                  </li>
+
+                    <li class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title label">Postal Code</div>
+                        <div class="item-input">
+                          <input type="text" name="postalCode" placeholder="postal code">
+                          <div class="field-error-msg"><div>
+                        </div>
+                      </div>
+                  </li>
+
+                    <li class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title label">Cell Phone</div>
+                        <div class="item-input">
+                          <input type="tel" name="phone" placeholder="cell phone">
+                          <div class="field-error-msg"><div>
+                        </div>
+                      </div>
+                  </li>
+
+                    <li class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title label">CDHO Reg #</div>
+                        <div class="item-input">
+                          <input type="text" name="CDHONumber" placeholder="CDHO reg number">
+                          <div class="field-error-msg"><div>
+                        </div>
+                      </div>
+                  </li>
+
+              </li>
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">Profile Picture</div>
+                    <div class="item-input" style="padding-top:4px;">
+                      <div id="hygienist-signup-photo-remove" style="display:none;">
+                          <img id="hygienist-signup-photo" src="img/user.jpg" style="width:20px;height:20px">
+                          <a id="hygienist-signup-remove-photo-button" href="#" style="font-size:115%">remove photo</a>
+                      </div>
+                      <div id="hygienist-signup-photo-add">
+                          <a id="hygienist-signup-upload-photo-button" href="#" xstyle="font-size:115%">
+                              <img id="hygienist-signup-photo" src="img/user.jpg" style="width:20px;height:20px">
+                              upload photo</a>
+                          <i style="color:#aaa">(optional)</i>
+                      </div>
+                    </div>
+
+                  </div>
+              </li>
+              </ul>
+            </div>
+
+            <div class="row" style="margin-top:20px;">
+                <div class="col-20">&nbsp;</div>
+                <div class="col-60">
+                    <a id="hygienist-signup-done-button" href="#" class="button button-round">Enter</a>
+                </div>
+                <div class="col-20">&nbsp;</div>
+            </div>
+          </form>
+          <br>&nbsp;
+        </div>
+
+        <div class="footer toolbar" style="height:70px !important;font-size:.8em;padding-top:20px;background-color:#fff">
+              <div class="row">
+                  <div class="col-50" style="text-align:center;">
+                      <a href="#" id="hygienist-signup-logout-link">Log Out</a>
+                  </div>
+                  <div class="col-50" style="text-align:center;">
+                      <a href="mailto:support@tempstars.net" class="external">Contact Support</a>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-auto" style="text-align:center;padding:10px;color:#999">
+                      Copyright &copy; 2016 Sudden Turtle Dental Consulting, Inc.
+                  </div>
+              </div>
+        </div>
+
+    </div>
+</div>

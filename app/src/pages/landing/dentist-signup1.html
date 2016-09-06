@@ -1,35 +1,41 @@
-<div class="navbar landing">
+<div class="navbar">
 
-    <div data-page="signup" class="navbar-inner">
-        <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>back</span></a></div>
+    <div data-page="dentist-signup1" class="navbar-inner">
         <div class="center sliding">TempStars Dentist</div>
     </div>
 
 </div>
 
 <div class="pages navbar-through toolbar-fixed">
-    <div data-page="signup-dentist" class="page landing">
+    <div data-page="dentist-signup1" class="page landing">
 
         <div class="page-content">
-          <div class="login-screen-title">Practice Info</div>
+          <div class="login-screen-title">Welcome!</div>
+          <p style="margin:auto;width:250px;text-align:center;">Please set up your account<br>
+              <i id="dentist-signup-email"></i>
+          </p>
 
-          <form>
+          <form id="dentist-signup1-form" class="store-data">
               <div class="list-block inset" style="margin:20px 0 10px 5px;font-size:12px;">
                   <div class="right" style="color:#888;padding-right:15px;text-align:right;">Step 1 of 3</div>
+                  <div class="form-error-msg"></div>
               <ul>
                   <li class="item-content">
                     <div class="item-inner">
                       <div class="item-title label">Practice Name</div>
                       <div class="item-input">
                         <input type="text" name="practiceName" placeholder="practice name"/>
+                        <div class="field-error-msg"><div>
                       </div>
                     </div>
                   </li>
+
                   <li class="item-content">
                     <div class="item-inner">
                       <div class="item-title label">Business Owner</div>
                       <div class="item-input">
                         <input type="text" name="businessOwner" placeholder="business owner"/>
+                        <div class="field-error-msg"><div>
                       </div>
                     </div>
                   </li>
@@ -38,42 +44,63 @@
                       <div class="item-inner">
                         <div class="item-title label">Address</div>
                         <div class="item-input">
-                          <input type="text" placeholder="address">
+                          <input type="text" name="address" placeholder="address">
+                          <div class="field-error-msg"><div>
                         </div>
                       </div>
                   </li>
+
                     <li class="item-content">
                       <div class="item-inner">
                         <div class="item-title label">City</div>
                         <div class="item-input">
-                          <input type="text" placeholder="city">
+                          <input type="text" name="city" placeholder="city">
+                          <div class="field-error-msg"><div>
                         </div>
                       </div>
                   </li>
-                    <!-- <li class="item-content">
-                      <div class="item-inner">
-                        <div class="item-title label">Province</div>
-                        <div class="item-input">
-                          <select>
-                            <option>Alberta</option>
-                            <option>British Columbia</option>
-                          </select>
-                        </div>
+
+                  <li class="item-content">
+                    <div class="item-inner">
+                      <div class="item-title label">Province</div>
+                      <div class="item-input">
+                        <select name="province">
+                            <option value="" style="color:green !important;">select province &dtrif; </option>
+                            <option value="AB">Alberta</option>
+                          <option value="BC">British Columbia</option>
+                          <option value="MB">Manitoba</option>
+                          <option value="NB">New Brunswick</option>
+                          <option value="NL">Newfoundland and Labrador</option>
+                          <option value="NT">Northwest Territories</option>
+                          <option value="NS">Nova Scotia</option>
+                          <option value="NU">Nunavut</option>
+                          <option value="ON">Ontario</option>
+                          <option value="PE">Prince Edward Island</option>
+                          <option value="QC">Quebec</option>
+                          <option value="SK">Saskatchewan</option>
+                          <option value="YT">Yukon</option>
+                        </select>
+                        <div class="field-error-msg"><div>
                       </div>
-                  </li> -->
+                    </div>
+                </li>
+
                     <li class="item-content">
                       <div class="item-inner">
                         <div class="item-title label">Postal Code</div>
                         <div class="item-input">
-                          <input type="text" placeholder="postal code">
+                          <input type="text" style="text-transform: uppercase" name="postalCode" placeholder="postal code">
+                          <div class="field-error-msg"><div>
                         </div>
                       </div>
                   </li>
+
                     <li class="item-content">
                       <div class="item-inner">
                         <div class="item-title label">Office Phone</div>
                         <div class="item-input">
-                          <input type="text" placeholder="office phone">
+                          <input type="text" name="phone" placeholder="office phone">
+                          <div class="field-error-msg"><div>
                         </div>
                       </div>
                   </li>
@@ -90,31 +117,28 @@
               </ul>
             </div>
 
-                    <div class="row" style="margin-top:20px">
-                        <div class="col-20">&nbsp;</div>
-                        <div class="col-60">
-                            <a id="dentist-enter-button" href="landing/signup-dentist2.html" class="button button-round">Next</a>
-                        </div>
-                        <div class="col-20">&nbsp;</div>
+                <div class="row" style="margin-top:20px">
+                    <div class="col-20">&nbsp;</div>
+                    <div class="col-60">
+                        <a id="dentist-signup1-done-button" href="#" class="button button-round">Next</a>
                     </div>
+                    <div class="col-20">&nbsp;</div>
+                </div>
           </form>
           <br><br>
         </div>
 
         <div class="footer toolbar" style="height:70px !important;font-size:.8em;padding-top:20px;background-color:#fff">
               <div class="row">
-                  <div class="col-33" style="text-align:center;">
-                      <a href="landing/forgot-password.html">Forgot Password?</a>
+                  <div class="col-50" style="text-align:center;">
+                      <a href="#" id="dentist-signup1-logout-link">Log Out</a>
                   </div>
-                  <div class="col-33" style="text-align:center;">
-                      <a href="index.html">Log In</a>
-                  </div>
-                  <div class="col-33" style="text-align:center;">
+                  <div class="col-50" style="text-align:center;">
                       <a href="mailto:support@tempstars.net" class="external">Contact Support</a>
                   </div>
               </div>
               <div class="row">
-                  <div class="col-auto" style="text-align:center;padding:10px;ffffont-size:.8em;color:#999">
+                  <div class="col-auto" style="text-align:center;padding:10px;color:#999">
                       Copyright &copy; 2016 Sudden Turtle Dental Consulting, Inc.
                   </div>
               </div>

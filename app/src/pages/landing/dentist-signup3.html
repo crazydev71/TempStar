@@ -1,6 +1,6 @@
 <div class="navbar landing">
 
-    <div data-page="signup" class="navbar-inner">
+    <div data-page="dentist-signup3" class="navbar-inner">
         <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>back</span></a></div>
         <div class="center sliding">TempStars Dentist</div>
     </div>
@@ -8,23 +8,23 @@
 </div>
 
 <div class="pages navbar-through toolbar-fixed">
-    <div data-page="signup-dentist3" class="page landing">
+    <div data-page="dentist-signup3" class="page landing">
 
         <div class="page-content">
           <div class="login-screen-title">Practice Details</div>
-          <!-- <div class="content-block" style="margin:0px;">
-              <p style="margin:auto;width:250px;text-align:center;">There are 132 hygienists looking for jobs</p>
-          </div> -->
+          <p class="page-subtitle">This information will help Hygienists be successful while at your practice.</p>
 
-          <form>
+          <form id="dentist-signup3-form" class="store-data">
               <div class="list-block inset" style="margin:20px 0 10px 5px;font-size:12px;">
                   <div class="right" style="color:#888;padding-right:15px;text-align:right;">Step 3 of 3</div>
+                  <div class="form-error-msg"></div>
               <ul>
                   <li class="item-content">
                     <div class="item-inner">
                       <div class="item-title label">Primary Contact</div>
                       <div class="item-input">
                         <input type="text" name="primaryContact" placeholder="contact person's name"/>
+                        <div class="field-error-msg"><div>
                       </div>
                     </div>
                   </li>
@@ -33,14 +33,15 @@
                     <div class="item-inner">
                       <div class="item-title label">Parking</div>
                       <div class="item-input">
-                          <select>
-                            <option>select parking</option>
-                            <option>Free on-site</option>
-                            <option>Paid on-site</option>
-                            <option>Street</option>
-                            <option>Public Lot</option>
-                            <option>No parking available</option>
+                          <select name="parking">
+                            <option value="">select parking &dtrif;</option>
+                            <option value="free-on-site">free on-site</option>
+                            <option value="paid-on-site">paid on-site</option>
+                            <option value="street">street</option>
+                            <option value="public-lot">public lot</option>
+                            <option value="no-parking">no parking available</option>
                           </select>
+                          <div class="field-error-msg"><div>
                       </div>
                     </div>
                   </li>
@@ -48,27 +49,29 @@
                     <div class="item-inner">
                       <div class="item-title label">Payment</div>
                       <div class="item-input">
-                          <select>
-                              <option>select payment</option>
-                            <option>Same-day cheque</option>
-                            <option>Please submit invoice for payment processing</option>
-                            <option>Other</option>
+                          <select name="payment">
+                            <option value="">select payment &dtrif;</option>
+                            <option value="same-day-cheque">same-day cheque</option>
+                            <option value="submit-invoice">submit invoice</option>
+                            <option value="other">other</option>
                           </select>
+                          <div class="field-error-msg"><div>
                       </div>
                     </div>
                   </li>
 
                     <li class="item-content">
                       <div class="item-inner">
-                        <div class="item-title label">Hygienist Arrival</div>
+                        <div class="item-title label">Arrival</div>
                         <div class="item-input">
-                            <select>
-                                <option>select arrival time</option>
-                              <option>30min before start time</option>
-                              <option>15min before start time</option>
-                              <option>10min before start time</option>
+                            <select name="hygienistArrival">
+                              <option value="">select hygienist arrival time &dtrif;</option>
+                              <option value="30min-before">30min before start time</option>
+                              <option value="15min-before">15min before start time</option>
+                              <option value="10min-before">10min before start time</option>
                               <option>At start time</option>
                             </select>
+                            <div class="field-error-msg"><div>
                         </div>
                       </div>
                   </li>
@@ -76,12 +79,13 @@
                       <div class="item-inner">
                         <div class="item-title label">Radiography</div>
                         <div class="item-input">
-                            <select>
-                             <option>select radiography</option>
-                              <option>Film</option>
-                              <option>Digital Sensors</option>
-                              <option>Phosphor plates</option>
+                            <select name="radiography">
+                             <option value="">select radiography &dtrif;</option>
+                              <option value="film">film</option>
+                              <option value="digital">digital sensors</option>
+                              <option value="phosphor-plates">phosphor plates</option>
                             </select>
+                            <div class="field-error-msg"><div>
                         </div>
                       </div>
                   </li>
@@ -89,11 +93,12 @@
                       <div class="item-inner">
                         <div class="item-title label">Sterilization</div>
                         <div class="item-input">
-                            <select>
-                              <option>select sterilization</option>
-                              <option>Sterilize your own instruments</option>
-                              <option>Sterilization assistant processes instruments</option>
+                            <select name="sterilization">
+                              <option value="">select sterilization &dtrif;</option>
+                              <option value="you">sterilize your instruments</option>
+                              <option value="assistant">sterilization assistant</option>
                             </select>
+                            <div class="field-error-msg"><div>
                         </div>
                       </div>
                   </li>
@@ -101,11 +106,12 @@
                   <div class="item-inner">
                     <div class="item-title label">Ultrasonic</div>
                     <div class="item-input">
-                        <select>
-                            <option>select ultrasonic equipment</option>
-                          <option>Cavitron</option>
-                          <option>Piezo</option>
+                        <select name="ultrasonic">
+                          <option value="">select ultrasonic equipment &dtrif;</option>
+                          <option value="cavitron">Cavitron</option>
+                          <option value="piezo">Piezo</option>
                         </select>
+                        <div class="field-error-msg"><div>
                     </div>
                   </div>
               </li>
@@ -114,11 +120,12 @@
                 <div class="item-inner">
                   <div class="item-title label">Recall Report</div>
                   <div class="item-input">
-                      <select>
-                          <option>select recall report</option>
-                        <option>Dentist prefers comprehesive report from hygienist</option>
-                        <option>Dentist prefers to perform and discuss his own exam and findings</option>
+                      <select name="recallReport">
+                        <option value="">select recall report &dtrif;</option>
+                        <option value="hygienist">report from hygienist</option>
+                        <option value="dentist">dentist performs own exam</option>
                       </select>
+                      <div class="field-error-msg"><div>
                   </div>
                 </div>
             </li>
@@ -127,12 +134,13 @@
               <div class="item-inner">
                 <div class="item-title label">Avg Appt Time</div>
                 <div class="item-input">
-                    <select>
-                        <option>select avg appt time</option>
+                    <select name="avgApptTime">
+                      <option value="">select avg appt time &dtrif;</option>
                       <option>30min</option>
                       <option>45min</option>
                       <option>60min</option>
                     </select>
+                    <div class="field-error-msg"><div>
                 </div>
               </div>
           </li>
@@ -141,15 +149,15 @@
               <div class="item-inner">
                 <div class="item-title label">Lunch</div>
                 <div class="item-input">
-                    <select>
-                      <option>select lunch break</option>
-
+                    <select name="lunch">
+                      <option value="">select lunch break &dtrif;</option>
                       <option>15min</option>
                       <option>30min</option>
                       <option>45min</option>
                       <option>60min</option>
                       <option>other</option>
                     </select>
+                    <div class="field-error-msg"><div>
                 </div>
               </div>
           </li>
@@ -158,11 +166,12 @@
             <div class="item-inner">
               <div class="item-title label">Charting</div>
               <div class="item-input">
-                  <select>
-                      <option>select charting</option>
+                  <select name="charting">
+                    <option value="">select charting &dtrif;</option>
                     <option>paper charts</option>
-                    <option>Digital charts</option>
+                    <option>digital charts</option>
                   </select>
+                  <div class="field-error-msg"><div>
               </div>
             </div>
         </li>
@@ -171,27 +180,25 @@
           <div class="item-inner">
             <div class="item-title label">Software</div>
             <div class="item-input">
-                <select>
-                    <option>select software</option>                                
-
+                <select name="software">
+                  <option value="">select office software &dtrif;</option>
                   <option>Dentrix</option>
                   <option>AbelDent</option>
                   <option>Tracker</option>
                   <option>EagleSoft</option>
                   <option>Other</option>
                 </select>
+                <div class="field-error-msg"><div>
             </div>
           </div>
       </li>
-
-
               </ul>
             </div>
 
                     <div class="row">
                         <div class="col-20">&nbsp;</div>
                         <div class="col-60">
-                            <a id="dentist-done-button" href="dentist/dentist.html" class="button button-round">Done!</a>
+                            <a id="dentist-signup3-done-button" href="#" class="button button-round">Done!</a>
                         </div>
                         <div class="col-20">&nbsp;</div>
                     </div>
