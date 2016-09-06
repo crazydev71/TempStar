@@ -15,6 +15,10 @@
   },
   "User": {
     "dataSource": "tempstarsDB",
+    "public": false
+  },
+  "TSUser": {
+    "dataSource": "tempstarsDB",
     "public": true
   },
   "AccessToken": {
@@ -27,11 +31,11 @@
   },
   "RoleMapping": {
     "dataSource": "tempstarsDB",
-    "public": false
+    "public": true
   },
   "Role": {
     "dataSource": "tempstarsDB",
-    "public": false
+    "public": true
   },
   "BlockedDentist": {
     "dataSource": "tempstarsDB",
