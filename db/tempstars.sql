@@ -90,26 +90,24 @@ DROP TABLE IF EXISTS `Dentist`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Dentist` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `practiceName` varchar(100) NOT NULL,
-  `businessOwner` varchar(100) NOT NULL,
-  `phone` varchar(30) NOT NULL,
-  `address` varchar(100) NOT NULL,
-  `city` varchar(100) NOT NULL,
-  `province` varchar(30) NOT NULL,
-  `postalCode` varchar(7) NOT NULL,
-  `lat` float NOT NULL,
-  `lon` float NOT NULL,
-  `regionId` int(11) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `website` varchar(100) NOT NULL,
-  `rating` float NOT NULL,
-  `billingStatus` int(11) NOT NULL COMMENT 'current, pastdue',
-  `auth0UserId` varchar(100) DEFAULT NULL,
+  `practiceName` varchar(100) DEFAULT NULL,
+  `businessOwner` varchar(100) DEFAULT NULL,
+  `phone` varchar(30) DEFAULT NULL,
+  `address` varchar(100) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `province` varchar(30) DEFAULT NULL,
+  `postalCode` varchar(7) DEFAULT NULL,
+  `lat` float DEFAULT NULL,
+  `lon` float DEFAULT NULL,
+  `regionId` int(11) DEFAULT NULL,
+  `website` varchar(100) DEFAULT NULL,
+  `rating` float DEFAULT NULL,
+  `billingStatus` int(11) DEFAULT NULL COMMENT 'current, pastdue',
   `stripeCustomerId` varchar(100) DEFAULT NULL,
+  `isComplete` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `auth0userId_UNIQUE` (`auth0UserId`),
   UNIQUE KEY `stripeCustomerId_UNIQUE` (`stripeCustomerId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -129,14 +127,14 @@ CREATE TABLE `DentistDetail` (
   `radiography` varchar(100) NOT NULL,
   `ultrasonic` varchar(100) NOT NULL,
   `sterilization` varchar(100) NOT NULL,
-  `avgRecallTime` varchar(100) NOT NULL,
+  `avgApptTime` varchar(100) NOT NULL,
   `recallReport` varchar(100) NOT NULL,
   `lunch` varchar(100) NOT NULL,
   `charting` varchar(100) NOT NULL,
-  `officeSoftware` varchar(100) NOT NULL,
+  `software` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `dentistId_UNIQUE` (`dentistId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -204,27 +202,25 @@ DROP TABLE IF EXISTS `Hygienist`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Hygienist` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `firstName` varchar(100) NOT NULL,
-  `lastName` varchar(100) NOT NULL,
-  `address` varchar(100) NOT NULL,
-  `city` varchar(100) NOT NULL,
-  `province` varchar(30) NOT NULL,
-  `postalCode` varchar(7) NOT NULL,
-  `lat` float NOT NULL,
-  `lon` float NOT NULL,
-  `regionId` int(11) NOT NULL,
-  `phone` varchar(20) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL,
-  `CDHONumber` varchar(20) NOT NULL,
-  `starScore` float NOT NULL,
-  `photoUrl` varchar(255) NOT NULL,
-  `resumeUrl` varchar(255) NOT NULL,
-  `showForHire` tinyint(1) NOT NULL,
-  `lastJobIdViewed` int(11) NOT NULL,
-  `auth0UserId` varchar(100) DEFAULT NULL,
+  `firstName` varchar(100) DEFAULT NULL,
+  `lastName` varchar(100) DEFAULT NULL,
+  `address` varchar(100) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `province` varchar(30) DEFAULT NULL,
+  `postalCode` varchar(7) DEFAULT NULL,
+  `lat` float DEFAULT NULL,
+  `lon` float DEFAULT NULL,
+  `regionId` int(11) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `CDHONumber` varchar(20) DEFAULT NULL,
+  `starScore` float DEFAULT NULL,
+  `photoUrl` varchar(255) DEFAULT NULL,
+  `resumeUrl` varchar(255) DEFAULT NULL,
+  `showForHire` tinyint(1) DEFAULT NULL,
+  `lastJobIdViewed` int(11) DEFAULT NULL,
+  `isComplete` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -379,7 +375,7 @@ CREATE TABLE `Role` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -395,7 +391,7 @@ CREATE TABLE `RoleMapping` (
   `principalId` varchar(512) DEFAULT NULL,
   `roleId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -440,8 +436,10 @@ CREATE TABLE `User` (
   `status` varchar(512) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `lastUpdated` datetime DEFAULT NULL,
+  `dentistId` int(11) DEFAULT NULL,
+  `hygienistId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -453,4 +451,4 @@ CREATE TABLE `User` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-08-10 19:12:48
+-- Dump completed on 2016-09-06 12:54:28
