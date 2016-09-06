@@ -21,5 +21,6 @@
     "cors": false,
     "handleErrors": false
   },
-  "legacyExplorer": false
+  "legacyExplorer": false,
+  "stripeSecretKey": "sk_test_PCAtzsYTShhPQLkwJLGrQ6xP"
 }

@@ -13,7 +13,7 @@
       "type": "Number",
       "id": true,
       "generated": true,
-      "required": true,
+      "required": false,
       "length": null,
       "precision": 10,
       "mysql": {
@@ -27,7 +27,7 @@
     },
     "practiceName": {
       "type": "String",
-      "required": true,
+      "required": false,
       "length": 100,
       "precision": null,
       "scale": null,
@@ -37,12 +37,12 @@
         "dataLength": 100,
         "dataPrecision": null,
         "dataScale": null,
-        "nullable": "N"
+        "nullable": "Y"
       }
     },
     "businessOwner": {
       "type": "String",
-      "required": true,
+      "required": false,
       "length": 100,
       "precision": null,
       "scale": null,
@@ -57,7 +57,7 @@
     },
     "phone": {
       "type": "String",
-      "required": true,
+      "required": false,
       "length": 30,
       "precision": null,
       "scale": null,
@@ -72,7 +72,7 @@
     },
     "address": {
       "type": "String",
-      "required": true,
+      "required": false,
       "length": 100,
       "precision": null,
       "scale": null,
@@ -87,7 +87,7 @@
     },
     "city": {
       "type": "String",
-      "required": true,
+      "required": false,
       "length": 100,
       "precision": null,
       "scale": null,
@@ -102,7 +102,7 @@
     },
     "province": {
       "type": "String",
-      "required": true,
+      "required": false,
       "length": 30,
       "precision": null,
       "scale": null,
@@ -117,7 +117,7 @@
     },
     "postalCode": {
       "type": "String",
-      "required": true,
+      "required": false,
       "length": 7,
       "precision": null,
       "scale": null,
@@ -132,7 +132,7 @@
     },
     "lat": {
       "type": "Number",
-      "required": true,
+      "required": false,
       "length": null,
       "precision": 12,
       "scale": null,
@@ -147,7 +147,7 @@
     },
     "lon": {
       "type": "Number",
-      "required": true,
+      "required": false,
       "length": null,
       "precision": 12,
       "scale": null,
@@ -162,7 +162,7 @@
     },
     "regionId": {
       "type": "Number",
-      "required": true,
+      "required": false,
       "length": null,
       "precision": 10,
       "scale": 0,
@@ -175,24 +175,9 @@
         "nullable": "N"
       }
     },
-    "email": {
-      "type": "String",
-      "required": true,
-      "length": 100,
-      "precision": null,
-      "scale": null,
-      "mysql": {
-        "columnName": "email",
-        "dataType": "varchar",
-        "dataLength": 100,
-        "dataPrecision": null,
-        "dataScale": null,
-        "nullable": "N"
-      }
-    },
     "website": {
       "type": "String",
-      "required": true,
+      "required": false,
       "length": 100,
       "precision": null,
       "scale": null,
@@ -207,7 +192,7 @@
     },
     "rating": {
       "type": "Number",
-      "required": true,
+      "required": false,
       "length": null,
       "precision": 12,
       "scale": null,
@@ -222,7 +207,7 @@
     },
     "billingStatus": {
       "type": "Number",
-      "required": true,
+      "required": false,
       "length": null,
       "precision": 10,
       "scale": 0,
@@ -233,21 +218,6 @@
         "dataPrecision": 10,
         "dataScale": 0,
         "nullable": "N"
-      }
-    },
-    "auth0UserId": {
-      "type": "String",
-      "required": false,
-      "length": 100,
-      "precision": null,
-      "scale": null,
-      "mysql": {
-        "columnName": "auth0UserId",
-        "dataType": "varchar",
-        "dataLength": 100,
-        "dataPrecision": null,
-        "dataScale": null,
-        "nullable": "Y"
       }
     },
     "stripeCustomerId": {
@@ -262,6 +232,21 @@
         "dataLength": 100,
         "dataPrecision": null,
         "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "isComplete": {
+      "type": "Number",
+      "required": true,
+      "length": null,
+      "precision": 3,
+      "scale": 0,
+      "mysql": {
+        "columnName": "isComplete",
+        "dataType": "tinyint",
+        "dataLength": null,
+        "dataPrecision": 3,
+        "dataScale": 0,
         "nullable": "Y"
       }
     }
@@ -300,6 +285,11 @@
       "type": "hasMany",
       "model": "Invoice",
       "foreignKey": "manualDentistId"
+    },
+    "user": {
+      "type": "hasOne",
+      "model": "TSUser",
+      "foreignKey": "dentistId"
     }
   },
   "acls": [],

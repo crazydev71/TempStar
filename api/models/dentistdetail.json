@@ -13,7 +13,7 @@
       "type": "Number",
       "id": true,
       "generated": true,
-      "required": true,
+      "required": false,
       "length": null,
       "precision": 10,
       "scale": 0,
@@ -26,7 +26,7 @@
         "nullable": "N"
       }
     },
-    "dentistid": {
+    "dentistId": {
       "type": "Number",
       "required": true,
       "length": null,
@@ -146,14 +146,14 @@
         "nullable": "N"
       }
     },
-    "avgRecallTime": {
+    "avgApptTime": {
       "type": "String",
       "required": true,
       "length": 100,
       "precision": null,
       "scale": null,
       "mysql": {
-        "columnName": "avgRecallTime",
+        "columnName": "avgApptTime",
         "dataType": "varchar",
         "dataLength": 100,
         "dataPrecision": null,
@@ -206,14 +206,14 @@
         "nullable": "N"
       }
     },
-    "officeSoftware": {
+    "software": {
       "type": "String",
       "required": true,
       "length": 100,
       "precision": null,
       "scale": null,
       "mysql": {
-        "columnName": "officeSoftware",
+        "columnName": "software",
         "dataType": "varchar",
         "dataLength": 100,
         "dataPrecision": null,
@@ -223,7 +223,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+      "dentist": {
+        "type": "belongsTo",
+        "model": "Dentist",
+        "foreignKey": "dentistId"
+      }
+  },
   "acls": [],
   "methods": {}
 }

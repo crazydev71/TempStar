@@ -177,36 +177,6 @@
         "nullable": "N"
       }
     },
-    "email": {
-      "type": "String",
-      "required": false,
-      "length": 100,
-      "precision": null,
-      "scale": null,
-      "mysql": {
-        "columnName": "email",
-        "dataType": "varchar",
-        "dataLength": 100,
-        "dataPrecision": null,
-        "dataScale": null,
-        "nullable": "N"
-      }
-    },
-    "password": {
-      "type": "String",
-      "required": false,
-      "length": 100,
-      "precision": null,
-      "scale": null,
-      "mysql": {
-        "columnName": "password",
-        "dataType": "varchar",
-        "dataLength": 100,
-        "dataPrecision": null,
-        "dataScale": null,
-        "nullable": "N"
-      }
-    },
     "CDHONumber": {
       "type": "String",
       "required": false,
@@ -297,18 +267,18 @@
         "nullable": "N"
       }
     },
-    "auth0UserId": {
-      "type": "String",
+    "isComplete": {
+      "type": "Number",
       "required": false,
-      "length": 100,
-      "precision": null,
-      "scale": null,
+      "length": null,
+      "precision": 3,
+      "scale": 0,
       "mysql": {
-        "columnName": "auth0UserId",
-        "dataType": "varchar",
-        "dataLength": 100,
-        "dataPrecision": null,
-        "dataScale": null,
+        "columnName": "isComplete",
+        "dataType": "tinyint",
+        "dataLength": null,
+        "dataPrecision": 3,
+        "dataScale": 0,
         "nullable": "Y"
       }
     }
@@ -337,6 +307,11 @@
       "type": "hasMany",
       "model": "Invoice",
       "foreignKey": "manualHygienistId"
+    },
+    "user": {
+      "type": "hasOne",
+      "model": "TSUser",
+      "foreignKey": "hygienistId"
     }
   },
   "acls": [],
