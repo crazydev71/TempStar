@@ -66,7 +66,7 @@ TempStars.Ajax = (function() {
 
             // Add error and success handlers
             ajaxSettings.error = function( xhr, status ) {
-                reject( status );
+                reject( xhr.responseJSON );
             };
 
             ajaxSettings.success = function( data, status, xhr ) {

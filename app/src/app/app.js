@@ -55,6 +55,13 @@ TempStars.App = (function() {
 
         },
 
+        clearSignupData: function clearSignupData() {
+            app.formDeleteData('dentist-signup1-form');
+            app.formDeleteData('dentist-signup2-form');
+            app.formDeleteData('dentist-signup3-form');
+            app.formDeleteData('hygienist-signup-form');
+        },
+
         // TODO
         logout: function logout() {
             app.formDeleteData('dentist-signup1-form');
