@@ -103,6 +103,9 @@ TempStars.Pages.HygienistSignup = (function() {
             $('#hygienist-signup-form select[name="province"]').next().addClass('error').html( 'Province must be selected' );
         }
 
+        // Save form data
+        app.formStoreData('hygienist-signup-form', formData );
+
         if ( errors ) {
             if ( errors.firstName ) {
                 $('#hygienist-signup-form input[name="firstName"]').addClass('error').next().html( errors.firstName[0] );
@@ -144,6 +147,7 @@ TempStars.Pages.HygienistSignup = (function() {
         })
         .then(function() {
             app.hidePreloader();
+            app.formDeleteData('hygienist-signup-form');            
             TempStars.App.gotoStartingPage();
         })
         .catch( function( err ) {

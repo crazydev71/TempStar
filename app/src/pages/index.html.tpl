@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; connect-src http://localhost.com:3000 https://localhost:3000"> -->
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'"> -->
-    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com http://0.0.0.0:35729" />
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://api.stripe.com http://0.0.0.0:35729; img-src * data: 'unsafe-inline'" />
     <title>TempStars</title>
     <link rel="stylesheet" href="lib/font-awesome/font-awesome.css">
     <link rel="stylesheet" href="lib/themify-icons/themify-icons.css">
@@ -48,12 +48,11 @@
                 <!-- landing  -->
                 <div data-page="index" class="page no-swipeback landing">
                     <div class="page-content center" style="padding-top:8px;">
-                        <div class="content-block" style="margin:0 auto;width:240px;">
+                        <div class="content-block" style="margin:50px auto 30px auto;width:240px;">
                             <img class="centerimg" src="img/logo.png" style="width:150px;">
                         </div>
                             <div class="content-block-title" style="margin-top:20px;color:#333;font-size:15px;letter-spacing:0.03em;">Getting Started</div>
                         <div class="content-block">
-                            <p style="margin-left:35px !important;font-size:13px;">TempStars is free for Hygienists.<br>Dentists only pay a small booking fee.</p>
                             <div class="row" style="margin-top:20px;margin-bottom:0px;">
                                 <div class="col-20">&nbsp;</div>
                                 <div class="col-60">
@@ -72,7 +71,7 @@
                                       <div class="item-inner">
                                         <div class="item-title label">Email</div>
                                         <div class="item-input">
-                                          <input type="email" name="email" placeholder="your email address"/>
+                                          <input type="email" name="email" autocapitalize="none" autocorrect="off" placeholder="your email address"/>
                                           <div class="field-error-msg"><div>
                                         </div>
                                       </div>
@@ -81,7 +80,7 @@
                                       <div class="item-inner">
                                         <div class="item-title label">Password</div>
                                         <div class="item-input">
-                                          <input type="password" name="password" placeholder="your password"/>
+                                          <input type="password" name="password" autocapitalize="none" autocorrect="off" placeholder="your password"/>
                                           <div class="field-error-msg"><div>
                                         </div>
                                       </div>

@@ -12,7 +12,7 @@
 
         <div class="page-content">
           <div class="login-screen-title">Practice Details</div>
-          <p class="page-subtitle">This information will help Hygienists be successful while at your practice.</p>
+          <p class="page-subtitle">Help your temp hygienist get started quickly by providing a few details about your office.</p>
 
           <form id="dentist-signup3-form" class="store-data">
               <div class="list-block inset" style="margin:20px 0 10px 5px;font-size:12px;">
@@ -34,7 +34,7 @@
                       <div class="item-title label">Parking</div>
                       <div class="item-input">
                           <select name="parking">
-                            <option value="">select parking &dtrif;</option>
+                            <option value="">Parking is: &dtrif;</option>
                             <option value="free-on-site">free on-site</option>
                             <option value="paid-on-site">paid on-site</option>
                             <option value="street">street</option>
@@ -50,7 +50,7 @@
                       <div class="item-title label">Payment</div>
                       <div class="item-input">
                           <select name="payment">
-                            <option value="">select payment &dtrif;</option>
+                            <option value="">Hygienist paid via: &dtrif;</option>
                             <option value="same-day-cheque">same-day cheque</option>
                             <option value="submit-invoice">submit invoice</option>
                             <option value="other">other</option>
@@ -65,11 +65,11 @@
                         <div class="item-title label">Arrival</div>
                         <div class="item-input">
                             <select name="hygienistArrival">
-                              <option value="">select hygienist arrival time &dtrif;</option>
-                              <option value="30min-before">30min before start time</option>
-                              <option value="15min-before">15min before start time</option>
-                              <option value="10min-before">10min before start time</option>
+                              <option value="">Hygienist to arrive... &dtrif;</option>
                               <option>At start time</option>
+                              <option value="10min-before">10min before start time</option>
+                              <option value="15min-before">15min before start time</option>
+                              <option value="30min-before">30min before start time</option>
                             </select>
                             <div class="field-error-msg"><div>
                         </div>
@@ -80,23 +80,10 @@
                         <div class="item-title label">Radiography</div>
                         <div class="item-input">
                             <select name="radiography">
-                             <option value="">select radiography &dtrif;</option>
+                             <option value="">Type of radiographs &dtrif;</option>
                               <option value="film">film</option>
                               <option value="digital">digital sensors</option>
                               <option value="phosphor-plates">phosphor plates</option>
-                            </select>
-                            <div class="field-error-msg"><div>
-                        </div>
-                      </div>
-                  </li>
-                    <li class="item-content">
-                      <div class="item-inner">
-                        <div class="item-title label">Sterilization</div>
-                        <div class="item-input">
-                            <select name="sterilization">
-                              <option value="">select sterilization &dtrif;</option>
-                              <option value="you">sterilize your instruments</option>
-                              <option value="assistant">sterilization assistant</option>
                             </select>
                             <div class="field-error-msg"><div>
                         </div>
@@ -107,55 +94,25 @@
                     <div class="item-title label">Ultrasonic</div>
                     <div class="item-input">
                         <select name="ultrasonic">
-                          <option value="">select ultrasonic equipment &dtrif;</option>
+                          <option value="">Piezo or Cavitron? &dtrif;</option>
                           <option value="cavitron">Cavitron</option>
                           <option value="piezo">Piezo</option>
+                          <option value="none">None</option>
                         </select>
                         <div class="field-error-msg"><div>
                     </div>
                   </div>
               </li>
 
-              <li class="item-content">
-                <div class="item-inner">
-                  <div class="item-title label">Recall Report</div>
-                  <div class="item-input">
-                      <select name="recallReport">
-                        <option value="">select recall report &dtrif;</option>
-                        <option value="hygienist">report from hygienist</option>
-                        <option value="dentist">dentist performs own exam</option>
-                      </select>
-                      <div class="field-error-msg"><div>
-                  </div>
-                </div>
-            </li>
-
             <li class="item-content">
               <div class="item-inner">
                 <div class="item-title label">Avg Appt Time</div>
                 <div class="item-input">
                     <select name="avgApptTime">
-                      <option value="">select avg appt time &dtrif;</option>
+                      <option value="">Adult recalls are: &dtrif;</option>
                       <option>30min</option>
                       <option>45min</option>
                       <option>60min</option>
-                    </select>
-                    <div class="field-error-msg"><div>
-                </div>
-              </div>
-          </li>
-
-            <li class="item-content">
-              <div class="item-inner">
-                <div class="item-title label">Lunch</div>
-                <div class="item-input">
-                    <select name="lunch">
-                      <option value="">select lunch break &dtrif;</option>
-                      <option>15min</option>
-                      <option>30min</option>
-                      <option>45min</option>
-                      <option>60min</option>
-                      <option>other</option>
                     </select>
                     <div class="field-error-msg"><div>
                 </div>
@@ -167,7 +124,7 @@
               <div class="item-title label">Charting</div>
               <div class="item-input">
                   <select name="charting">
-                    <option value="">select charting &dtrif;</option>
+                    <option value="">Charting system is: &dtrif;</option>
                     <option>paper charts</option>
                     <option>digital charts</option>
                   </select>
@@ -181,7 +138,7 @@
             <div class="item-title label">Software</div>
             <div class="item-input">
                 <select name="software">
-                  <option value="">select office software &dtrif;</option>
+                  <option value="">Dental software is: &dtrif;</option>
                   <option>Dentrix</option>
                   <option>AbelDent</option>
                   <option>Tracker</option>

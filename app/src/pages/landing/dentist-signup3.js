@@ -37,19 +37,10 @@ TempStars.Pages.DentistSignup3 = (function() {
             radiography: {
                 presence: {message: "is required"}
             },
-            sterilization: {
-                presence: {message: "is required"}
-            },
             ultrasonic: {
                 presence: {message: "is required"}
             },
-            recallReport: {
-                presence: {message: "is required"}
-            },
             avgApptTime: {
-                presence: {message: "is required"}
-            },
-            lunch: {
                 presence: {message: "is required"}
             },
             charting: {
@@ -122,7 +113,7 @@ TempStars.Pages.DentistSignup3 = (function() {
         TempStars.Dentist.setupAccount( allData )
         .then( function() {
             return TempStars.User.refresh();
-        })        
+        })
         .then(function() {
             app.hidePreloader();
             TempStars.App.gotoStartingPage();
@@ -130,7 +121,7 @@ TempStars.Pages.DentistSignup3 = (function() {
         .catch( function( err ) {
             app.hidePreloader();
             $$('#dentist-signup3-form .form-error-msg')
-                .html('<span class="ti-alert"></span> Setting up account failed. Please try again.')
+                .html('<span class="ti-alert"></span> Setting up account failed. ' + err.error.message )
                 .show();
         });
     }

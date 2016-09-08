@@ -42,10 +42,16 @@ TempStars.Pages.Signup = (function() {
         // Custom error checking for 'radio' button
         if ( ! $$('#signup-account-type-hygienist').prop('checked') &&
              ! $$('#signup-account-type-dentist').prop('checked') ) {
-            $('#signup-account-error-msg').addClass('error').html( 'Must select one option' );
+            if ( ! errors ) {
+                errors = {};
+            }
+            errors.accountType = ['Must select one option'];
         }
 
         if ( errors ) {
+            if ( errors.accountType ) {
+                $('#signup-account-error-msg').addClass('error').html( 'Must select one option' );
+            }
             if ( errors.email ) {
                 $('#signup-form input[name="email"]').addClass('error').next().html( errors.email[0] );
             }
@@ -66,12 +72,20 @@ TempStars.Pages.Signup = (function() {
         TempStars.User.create( formData.email, formData.password, role )
         .then(function() {
             app.hidePreloader();
+            TempStars.App.clearSignupData();
             TempStars.App.gotoStartingPage();
         })
         .catch( function( err ) {
+            var msg;
+            if ( err.error && err.error.details && err.error.details.messages && err.error.details.messages.email ) {
+                msg = err.error.details.messages.email[0] + '.';
+            }
+            else {
+                msg = 'Please try again.'
+            }
             app.hidePreloader();
             $$('#signup-form .form-error-msg')
-                .html('<span class="ti-alert"></span> Create account failed. Please try again.')
+                .html('<span class="ti-alert"></span> Create account failed. ' + msg )
                 .show();
         });
     }
