@@ -5,15 +5,15 @@ module.exports = function (grunt) {
         // Metadata
         pkg: grunt.file.readJSON('package.json'),
         banner: '/*! <%= pkg.name %> - v<%= pkg.version %> */\n',
-
+        target: grunt.option('target') || 'local',
 
         // Task configuration
         clean: {
-            build: ['www/*']
+            all: ['www/*']
         },
 
         copy: {
-            build: {
+            all: {
                 files: [
                     { cwd: 'src/lib/', src: '**', dest: 'www/lib/', expand: true },
                     { cwd: 'src/img/', src: '**', dest: 'www/img/', expand: true },
@@ -28,7 +28,11 @@ module.exports = function (grunt) {
                 stripBanners: true
             },
             app: {
-                src: ['src/app/bootstrap.js', 'src/app/config.js', 'src/app/!(bootstrap|config)*.js','src/pages/*.js','src/pages/landing/*.js'],
+                src: [ 'src/app/bootstrap.js',
+                       'src/config/config.<%= target %>.js',
+                       'src/app/!(bootstrap)*.js',
+                       'src/pages/*.js',
+                       'src/pages/landing/*.js'],
                 dest: 'www/js/tempstars.app.js'
             },
             dentist: {
@@ -57,7 +61,7 @@ module.exports = function (grunt) {
             android: {
                 options: {
                     data: {
-                        cssfile: 'android/index.css.html'
+                        cssfile: 'ios/index.css.html'
                     }
                 },
                 files: {
@@ -87,7 +91,6 @@ module.exports = function (grunt) {
         },
 
         includereplace: {
-
             all: {
                 options: {
                     includesDir: 'src/includes'
@@ -205,11 +208,21 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-template');
+    grunt.loadNpmTasks('grunt-config');
 
-    grunt.registerTask( 'default',  ['clean', 'copy', 'concat',  'template:browser', 'includereplace' ]);
+    grunt.registerTask('init', function() {
+        var target = grunt.config.get( 'target' );
+        grunt.log.writeln( 'Building app for ' + target + ' environment' );
+    });
+
+    grunt.registerTask('help', function() {
+        grunt.log.writeln( ' "grunt --target=local|dev"' );
+    });
+
+    grunt.registerTask( 'default',  [ 'init', 'clean', 'copy', 'concat',  'template:browser', 'includereplace' ]);
     grunt.registerTask( 'serve',    ['connect', 'watch']);
-    grunt.registerTask( 'ios',      ['clean', 'copy', 'concat', 'template:ios',     'includereplace', 'exec:run_ios']);
-    grunt.registerTask( 'android',  ['clean', 'copy', 'concat', 'template:android', 'includereplace', 'exec:run_android']);
-    grunt.registerTask( 'browser',  ['clean', 'copy', 'concat', 'template:browser', 'includereplace', 'exec:run_browser']);
+    grunt.registerTask( 'ios',      [ 'init', 'clean', 'copy', 'concat', 'template:ios',     'includereplace', 'exec:run_ios']);
+    grunt.registerTask( 'android',  [ 'init', 'clean', 'copy', 'concat', 'template:android', 'includereplace', 'exec:run_android']);
+    grunt.registerTask( 'browser',  [ 'init', 'clean', 'copy', 'concat', 'template:browser', 'includereplace', 'exec:run_browser']);
 
 };

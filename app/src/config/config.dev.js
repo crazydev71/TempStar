@@ -6,8 +6,7 @@ TempStars.Config = (function() {
         server: {
             authUserName: 'riff',
             authPassword: 'raff',
-            // "https://api.tempstars.net/v2/",
-            baseUrl: "http://localhost:3000/v2/"
+            baseUrl: "https://api.tempstars.net/v2/"
         }
     };
 })();
