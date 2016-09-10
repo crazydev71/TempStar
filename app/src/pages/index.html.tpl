@@ -71,7 +71,7 @@
                                       <div class="item-inner">
                                         <div class="item-title label">Email</div>
                                         <div class="item-input">
-                                          <input type="email" name="email" autocapitalize="none" autocorrect="off" placeholder="your email address"/>
+                                          <input type="email" name="email" autocapitalize="none" autocorrect="off" maxlength="50" placeholder="your email address"/>
                                           <div class="field-error-msg"><div>
                                         </div>
                                       </div>
@@ -80,7 +80,7 @@
                                       <div class="item-inner">
                                         <div class="item-title label">Password</div>
                                         <div class="item-input">
-                                          <input type="password" name="password" autocapitalize="none" autocorrect="off" placeholder="your password"/>
+                                          <input type="password" name="password" autocapitalize="none" autocorrect="off" maxlength="50" placeholder="your password"/>
                                           <div class="field-error-msg"><div>
                                         </div>
                                       </div>
