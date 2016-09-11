@@ -179,11 +179,11 @@
   },
   "validations": [],
   "relations": {
-      "dentist": {
-        "type": "belongsTo",
-        "model": "Dentist",
-        "foreignKey": "dentistId"
-      }
+    "dentist": {
+      "type": "belongsTo",
+      "model": "Dentist",
+      "foreignKey": "dentistId"
+    }
   },
   "acls": [],
   "methods": {}

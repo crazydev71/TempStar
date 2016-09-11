@@ -26,14 +26,14 @@
         "nullable": "N"
       }
     },
-    "postalCode": {
+    "prefix": {
       "type": "String",
       "required": true,
       "length": 7,
       "precision": null,
       "scale": null,
       "mysql": {
-        "columnName": "postalCode",
+        "columnName": "prefix",
         "dataType": "varchar",
         "dataLength": 7,
         "dataPrecision": null,

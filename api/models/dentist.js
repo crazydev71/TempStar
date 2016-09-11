@@ -1,10 +1,12 @@
 
-var Promise = require( 'bluebird' );
-var app     = require('../tempstars-api.js');
-var stripe  = require('stripe')(app.get('stripeSecretKey'));
+'use strict';
+
+var Promise  = require( 'bluebird' );
+var app      = require('../tempstars-api.js' );
+var stripe   = require( 'stripe' )(app.get('stripeSecretKey'));
+var location = require( 'location' );
 
 module.exports = function( Dentist ) {
-    'use strict';
 
     Dentist.disableRemoteMethod('createChangeStream', true);
 
@@ -18,6 +20,8 @@ module.exports = function( Dentist ) {
 
     Dentist.account = function( id, data, callback ) {
         var customer;
+        var dentist;
+        var geocode;
 
         stripe.customers.create({
           source: data.p2.token,
@@ -41,7 +45,8 @@ module.exports = function( Dentist ) {
                 isComplete: 1
             });
         })
-        .then( function( dentist ) {
+        .then( function( d ) {
+            dentist = d;
             return dentist.detail.create({
                 primaryContact: data.p3.primaryContact,
                 parking: data.p3.parking,
@@ -55,6 +60,23 @@ module.exports = function( Dentist ) {
                 lunch: data.p3.lunch,
                 charting: data.p3.charting,
                 software: data.p3.software
+            });
+        })
+        .then( function() {
+            var address = dentist.address + ', ' + dentist.city + ', ' + dentist.province + ' ' + dentist.postalCode + ' Canada';
+            return location.geocode( address );
+        })
+        .then( function( gc ) {
+            geocode = gc;
+            var PostalCode = app.models.PostalCode;
+            var prefix = dentist.postalCode.substr(0,2);
+            return PostalCode.findOne( {where: {prefix: prefix} } );
+        })
+        .then( function( postalCode ) {
+            return dentist.updateAttributes( {
+                lat: geocode.lat,
+                lon: geocode.lng,
+                regionId: postalCode.regionId
             });
         })
         .then( function() {

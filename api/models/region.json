@@ -67,7 +67,7 @@
     "dentist": {
       "type": "hasMany",
       "model": "Dentist",
-      "foreignKey": ""
+      "foreignKey": "regionId"
     },
     "hygienist": {
       "type": "hasMany",
