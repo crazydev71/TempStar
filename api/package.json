@@ -8,13 +8,16 @@
     "posttest": "nsp check"
   },
   "dependencies": {
+    "@google/maps": "^0.1.0",
     "compression": "^1.0.3",
     "cors": "^2.5.2",
     "express-jwt": "^3.4.0",
     "helmet": "^1.3.0",
+    "location": "file:local_modules/location",
     "loopback": "^2.22.0",
     "loopback-boot": "^2.6.5",
     "loopback-component-explorer": "^2.4.0",
+    "loopback-component-storage": "^1.9.1",
     "loopback-connector-mysql": "^2.3.0",
     "loopback-datasource-juggler": "^2.39.0",
     "loopback-jwt": "^1.0.1",

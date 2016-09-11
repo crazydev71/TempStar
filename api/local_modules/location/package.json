@@ -1,0 +1,12 @@
+{
+  "name": "location",
+  "version": "0.1.0",
+  "main": "location.js",
+  "author": "Mike Betts",
+  "private": true,
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@google/maps": "^0.1.0",
+    "bluebird": "^3.4.6"
+  }
+}
