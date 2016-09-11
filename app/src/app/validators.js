@@ -48,7 +48,18 @@ TempStars.Validators = (function() {
             else {
                 return "is invalid";
             }
+        },
+
+        validatePostalCodeIsOntario: function validatePostalCodeIsOntario(value, options, key, attributes) {
+            var firstLetter = value.substr(0,1);
+            if ( firstLetter.match(/[KLMNP]/) ) {
+                return null;
+            }
+            else {
+                return "is invalid";
+            }
         }
+
     };
 
 })();
@@ -59,3 +70,4 @@ validate.validators.phoneNumber = TempStars.Validators.validatePhoneNumber;
 validate.validators.creditCardNumber = TempStars.Validators.validateCreditCardNumber;
 validate.validators.creditCardExpiryDate = TempStars.Validators.validateCreditCardExpiryDate;
 validate.validators.creditCardCVC = TempStars.Validators.validateCreditCardCVC;
+validate.validators.postalCodeIsOntario = TempStars.Validators.validatePostalCodeIsOntario;

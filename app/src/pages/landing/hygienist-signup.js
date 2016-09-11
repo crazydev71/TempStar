@@ -73,7 +73,8 @@ TempStars.Pages.HygienistSignup = (function() {
             },
             postalCode: {
                 presence: true,
-                postalCode: true
+                postalCode: true,
+                postalCodeIsOntario: true
             },
             phone: {
                 presence: true,
@@ -147,7 +148,7 @@ TempStars.Pages.HygienistSignup = (function() {
         })
         .then(function() {
             app.hidePreloader();
-            app.formDeleteData('hygienist-signup-form');            
+            app.formDeleteData('hygienist-signup-form');
             TempStars.App.gotoStartingPage();
         })
         .catch( function( err ) {

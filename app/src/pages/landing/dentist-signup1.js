@@ -73,7 +73,8 @@ TempStars.Pages.DentistSignup1 = (function() {
             },
             postalCode: {
                 presence: true,
-                postalCode: true
+                postalCode: true,
+                postalCodeIsOntario: true                
             },
             phone: {
                 presence: true,
