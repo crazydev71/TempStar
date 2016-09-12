@@ -100,5 +100,9 @@
   "Container": {
     "dataSource": "storage",
     "public": true
+  },
+  "Email": {
+    "dataSource": "email",
+    "public": false
   }
 }

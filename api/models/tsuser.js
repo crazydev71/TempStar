@@ -67,12 +67,29 @@ module.exports = function( TSUser ) {
     };
 
     TSUser.on( 'resetPasswordRequest', function( info ) {
+        console.dir( info.accessToken );
+        
         console.log(info.email); // the email of the requested user
         console.log(info.accessToken.id); // the temp access token to allow password reset
-     
+
         // requires AccessToken.belongsTo(User)
         info.accessToken.user( function(err, user ) {
             console.log(user); // the actual user
         });
+
+        var url = 'http://' + TSUser.app.get('host') + ':' + TSUser.app.get('port') + '/reset-password';
+        var html = 'Click <a href="' + url + '?access_token=' +
+            info.accessToken.id + '">here</a> to reset your password';
+        //'here' in above html is linked to : 'http://<host:port>/reset-password?access_token=<short-lived/temporary access token>'
+        TSUser.app.models.Email.send({
+          to: info.email,
+          from: "help@tempstars.net",
+          subject: 'Password reset',
+          html: html
+        }, function(err) {
+          if (err) return console.log('> error sending password reset email');
+          console.log('> sending password reset email to:', info.email);
+        });
+
     });
 };

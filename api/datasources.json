@@ -9,5 +9,15 @@
     "provider": "amazon",
     "key": "4pZ3kUv+04W9T4DO8nTVumfn/KL8cOw3kNrK9SdA",
     "keyId": "AKIAI7E2XU346VSRBIQQ"
+  },
+  "email": {
+    "name": "email",
+    "connector": "mail",
+    "transports": [{
+        "type": "ses",
+        "accessKeyId": "AKIAJFUJRZ25B3ASWI4Q",
+        "secretAccessKey": "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",
+        "rateLimit": 10
+    }]
   }
 }

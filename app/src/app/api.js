@@ -50,7 +50,7 @@ TempStars.Api = (function() {
         },
 
         resetPassword: function resetPassword( email ) {
-            return TempStars.Ajax.post( 'tsusers/reset', { email: email }, authToken );
+            return TempStars.Ajax.post( 'tsusers/reset', { email: email });
         },
 
         getDentists: function getDentists() {

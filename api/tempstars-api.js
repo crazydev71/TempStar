@@ -1,7 +1,14 @@
-var loopback = require('loopback');
-var boot = require('loopback-boot');
+
+var loopback   = require('loopback');
+var boot       = require('loopback-boot');
+var exphbs     = require('express-handlebars');
+var bodyParser = require('body-parser');
 
 var app = module.exports = loopback();
+
+app.engine( 'handlebars', exphbs({defaultLayout: 'main'}));
+app.set( 'view engine', 'handlebars');
+app.use( bodyParser.urlencoded({extended: true}));
 
 app.start = function() {
   // start the web server

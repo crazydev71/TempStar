@@ -181,6 +181,10 @@ TempStars.User = (function() {
                     reject( err );
                 });
             });
+        },
+
+        requestPasswordReset: function requestPasswordReset( email ) {
+            return TempStars.Api.resetPassword( email );
         }
 
     };

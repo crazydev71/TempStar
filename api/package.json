@@ -9,8 +9,10 @@
   },
   "dependencies": {
     "@google/maps": "^0.1.0",
+    "body-parser": "^1.15.2",
     "compression": "^1.0.3",
     "cors": "^2.5.2",
+    "express-handlebars": "^3.0.0",
     "express-jwt": "^3.4.0",
     "helmet": "^1.3.0",
     "location": "file:local_modules/location",
@@ -21,6 +23,7 @@
     "loopback-connector-mysql": "^2.3.0",
     "loopback-datasource-juggler": "^2.39.0",
     "loopback-jwt": "^1.0.1",
+    "nodemailer-ses-transport": "^1.4.0",
     "serve-favicon": "^2.0.1",
     "stripe": "^4.10.0",
     "strong-error-handler": "^1.0.1"
