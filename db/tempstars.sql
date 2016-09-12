@@ -100,6 +100,7 @@ CREATE TABLE `Dentist` (
   `lat` float DEFAULT NULL,
   `lon` float DEFAULT NULL,
   `regionId` int(11) DEFAULT NULL,
+  `photoUrl` varchar(255) DEFAULT NULL,
   `website` varchar(100) DEFAULT NULL,
   `rating` float DEFAULT NULL,
   `billingStatus` int(11) DEFAULT NULL COMMENT 'current, pastdue',
@@ -107,7 +108,7 @@ CREATE TABLE `Dentist` (
   `isComplete` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `stripeCustomerId_UNIQUE` (`stripeCustomerId`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -126,15 +127,12 @@ CREATE TABLE `DentistDetail` (
   `hygienistArrival` varchar(100) NOT NULL,
   `radiography` varchar(100) NOT NULL,
   `ultrasonic` varchar(100) NOT NULL,
-  `sterilization` varchar(100) NOT NULL,
   `avgApptTime` varchar(100) NOT NULL,
-  `recallReport` varchar(100) NOT NULL,
-  `lunch` varchar(100) NOT NULL,
   `charting` varchar(100) NOT NULL,
   `software` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `dentistId_UNIQUE` (`dentistId`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -220,7 +218,7 @@ CREATE TABLE `Hygienist` (
   `lastJobIdViewed` int(11) DEFAULT NULL,
   `isComplete` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -339,11 +337,11 @@ DROP TABLE IF EXISTS `PostalCode`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `PostalCode` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `postalCode` varchar(7) NOT NULL,
+  `prefix` varchar(7) NOT NULL,
   `regionId` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index2` (`regionId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -358,7 +356,7 @@ CREATE TABLE `Region` (
   `description` varchar(50) NOT NULL,
   `rate` decimal(6,2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -391,7 +389,7 @@ CREATE TABLE `RoleMapping` (
   `principalId` varchar(512) DEFAULT NULL,
   `roleId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -439,7 +437,7 @@ CREATE TABLE `User` (
   `dentistId` int(11) DEFAULT NULL,
   `hygienistId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -451,4 +449,4 @@ CREATE TABLE `User` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-06 12:54:28
+-- Dump completed on 2016-09-11 22:53:18
