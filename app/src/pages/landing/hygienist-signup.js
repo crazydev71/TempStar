@@ -188,7 +188,7 @@ TempStars.Pages.HygienistSignup = (function() {
     }
 
     function removePhotoHandler( e ) {
-        $$('#hygienist-signup-photo').attr( 'src', 'img/hygientist.png' );
+        $$('#hygienist-signup-photo').attr( 'src', 'img/hygienist.png' );
         $$('#hygienist-signup-photo-remove').hide();
         $$('#hygienist-signup-photo-add').show();
     }
@@ -211,7 +211,7 @@ TempStars.Pages.HygienistSignup = (function() {
         return new Promise( function( resolve, reject ) {
             var photoURI = $$('#hygienist-signup-photo').attr('src');
 
-            if ( photoURI == 'img/hygientist.png' ) {
+            if ( photoURI == 'img/hygienist.png' ) {
                 resolve();
                 return;
             }
