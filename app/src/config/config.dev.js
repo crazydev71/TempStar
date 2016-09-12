@@ -7,6 +7,9 @@ TempStars.Config = (function() {
             authUserName: 'riff',
             authPassword: 'raff',
             baseUrl: "https://api.tempstars.net/v2/"
-        }
+        },
+        bucket: {
+            baseUrl: 'https://s3.amazonaws.com/tempstars.ca/'
+        }        
     };
 })();
