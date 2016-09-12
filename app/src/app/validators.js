@@ -56,7 +56,7 @@ TempStars.Validators = (function() {
                 return null;
             }
             else {
-                return "is invalid";
+                return "is not in Ontario";
             }
         }
 
