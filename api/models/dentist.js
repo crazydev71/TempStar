@@ -19,20 +19,31 @@ module.exports = function( Dentist ) {
     });
 
     Dentist.account = function( id, data, callback ) {
-        var customer;
+        var customerId;
         var dentist;
         var geocode;
 
-        stripe.customers.create({
-          source: data.p2.token,
-          description: data.p1.businessOwner,
-          email: data.user.email
+        Dentist.findById( data.user.dentistId )
+        .then( function( d ) {
+            dentist = d;
+            if ( dentist.stripeCustomerId ) {
+                return Promise.resolve( dentist.stripeCustomerId );
+            }
+            else {
+                return new Promise( function( resolve, reject ) {
+                    stripe.customers.create({
+                        source: data.p2.token,
+                        description: data.p1.businessOwner,
+                        email: data.user.email
+                    })
+                    .then( function( c ) {
+                        resolve( c.id );
+                    });
+                });
+            }
         })
-        .then( function( c ) {
-            customer = c;
-            return Dentist.findById( data.user.dentistId );
-        })
-        .then( function( dentist ) {
+        .then( function( cid ) {
+            customerId = cid;
             return dentist.updateAttributes({
                 practiceName: data.p1.practiceName,
                 businessOwner: data.p1.businessOwner,
@@ -41,13 +52,16 @@ module.exports = function( Dentist ) {
                 city: data.p1.city,
                 province: data.p1.province,
                 postalCode: data.p1.postalCode,
-                stripeCustomerId: customer.id,
+                photoUrl: data.p1.photoUrl,
+                stripeCustomerId: customerId,
                 isComplete: 1
             });
         })
         .then( function( d ) {
             dentist = d;
-            return dentist.detail.create({
+            var DentistDetail = app.models.DentistDetail;
+            return DentistDetail.findOrCreate( {where: { dentistId: dentist.id }}, {
+                dentistId: dentist.id,
                 primaryContact: data.p3.primaryContact,
                 parking: data.p3.parking,
                 payment: data.p3.payment,
@@ -56,15 +70,21 @@ module.exports = function( Dentist ) {
                 ultrasonic: data.p3.ultrasonic,
                 sterilization: data.p3.sterilization,
                 avgApptTime: data.p3.avgApptTime,
-                recallReport: data.p3.recallReport,
-                lunch: data.p3.lunch,
                 charting: data.p3.charting,
                 software: data.p3.software
             });
         })
         .then( function() {
-            var address = dentist.address + ', ' + dentist.city + ', ' + dentist.province + ' ' + dentist.postalCode + ' Canada';
-            return location.geocode( address );
+            return new Promise( function( resolve, reject ) {
+                var address = dentist.address + ', ' + dentist.city + ', ' + dentist.province + ' ' + dentist.postalCode + ' Canada';
+                location.geocode( address )
+                .then( function( latlon ) {
+                    resolve( latlon );
+                })
+                .catch( function( err ) {
+                    resolve( { lat: 0, lon: 0} );
+                });
+            });
         })
         .then( function( gc ) {
             geocode = gc;

@@ -175,6 +175,21 @@
         "nullable": "N"
       }
     },
+    "photoUrl": {
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "photoUrl",
+        "dataType": "varchar",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "N"
+      }
+    },    
     "website": {
       "type": "String",
       "required": false,
