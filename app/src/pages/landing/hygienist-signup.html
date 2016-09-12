@@ -110,7 +110,7 @@
                       <div class="item-inner">
                         <div class="item-title label">CDHO Reg. #</div>
                         <div class="item-input">
-                          <input type="text" name="CDHONumber" maxlength="6" placeholder="CDHO reg number">
+                          <input type="number" pattern="[0-9]*" inputmode="numeric" name="CDHONumber" maxlength="6" placeholder="CDHO reg number">
                           <div class="field-error-msg"><div>
                         </div>
                       </div>
@@ -123,11 +123,11 @@
                     <div class="item-input" style="padding-top:4px;">
                       <div id="hygienist-signup-photo-remove" style="display:none;">
                           <img id="hygienist-signup-photo" src="img/user.jpg" style="width:20px;height:20px">
-                          <a id="hygienist-signup-remove-photo-button" href="#" style="font-size:115%">remove photo</a>
+                          <a id="hygienist-signup-remove-photo-button" href="#">remove photo</a>
                       </div>
                       <div id="hygienist-signup-photo-add">
-                          <a id="hygienist-signup-upload-photo-button" href="#" xstyle="font-size:115%">
-                              <img id="hygienist-signup-photo" src="img/user.jpg" style="width:20px;height:20px">
+                          <a id="hygienist-signup-upload-photo-button" href="#">
+                              <img id="hygienist-signup-photo" src="img/hygienist.png" style="width:20px;height:20px">
                               upload photo</a>
                           <i style="color:#aaa">(optional)</i>
                       </div>

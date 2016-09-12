@@ -8,12 +8,14 @@ TempStars.Pages.DentistSignup2 = (function() {
         app.onPageInit( 'dentist-signup2', function( page ) {
             $$('#dentist-signup2-done-button').on( 'click', doneButtonHandler );
             $$('#dentist-signup2-logout-link').on( 'click', logoutHandler );
+            $$('#dentist-signup2-form input').on( 'keypress', keyHandler );
             mainView.showNavbar();
         });
 
         app.onPageBeforeRemove( 'dentist-signup2', function( page ) {
             $$('#dentist-signup2-done-button').off( 'click', doneButtonHandler );
             $$('#dentist-signup2-logout-link').off( 'click', logoutHandler );
+            $$('#dentist-signup2-form input').off( 'keypress', keyHandler );
         });
 
         app.onPageBeforeAnimation( 'dentist-signup2', function( page ) {
@@ -124,6 +126,15 @@ TempStars.Pages.DentistSignup2 = (function() {
 
             // Go to the next page
             mainView.router.loadPage( 'landing/dentist-signup3.html' );
+        }
+    }
+
+    function keyHandler( e ) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if ( (code == 13) || (code == 10)) {
+            cordova.plugins.Keyboard.close();
+            $$('#dentist-signup2-done-button').trigger( 'click' );
+            return false;
         }
     }
 

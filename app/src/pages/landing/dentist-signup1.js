@@ -7,10 +7,11 @@ TempStars.Pages.DentistSignup1 = (function() {
             mainView.showNavbar();
 
             $$('#dentist-signup1-done-button').on( 'click', doneButtonHandler );
-            $$('#dentist-signup1-upload-photo-button').on( 'click', uploadPhotoHandler );
+            $$('#dentist-signup1-upload-photo-button').on( 'click', addPhotoHandler );
             $$('#dentist-signup1-remove-photo-button').on( 'click', removePhotoHandler );
             $$('#dentist-signup1-logout-link').on( 'click', logoutHandler );
             $$('#dentist-signup1-form input[name="postalCode"]').on( 'focusout', upcasePostalCode );
+            $$('#dentist-signup1-form input').on( 'keypress', keyHandler );
 
             userAccount = TempStars.User.getCurrentUser();
             $$( '#dentist-signup-email').html( userAccount.email );
@@ -18,10 +19,11 @@ TempStars.Pages.DentistSignup1 = (function() {
 
         app.onPageBeforeRemove( 'dentist-signup1', function( page ) {
             $$('#dentist-signup1-done-button').off( 'click', doneButtonHandler );
-            $$('#dentist-signup1-upload-photo-button').off( 'click', uploadPhotoHandler );
+            $$('#dentist-signup1-upload-photo-button').off( 'click', addPhotoHandler );
             $$('#dentist-signup1-remove-photo-button').off( 'click', removePhotoHandler );
             $$('#dentist-signup1-logout-link').off( 'click', logoutHandler );
             $$('#dentist-signup1-form input[name="postalCode"]').off( 'focusout', upcasePostalCode );
+            $$('#dentist-signup1-form input').off( 'keypress', keyHandler );
         });
 
         app.onPageBeforeAnimation( 'dentist-signup1', function( page ) {
@@ -74,7 +76,7 @@ TempStars.Pages.DentistSignup1 = (function() {
             postalCode: {
                 presence: true,
                 postalCode: true,
-                postalCodeIsOntario: true                
+                postalCodeIsOntario: true
             },
             phone: {
                 presence: true,
@@ -119,24 +121,34 @@ TempStars.Pages.DentistSignup1 = (function() {
             return;
         }
 
-        // Save form data
-        app.formStoreData('dentist-signup1-form', formData );
+        uploadPhoto()
+        .then( function( photoFileName ) {
+            // Save form data
+            if ( photoFileName ) {
+                formData.photoUrl = TempStars.Config.bucket.baseUrl + photoFileName;
+            }
 
-        // Go to the next page
-        mainView.router.loadPage( 'landing/dentist-signup2.html' );
+            app.formStoreData('dentist-signup1-form', formData );
+
+            // Go to the next page
+            mainView.router.loadPage( 'landing/dentist-signup2.html' );
+        })
+        .catch( function( err ) {
+            console.log( err );
+            return;
+        });
     }
 
-    function uploadPhotoHandler() {
+    function addPhotoHandler() {
         navigator.camera.getPicture (
           function(result) {
-              //var image = document.getElementById('signup-dentist-photo');
-              //image.src = "data:image/jpeg;base64," + result;
-
               $$('#dentist-signup1-photo').attr('src', result );
               $$('#dentist-signup1-photo-remove').show();
               $$('#dentist-signup1-photo-add').hide();
           },
-          function(errmsg) { app.alert( errmsg ) },
+          function(errmsg) {
+              app.alert( errmsg )
+          },
           {
               sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
               quality: 80,
@@ -146,8 +158,34 @@ TempStars.Pages.DentistSignup1 = (function() {
     }
 
     function removePhotoHandler( e ) {
+        $$('#dentist-signup1-photo').attr( 'src', 'img/dental-office.png' );
         $$('#dentist-signup1-photo-remove').hide();
         $$('#dentist-signup1-photo-add').show();
+    }
+
+    function uploadPhoto() {
+        return new Promise( function( resolve, reject ) {
+            var photoURI = $$('#dentist-signup1-photo').attr('src');
+
+            if ( photoURI == 'img/dental-office.png' ) {
+                resolve();
+                return;
+            }
+            var options = new FileUploadOptions();
+            options.fileName = uuid.v4() + '.jpg';
+            var ft = new FileTransfer();
+            var uploadURL = TempStars.Config.server.baseUrl + 'containers/tempstars.ca/upload';
+            ft.upload( photoURI,
+               encodeURI( uploadURL ),
+               function( result ) {
+                  resolve( options.fileName );
+               },
+               function( error ) {
+                  reject( error );
+               },
+               options
+            );
+        });
     }
 
     function logoutHandler( e ) {
@@ -162,6 +200,15 @@ TempStars.Pages.DentistSignup1 = (function() {
     function upcasePostalCode( e ) {
         var value = $$(this).val().toLocaleUpperCase();
         $$(this).val( value );
+    }
+
+    function keyHandler( e ) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if ( (code == 13) || (code == 10)) {
+            cordova.plugins.Keyboard.close();
+            $$('#dentist-signup1-done-button').trigger( 'click' );
+            return false;
+        }
     }
 
     return {

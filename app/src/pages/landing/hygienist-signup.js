@@ -5,10 +5,11 @@ TempStars.Pages.HygienistSignup = (function() {
 
         app.onPageInit( 'hygienist-signup', function( page ) {
             $$('#hygienist-signup-done-button').on( 'click', doneButtonHandler );
-            $$('#hygienist-signup-upload-photo-button').on( 'click', uploadPhotoHandler );
+            $$('#hygienist-signup-upload-photo-button').on( 'click', addPhotoHandler );
             $$('#hygienist-signup-remove-photo-button').on( 'click', removePhotoHandler );
             $$('#hygienist-signup-logout-link').on( 'click', logoutHandler );
             $$('#hygienist-signup-form input[name="postalCode"]').on( 'focusout', upcasePostalCode );
+            $$('#hygienist-signup-form input').on( 'keypress', keyHandler );
             mainView.showNavbar();
 
             userAccount = TempStars.User.getCurrentUser();
@@ -17,10 +18,11 @@ TempStars.Pages.HygienistSignup = (function() {
 
         app.onPageBeforeRemove( 'hygienist-signup', function( page ) {
             $$('#hygienist-signup-done-button').off( 'click', doneButtonHandler );
-            $$('#hygienist-signup-upload-photo-button').off( 'click', uploadPhotoHandler );
+            $$('#hygienist-signup-upload-photo-button').off( 'click', addPhotoHandler );
             $$('#hygienist-signup-remove-photo-button').off( 'click', removePhotoHandler );
             $$('#hygienist-signup-logout-link').off( 'click', logoutHandler );
             $$('#hygienist-signup-form input[name="postalCode"]').off( 'focusout', upcasePostalCode );
+            $$('#hygienist-signup-form input').off( 'keypress', keyHandler );
         });
 
         app.onPageAfterAnimation( 'hygienist-signup', function( page ) {
@@ -139,10 +141,18 @@ TempStars.Pages.HygienistSignup = (function() {
 
         app.showPreloader('Setting Up Account');
 
-        // Add the hygienist id
-        formData.id = userAccount.hygienistId;
-        formData.isComplete = 1;
-        TempStars.Hygienist.save( formData )
+        // If have a photo, upload it
+        uploadPhoto()
+        .then( function( photoFileName ) {
+            if ( photoFileName ) {
+                formData.photoUrl = TempStars.Config.bucket.baseUrl + photoFileName;
+            }
+
+            // Add the hygienist id
+            formData.id = userAccount.hygienistId;
+            formData.isComplete = 1;
+            return TempStars.Hygienist.save( formData );
+        })
         .then( function() {
             return TempStars.User.refresh();
         })
@@ -159,17 +169,16 @@ TempStars.Pages.HygienistSignup = (function() {
         });
     }
 
-    function uploadPhotoHandler() {
-        navigator.camera.getPicture (
-          function(result) {
-              //var image = document.getElementById('signup-hygienist-photo');
-              //image.src = "data:image/jpeg;base64," + result;
-
-              $$('#hygienist-signup-photo').attr('src', result );
+    function addPhotoHandler() {
+        navigator.camera.getPicture(
+          function( photoURI ) {
+              $$('#hygienist-signup-photo').attr('src', photoURI );
               $$('#hygienist-signup-photo-remove').show();
               $$('#hygienist-signup-photo-add').hide();
           },
-          function(errmsg) { app.alert( errmsg ) },
+          function(errmsg) {
+              app.alert( errmsg )
+          },
           {
               sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
               quality: 80,
@@ -179,8 +188,9 @@ TempStars.Pages.HygienistSignup = (function() {
     }
 
     function removePhotoHandler( e ) {
-        $$('#signup-hygienist-photo-remove').hide();
-        $$('#signup-hygienist-photo-add').show();
+        $$('#hygienist-signup-photo').attr( 'src', 'img/hygientist.png' );
+        $$('#hygienist-signup-photo-remove').hide();
+        $$('#hygienist-signup-photo-add').show();
     }
 
     function logoutHandler( e ) {
@@ -195,6 +205,40 @@ TempStars.Pages.HygienistSignup = (function() {
     function upcasePostalCode( e ) {
         var value = $$(this).val().toLocaleUpperCase();
         $$(this).val( value );
+    }
+
+    function uploadPhoto() {
+        return new Promise( function( resolve, reject ) {
+            var photoURI = $$('#hygienist-signup-photo').attr('src');
+
+            if ( photoURI == 'img/hygientist.png' ) {
+                resolve();
+                return;
+            }
+            var options = new FileUploadOptions();
+            options.fileName = uuid.v4() + '.jpg';
+            var ft = new FileTransfer();
+            var uploadURL = TempStars.Config.server.baseUrl + 'containers/tempstars.ca/upload';
+            ft.upload( photoURI,
+               encodeURI( uploadURL ),
+               function( result ) {
+                  resolve( options.fileName );
+               },
+               function( error ) {
+                  reject( error );
+               },
+               options
+            );
+        });
+    }
+
+    function keyHandler( e ) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if ( (code == 13) || (code == 10)) {
+            cordova.plugins.Keyboard.close();
+            $$('#hygienist-signup-done-button').trigger( 'click' );
+            return false;
+        }
     }
 
     return {

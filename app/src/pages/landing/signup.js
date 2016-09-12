@@ -7,12 +7,14 @@ TempStars.Pages.Signup = (function() {
             $$('#signup-button').on( 'click', signupButtonHandler );
             $$('#signup-account-type-hygienist').on( 'change', toggleHygienist );
             $$('#signup-account-type-dentist').on( 'change', toggleDentist );
+            $$('#signup-form input').on( 'keypress', keyHandler );
         });
 
         app.onPageBeforeRemove( 'signup', function( page ) {
             $$('#signup-button').off( 'click', signupButtonHandler );
             $$('#signup-account-type-hygienist').off( 'change', toggleHygienist );
             $$('#signup-account-type-dentist').off( 'change', toggleDentist );
+            $$('#signup-form input').off( 'keypress', keyHandler );
         });
     }
 
@@ -77,7 +79,7 @@ TempStars.Pages.Signup = (function() {
         })
         .catch( function( err ) {
             var msg;
-            if ( err.error && err.error.details && err.error.details.messages && err.error.details.messages.email ) {
+            if ( err && err.error && err.error.details && err.error.details.messages && err.error.details.messages.email ) {
                 msg = err.error.details.messages.email[0] + '.';
             }
             else {
@@ -102,8 +104,13 @@ TempStars.Pages.Signup = (function() {
         }
     }
 
-    function removeError(e) {
-        $$(this).removeClass( 'error' ).next().html( '' );
+    function keyHandler( e ) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if ( (code == 13) || (code == 10)) {
+            cordova.plugins.Keyboard.close();
+            $$('#signup-button').trigger( 'click' );
+            return false;
+        }
     }
 
     return {

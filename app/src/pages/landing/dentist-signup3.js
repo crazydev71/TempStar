@@ -6,11 +6,13 @@ TempStars.Pages.DentistSignup3 = (function() {
             mainView.showNavbar();
             $$('#dentist-signup3-done-button').on( 'click', doneButtonHandler );
             $$('#dentist-signup3-logout-link').on( 'click', logoutHandler );
+            $$('#dentist-signup3-form input').on( 'keypress', keyHandler );
         });
 
         app.onPageBeforeRemove( 'dentist-signup3', function( page ) {
             $$('#dentist-signup3-done-button').off( 'click', doneButtonHandler );
             $$('#dentist-signup3-logout-link').off( 'click', logoutHandler );
+            $$('#dentist-signup3-form input').on( 'keypress', keyHandler );
         });
 
         app.onPageBeforeAnimation( 'dentist-signup3', function( page ) {
@@ -80,14 +82,8 @@ TempStars.Pages.DentistSignup3 = (function() {
             if ( errors.ultrasonic ) {
                 $$('#dentist-signup3-form select[name="ultrasonic"]').addClass('error').next().html( errors.ultrasonic[0] );
             }
-            if ( errors.recallReport ) {
-                $$('#dentist-signup3-form select[name="recallReport"]').addClass('error').next().html( errors.recallReport[0] );
-            }
             if ( errors.avgApptTime ) {
                 $$('#dentist-signup3-form select[name="avgApptTime"]').addClass('error').next().html( errors.avgApptTime[0] );
-            }
-            if ( errors.lunch ) {
-                $$('#dentist-signup3-form select[name="lunch"]').addClass('error').next().html( errors.lunch[0] );
             }
             if ( errors.charting ) {
                 $$('#dentist-signup3-form select[name="charting"]').addClass('error').next().html( errors.charting[0] );
@@ -133,6 +129,15 @@ TempStars.Pages.DentistSignup3 = (function() {
                 mainView.router.loadPage( { url: 'index.html', animatePages: false } );
             });
         });
+    }
+
+    function keyHandler( e ) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if ( (code == 13) || (code == 10)) {
+            cordova.plugins.Keyboard.close();
+            $$('#dentist-signup3-done-button').trigger( 'click' );
+            return false;
+        }
     }
 
     return {

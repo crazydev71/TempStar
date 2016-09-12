@@ -4,11 +4,13 @@ TempStars.Pages.Index = (function() {
 
         app.onPageInit( 'index', function( page ) {
             $$('#login-button').on( 'click', loginButtonHandler );
+            $$('#login-form input').on( 'keypress', keyHandler );
             mainView.hideNavbar();
         }).trigger();
 
         app.onPageBeforeRemove( 'index', function( page ) {
             $$('#login-button').off( 'click', loginButtonHandler );
+            $$('#login-form input').off( 'keypress', keyHandler );
         });
 
         app.onPageBeforeAnimation( 'index', function( page ) {
@@ -65,8 +67,13 @@ TempStars.Pages.Index = (function() {
         });
     }
 
-    function removeError(e) {
-        $$(this).removeClass( 'error' ).next().html( '' );
+    function keyHandler( e ) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if ( (code == 13) || (code == 10)) {
+            cordova.plugins.Keyboard.close();
+            $$('#login-button').trigger( 'click' );
+            return false;
+        }
     }
 
     return {
