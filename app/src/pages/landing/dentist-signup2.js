@@ -95,6 +95,8 @@ TempStars.Pages.DentistSignup2 = (function() {
             return;
         }
 
+        app.showPreloader('Saving Billing Info');
+
         var stripeData = {};
         stripeData.name = formData.cardholderName;
         stripeData.number = formData.cardNumber;
@@ -117,12 +119,14 @@ TempStars.Pages.DentistSignup2 = (function() {
 
     function stripeResponseHandler( status, response ) {
         if ( response.error ) {
+            app.hidePreloader();
             app.alert( response.error.message );
         }
         else {
             var token = response.id;
             formData.token = token;
             app.formStoreData( 'dentist-signup2-form', formData );
+            app.hidePreloader();
 
             // Go to the next page
             mainView.router.loadPage( 'landing/dentist-signup3.html' );

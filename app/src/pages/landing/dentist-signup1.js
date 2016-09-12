@@ -121,6 +121,8 @@ TempStars.Pages.DentistSignup1 = (function() {
             return;
         }
 
+        app.showPreloader('Saving Account');
+
         uploadPhoto()
         .then( function( photoFileName ) {
             // Save form data
@@ -129,12 +131,14 @@ TempStars.Pages.DentistSignup1 = (function() {
             }
 
             app.formStoreData('dentist-signup1-form', formData );
+            app.hidePreloader();
 
             // Go to the next page
             mainView.router.loadPage( 'landing/dentist-signup2.html' );
         })
         .catch( function( err ) {
             console.log( err );
+            app.hidePreloader();            
             return;
         });
     }
