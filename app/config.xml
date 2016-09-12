@@ -15,6 +15,8 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <allow-navigation href="*" />
+
     <preference name="SplashScreenDelay" value="0" />
     <preference name="FadeSplashScreenDuration" value="0" />
     <platform name="android">
@@ -45,6 +47,8 @@
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
+        <preference name="DisallowOverscroll" value="true" />        
+        <preference name="BackupWebStorage" value="local"/>
         <preference name="SplashScreenDelay" value="3500" />
         <preference name="FadeSplashScreenDuration" value="500" />
         <icon height="29" src="resources/ios/AppIcon.appiconset/icon-29.png" width="29" />
@@ -78,6 +82,11 @@
     <engine name="ios" spec="~4.2.0" />
     <engine name="android" spec="~5.2.1" />
     <engine name="browser" spec="~4.1.0" />
+    <preference name="xwalkVersion" value="20+" />
+    <preference name="xwalkCommandLine" value="--disable-pull-to-refresh-effect" />
+    <preference name="xwalkMode" value="embedded" />
+    <preference name="xwalkMultipleApk" value="true" />
+    <preference name="android-minSdkVersion" value="16" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <plugin name="cordova-plugin-device" spec="~1.1.2" />
     <plugin name="cordova-plugin-splashscreen" spec="~3.2.2" />
@@ -86,9 +95,7 @@
     <plugin name="cordova-plugin-console" spec="~1.0.3" />
     <plugin name="cordova-plugin-camera" spec="~2.2.0" />
     <plugin name="cordova-plugin-nativestorage" spec="~2.0.2" />
-    <preference name="xwalkVersion" value="20+" />
-    <preference name="xwalkCommandLine" value="--disable-pull-to-refresh-effect" />
-    <preference name="xwalkMode" value="embedded" />
-    <preference name="xwalkMultipleApk" value="true" />
-    <preference name="android-minSdkVersion" value="16" />
+    <plugin name="com.ionic.keyboard" spec="https://github.com/Telerik-Verified-Plugins/Keyboard" />
+    <plugin name="cordova-plugin-crosswalk-webview" spec="~2.0.0" />
+    <plugin name="cordova-plugin-file-transfer" spec="~1.5.1" />
 </widget>
