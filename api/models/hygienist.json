@@ -312,6 +312,11 @@
       "type": "hasOne",
       "model": "TSUser",
       "foreignKey": "hygienistId"
+    },
+    "region": {
+      "type": "belongsTo",
+      "model": "Region",
+      "foreignKey": "regionId"
     }
   },
   "acls": [],

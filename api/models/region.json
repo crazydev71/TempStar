@@ -72,7 +72,7 @@
     "hygienist": {
       "type": "hasMany",
       "model": "Hygienist",
-      "foreignKey": ""
+      "foreignKey": "regionId"
     }
   },
   "acls": [],
