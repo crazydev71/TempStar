@@ -35,20 +35,31 @@ TempStars.Pages.ForgotPassword = (function() {
         }
 
 
+        var resetWorked;
+        var errorMessage = '';
+
         app.showPreloader('Sending Password Reset');
-        TempStars.User.requestPasswordReset( formData.email )
-        .then(function() {
+        setTimeout( function() {
             app.hidePreloader();
-            $$('#forgot-password-status').show();
+            if ( resetWorked ) {
+                $$('#forgot-password-status').show();
+            }
+            else {
+                $$('#forgot-password-form .form-error-msg')
+                    .html('<span class="ti-alert"></span> Sending password reset email failed.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + errorMessage )
+                    .show();
+            }
+        }, 3000 );
+
+        TempStars.User.requestPasswordReset( formData.email )
+        .then( function() {
+            resetWorked = true;
         })
         .catch( function( err ) {
-            var msg;
-                msg = 'Please try again.';
-
-            app.hidePreloader();
-            $$('#signup-form .form-error-msg')
-                .html('<span class="ti-alert"></span> Sending password reset email failed. ' + msg )
-                .show();
+            if ( err && err.error && err.error.message ) {
+                errorMessage = err.error.message;
+            }
+            resetWorked = false;
         });
     }
 
