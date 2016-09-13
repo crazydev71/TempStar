@@ -109,7 +109,7 @@
                                   <a href="landing/privacy-policy.html">Privacy Policy</a>
                               </div>
                               <div class="col-33" style="text-align:center;">
-                                  <a href="mailto:support@tempstars.net" class="external">Contact Support</a>
+                                  <a href="mailto:help@tempstars.ca" class="external">Contact Support</a>
                               </div>
                           </div>
                           <div class="row">
