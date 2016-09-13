@@ -56,10 +56,38 @@ TempStars.bootstrap = {
         };
 
         // If running on Android, use material theme and change navbar to fixed
-        // if (isAndroid) {
-        //     $$('.view.navbar-through').removeClass('navbar-through').addClass('navbar-fixed');
-        //     $$('.view .navbar').prependTo('.view .page');
-        // }
+//         if (isAndroid) {
+//             $$('.view.navbar-through').removeClass('navbar-through').addClass('navbar-fixed');
+// //            $$('.view .navbar').prependTo('.view .page');
+//         }
+
+        // Setup Android keyboard scrolling fix
+        if ( isAndroid ) {
+            TempStars.bootstrap.initAndroidKeyboardFix();
+        }
+    },
+
+    initAndroidKeyboardFix: function initAndroidKeyboardFix() {
+
+        window.addEventListener('native.keyboardshow', function(e) {
+            $('.footer').hide();
+        });
+
+        window.addEventListener('native.keyboardhide', function(e) {
+            $('.footer').show();
+        });
+
+        $(document).on( 'focus', 'input', function(e) {
+
+            // console.log( 'input focus on: ' + document.activeElement.name );
+            // var st = $(document.activeElement).offset().top - 60;
+            // console.log( 'scrolltop: ' + st );
+
+            $('.page-content').animate({
+                scrollTop: $(document.activeElement).offset().top - 60
+            }, 500);
+
+        });
     },
 
     onResume: function() {
