@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="ca.tempstars.app2" version="0.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="ca.tempstars.app2" version="0.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>TempStars</name>
     <description>
         Hygienist Temping done right
@@ -47,7 +47,7 @@
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
-        <preference name="DisallowOverscroll" value="true" />        
+        <preference name="DisallowOverscroll" value="true" />
         <preference name="BackupWebStorage" value="local"/>
         <preference name="SplashScreenDelay" value="3500" />
         <preference name="FadeSplashScreenDuration" value="500" />
