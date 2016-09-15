@@ -7,7 +7,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; connect-src http://localhost.com:3000 https://localhost:3000"> -->
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'"> -->
-    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://api.stripe.com http://0.0.0.0:35729; img-src * data: 'unsafe-inline'" />
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: ; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://api.stripe.com http://0.0.0.0:35729; connect-src http://10.0.1.45:3000; img-src * data: 'unsafe-inline'" /> -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://api.stripe.com http://0.0.0.0:35729 http://10.0.1.45:3000" /> -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://api.stripe.com http://0.0.0.0:35729 http://10.0.1.45:3000; connect-src: http://10.0.1.45:3000 http://10.0.1.45" /> -->
+    <meta http-equiv="Content-Security-Policy-Report-Only: default-src 'none'" />
     <title>TempStars</title>
     <link rel="stylesheet" href="lib/font-awesome/font-awesome.css">
     <link rel="stylesheet" href="lib/themify-icons/themify-icons.css">

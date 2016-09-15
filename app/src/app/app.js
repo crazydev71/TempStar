@@ -30,12 +30,24 @@ TempStars.App = (function() {
                 if ( TempStars.User.isSetupComplete() ) {
 
                     // Set up dentist menu
-                    menuContent = $('#dentist-menu').html();
+                    var template = $$('#dentist-menu').html();
+                    var compiledTemplate = Template7.compile( template );
+                    var user = TempStars.User.getCurrentUser();
+                    console.dir( user );
+                    var practiceName = _.capitalize( user.dentist.practiceName );
+                    var photoUrl = (user.dentist.photoUrl) ? user.dentist.photoUrl : 'img/dental-office.png';
+                    menuContent = compiledTemplate({
+                        practiceName: practiceName,
+                        city: _.trim( user.dentist.city ),
+                        province: user.dentist.province,
+                        photoUrl: photoUrl
+                    });
                     $('#panel-menu').html(menuContent);
 
                     mainView.router.loadPage( { url: 'dentist/dentist.html', animatePages: false } );
                 }
                 else {
+                    // Go back to signup
                     mainView.router.loadPage( { url: 'landing/dentist-signup1.html', animatePages: false } );
                 }
             }
@@ -43,7 +55,18 @@ TempStars.App = (function() {
                 if ( TempStars.User.isSetupComplete() ) {
 
                     // Set up hygienist menu
-                    menuContent = $('#hygienist-menu').html();
+                    var template = $$('#hygienist-menu').html();
+                    var compiledTemplate = Template7.compile( template );
+                    var user = TempStars.User.getCurrentUser();
+                    console.dir( user );
+                    var fullName = _.capitalize( user.hygienist.firstName ) + ' ' + _.capitalize( user.hygienist.lastName );
+                    var photoUrl = (user.hygienist.photoUrl) ? user.hygienist.photoUrl : 'img/hygienist.png';
+                    menuContent = compiledTemplate({
+                        fullname: fullName,
+                        city: _.trim( user.hygienist.city ),
+                        province: user.hygienist.province,
+                        photoUrl: photoUrl
+                    });
                     $('#panel-menu').html(menuContent);
 
                     mainView.router.loadPage( { url: 'hygienist/hygienist.html', animatePages: false } );
