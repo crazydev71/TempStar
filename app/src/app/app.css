@@ -135,12 +135,13 @@ i.tabbar-demo-icon-4 {
 
 .container.menu-right {
   width: 130px;
-  margin: 50px auto;
+  margin: 30px auto;
   text-align: center;
 }
 
-.item-title.author.profile.menu-right {
+.item-title.user.profile.menu-right {
   color: white;
+  margin-top: 10px;
 }
 
 .item-subtitle.location.menu-right {
@@ -355,4 +356,14 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+.menu-photo {
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 75px;
+    height: 75px;
+    border-radius: 100%;
+    margin: 0 auto;
+    min-height: 75px;
 }
