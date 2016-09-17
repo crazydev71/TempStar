@@ -189,7 +189,7 @@
         "dataScale": null,
         "nullable": "N"
       }
-    },    
+    },
     "website": {
       "type": "String",
       "required": false,
@@ -270,9 +270,8 @@
   "relations": {
     "favouriteHygienists": {
       "type": "hasMany",
-      "model": "Hygienist",
-      "foreignKey": "dentistId",
-      "through": "FavouriteHygienist"
+      "model": "FavouriteHygienist",
+      "foreignKey": "dentistId"
     },
     "detail": {
       "type": "hasOne",
@@ -287,9 +286,8 @@
     },
     "blockedHygienists": {
       "type": "hasMany",
-      "model": "Hygienist",
-      "foreignKey": "dentistId",
-      "through": "BlockedHygienist"
+      "model": "BlockedHygienist",
+      "foreignKey": "dentistId"
     },
     "jobs": {
       "type": "hasMany",

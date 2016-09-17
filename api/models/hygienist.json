@@ -293,15 +293,13 @@
     },
     "blockedDentists": {
       "type": "hasMany",
-      "model": "Dentist",
-      "foreignKey": "",
-      "through": "BlockedDentist"
+      "model": "BlockedDentist",
+      "foreignKey": "hygienistId"
     },
     "favouriteDentists": {
       "type": "hasMany",
-      "model": "Dentist",
-      "foreignKey": "",
-      "through": "FavouriteDentist"
+      "model": "favouriteDentist",
+      "foreignKey": "hygienistId"
     },
     "manualInvoices": {
       "type": "hasMany",
