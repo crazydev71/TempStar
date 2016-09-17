@@ -180,7 +180,8 @@ module.exports = function (grunt) {
                 command:"cordova prepare",
                 stdout:true,
                 stderror:true
-            }
+            },
+            create_version: './create-version.sh'
         },
 
         connect: {
@@ -219,10 +220,10 @@ module.exports = function (grunt) {
         grunt.log.writeln( ' "grunt --target=local|dev"' );
     });
 
-    grunt.registerTask( 'default',  [ 'init', 'clean', 'copy', 'concat',  'template:browser', 'includereplace' ]);
+    grunt.registerTask( 'default',  [ 'init', 'clean', 'exec:create_version', 'copy', 'concat', 'template:browser', 'includereplace' ]);
+    grunt.registerTask( 'ios',      [ 'init', 'clean', 'exec:create_version', 'copy', 'concat', 'template:ios',     'includereplace', 'exec:run_ios']);
+    grunt.registerTask( 'android',  [ 'init', 'clean', 'exec:create_version', 'copy', 'concat', 'template:android', 'includereplace', 'exec:run_android']);
+    grunt.registerTask( 'browser',  [ 'init', 'clean', 'exec:create_version', 'copy', 'concat', 'template:browser', 'includereplace', 'exec:run_browser']);
     grunt.registerTask( 'serve',    ['connect', 'watch']);
-    grunt.registerTask( 'ios',      [ 'init', 'clean', 'copy', 'concat', 'template:ios',     'includereplace', 'exec:run_ios']);
-    grunt.registerTask( 'android',  [ 'init', 'clean', 'copy', 'concat', 'template:android', 'includereplace', 'exec:run_android']);
-    grunt.registerTask( 'browser',  [ 'init', 'clean', 'copy', 'concat', 'template:browser', 'includereplace', 'exec:run_browser']);
 
 };
