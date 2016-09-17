@@ -5,7 +5,6 @@ TempStars.Pages.Index = (function() {
         app.onPageInit( 'index', function( page ) {
             $$('#login-button').on( 'click', loginButtonHandler );
             $$('#login-form input').on( 'keypress', keyHandler );
-            mainView.hideNavbar();
         }).trigger();
 
         app.onPageBeforeRemove( 'index', function( page ) {
@@ -13,11 +12,7 @@ TempStars.Pages.Index = (function() {
             $$('#login-form input').off( 'keypress', keyHandler );
         });
 
-        app.onPageBeforeAnimation( 'index', function( page ) {
-            mainView.hideNavbar();
-        });
-
-        // Global handler for logout 
+        // Global handler for logout
         $$(document).on( 'click', '.logout-link', TempStars.Menu.logout );
     }
 
