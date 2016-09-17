@@ -2,6 +2,9 @@
 
 window.TempStars = window.TempStars || {};
 window.TempStars.Pages = {};
+window.TempStars.Pages.Dentist = {};
+window.TempStars.Pages.Hygienist = {};
+
 
 TempStars.bootstrap = {
 
@@ -32,6 +35,11 @@ TempStars.bootstrap = {
             this.bindEvents();
         }
         else {
+            window.device = {};
+            window.device.platform = 'dev',
+            window.device.version = '&infin;',
+            window.device.manufacturer = 'Mike',
+            window.device.model = 'latest &amp; greatest',
             this.onDeviceReady();
         }
     },

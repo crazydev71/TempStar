@@ -44,7 +44,7 @@ TempStars.App = (function() {
                     });
                     $('#panel-menu').html(menuContent);
 
-                    mainView.router.loadPage( { url: 'dentist/dentist.html', animatePages: false } );
+                    mainView.router.loadPage( { url: 'dentist/home.html', animatePages: false } );
                 }
                 else {
                     // Go back to signup
@@ -69,7 +69,7 @@ TempStars.App = (function() {
                     });
                     $('#panel-menu').html(menuContent);
 
-                    mainView.router.loadPage( { url: 'hygienist/hygienist.html', animatePages: false } );
+                    mainView.router.loadPage( { url: 'hygienist/home.html', animatePages: false } );
                 }
                 else {
                     mainView.router.loadPage( { url: 'landing/hygienist-signup.html', animatePages: false } );
@@ -91,10 +91,7 @@ TempStars.App = (function() {
             app.formDeleteData('dentist-signup2-form');
             app.formDeleteData('dentist-signup3-form');
             app.formDeleteData('hygienist-signup-form');
-        },
-
-        sendPasswordResetLink: function sendPasswordResetLink() {
-
         }
     };
+    
 })();

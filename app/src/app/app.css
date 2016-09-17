@@ -367,3 +367,13 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 0 auto;
     min-height: 75px;
 }
+
+.page[data-page="terms-of-service"] h3,h4 {
+    margin-bottom:4px;
+    color:#444;
+}
+
+.page[data-page="dentist-terms-of-service"] h3,h4 {
+    margin-bottom:4px;
+    color:#444;
+}

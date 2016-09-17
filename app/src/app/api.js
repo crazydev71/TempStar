@@ -11,10 +11,6 @@ TempStars.Api = (function() {
             authToken = at;
         },
 
-        // getAuthToken: function getAuthToken() {
-        //     return authToken;
-        // },
-
         login: function login( email, password ) {
             return TempStars.Ajax.post( 'tsusers/login', { email: email, password: password });
         },
@@ -42,7 +38,7 @@ TempStars.Api = (function() {
         },
 
         saveHygienist: function saveHygienist( hygienist ) {
-            return TempStars.Ajax.put( 'hygienists/' + hygienist.id + '/account', hygienist );            
+            return TempStars.Ajax.put( 'hygienists/' + hygienist.id + '/account', hygienist );
         },
 
         setupDentistAccount: function setupDentistAccount( dentistId, data ) {
@@ -55,6 +51,22 @@ TempStars.Api = (function() {
 
         getDentists: function getDentists() {
             return TempStars.Ajax.get( 'dentists', null, authToken );
+        },
+
+        getBlockedHygienists: function getBlockedHygienists( dentistId ) {
+            return TempStars.Ajax.get( 'dentists/' + dentistId + '/blockedhygienists' );
+        },
+
+        getFavouriteHygienists: function getFavouriteHygienists( dentistId ) {
+            return TempStars.Ajax.get( 'dentists/' + dentistId + '/favouritehygienists' );
+        },
+
+        removeBlockedHygienist: function removeBlockedHygienist( dentistId, hygienistId ) {
+            return TempStars.Ajax.del( 'dentists/' + dentistId + '/blockedhygienists/' + hygienistId );
+        },
+
+        removeFavouriteHygienist: function removeFavouriteHygienist( dentistId, hygienistId ) {
+            return TempStars.Ajax.del( 'dentists/' + dentistId + '/favouritehygienists/' + hygienistId );
         }
 
     };

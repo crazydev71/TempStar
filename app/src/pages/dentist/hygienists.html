@@ -3,11 +3,6 @@
         <div class="pages navbar-through">
             <div class="navbar">
                 <div class="navbar-inner">
-                    <!-- <div class="left sliding">
-                        <a href="#" class="link icon-only back">
-                            <span class="ti-angle-left"></span>
-                        </a>
-                    </div> -->
                     <div class="center sliding">Hygienists</div>
                     <div class="right">
                         <a href="#" data-panel="right" class="link icon-only open-panel">
@@ -16,93 +11,60 @@
                     </div>
                 </div>
             </div>
-        <div data-page="dentist-settings" class="page">
+        <div data-page="dentist-hygienists" class="page">
             <div class="page-content">
                 <div class="content-block-title">Favourite Hygienists</div>
                 <div class="list-block media-list">
                   <ul>
-                    <li>
-                      <div class="item-link item-content">
-                        <div class="item-inner">
-                          <div class="item-title-row">
-                            <div class="item-title">Jane Smith</div>
-                                <div class="item-after">
-                                    <button class="dentist-settings-remove-fav-button button button-round">Remove</button>
+                      {{#each favourites}}
+                      <li>
+                          <div class="item-link item-content">
+                            <div class="item-inner">
+                              <div class="item-title-row">
+                                <div class="item-title">{{hygienist.firstName}} {{hygienist.lastName}}</div>
+                                    <div class="item-after">
+                                        <button data-id="{{id}}" data-name="{{hygienist.firstName}}" class="dentist-hygienists-remove-fav-button button button-round">Remove</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                      </div>
-                    </li>
-
-                    <li>
-                      <div class="item-link item-content">
-                        <div class="item-inner">
-                          <div class="item-title-row">
-                            <div class="item-title">Mary Jones</div>
-                                <div class="item-after">
-                                    <button class="dentist-settings-remove-fav-button button button-round">Remove</button>
-                                </div>
+                          </div>
+                      </li>
+                      {{else}}
+                      <li>
+                          <div class="item-link item-content">
+                            <div class="item-inner">
+                                No favourite hygienists &nbsp;<span class="ti-face-sad"></span>
                             </div>
-                        </div>
-                      </div>
-                    </li>
-
-                    <li>
-                      <div class="item-link item-content">
-                        <div class="item-inner">
-                          <div class="item-title-row">
-                            <div class="item-title">Abby Adams</div>
-                                <div class="item-after">
-                                    <button class="dentist-settings-remove-fav-button button button-round">Remove</button>
-                                </div>
-                            </div>
-                        </div>
-                      </div>
-                    </li>
+                          </div>
+                      </li>
+                      {{/each}}
                   </ul>
                 </div>
                 <div class="content-block-title">Blocked Hygienists</div>
                 <div class="list-block media-list">
                   <ul>
-                    <li>
-                      <div class="item-link item-content">
-                        <div class="item-inner">
-                          <div class="item-title-row">
-                            <div class="item-title">Belinda Bacon</div>
-                                <div class="item-after">
-                                    <button class="dentist-settings-remove-blocked-button button button-round">Remove</button>
-                                </div>
-                            </div>
+                      {{#each blocked}}
+                      <li>
+                        <div class="item-link item-content">
+                          <div class="item-inner">
+                            <div class="item-title-row">
+                              <div class="item-title">{{hygienist.firstName}} {{hygienist.lastName}}</div>
+                                  <div class="item-after">
+                                      <button data-id="{{id}}" data-name="{{hygienist.firstName}}" class="dentist-hygienists-remove-blocked-button button button-round">Remove</button>
+                                  </div>
+                              </div>
+                          </div>
                         </div>
-                      </div>
-                    </li>
-
-                    <li>
-                      <div class="item-link item-content">
-                        <div class="item-inner">
-                          <div class="item-title-row">
-                            <div class="item-title">Charlie Chan</div>
-                                <div class="item-after">
-                                    <button class="dentist-settings-remove-blocked-button button button-round">Remove</button>
-                                </div>
+                      </li>
+                      {{else}}
+                      <li>
+                          <div class="item-link item-content">
+                            <div class="item-inner">
+                                No blocked hygienists &nbsp;<span class="ti-face-smile"></span>
                             </div>
-                        </div>
-                      </div>
-                    </li>
-
-                    <li>
-                      <div class="item-link item-content">
-                        <div class="item-inner">
-                          <div class="item-title-row">
-                            <div class="item-title">Dawn Redmond</div>
-                                <div class="item-after">
-                                    <button class="dentist-settings-remove-blocked-button button button-round">Remove</button>
-                                </div>
-                            </div>
-                        </div>
-                      </div>
-                    </li>
-
+                          </div>
+                      </li>
+                      {{/each}}
                   </ul>
                   <br>&nbsp;
                 </div>

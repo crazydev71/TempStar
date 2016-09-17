@@ -17,10 +17,8 @@ TempStars.Pages.Index = (function() {
             mainView.hideNavbar();
         });
 
-        // Global handler for menu
-        $$(document).on( 'click', '.logout-link', function(e) {
-            app.confirm( 'Are you sure you want to log out?', TempStars.Menu.logout );
-        });
+        // Global handler for logout 
+        $$(document).on( 'click', '.logout-link', TempStars.Menu.logout );
     }
 
     function loginButtonHandler(e) {

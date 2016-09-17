@@ -144,6 +144,7 @@
     <script src="lib/uuid.js"></script>
     <script src="lib/validate.min.js"></script>
     <script src="js/tempstars.app.js"></script>
+    <script src="js/tempstars.version.js"></script>
     <script src="js/tempstars.dentist.js"></script>
     <script src="js/tempstars.hygienist.js"></script>
     <script>
