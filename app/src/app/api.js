@@ -77,8 +77,8 @@ TempStars.Api = (function() {
             return TempStars.Ajax.post( 'dentists/' + dentistId + '/jobs', data );
         },
 
-        updateJob: function updateJob( dentistId, data ) {
-            return TempStars.Ajax.put( 'dentists/' + dentistId + '/jobs', data );
+        updateJob: function updateJob( jobId, data ) {
+            return TempStars.Ajax.put( 'jobs/' + jobId, data );
         },
 
         deleteJob: function deleteJob( dentistId, data ) {
@@ -92,7 +92,7 @@ TempStars.Api = (function() {
         updateInvoice: function updateInvoice( invoiceId, data ) {
             return TempStars.Ajax.put( 'invoices/' + invoiceId, data );
         }
-        
+
     };
 
 })();

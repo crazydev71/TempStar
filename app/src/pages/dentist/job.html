@@ -1,28 +1,60 @@
-<div class="views">
-    <div class="view view-main">
-        <div class="pages navbar-through">
-            <div class="navbar">
-                <div class="navbar-inner">
-                    <div class="left sliding">
-                        <a href="#" class="link icon-only back">
-                            <span class="ti-angle-left"></span> Back
-                        </a>
-                    </div>
-                    <div class="center sliding">Job Detail</div>
-                    <div class="right">
-                        <a href="#" data-panel="right" class="link icon-only open-panel">
-                            <span class="ti-menu"></span>
-                        </a>
-                    </div>
-                </div>
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="left sliding">
+            <a href="dentist/jobs.html" class="detailback link" data-reload="true" data-ignore-cache="true">
+                <span class="ti-angle-left"></span> back
+            </a>
+        </div>
+        <div class="center sliding">Job Detail</div>
+        <div class="right">
+            <a href="#" data-panel="right" class="link icon-only open-panel">
+                <span class="ti-menu"></span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div data-page="dentist-job" class="page">
+    <div class="page-content">
+        <div class="content-block">
+            <div class="job-box">
+
+            <div class="login-screen-title" style="margin-bottom:20px;">{{hygienist.firstName}} {{hygienist.lastName}}</div>
+
+            <table cellpadding="0" cellspacing="0">
+                <tr class="heading">
+                    <td>Shift</td>
+                    <td style="text-align:left;">Hours</td>
+                </tr>
+
+                {{#each shifts}}
+                <tr class="item">
+                    <td>{{date_format shiftDate}}</td>
+                    <td style="text-align:left;">
+                        {{time_format postedStart}} - {{time_format postedEnd}}
+                    </td>
+                </tr>
+                {{/each}}
+
+                <tr colspan="2"><td>&nbsp;</td></tr>
+            </table>
             </div>
-            <div data-page="job" class="page">
-                <div class="page-content">
-                    <div class="content-block">
-                        job details go here...
-                    </div>
+
+            <form id="dentist-job-notes-form">
+                <div class="label">Private Notes</div>
+                <div class="item-input">
+                    <textarea id="dentist-job-notes" class="resizable" style="width:96%;" placeholder="enter private notes" rows="6">{{privateNotes}}</textarea>
                 </div>
-            </div>
+
+                <div class="row" style="margin-top:20px">
+                    <div class="col-20">&nbsp;</div>
+                    <div class="col-60">
+                        <a id="dentist-job-notes-save-button" href="#" data-id="{{id}}" class="button button-round">Save Notes</a>
+                    </div>
+                    <div class="col-20">&nbsp;</div>
+                </div>
+            </form>
+
         </div>
     </div>
 </div>

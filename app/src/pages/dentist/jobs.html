@@ -1,92 +1,62 @@
-<div class="views">
-    <div class="view view-main">
-        <div class="pages navbar-through">
-            <div class="navbar">
-                <div class="navbar-inner">
-                    <!-- <div class="left sliding">
-                        <a href="#" class="link icon-only back">
-                            <span class="ti-angle-left"></span>
-                        </a>
-                    </div> -->
-                    <div class="center sliding">Job History</div>
-                    <div class="right">
-                        <a href="#" data-panel="right" class="link icon-only open-panel">
-                            <span class="ti-menu"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        <div data-page="jobs" class="page">
-            <div class="page-content">
-                <div class="content-block">
-                    <div class="row">
-                        <div class="col-50">
-                            <div style="padding-bottom:6px">Sort by</div>
-                          <div class="buttons-row">
-                              <a id="jobs-date-sorting-button" href="#" class="button active">Date</a>
-                              <a id="jobs-office-sorting-button" href="#" class="button">Hygienist</a>
-                          </div>
-                      </div>
-                      <div class="col-50">
-                          &nbsp;
-                      </div>
-                    </div>
-                </div>
-                <div class="list-block media-list">
-                      <ul>
-                          <li>
-                            <a href="dentist/job.html" class="item-link item-content">
-                              <div class="item-inner">
-                                <div class="item-title-row">
-                                    <div class="item-title">Jane Smith</div>
-                                    <div class="item-after"><span class="ti-angle-right" style="margin-top:24px;font-size:40px"></span></div>
-                                </div>
-                                <div class="item-subtitle">August 16th, 9am - 4pm</div>
-                                <div class="item-text">
-                                    invoice received: Aug 17, 2016<br>
-                                    survey complete: Aug 17, 2016
-                                </div>
-                              </div>
-                            </a>
-                          </li>
 
-
-                          <li>
-                            <a href="dentist/job.html" class="item-link item-content">
-                              <div class="item-inner">
-                                <div class="item-title-row">
-                                    <div class="item-title">Lisa Johnson</div>
-                                    <div class="item-after"><span class="ti-angle-right" style="margin-top:24px;font-size:40px"></span></div>
-                                </div>
-                                <div class="item-subtitle">August 16th, 9am - 4pm</div>
-                                <div class="item-text">
-                                    invoice received: Aug 17, 2016<br>
-                                    survey complete: Aug 17, 2016
-                                </div>
-                              </div>
-                            </a>
-                          </li>
-
-                          <li>
-                            <a href="dentist/job.html" class="item-link item-content">
-                              <div class="item-inner">
-                                <div class="item-title-row">
-                                    <div class="item-title">Mary Jones</div>
-                                    <div class="item-after"><span class="ti-angle-right" style="margin-top:24px;font-size:40px"></span></div>
-                                </div>
-                                <div class="item-subtitle">August 16th, 9am - 4pm</div>
-                                <div class="item-text">
-                                    invoice received: Aug 17, 2016<br>
-                                    survey complete: Aug 17, 2016
-                                </div>
-                              </div>
-                            </a>
-                          </li>
-                      </ul>
-                      <br>&nbsp;
-                    </div>
-                </div>
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="center sliding">Job History</div>
+            <div class="right">
+                <a href="#" data-panel="right" class="link icon-only open-panel">
+                    <span class="ti-menu"></span>
+                </a>
             </div>
         </div>
     </div>
-</div>
+
+    <div data-page="dentist-jobs" class="page">
+        <div class="page-content">
+            <div class="content-block">
+                    <div class="row">
+                        <div class="col-80">
+                            <div style="padding-bottom:6px">Sort by</div>
+                                <div class="buttons-row">
+                                    <a id="dentist-jobs-date-sorting-button" href="#" class="button active">Job Start Date</a>
+                                    <a id="dentist-jobs-hygienist-sorting-button" href="#" class="button">Hygienist</a>
+                                </div>
+                        </div>
+                        <div class="col-20">
+                            &nbsp;
+                        </div>
+                    </div>
+            </div>
+            <div class="list-block media-list">
+                  <ul>
+                      {{#each jobs}}
+                      <li>
+                        <a href="#" data-id="{{id}}" class="job item-link item-content">
+                          <div class="item-inner">
+                            <div class="item-title-row">
+                                <div class="item-title">{{hygienist.firstName}} {{hygienist.lastName}}</div>
+                                <div class="item-after"><span class="ti-angle-right" style="margin-top:16px;xxfont-size:20px"></span></div>
+                            </div>
+                            <div class="item-subtitle">job start date: {{date_format startDate}}</div>
+                            <!-- <div class="item-text">
+                                invoice date: {{date_format invoice.sentOn}}<br>
+                                survey complete: {{#if invoice.dentistMarkedPaid}}yes{{else}}no{{/if}}
+                            </div> -->
+                          </div>
+                        </a>
+                      </li>
+                      {{else}}
+                      <li>
+                          <div class="item-link item-content">
+                            <div class="item-inner">
+                                No jobs &nbsp;<span class="ti-face-sad"></span>
+                            </div>
+                          </div>
+                      </li>
+                      {{/each}}
+
+
+                  </ul>
+                      <br>&nbsp;
+            </div>
+        </div>
+    </div>

@@ -33,12 +33,12 @@
                           <div class="item-inner">
                             <div class="item-title-row">
                                 <div class="item-title">{{hygienist.firstName}} {{hygienist.lastName}}</div>
-                                <div class="item-after"><span class="ti-angle-right" style="margin-top:24px;font-size:20px"></span></div>
+                                <div class="item-after"><span class="ti-angle-right" style="margin-top:26px;xxfont-size:20px"></span></div>
                             </div>
-                            {{#each shifts}}
+                            <!-- {{#each shifts}}
                             <div class="item-subtitle">{{date_format shiftDate}} &nbsp;&nbsp; {{time_format postedStart}} - {{time_format postedEnd}}</div>
-                            {{/each}}
-                            <div class="item-text">
+                            {{/each}} -->
+                            <div class="item-subtitle">
                                 invoice date: {{date_format invoice.sentOn}}<br>
                                 paid: {{#if invoice.dentistMarkedPaid}}yes{{else}}no{{/if}}
                             </div>

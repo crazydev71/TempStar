@@ -5,12 +5,12 @@ TempStars.Pages.Dentist.Invoice = (function() {
     function init() {
         app.onPageBeforeInit( 'dentist-invoice', function( page ) {
             $$('#dentist-invoice-paid-checkbox').on( 'change', paidToggleHandler );
-            $$('.mike').on( 'click', backHandler );
+            $$('.detailback').on( 'click', backHandler );
         });
 
         app.onPageBeforeRemove( 'dentist-invoice', function( page ) {
             $$('#dentist-invoice-paid-checkbox').off( 'change', paidToggleHandler );
-            $$('.mike').off( 'click', backHandler );
+            $$('.detailback').off( 'click', backHandler );
         });
 
     }
