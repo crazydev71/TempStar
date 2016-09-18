@@ -67,8 +67,32 @@ TempStars.Api = (function() {
 
         removeFavouriteHygienist: function removeFavouriteHygienist( dentistId, hygienistId ) {
             return TempStars.Ajax.del( 'dentists/' + dentistId + '/favouritehygienists/' + hygienistId );
-        }
+        },
 
+        getJobs: function getJobs( dentistId ) {
+            return TempStars.Ajax.get( 'dentists/' + dentistId + '/jobs' );
+        },
+
+        createJob: function createJob( dentistId, data ) {
+            return TempStars.Ajax.post( 'dentists/' + dentistId + '/jobs', data );
+        },
+
+        updateJob: function updateJob( dentistId, data ) {
+            return TempStars.Ajax.put( 'dentists/' + dentistId + '/jobs', data );
+        },
+
+        deleteJob: function deleteJob( dentistId, data ) {
+            return TempStars.Ajax.del( 'dentists/' + dentistId + '/jobs', data );
+        },
+
+        getInvoice: function getInvoice( jobId ) {
+            return TempStars.Ajax.post( 'jobs/' + jobId + '/invoice', data );
+        },
+
+        updateInvoice: function updateInvoice( invoiceId, data ) {
+            return TempStars.Ajax.put( 'invoices/' + invoiceId, data );
+        }
+        
     };
 
 })();

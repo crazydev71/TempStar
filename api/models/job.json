@@ -8,12 +8,15 @@
       "table": "Job"
     }
   },
+  "scope": {
+      "include": [ "invoice", "hygienist", "shifts" ]
+  },
   "properties": {
     "id": {
       "type": "Number",
       "id": true,
       "generated": true,
-      "required": true,
+      "required": false,
       "length": null,
       "precision": 10,
       "scale": 0,
@@ -88,7 +91,7 @@
     },
     "completedOn": {
       "type": "Date",
-      "required": true,
+      "required": false,
       "length": null,
       "precision": null,
       "scale": null,
@@ -148,7 +151,7 @@
     },
     "modifiedOn": {
       "type": "Date",
-      "required": true,
+      "required": false,
       "length": null,
       "precision": null,
       "scale": null,

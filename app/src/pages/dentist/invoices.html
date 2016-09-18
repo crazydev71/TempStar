@@ -1,92 +1,63 @@
-<div class="views">
-    <div class="view view-main">
-        <div class="pages navbar-through">
-            <div class="navbar">
-                <div class="navbar-inner">
-                    <!-- <div class="left sliding">
-                        <a href="#" class="link icon-only back">
-                            <span class="ti-angle-left"></span>
-                        </a>
-                    </div> -->
-                    <div class="center sliding">Invoices</div>
-                    <div class="right">
-                        <a href="#" data-panel="right" class="link icon-only open-panel">
-                            <span class="ti-menu"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        <div data-page="invoices" class="page">
-            <div class="page-content">
-                <div class="content-block">
-                        <div class="row">
-                            <div class="col-50">
-                                <div style="padding-bottom:6px">Sort by</div>
-                              <div class="buttons-row">
-                                  <a id="invoices-date-sorting-button" href="#" class="button active">Date</a>
-                                  <a id="invoices-office-sorting-button" href="#" class="button">Hygienist</a>
-                              </div>
-                          </div>
-                          <div class="col-50">
-                          </div>
-                        </div>
-                </div>
-                    <div class="list-block media-list">
-                      <ul>
-                          <li>
-                            <a href="dentist/invoice.html" class="item-link item-content">
-                              <div class="item-inner">
-                                <div class="item-title-row">
-                                    <div class="item-title">Jane Smith</div>
-                                    <div class="item-after"><span class="ti-angle-right" style="margin-top:24px;font-size:40px"></span></div>
-                                </div>
-                                <div class="item-subtitle">August 16th, 9am - 4pm</div>
-                                <div class="item-text">
-                                    received: Aug 17, 2016<br>
-                                    paid: Aug 21, 2016
-                                </div>
-                              </div>
-                            </a>
-                          </li>
-
-                          <li>
-                            <a href="dentist/invoice.html" class="item-link item-content">
-                              <div class="item-inner">
-                                <div class="item-title-row">
-                                    <div class="item-title">Lisa Johnson</div>
-                                    <div class="item-after"><span class="ti-angle-right" style="margin-top:24px;font-size:40px"></span></div>
-                                </div>
-                                <div class="item-subtitle">August 16th, 9am - 4pm</div>
-                                <div class="item-text">
-                                    received: Aug 17, 2016<br>
-                                    paid: Aug 21, 2016
-                                </div>
-                              </div>
-                            </a>
-                          </li>
-
-                          <li>
-                            <a href="dentist/invoice.html" class="item-link item-content">
-                              <div class="item-inner">
-                                <div class="item-title-row">
-                                    <div class="item-title">Mary Smith</div>
-                                    <div class="item-after"><span class="ti-angle-right" style="margin-top:24px;font-size:40px"></span></div>
-                                </div>
-                                <div class="item-subtitle">August 16th, 9am - 4pm</div>
-                                <div class="item-text">
-                                    received: Aug 17, 2016<br>
-                                    paid: Aug 21, 2016
-                                </div>
-                              </div>
-                            </a>
-                          </li>
-
-
-                      </ul>
-                      <br>&nbsp;
-                    </div>
-                </div>
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="center sliding">Invoices</div>
+            <div class="right">
+                <a href="#" data-panel="right" class="link icon-only open-panel">
+                    <span class="ti-menu"></span>
+                </a>
             </div>
         </div>
     </div>
-</div>
+
+    <div data-page="dentist-invoices" class="page">
+        <div class="page-content">
+            <div class="content-block">
+                    <div class="row">
+                        <div class="col-70">
+                            <div style="padding-bottom:6px">Sort by</div>
+                                <div class="buttons-row">
+                                    <a id="dentist-invoices-date-sorting-button" href="#" class="button active">Invoice Date</a>
+                                    <a id="dentist-invoices-hygienist-sorting-button" href="#" class="button">Hygienist</a>
+                                </div>
+                        </div>
+                        <div class="col-30">
+                            &nbsp;
+                        </div>
+                    </div>
+            </div>
+            <div class="list-block media-list">
+                  <ul>
+                      {{#each jobs}}
+                      <li>
+                        <a href="#" data-id="{{id}}" class="invoice item-link item-content">
+                          <div class="item-inner">
+                            <div class="item-title-row">
+                                <div class="item-title">{{hygienist.firstName}} {{hygienist.lastName}}</div>
+                                <div class="item-after"><span class="ti-angle-right" style="margin-top:24px;font-size:20px"></span></div>
+                            </div>
+                            {{#each shifts}}
+                            <div class="item-subtitle">{{date_format shiftDate}} &nbsp;&nbsp; {{time_format postedStart}} - {{time_format postedEnd}}</div>
+                            {{/each}}
+                            <div class="item-text">
+                                invoice date: {{date_format invoice.sentOn}}<br>
+                                paid: {{#if invoice.dentistMarkedPaid}}yes{{else}}no{{/if}}
+                            </div>
+                          </div>
+                        </a>
+                      </li>
+                      {{else}}
+                      <li>
+                          <div class="item-link item-content">
+                            <div class="item-inner">
+                                No invoices &nbsp;<span class="ti-face-sad"></span>
+                            </div>
+                          </div>
+                      </li>
+                      {{/each}}
+
+
+                  </ul>
+                      <br>&nbsp;
+            </div>
+        </div>
+    </div>

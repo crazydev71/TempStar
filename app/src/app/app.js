@@ -9,6 +9,37 @@ TempStars.App = (function() {
 
     return {
         init: function init() {
+            app.onPageBeforeInit( '*', function( page ) {
+                console.log( page.name + ': onPageBeforeInit' );
+            });
+
+            app.onPageInit( '*', function( page ) {
+                console.log( page.name + ': onPageInit' );
+            });
+
+            app.onPageReinit( '*', function( page ) {
+                console.log( page.name + ': onPageReinit' );
+            });
+
+            app.onPageBeforeAnimation( '*', function( page ) {
+                console.log( page.name + ': onPageBeforeAnimation' );
+            });
+
+            app.onPageAfterAnimation( '*', function( page ) {
+                console.log( page.name + ': onPageAfterAnimation' );
+            });
+
+            app.onPageBeforeRemove( '*', function( page ) {
+                console.log( page.name + ': onPageBeforeRemove' );
+            });
+
+            app.onPageBack( '*', function( page ) {
+                console.log( page.name + ': onPageBack' );
+            });
+
+            app.onPageAfterBack( '*', function( page ) {
+                console.log( page.name + ': onPageAfterBack' );
+            });
 
             // TODO
             Stripe.setPublishableKey('pk_test_fPZwN5y87Dx9r3C4FWhdzGVH');
@@ -21,6 +52,8 @@ TempStars.App = (function() {
                 // Stay on main page
                 console.log( 'autoLogin failed' );
             });
+
+
         },
 
         gotoStartingPage: function gotoStartingPage() {
@@ -93,5 +126,5 @@ TempStars.App = (function() {
             app.formDeleteData('hygienist-signup-form');
         }
     };
-    
+
 })();

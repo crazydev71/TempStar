@@ -13,6 +13,14 @@ TempStars.bootstrap = {
         // Define Dom7 as global
         window.$$ = Dom7;
 
+        // Register helpers
+        Template7.registerHelper('date_format', function(dateString) {
+            return moment( dateString ).format('MMM D, YYYY');
+        });
+        Template7.registerHelper('time_format', function(timeString) {
+            return moment( timeString ).format('h:mm a');
+        });
+
         // Setup app
         window.app = new Framework7({
             // Enable Material theme for Android device only
@@ -21,7 +29,8 @@ TempStars.bootstrap = {
             material: false,
             template7Pages: true,
             modalTitle: 'TempStars',
-            animateNavBackIcon: true
+            animateNavBackIcon: true,
+            cache: false
         });
 
         // Initialize main view
