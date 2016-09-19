@@ -1,128 +1,280 @@
-<div class="views">
-    <div class="view view-main">
-        <div class="navbar">
-            <div class="navbar-inner">
-                <div class="center sliding">Office Profile</div>
-                <div class="right">
-                    <a href="#" data-panel="right" class="link icon-only open-panel">
-                        <span class="ti-menu"></span>
-                    </a>
-                </div>
+
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="center sliding">Dental Office Profile</div>
+            <div class="right">
+                <a href="#" data-panel="right" class="link icon-only open-panel">
+                    <span class="ti-menu"></span>
+                </a>
             </div>
         </div>
+    </div>
 
-        <div class="pages navbar-through">
-        <div data-page="settings" class="page">
-            <div class="page-content">
-                <div class="content-block">
-                    <div style="margin:auto; width:150px;padding-left:0">
-                        <img width="150" src="img/dentist-office.jpg"><br>
-                    </div>
-                    <div style="margin:auto; width:150px;padding-left:0">
-                        <button style="width:150px" class="button button-round">upload photo</button>
-                    </div>
-                </div>
-                    <div class="list-block">
-                      <ul>
-                        <!-- Text inputs -->
-                        <li>
-                          <div class="item-content">
+    <div data-page="dentist-profile" class="page">
+        <div class="page-content">
+            <form id="dentist-profile-form">
+                <div class="list-block inset" style="margin:20px 0 10px 5px;font-size:12px;">
+                    <div class="form-error-msg"></div>
+                    <ul>
+                        <!-- <li class="item-content">
                             <div class="item-inner">
-                              <div class="item-title label">Practice Name</div>
-                              <div class="item-input">
-                                <input type="text" placeholder="practice name">
-                              </div>
+                                <div class="item-title label">Email</div>
+                                <div class="item-input">
+                                    <input type="text" name="email" maxlength="100" placeholder="email address" value="">
+                                    <div class="field-error-msg"></div>
+                                </div>
                             </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="item-content">
+                        </li> -->
+
+                        <li class="item-content">
                             <div class="item-inner">
-                              <div class="item-title label">Business Name</div>
-                              <div class="item-input">
-                                <input type="text" placeholder="business name">
-                              </div>
+                                <div class="item-title label">Practice Name</div>
+                                <div class="item-input">
+                                    <input type="text" name="practiceName" maxlength="100" placeholder="practice name" value="{{practiceName}}">
+                                    <div class="field-error-msg"></div>
+                                </div>
                             </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="item-content">
-                            <div class="item-inner">
-                              <div class="item-title label">Email</div>
-                              <div class="item-input">
-                                <input type="email" placeholder="email">
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="item-content">
-                            <div class="item-inner">
-                              <div class="item-title label">Address</div>
-                              <div class="item-input">
-                                <input type="text" placeholder="address">
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="item-content">
-                            <div class="item-inner">
-                              <div class="item-title label">City</div>
-                              <div class="item-input">
-                                <input type="text" placeholder="city">
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="item-content">
-                            <div class="item-inner">
-                              <div class="item-title label">Province</div>
-                              <div class="item-input">
-                                <select>
-                                  <option>Alberta</option>
-                                  <option>British Columbia</option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="item-content">
-                            <div class="item-inner">
-                              <div class="item-title label">Postal Code</div>
-                              <div class="item-input">
-                                <input type="text" placeholder="postal code">
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="item-content">
-                            <div class="item-inner">
-                              <div class="item-title label">Phone</div>
-                              <div class="item-input">
-                                <input type="text" placeholder="phone">
-                              </div>
-                            </div>
-                          </div>
                         </li>
 
-                      </ul>
-                    </div>
-                <div class="content-block">
-                    <div class="row">
-                        <div class="col-30">&nbsp;</div>
-                        <div class="col-40">
-                            <a href="#" class="button button-big button-round">Save</a>
-                        </div>
-                        <!-- <div class="col-30">
-                            <a href="#" class="" style="line-height:28px;vertical-align:center;">Cancel</a>
-                        </div> -->
-                        <div class="col-30">&nbsp;</div>
-                    </div>
+                        <li class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Business Owner</div>
+                                <div class="item-input">
+                                    <input type="text" name="businessOwner" maxlength="100" placeholder="business owner" value="{{businessOwner}}">
+                                    <div class="field-error-msg"></div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Address</div>
+                                <div class="item-input">
+                                    <input type="text" name="address" maxlength="50" placeholder="address"  value="{{address}}">
+                                    <div class="field-error-msg"></div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">City</div>
+                                <div class="item-input">
+                                    <input type="text" name="city" maxlength="50" placeholder="city"  value="{{city}}">
+                                    <div class="field-error-msg"></div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Province</div>
+                                <div class="item-input">
+                                    <select class="no-fastclick" name="province">
+                                        <option value="">select province &dtrif; </option>
+                                        <option value="ON">Ontario</option>
+                                        <option value="AB" disabled>Alberta (coming soon)</option>
+                                        <option value="BC" disabled>British Columbia (coming soon)</option>
+                                        <option value="MB" disabled>Manitoba (coming soon)</option>
+                                        <option value="NB" disabled>New Brunswick (coming soon)</option>
+                                        <option value="NL" disabled>Newfoundland and Labrador (coming soon)</option>
+                                        <option value="NT" disabled>Northwest Territories (coming soon)</option>
+                                        <option value="NS" disabled>Nova Scotia (coming soon)</option>
+                                        <option value="NU" disabled>Nunavut (coming soon)</option>
+                                        <option value="PE" disabled>Prince Edward Island (coming soon)</option>
+                                        <option value="QC" disabled>Quebec (coming soon)</option>
+                                        <option value="SK" disabled>Saskatchewan (coming soon)</option>
+                                        <option value="YT" disabled>Yukon (coming soon)</option>
+                                    </select>
+                                    <div class="field-error-msg"></div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Postal Code</div>
+                                <div class="item-input">
+                                    <input type="text" style="text-transform: uppercase" name="postalCode" maxlength="7" placeholder="postal code" value="{{postalCode}}">
+                                    <div class="field-error-msg"></div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Office Phone</div>
+                                <div class="item-input">
+                                    <input type="tel" name="phone" maxlength="20" placeholder="office phone" value="{{phone}}">
+                                    <div class="field-error-msg"></div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Office Picture</div>
+                                <div class="item-input" style="padding-top:4px;">
+                                    <div id="dentist-signup1-photo-remove" style="display:none;">
+                                        <img id="dentist-signup1-photo" src="img/dental-office.png" style="width:20px;height:20px">
+                                        <a id="dentist-signup1-remove-photo-button" href="#">remove photo</a>
+                                    </div>
+                                    <div id="dentist-signup1-photo-add">
+                                        <a id="dentist-signup1-upload-photo-button" href="#">
+                                            <img id="dentist-signup1-photo" src="img/dental-office.png" style="width:20px;height:20px">
+                                            upload photo
+                                        </a>
+                                        <i style="color:#aaa">(optional)</i>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Primary Contact</div>
+                                <div class="item-input">
+                                    <input type="text" name="primaryContact" maxlength="50" placeholder="contact person's name" value="{{detail.primaryContact}}">
+                                    <div class="field-error-msg"></div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Parking</div>
+                                <div class="item-input">
+                                    <select class="no-fastclick" name="parking">
+                                        <option value="">Parking is: &dtrif;</option>
+                                        <option value="free-on-site">free on-site</option>
+                                        <option value="paid-on-site">paid on-site</option>
+                                        <option value="street">street</option>
+                                        <option value="public-lot">public lot</option>
+                                        <option value="no-parking">no parking available</option>
+                                    </select>
+                                    <div class="field-error-msg"></div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Payment</div>
+                                <div class="item-input">
+                                    <select class="no-fastclick" name="payment">
+                                        <option value="">Hygienist paid via: &dtrif;</option>
+                                        <option value="same-day-cheque">same-day cheque</option>
+                                        <option value="submit-invoice">submit invoice</option>
+                                        <option value="other">other</option>
+                                    </select>
+                                    <div class="field-error-msg"></div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Arrival</div>
+                                <div class="item-input">
+                                    <select class="no-fastclick" name="hygienistArrival">
+                                        <option value="">Hygienist to arrive... &dtrif;</option>
+                                        <option>At start time</option>
+                                        <option value="10min-before">10min before start time</option>
+                                        <option value="15min-before">15min before start time</option>
+                                        <option value="30min-before">30min before start time</option>
+                                    </select>
+                                    <div class="field-error-msg"></div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Radiography</div>
+                                <div class="item-input">
+                                    <select class="no-fastclick" name="radiography">
+                                        <option value="">Type of radiographs &dtrif;</option>
+                                        <option value="film">film</option>
+                                        <option value="digital">digital sensors</option>
+                                        <option value="phosphor-plates">phosphor plates</option>
+                                    </select>
+                                    <div class="field-error-msg"></div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Ultrasonic</div>
+                                <div class="item-input">
+                                    <select class="no-fastclick" name="ultrasonic">
+                                        <option value="">Piezo or Cavitron? &dtrif;</option>
+                                        <option value="cavitron">Cavitron</option>
+                                        <option value="piezo">Piezo</option>
+                                        <option value="both">Both</option>
+                                        <option value="none">None</option>
+                                    </select>
+                                    <div class="field-error-msg"></div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Avg Recall</div>
+                                <div class="item-input">
+                                    <select class="no-fastclick" name="avgApptTime">
+                                        <option value="">Adult recalls are: &dtrif;</option>
+                                        <option>30min</option>
+                                        <option>45min</option>
+                                        <option>60min</option>
+                                    </select>
+                                    <div class="field-error-msg"></div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Charting</div>
+                                <div class="item-input">
+                                    <select class="no-fastclick" name="charting">
+                                        <option value="">Charting system is: &dtrif;</option>
+                                        <option>paper charts</option>
+                                        <option>digital charts</option>
+                                    </select>
+                                    <div class="field-error-msg"></div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Software</div>
+                                <div class="item-input">
+                                    <select class="no-fastclick" name="software">
+                                        <option value="">Dental software is: &dtrif;</option>
+                                        <option>Dentrix</option>
+                                        <option>AbelDent</option>
+                                        <option>Tracker</option>
+                                        <option>EagleSoft</option>
+                                        <option>Other</option>
+                                    </select>
+                                    <div class="field-error-msg"></div>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
                 </div>
+
+                <div class="row" style="margin-top:20px">
+                    <div class="col-20">&nbsp;</div>
+                    <div class="col-60">
+                        <a id="dentist-profile-save-button" class="button button-round">Save</a>
+                    </div>
+                    <div class="col-20">&nbsp;</div>
+                </div>
+            </form>
         </div>
     </div>
-</div>

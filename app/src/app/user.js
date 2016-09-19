@@ -23,6 +23,7 @@ TempStars.User = (function() {
                 TempStars.User.getAccount()
                 .then( function( account ) {
                     userAccount = account;
+                    TempStars.Storage.set( 'userAccount', account );                    
                     resolve();
                 })
                 .catch( function( err ) {

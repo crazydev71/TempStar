@@ -10,7 +10,7 @@ module.exports = function( Dentist ) {
 
     Dentist.disableRemoteMethod('createChangeStream', true);
 
-    Dentist.remoteMethod( 'account', {
+    Dentist.remoteMethod( 'createAccount', {
         accepts: [
             {arg: 'id', type: 'number', required: true},
             {arg: 'data', type: 'object', http: { source: 'body' } } ],
@@ -18,7 +18,7 @@ module.exports = function( Dentist ) {
         http: { verb: 'post', path: '/:id/account' }
     });
 
-    Dentist.account = function( id, data, callback ) {
+    Dentist.createAccount = function( id, data, callback ) {
         var customerId;
         var dentist;
         var geocode;
@@ -75,19 +75,24 @@ module.exports = function( Dentist ) {
             });
         })
         .then( function() {
+            console.log( 'geocoding...' );
+
             return new Promise( function( resolve, reject ) {
                 var address = dentist.address + ', ' + dentist.city + ', ' + dentist.province + ' ' + dentist.postalCode + ' Canada';
                 location.geocode( address )
                 .then( function( latlon ) {
+                    console.log( 'geocoding worked supposedly' );
                     resolve( latlon );
                 })
                 .catch( function( err ) {
+                    console.log( 'geocode error' );
                     resolve( { lat: 0, lon: 0} );
                 });
             });
         })
         .then( function( gc ) {
             geocode = gc;
+            console.log( 'geocode: ', gc );
             var PostalCode = app.models.PostalCode;
             var prefix = dentist.postalCode.substr(0,2);
             return PostalCode.findOne( {where: {prefix: prefix} } );
@@ -106,4 +111,90 @@ module.exports = function( Dentist ) {
             callback( err );
         });
     };
+
+    Dentist.remoteMethod( 'updateAccount', {
+        accepts: [
+            {arg: 'id', type: 'number', required: true},
+            {arg: 'data', type: 'object', http: { source: 'body' } } ],
+        returns: { arg: 'result', type: 'object' },
+        http: { verb: 'put', path: '/:id/account' }
+    });
+
+    Dentist.updateAccount = function( id, data, callback ) {
+        var dentist;
+        var dentistDetail;
+        var geocode;
+
+        Dentist.findById( id )
+        .then( function( d ) {
+            dentist = d;
+            return dentist.updateAttributes({
+                practiceName: data.practiceName,
+                businessOwner: data.businessOwner,
+                phone: data.phone,
+                address: data.address,
+                city: data.city,
+                province: data.province,
+                postalCode: data.postalCode,
+                photoUrl: data.photoUrl
+            });
+        })
+        .then( function( d ) {
+            dentist = d;
+            var DentistDetail = app.models.DentistDetail;
+            return DentistDetail.findById( data.detailId );
+        })
+        .then( function( dd ) {
+            dentistDetail = dd;
+            return dentistDetail.updateAttributes({
+                primaryContact: data.primaryContact,
+                parking: data.parking,
+                payment: data.payment,
+                hygienistArrival: data.hygienistArrival,
+                radiography: data.radiography,
+                ultrasonic: data.ultrasonic,
+                sterilization: data.sterilization,
+                avgApptTime: data.avgApptTime,
+                charting: data.charting,
+                software: data.software
+            });
+        })
+        // .then( function() {
+        //     return new Promise( function( resolve, reject ) {
+        //         var address = dentist.address + ', ' + dentist.city + ', ' + dentist.province + ' ' + dentist.postalCode + ' Canada';
+        //         location.geocode( address )
+        //         .then( function( latlon ) {
+        //             resolve( latlon );
+        //         })
+        //         .catch( function( err ) {
+        //             resolve( { lat: 0, lon: 0} );
+        //         });
+        //     });
+        // })
+        .then( function( gc ) {
+            //geocode = gc;
+            console.log( 'Geocoding...');
+            geocode = { lat: -1.0, lon: 1.0};
+            var PostalCode = app.models.PostalCode;
+            var prefix = dentist.postalCode.substr(0,2);
+            return PostalCode.findOne( {where: {prefix: prefix} } );
+        })
+        .then( function( postalCode ) {
+            console.log( 'Regioning...');
+            return dentist.updateAttributes({
+                lat: geocode.lat,
+                lon: geocode.lon,
+                regionId: postalCode.regionId
+            });
+        })
+        .then( function() {
+            console.log( 'worked!' );
+            callback( null, {} );
+        })
+        .catch( function( err ) {
+            console.log( 'error!' );
+            callback( err );
+        });
+    };
+
 };

@@ -12,19 +12,20 @@
     <div data-page="dentist-invoices" class="page">
         <div class="page-content">
             <div class="content-block">
-                    <div class="row">
-                        <div class="col-70">
-                            <div style="padding-bottom:6px">Sort by</div>
-                                <div class="buttons-row">
-                                    <a id="dentist-invoices-date-sorting-button" href="#" class="button active">Invoice Date</a>
-                                    <a id="dentist-invoices-hygienist-sorting-button" href="#" class="button">Hygienist</a>
-                                </div>
-                        </div>
-                        <div class="col-30">
-                            &nbsp;
+                <div class="row">
+                    <div class="col-70">
+                        <div style="padding-bottom:6px">Sort by</div>
+                        <div class="buttons-row">
+                            <a id="dentist-invoices-date-sorting-button" href="#" class="button active">Invoice Date</a>
+                            <a id="dentist-invoices-hygienist-sorting-button" href="#" class="button">Hygienist</a>
                         </div>
                     </div>
+                    <div class="col-30">
+                        &nbsp;
+                    </div>
+                </div>
             </div>
+
             <div class="list-block media-list">
                   <ul>
                       {{#each jobs}}
@@ -54,8 +55,6 @@
                           </div>
                       </li>
                       {{/each}}
-
-
                   </ul>
                       <br>&nbsp;
             </div>

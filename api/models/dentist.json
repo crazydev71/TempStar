@@ -8,6 +8,9 @@
       "table": "Dentist"
     }
   },
+  "scope": {
+      "include": [ "detail", "user" ]
+  },
   "properties": {
     "id": {
       "type": "Number",
@@ -310,6 +313,32 @@
       "foreignKey": "regionId"
     }
   },
-  "acls": [],
+  "acls": [
+      {
+        "accessType": "EXECUTE",
+        "principalType": "ROLE",
+        "principalId": "$everyone",
+        "permission": "ALLOW",
+        "property": "updateAccount"
+      },
+      {
+        "accessType": "READ",
+        "principalType": "ROLE",
+        "principalId": "$owner",
+        "permission": "ALLOW"
+      },
+      {
+        "accessType": "WRITE",
+        "principalType": "ROLE",
+        "principalId": "$owner",
+        "permission": "ALLOW"
+      },
+      {
+        "accessType": "EXECUTE",
+        "principalType": "ROLE",
+        "principalId": "$owner",
+        "permission": "ALLOW"
+      }
+  ],
   "methods": {}
 }

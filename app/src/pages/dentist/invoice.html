@@ -19,84 +19,83 @@
             <div class="content-block">
                 <div class="invoice-box">
 
-                <div class="row" style="padding-bottom:20px;">
-                    <div class="col-50" style="xxpadding-left:15px; text-align:left;">
-                        {{hygienist.firstName}} {{hygienist.lastName}}<br>
-                        {{hygienist.address}}<br>
-                        {{hygienist.city}}, {{hygienist.province}}<br>
-                        {{hygienist.postalCode}}
+                    <div class="row" style="padding-bottom:20px;">
+                        <div class="col-50" style="xxpadding-left:15px; text-align:left;">
+                            {{hygienist.firstName}} {{hygienist.lastName}}<br>
+                            {{hygienist.address}}<br>
+                            {{hygienist.city}}, {{hygienist.province}}<br>
+                            {{hygienist.postalCode}}
+                        </div>
+                        <div class="col-50" style="xxpadding-right:15px; text-align:right;">
+                            Invoice #: {{id}}<br>
+                            {{date_format invoice.sentOn}}
+                        </div>
                     </div>
-                    <div class="col-50" style="xxpadding-right:15px; text-align:right;">
-                        Invoice #: {{id}}<br>
-                        {{date_format invoice.sentOn}}
-                    </div>
+
+                    <table cellpadding="0" cellspacing="0">
+                        <tr class="heading">
+                            <td>Shift</td>
+                            <td style="text-align:left;">Hours</td>
+                        </tr>
+
+                        {{#each shifts}}
+                        <tr class="item">
+                            <td>{{date_format shiftDate}}</td>
+                            <td style="text-align:left;">
+                                {{time_format postedStart}} - {{time_format postedEnd}}
+                            </td>
+                        </tr>
+                        {{/each}}
+
+                        <tr colspan="2"><td>&nbsp;</td></tr>
+
+                        <tr class="heading">
+                            <td>Totals</td>
+                            <td>&nbsp;</td>
+                        </tr>
+
+                        <tr class="item">
+                            <td>unpaid hours</td>
+                            <td>{{invoice.totalUnpaidHours}}</td>
+                        </tr>
+
+                        <tr class="item">
+                            <td>total hours</td>
+                            <td>{{invoice.totalHours}}</td>
+                        </tr>
+
+                        <tr class="item last">
+                            <td>hourly rate</td>
+                            <td>{{invoice.hourlyRate}}</td>
+                        </tr>
+
+                        <tr class="total">
+                            <td>&nbsp;</td>
+                            <td>
+                               Total: ${{invoice.totalInvoice}}
+                            </td>
+                        </tr>
+                    </table>
                 </div>
 
-                <table cellpadding="0" cellspacing="0">
-                    <tr class="heading">
-                        <td>Shift</td>
-                        <td style="text-align:left;">Hours</td>
-                    </tr>
-
-                    {{#each shifts}}
-                    <tr class="item">
-                        <td>{{date_format shiftDate}}</td>
-                        <td style="text-align:left;">
-                            {{time_format postedStart}} - {{time_format postedEnd}}
-                        </td>
-                    </tr>
-                    {{/each}}
-
-                    <tr colspan="2"><td>&nbsp;</td></tr>
-
-                    <tr class="heading">
-                        <td>Totals</td>
-                        <td>&nbsp;</td>
-                    </tr>
-
-                    <tr class="item">
-                        <td>unpaid hours</td>
-                        <td>{{invoice.totalUnpaidHours}}</td>
-                    </tr>
-
-                    <tr class="item">
-                        <td>total hours</td>
-                        <td>{{invoice.totalHours}}</td>
-                    </tr>
-
-                    <tr class="item last">
-                        <td>hourly rate</td>
-                        <td>{{invoice.hourlyRate}}</td>
-                    </tr>
-
-                    <tr class="total">
-                        <td>&nbsp;</td>
-                        <td>
-                           Total: ${{invoice.totalInvoice}}
-                        </td>
-                    </tr>
-                </table>
-                </div>
                 <div class="row">
                     <div class="col-20"></div>
                     <div class="col-60" style="text-align: center;">
                         <label class="label-switch">
                             <div style="font-size:20px;padding-bottom:4px;">Paid?</div>
-                          <input id="dentist-invoice-paid-checkbox" data-id="{{invoice.id}}" type="checkbox" {{#if invoice.dentistMarkedPaid}}checked{{/if}}>
-                          <div class="checkbox"></div>
-                          <div id="dentist-invoice-paid-label" style="font-size:12px; padding-top:10px;">
-                              {{#if invoice.dentistMarkedPaid}}
-                              paid!
-                              {{else}}
-                              not paid
-                              {{/if}}
-                          </div>
+                            <input id="dentist-invoice-paid-checkbox" data-id="{{invoice.id}}" type="checkbox" {{#if invoice.dentistMarkedPaid}}checked{{/if}}>
+                            <div class="checkbox"></div>
+                            <div id="dentist-invoice-paid-label" style="font-size:12px; padding-top:10px;">
+                                {{#if invoice.dentistMarkedPaid}}
+                                paid!
+                                {{else}}
+                                not paid
+                                {{/if}}
+                            </div>
                         </label>
                     </div>
                     <div class="col-20"></div>
                 </div>
             </div>
-            <!-- dentist said paid:  {{invoice.dentistMarkedPaid}} -->
-
         </div>
     </div>

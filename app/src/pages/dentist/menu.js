@@ -10,8 +10,10 @@ TempStars.Dentist.Menu = (function() {
             e.preventDefault();
 
             var url = $$(this).attr('data-url');
+            console.log( 'menu get data for url: ' + url );
             getData( url )
             .then( function( data ) {
+                console.log( 'loading url: ' + url );
                 mainView.router.load({
                     url: url,
                     context: data,
