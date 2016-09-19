@@ -17,8 +17,9 @@ TempStars.Dentist.Menu = (function() {
                 mainView.router.load({
                     url: url,
                     context: data,
-                    ignoreCache: true,
-                    reload: true
+                    ignoreCache: true
+                    // reload: true,
+                    // reloadPrevious: true
                 });
             })
             .catch( function( err ) {
@@ -55,6 +56,14 @@ TempStars.Dentist.Menu = (function() {
 
             case 'dentist/support.html':
                 return TempStars.Pages.Dentist.Support.getData();
+                break;
+
+            case 'dentist/terms-of-service.html':
+                return TempStars.Pages.Dentist.TermsOfService.getData();
+                break;
+
+            case 'dentist/privacy-policy.html':
+                return TempStars.Pages.Dentist.PrivacyPolicy.getData();
                 break;
 
             default:
