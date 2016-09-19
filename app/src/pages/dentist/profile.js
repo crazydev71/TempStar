@@ -6,13 +6,29 @@ TempStars.Pages.Dentist.Profile = (function() {
 
     function init() {
 
+        app.onPageAfterAnimation( 'dentist-profile', function( page ) {
+            if ( data.photoUrl ) {
+                $$('#dentist-profile-photo').attr('src', data.photoUrl );
+                $$('#dentist-profile-photo-remove').show();
+                $$('#dentist-profile-photo-add').hide();
+            }            
+        });
+
         app.onPageBeforeInit( 'dentist-profile', function( page ) {
 
             if ( ! initialized ) {
                 $$(document).on( 'click','#dentist-profile-save-button', submitHandler );
+                $$('#dentist-profile-upload-photo-button').on( 'click', addPhotoHandler );
+                $$('#dentist-profile-remove-photo-button').on( 'click', removePhotoHandler );
                 $$('#dentist-profile-form input[name="postalCode"]').on( 'focusout', upcasePostalCode );
                 $$('#dentist-profile-form input').on( 'keypress', keyHandler );
                 initialized = true;
+            }
+
+            if ( data.photoUrl ) {
+                $$('#dentist-profile-photo').attr('src', data.photoUrl );
+                $$('#dentist-profile-photo-remove').show();
+                $$('#dentist-profile-photo-add').hide();
             }
 
             $$('#dentist-profile-form select[name="province"]').val(data.province).prop('selected', true);
@@ -178,11 +194,15 @@ TempStars.Pages.Dentist.Profile = (function() {
             return;
         }
 
-
         app.showPreloader('Saving Profile');
-        formData.detailId = data.detail.id;
-        TempStars.Api.updateDentistAccount( data.id, formData )
+        uploadPhoto()
+        .then( function( photoFileName ) {
+            formData.photoUrl =  photoFileName;
+            formData.detailId = data.detail.id;
+            return TempStars.Api.updateDentistAccount( data.id, formData );
+        })
         .then( function() {
+            //app.formStoreData( '#dentist-profile-form', formData );
             return TempStars.User.refresh();
         })
         .then(function() {
@@ -195,6 +215,63 @@ TempStars.Pages.Dentist.Profile = (function() {
             // $$('#dentist-profile-form .form-error-msg')
             //     .html('<span class="ti-alert"></span> Updating Profile failed. ' + err.error.message )
             //     .show();
+        });
+    }
+
+    function addPhotoHandler() {
+        navigator.camera.getPicture (
+          function(result) {
+              $$('#dentist-profile-photo').attr('src', result );
+              $$('#dentist-profile-photo-remove').show();
+              $$('#dentist-profile-photo-add').hide();
+          },
+          function(errmsg) {
+              app.alert( errmsg )
+          },
+          {
+              sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+              quality: 80,
+              targetWidth: 200,
+              targetHeight: 200
+        });
+    }
+
+    function removePhotoHandler( e ) {
+        $$('#dentist-profile-photo').attr( 'src', '' );
+        $$('#dentist-profile-photo-remove').hide();
+        $$('#dentist-profile-photo-add').show();
+    }
+
+    function uploadPhoto() {
+        return new Promise( function( resolve, reject ) {
+            var photoURI = $$('#dentist-profile-photo').attr('src');
+
+            // If photo hasn't changed, don't need to upload
+            if ( photoURI == data.photoUrl ) {
+                resolve( photoURI );
+            }
+
+            // If the photo was removed, don't need to upload
+            // TODO remove old photo from server
+            if ( photoURI == '' ) {
+                resolve( photoURI );
+            }
+
+            // Otherwise new photo so upload
+            var options = new FileUploadOptions();
+            options.fileName = uuid.v4() + '.jpg';
+            var ft = new FileTransfer();
+            var uploadURL = TempStars.Config.server.baseUrl + 'containers/tempstars.ca/upload';
+            ft.upload( photoURI,
+               encodeURI( uploadURL ),
+               function( result ) {
+                  resolve( TempStars.Config.bucket.baseUrl + options.fileName );
+               },
+               function( error ) {
+                  reject( error );
+               },
+               options
+            );
         });
     }
 
