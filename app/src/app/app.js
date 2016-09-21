@@ -3,10 +3,6 @@ TempStars.App = (function() {
 
     'use strict';
 
-    var userLoggedIn,
-        userAuth,
-        userAccount;
-
     return {
         init: function init() {
             app.onPageBeforeInit( '*', function( page ) {
@@ -57,18 +53,24 @@ TempStars.App = (function() {
         },
 
         gotoStartingPage: function gotoStartingPage() {
-            var menuContent;
+            var menuContent,
+                template,
+                compiledTemplate,
+                user,
+                practiceName,
+                fullName,
+                photoUrl;
 
             if ( TempStars.User.isDentist() ) {
                 if ( TempStars.User.isSetupComplete() ) {
 
                     // Set up dentist menu
-                    var template = $$('#dentist-menu').html();
-                    var compiledTemplate = Template7.compile( template );
-                    var user = TempStars.User.getCurrentUser();
+                    template = $$('#dentist-menu').html();
+                    compiledTemplate = Template7.compile( template );
+                    user = TempStars.User.getCurrentUser();
                     console.dir( user );
-                    var practiceName = _.capitalize( user.dentist.practiceName );
-                    var photoUrl = (user.dentist.photoUrl) ? user.dentist.photoUrl : 'img/dental-office.png';
+                    practiceName = _.capitalize( user.dentist.practiceName );
+                    photoUrl = (user.dentist.photoUrl) ? user.dentist.photoUrl : 'img/dental-office.png';
                     menuContent = compiledTemplate({
                         practiceName: practiceName,
                         city: _.trim( user.dentist.city ),
@@ -77,7 +79,11 @@ TempStars.App = (function() {
                     });
                     $('#panel-menu').html(menuContent);
 
-                    mainView.router.loadPage( { url: 'dentist/home.html', animatePages: false } );
+                    mainView.router.loadPage({
+                        url: 'dentist/home.html',
+                        context: user,
+                        animatePages: false
+                    });
                 }
                 else {
                     // Go back to signup
@@ -88,12 +94,12 @@ TempStars.App = (function() {
                 if ( TempStars.User.isSetupComplete() ) {
 
                     // Set up hygienist menu
-                    var template = $$('#hygienist-menu').html();
-                    var compiledTemplate = Template7.compile( template );
-                    var user = TempStars.User.getCurrentUser();
+                    template = $$('#hygienist-menu').html();
+                    compiledTemplate = Template7.compile( template );
+                    user = TempStars.User.getCurrentUser();
                     console.dir( user );
-                    var fullName = _.capitalize( user.hygienist.firstName ) + ' ' + _.capitalize( user.hygienist.lastName );
-                    var photoUrl = (user.hygienist.photoUrl) ? user.hygienist.photoUrl : 'img/hygienist.png';
+                    fullName = _.capitalize( user.hygienist.firstName ) + ' ' + _.capitalize( user.hygienist.lastName );
+                    photoUrl = (user.hygienist.photoUrl) ? user.hygienist.photoUrl : 'img/hygienist.png';
                     menuContent = compiledTemplate({
                         fullname: fullName,
                         city: _.trim( user.hygienist.city ),

@@ -73,8 +73,8 @@ TempStars.Api = (function() {
             return TempStars.Ajax.del( 'dentists/' + dentistId + '/favouritehygienists/' + hygienistId );
         },
 
-        getJobs: function getJobs( dentistId ) {
-            return TempStars.Ajax.get( 'dentists/' + dentistId + '/jobs' );
+        getJobHistory: function getJobHistory( dentistId ) {
+            return TempStars.Ajax.get( 'dentists/' + dentistId + '/jobs?filter={"where":{"status":{"gt":6}}}' );
         },
 
         createJob: function createJob( dentistId, data ) {
@@ -90,11 +90,19 @@ TempStars.Api = (function() {
         },
 
         getInvoice: function getInvoice( jobId ) {
-            return TempStars.Ajax.post( 'jobs/' + jobId + '/invoice', data );
+            return TempStars.Ajax.get( 'jobs/' + jobId + '/invoice' );
+        },
+
+        getInvoices: function getInvoices( dentistId ) {
+            return TempStars.Ajax.get( 'dentists/' + dentistId + '/jobs?filter={"where":{"status":{"gt":6}}}' );
         },
 
         updateInvoice: function updateInvoice( invoiceId, data ) {
             return TempStars.Ajax.put( 'invoices/' + invoiceId, data );
+        },
+
+        postJob: function postJob( dentistId, data ) {
+            return TempStars.Ajax.post( 'dentists/' + dentistId + '/jobshifts', data, authToken ).minDelay(1000);
         }
 
     };

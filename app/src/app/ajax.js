@@ -51,7 +51,8 @@ TempStars.Ajax = (function() {
             var vud = {
                 method: verb,
                 url: baseUrl + url
-            }
+            };
+            
             if ( data ) {
                 vud.data = data;
             }
