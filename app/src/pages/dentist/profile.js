@@ -13,6 +13,8 @@ TempStars.Pages.Dentist.Profile = (function() {
                 $$('#dentist-profile-photo').attr('src', data.photoUrl );
                 $$('#dentist-profile-photo-remove').show();
                 $$('#dentist-profile-photo-add').hide();
+                $$('#dentist-profile-upload-photo-button').on( 'click', addPhotoHandler );
+                $$('#dentist-profile-remove-photo-button').on( 'click', removePhotoHandler );                
             }
         });
 
@@ -247,15 +249,22 @@ TempStars.Pages.Dentist.Profile = (function() {
         return new Promise( function( resolve, reject ) {
             var photoURI = $$('#dentist-profile-photo').attr('src');
 
+            if ( photoURI == 'img/dental-office.png' ) {
+                resolve( '' );
+                return;
+            }
+
             // If photo hasn't changed, don't need to upload
             if ( photoURI == data.photoUrl ) {
                 resolve( photoURI );
+                return;
             }
 
             // If the photo was removed, don't need to upload
             // TODO remove old photo from server
             if ( photoURI === '' ) {
                 resolve( photoURI );
+                return;
             }
 
             // Otherwise new photo so upload
