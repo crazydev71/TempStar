@@ -17,6 +17,7 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-cordovacli": "^1.0.1",
     "grunt-exec": "^1.0.0",
+    "grunt-htmlhint": "^0.9.13",
     "grunt-include-replace": "^5.0.0",
     "grunt-includes": "^1.0.0",
     "grunt-template": "^1.0.0"

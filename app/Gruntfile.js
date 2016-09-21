@@ -127,12 +127,12 @@ module.exports = function (grunt) {
                 browser: true,
                 curly: true,
                 debug: true,
-                eqeqeq: true,
+                eqeqeq: false,
                 eqnull: true,
                 esversion: 5,
                 expr: true,
                 freeze: true,
-                latedef: true,
+                latedef: 'nofunc',
                 loopfunc: true,
                 noarg: true,
                 nonew: true,
@@ -141,7 +141,12 @@ module.exports = function (grunt) {
                 undef: true,
                 unused: 'vars',
                 validthis: true,
-                globals: { $: true, Dom7: true, Template7: true, $$: true },
+                globals: { $: true, Framework7: true, Dom7: true, Template7: true,
+                    $$: true, TempStars: true, Promise: true, _: true, app: true,
+                    Stripe: true, mainView: true, moment: true, NativeStorage: true,
+                    validate: true, Camera: true, FileUploadOptions: true, uuid: true,
+                    FileTransfer: true, device: true, cordova: true },
+                '-W027': true
             },
             gruntfile: {
                 src: 'Gruntfile.js'
@@ -151,9 +156,30 @@ module.exports = function (grunt) {
             },
             dentist: {
                 src: ['src/pages/dentist/*.js']
+            }
+            // hygienist: {
+            //     src: ['src/pages/hygienist/*.js']
+            // }
+        },
+
+        htmlhint: {
+            index: {
+                options: {
+                'tag-pair': true
+                },
+                src: ['src/pages/index.html.tpl']
             },
-            hygienist: {
-                src: ['src/pages/hygienist/*.js']
+            landing: {
+                options: {
+                  'tag-pair': true
+                },
+                src: ['src/pages/landing/*.html']
+            },
+            dentist: {
+                options: {
+                  'tag-pair': true
+                },
+                src: ['src/pages/dentist/*.html']
             }
         },
 
@@ -210,6 +236,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-template');
     grunt.loadNpmTasks('grunt-config');
+    grunt.loadNpmTasks('grunt-htmlhint');
 
     grunt.registerTask('init', function() {
         var target = grunt.config.get( 'target' );
