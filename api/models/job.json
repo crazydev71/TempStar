@@ -46,7 +46,7 @@
     },
     "hygienistId": {
       "type": "Number",
-      "required": true,
+      "required": false,
       "length": null,
       "precision": 10,
       "scale": 0,
@@ -76,7 +76,7 @@
     },
     "bookedOn": {
       "type": "Date",
-      "required": true,
+      "required": false,
       "length": null,
       "precision": null,
       "scale": null,
@@ -106,7 +106,7 @@
     },
     "hourlyRate": {
       "type": "Number",
-      "required": true,
+      "required": false,
       "length": null,
       "precision": 6,
       "scale": 2,
@@ -121,7 +121,7 @@
     },
     "status": {
       "type": "Number",
-      "required": true,
+      "required": false,
       "length": null,
       "precision": 10,
       "scale": 0,
@@ -136,7 +136,7 @@
     },
     "cascadeInterval": {
       "type": "Number",
-      "required": true,
+      "required": false,
       "length": null,
       "precision": 10,
       "scale": 0,
@@ -256,7 +256,7 @@
     },
     "startDate": {
       "type": "Date",
-      "required": false,
+      "required": true,
       "length": null,
       "precision": null,
       "scale": null,
@@ -271,7 +271,7 @@
     },
     "privateNotes": {
       "type": "String",
-      "required": true,
+      "required": false,
       "length": 65535,
       "precision": null,
       "scale": null,
@@ -283,7 +283,7 @@
         "dataScale": null,
         "nullable": "N"
       }
-    }    
+    }
   },
   "validations": [],
   "relations": {

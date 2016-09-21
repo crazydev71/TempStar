@@ -88,7 +88,7 @@
     },
     "actualStart": {
       "type": "Date",
-      "required": true,
+      "required": false,
       "length": null,
       "precision": null,
       "scale": null,
@@ -103,7 +103,7 @@
     },
     "actualEnd": {
       "type": "Date",
-      "required": true,
+      "required": false,
       "length": null,
       "precision": null,
       "scale": null,
@@ -118,7 +118,7 @@
     },
     "unpaidHours": {
       "type": "String",
-      "required": true,
+      "required": false,
       "length": null,
       "precision": 4,
       "scale": 0,
@@ -133,7 +133,7 @@
     },
     "totalHours": {
       "type": "String",
-      "required": true,
+      "required": false,
       "length": null,
       "precision": 4,
       "scale": 0,
@@ -148,7 +148,7 @@
     },
     "modifiedOn": {
       "type": "Date",
-      "required": true,
+      "required": false,
       "length": null,
       "precision": null,
       "scale": null,

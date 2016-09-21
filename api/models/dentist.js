@@ -159,22 +159,23 @@ module.exports = function( Dentist ) {
                 software: data.software
             });
         })
-        // .then( function() {
-        //     return new Promise( function( resolve, reject ) {
-        //         var address = dentist.address + ', ' + dentist.city + ', ' + dentist.province + ' ' + dentist.postalCode + ' Canada';
-        //         location.geocode( address )
-        //         .then( function( latlon ) {
-        //             resolve( latlon );
-        //         })
-        //         .catch( function( err ) {
-        //             resolve( { lat: 0, lon: 0} );
-        //         });
-        //     });
-        // })
+        .then( function() {
+            return new Promise( function( resolve, reject ) {
+                console.log( 'Geocoding...');
+                var address = dentist.address + ', ' + dentist.city + ', ' + dentist.province + ' ' + dentist.postalCode + ' Canada';
+                location.geocode( address )
+                .then( function( latlon ) {
+                    resolve( latlon );
+                })
+                .catch( function( err ) {
+                    resolve( { lat: 0, lon: 0} );
+                });
+            });
+        })
         .then( function( gc ) {
-            //geocode = gc;
-            console.log( 'Geocoding...');
-            geocode = { lat: -1.0, lon: 1.0};
+            geocode = gc;
+            console.dir( gc );
+            //geocode = { lat: -1.0, lon: 1.0};
             var PostalCode = app.models.PostalCode;
             var prefix = dentist.postalCode.substr(0,2);
             return PostalCode.findOne( {where: {prefix: prefix} } );
@@ -183,7 +184,7 @@ module.exports = function( Dentist ) {
             console.log( 'Regioning...');
             return dentist.updateAttributes({
                 lat: geocode.lat,
-                lon: geocode.lon,
+                lon: geocode.lng,
                 regionId: postalCode.regionId
             });
         })
@@ -196,5 +197,58 @@ module.exports = function( Dentist ) {
             callback( err );
         });
     };
+
+
+    Dentist.remoteMethod( 'postJob', {
+        accepts: [
+            {arg: 'id', type: 'number', required: true},
+            {arg: 'data', type: 'object', http: { source: 'body' } } ],
+        returns: { arg: 'result', type: 'object' },
+        http: { verb: 'post', path: '/:id/jobshifts' }
+    });
+
+    Dentist.postJob = function( id, data, callback ) {
+
+        var Job = app.models.Job;
+        var Shift = app.models.Shift;
+/*
+        {
+            job: {
+                dentistId: id,
+                hygienistId: 14,
+                postedOn: '2016-09-19',
+                startDate: '2016-09-22'
+            },
+            shifts: [
+                { shiftDate: '2016-09-22', startTime:'9:00', endTime: '17:00'},
+                { shiftDate: '2016-09-23', startTime:'9:00', endTime: '17:00'}
+            ]
+        }
+*/
+    console.dir( data );
+        // Create a new job and the shifts for that job
+        var j = data.job;
+        j.dentistId = parseInt(id);
+        Job.create( j )
+        .then( function( job ) {
+            return Promise.map( data.shifts, function( shift ) {
+                var s = {};
+                s.jobId = job.id;
+                s.shiftDate = shift.shiftDate;
+                s.postedStart = shift.startTime;
+                s.postedEnd = shift.endTime;
+                return Shift.create( s );
+            });
+        })
+        .then( function() {
+            console.log( 'post job worked!' );
+            callback( null, {} );
+        })
+        .catch( function( err ) {
+            console.log( 'post job error!' );
+            callback( err );
+        });
+    };
+
 
 };
