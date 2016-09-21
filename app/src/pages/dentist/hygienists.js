@@ -1,5 +1,6 @@
 
 TempStars.Pages.Dentist.Hygienists = (function() {
+    'use strict';
 
     function init() {
         app.onPageBeforeInit( 'dentist-hygienists', function( page ) {
@@ -21,7 +22,7 @@ TempStars.Pages.Dentist.Hygienists = (function() {
         app.confirm('Are you sure you want to remove ' + name + '?', 'Remove Blocked Hygienist', function() {
             TempStars.Api.removeBlockedHygienist( dentistId, blockedHygienistId )
             .then( function(){
-                $$('#dentist-menu-hygienists').click();
+                $('#dentist-menu-hygienists').click();
             })
             .catch( function( err ) {
                 app.alert('Error removing hygienist. Please try again.' );
@@ -67,7 +68,7 @@ TempStars.Pages.Dentist.Hygienists = (function() {
                 });
             });
         }
-        
+
     };
 
 })();

@@ -1,5 +1,7 @@
 
 TempStars.Pages.Dentist.Invoice = (function() {
+    'use strict';
+
     var changedData = false;
 
     function init() {

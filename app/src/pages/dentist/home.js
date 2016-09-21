@@ -1,4 +1,5 @@
 TempStars.Pages.Dentist.Home = (function() {
+    'use strict';
 
     function init() {
         app.onPageBeforeInit( 'home', function( page ) {
@@ -33,7 +34,7 @@ TempStars.Pages.Dentist.Home = (function() {
                     '</div>' +
                 '</div>',
             onOpen: function (p) {
-                $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
+                $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] + ' ' + p.currentYear);
                 $$('.calendar-custom-toolbar .left .link').on('click', function () {
                     calendarInline.prevMonth();
                 });
@@ -42,41 +43,50 @@ TempStars.Pages.Dentist.Home = (function() {
                 });
             },
             onMonthYearChangeStart: function (p) {
-                $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
+                $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] + ' ' + p.currentYear);
             },
             events: [
-                new Date(2016, 7, 10),
-                new Date(2016, 7, 23)
+                // JS month starts with zero
+                new Date(2016, 8, 23),
+                new Date(2016, 8, 27),
+                new Date(2016, 8, 9)
             ],
 
             rangesClasses: [
                 {
                     cssClass: 'calendar-openings',
                     range: [
-                        new Date(2016, 7, 26),
-                        new Date(2016, 7, 29)
+                        new Date(2016, 8, 29),
+                        new Date(2016, 8, 30)
                     ]
                 },
+
                 {
-                    cssClass: 'calendar-offers',
+                    cssClass: 'calendar-partials',
                     range: [
-                        new Date(2016, 7, 23),
-                        new Date(2016, 7, 24)
+                        new Date(2016, 8, 26),
+                        new Date(2016, 8, 27)
                     ]
                 },
+                // {
+                //     cssClass: 'calendar-offers',
+                //     range: [
+                //         new Date(2016, 7, 23),
+                //         new Date(2016, 7, 24)
+                //     ]
+                // },
                 {
                     cssClass: 'calendar-booked',
                     range: [
-                        new Date(2016, 7, 16),
-                        new Date(2016, 7, 17),
-                        new Date(2016, 7, 19)
+                        new Date(2016, 8, 22),
+                        new Date(2016, 8, 23)
                     ]
                 },
                 {
                     cssClass: 'calendar-worked',
                     range: [
-                        new Date(2016, 7, 2),
-                        new Date(2016, 7, 10)
+                        new Date(2016, 8, 8),
+                        new Date(2016, 8, 9)
                     ]
                 }
             ]
@@ -86,7 +96,7 @@ TempStars.Pages.Dentist.Home = (function() {
     return {
         init: init,
         getData: function() {
-            return Promise.resolve( {} );
+            return Promise.resolve( TempStars.User.getCurrentUser() );
         }
     };
 

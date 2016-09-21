@@ -1,6 +1,8 @@
 
 TempStars.Pages.Dentist.Invoices = (function() {
 
+    'use strict';
+
     var data;
     var sortBy = 'date';
 
@@ -32,7 +34,7 @@ TempStars.Pages.Dentist.Invoices = (function() {
     function getData() {
 
         return new Promise( function( resolve, reject ) {
-            TempStars.Api.getJobs( TempStars.User.getCurrentUser().dentistId )
+            TempStars.Api.getInvoices( TempStars.User.getCurrentUser().dentistId )
             .then( function( jobs ) {
 
                 data = { jobs: jobs };

@@ -1,72 +1,81 @@
-<div class="views">
-    <div class="view view-main">
-        <div class="navbar">
-            <div class="navbar-inner">
-                <div class="left sliding">
-                    <a href="#" class="link icon-only back">
-                        <span class="ti-angle-left"></span>
-                    </a>
-                </div>
-                <div class="center sliding">Post Job</div>
-                <div class="right">
-                    <a href="#" data-panel="right" class="link icon-only open-panel">
-                        <span class="ti-menu"></span>
-                    </a>
-                </div>
+
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="left sliding">
+                <a href="#" id="dentist-post-job-back" data-url="dentist/home.html" class="internal detailback link">
+                    <span class="ti-angle-left"></span> back
+                </a>
+            </div>
+            <div class="center sliding">Find a Hygienist</div>
+            <div class="right">
+                <a href="#" data-panel="right" class="link icon-only open-panel">
+                    <span class="ti-menu"></span>
+                </a>
             </div>
         </div>
+    </div>
 
-        <div class="pages navbar-through">
-        <div data-page="post-job" class="page">
-            <div class="page-content">
-                <div class="content-block">
-                    <p>Create a new job posting</p>
-                </div>
-                    <div class="list-block">
-                      <ul>
-                        <!-- Text inputs -->
-                        <li>
-                          <div class="item-content">
-                            <div class="item-inner">
-                              <div class="item-title label">Job Date</div>
-                              <div class="item-input">
-                                  <input type="text" placeholder="Select job date" readonly id="job-calendar-input">
-                              </div>
-                            </div>
+    <div data-page="post-job" class="page">
+        <div class="page-content">
+
+            <div class="login-screen-title">Post Job</div>
+            <div class="content-block">
+                <p class="page-subtitle">To find a hygienist, post a job</p>
+            </div>
+
+            <form id="dentist-post-job-form">
+                <div class="list-block">
+                  <div class="form-error-msg"></div>
+                  <ul>
+                    <li>
+                      <div class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title label">Job Date</div>
+                          <div class="item-input">
+                              <input type="text" placeholder="select job date" name="startDate" readonly id="dentist-post-job-date">
+                              <div class="field-error-msg"></div>
                           </div>
-                        </li>
-                        <li>
-                          <div class="item-content">
-                            <div class="item-inner">
-                              <div class="item-title label">Start Time</div>
-                              <div class="item-input">
-                                <input type="text" placeholder="starting time" readonly id="job-start-time-input">
-                              </div>
-                            </div>
-                          </div>
-                          <div id="start-time-picker-container"></div>
-                        </li>
-                        <li>
-                          <div class="item-content">
-                            <div class="item-inner">
-                              <div class="item-title label">End Time</div>
-                              <div class="item-input">
-                                  <input type="text" placeholder="ending time" readonly id="job-end-time-input">
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                <div class="content-block">
-                    <div class="row">
-                        <div class="col-30">&nbsp;</div>
-                        <div class="col-40">
-                            <a href="#" id="job-post-button" class="button button-big button-round">Post</a>
                         </div>
-                        <div class="col-30">&nbsp;</div>
-                    </div>
+                      </div>
+                    </li>
+
+                    <li>
+                      <div class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title label">Start Time</div>
+                          <div class="item-input">
+                            <input type="text" placeholder="starting time" name="postedStart" readonly id="dentist-post-job-starttime">
+                            <div class="field-error-msg"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+
+                    <li>
+                      <div class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title label">End Time</div>
+                          <div class="item-input">
+                              <input type="text" placeholder="ending time" name="postedEnd" readonly id="dentist-post-job-endtime">
+                              <div class="field-error-msg"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+
+                  </ul>
                 </div>
+            </form>
+
+            <div class="content-block">
+                <div class="row">
+                    <div class="col-25">&nbsp;</div>
+                    <div class="col-50">
+                        <a href="#" id="denist-post-job-button" class="button button-round">Post Job</a>
+                    </div>
+                    <div class="col-25">&nbsp;</div>
+                </div>
+            </div>
+
         </div>
     </div>
-</div>

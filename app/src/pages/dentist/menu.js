@@ -10,17 +10,30 @@ TempStars.Dentist.Menu = (function() {
             e.preventDefault();
 
             var url = $$(this).attr('data-url');
+            var back = $$(this).hasClass('detailback');
+            var reload = $$(this).hasClass('reload');
+
             console.log( 'menu get data for url: ' + url );
             getData( url )
             .then( function( data ) {
                 console.log( 'loading url: ' + url );
-                mainView.router.load({
-                    url: url,
-                    context: data,
-                    ignoreCache: true
-                    // reload: true,
-                    // reloadPrevious: true
-                });
+                if ( back ) {
+                    mainView.router.back({
+                        url: url,
+                        context: data,
+                        ignoreCache: true,
+                        reload: false
+                    });
+                }
+                else {
+                    mainView.router.load({
+                        url: url,
+                        context: data,
+                        ignoreCache: true,
+                        reload: reload
+                        // reloadPrevious: true
+                    });
+                }
             })
             .catch( function( err ) {
                 console.log( 'error getting data for: ' + url );
@@ -30,12 +43,15 @@ TempStars.Dentist.Menu = (function() {
     }
 
     function getData( url ) {
-        var data;
 
         switch( url ) {
 
             case 'dentist/home.html':
                 return TempStars.Pages.Dentist.Home.getData();
+                break;
+
+            case 'dentist/post-job.html':
+                return TempStars.Pages.Dentist.PostJob.getData();
                 break;
 
             case 'dentist/profile.html':
@@ -72,9 +88,9 @@ TempStars.Dentist.Menu = (function() {
         }
     }
 
-    function logout() {
-        app.confirm( 'Are you sure you want to log out?', TempStars.Menu.logout );
-    }
+    // function logout() {
+    //     app.confirm( 'Are you sure you want to log out?', TempStars.Menu.logout );
+    // }
 
 
     return {

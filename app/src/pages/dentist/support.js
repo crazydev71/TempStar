@@ -1,6 +1,8 @@
 
 TempStars.Pages.Dentist.Support = (function() {
 
+    'use strict';
+
     return {
         getData: function() {
             return Promise.resolve( {

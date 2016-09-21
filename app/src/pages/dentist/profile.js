@@ -1,6 +1,8 @@
 
 TempStars.Pages.Dentist.Profile = (function() {
 
+    'use strict';
+
     var data;
     var initialized = false;
 
@@ -11,7 +13,7 @@ TempStars.Pages.Dentist.Profile = (function() {
                 $$('#dentist-profile-photo').attr('src', data.photoUrl );
                 $$('#dentist-profile-photo-remove').show();
                 $$('#dentist-profile-photo-add').hide();
-            }            
+            }
         });
 
         app.onPageBeforeInit( 'dentist-profile', function( page ) {
@@ -67,7 +69,6 @@ TempStars.Pages.Dentist.Profile = (function() {
 
     function submitHandler(e) {
         var formData = app.formToJSON('#dentist-profile-form');
-        var pn = $('#dentist-profile-form input[name="practiceName"]').val();
 
         var constraints = {
             // email: {
@@ -226,7 +227,7 @@ TempStars.Pages.Dentist.Profile = (function() {
               $$('#dentist-profile-photo-add').hide();
           },
           function(errmsg) {
-              app.alert( errmsg )
+              app.alert( errmsg );
           },
           {
               sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
@@ -253,7 +254,7 @@ TempStars.Pages.Dentist.Profile = (function() {
 
             // If the photo was removed, don't need to upload
             // TODO remove old photo from server
-            if ( photoURI == '' ) {
+            if ( photoURI === '' ) {
                 resolve( photoURI );
             }
 

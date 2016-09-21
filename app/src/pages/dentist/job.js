@@ -1,6 +1,6 @@
 
 TempStars.Pages.Dentist.Job = (function() {
-    var changedData = false;
+    'use strict';
 
     function init() {
         app.onPageBeforeInit( 'dentist-job', function( page ) {
@@ -25,7 +25,7 @@ TempStars.Pages.Dentist.Job = (function() {
         })
         .catch( function( err ) {
             app.alert( 'Error saving notes. Please try again.' );
-        })
+        });
     }
 
     // function paidToggleHandler( e ) {
