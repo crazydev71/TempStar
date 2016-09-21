@@ -172,17 +172,68 @@ ul.menu-right {
     padding:0;
 }
 
-.calendar-openings {
-    background: #D5F5E3;
+.calendar-partials span {
+    border: 2px solid red;
+    color: #fff;
+    xxbackground: #D6EA00;
 }
+.calendar-partials span:before {
+    content: " ";
+    position: absolute;
+    z-index: -1;
+    top: 3px;
+    left: 3px;
+    right: 3px;
+    bottom: 3px;
+    xxborder: 1px solid purple;
+    border-radius: 100%;
+    background: red;
+}
+
+
+.calendar-partials span {
+    display: inline-block;
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+}
+
 .calendar-offers {
     background: #FCF3CF;
 }
-.calendar-booked {
-    background: #D6EAF8;
+
+
+.calendar-openings span {
+    display: inline-block;
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+    border: 2px solid red;
 }
-.calendar-worked {
+
+.calendar-booked span {
+    display: inline-block;
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+    background: red;
+    color: white;
+}
+
+.calendar-worked span {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    position: relative;
     background: #E5E8E8;
+    border-radius: 100%;
 }
 
 span.badge.bg-red {
@@ -192,23 +243,40 @@ span.badge.bg-red {
     z-index: 111;
 }
 
-.calendar-inline-container .picker-calendar-day-has-events span:after {
-    /*content: '';*/
+/*picker-calendar-day.picker-calendar-day-has-events span:after*/
+/*.picker-calendar-day-has-events span:after {
+    content: '';
     width: 8px !important;
     height: 8px !important;
     border-radius: 50%;
     background: red !important;
-    /*position: absolute;
-    margin-left: -2px;*/
+    position: absolute;
+    margin-left: -2px;
     left: 26px !important;
     bottom: 20px !important;
+}*/
+
+.picker-calendar-day.picker-calendar-day-has-events span:after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: red;
+    position: absolute;
+    /*margin-left: -2px;*/
+    margin-top:-1px;
+    left: 74%;
+    top:0;
+    bottom: 1px
 }
+
 
 /*.picker-calendar-day-selected span {
      background: transparent !important;
      xxcolor: black;
      border:1px black solid;
 }*/
+
 .calendar-inline-container .picker-calendar-day-selected span {
     background: #fff !important;
     color: #000 !important;
@@ -382,4 +450,26 @@ input[type=number]::-webkit-outer-spin-button {
 .page[data-page="dentist-terms-of-service"] h3,h4 {
     margin-bottom:4px;
     color:#444;
+}
+
+.center-box {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.app-title {
+    font-size: 20px;
+    margin-bottom: 10px;
 }
