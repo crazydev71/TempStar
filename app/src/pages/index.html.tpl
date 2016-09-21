@@ -75,7 +75,7 @@
                                         <div class="item-title label">Email</div>
                                         <div class="item-input">
                                           <input type="email" name="email" autocapitalize="none" autocorrect="off" maxlength="50" placeholder="your email address"/>
-                                          <div class="field-error-msg"><div>
+                                          <div class="field-error-msg"></div>
                                         </div>
                                       </div>
                                     </li>
@@ -84,7 +84,7 @@
                                         <div class="item-title label">Password</div>
                                         <div class="item-input">
                                           <input type="password" name="password" autocapitalize="none" autocorrect="off" maxlength="50" placeholder="your password"/>
-                                          <div class="field-error-msg"><div>
+                                          <div class="field-error-msg"></div>
                                         </div>
                                       </div>
                                     </li>
@@ -94,7 +94,7 @@
                                 <div class="row">
                                     <div class="col-20">&nbsp;</div>
                                     <div class="col-60">
-                                        <a id="login-button" href="#" class="button button-round">Log In</a></li>
+                                        <a id="login-button" href="#" class="button button-round">Log In</a>
                                     </div>
                                     <div class="col-20">&nbsp;</div>
                                 </div>
@@ -136,7 +136,7 @@
     @@include( 'hygienist/dentist-list.html' )
 
     <script src="cordova.js"></script>
-    <script src="lib/framework7/js/framework7.min.js"></script>
+    <script src="lib/framework7/js/framework7.js"></script>
     <script src="lib/jquery.min.js"></script>
     <script src="lib/lodash.min.js"></script>
     <script src="lib/bluebird.min.js"></script>

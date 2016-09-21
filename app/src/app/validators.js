@@ -1,6 +1,7 @@
 
 TempStars.Validators = (function() {
-
+    'use strict';
+    
     return {
         validatePostalCode: function validatePostalCode(value, options, key, attributes) {
             if ( value.match( /^([ABCEGHJKLMNPRSTVXY][0-9][A-Z][ ]?[0-9][A-Z][0-9])*$/ ) ) {
