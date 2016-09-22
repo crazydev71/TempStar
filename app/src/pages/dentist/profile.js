@@ -14,7 +14,7 @@ TempStars.Pages.Dentist.Profile = (function() {
                 $$('#dentist-profile-photo-remove').show();
                 $$('#dentist-profile-photo-add').hide();
                 $$('#dentist-profile-upload-photo-button').on( 'click', addPhotoHandler );
-                $$('#dentist-profile-remove-photo-button').on( 'click', removePhotoHandler );                
+                $$('#dentist-profile-remove-photo-button').on( 'click', removePhotoHandler );
             }
         });
 
@@ -134,11 +134,7 @@ TempStars.Pages.Dentist.Profile = (function() {
         $$('#dentist-profile-form .form-error-msg').html('');
         $$('#dentist-profile-form .field-error-msg').removeClass( 'error' ).html('');
 
-        // var formData = app.formToJSON('#dentist-profile-form');
-        // var pn = $('#dentist-profile-form input[name="practiceName"]').val();
-
         var errors = validate( formData, constraints );
-
         if ( errors ) {
             // if ( errors.email ) {
             //     $('#dentist-profile-form input[name="email"]').addClass('error').next().html( errors.email[0] );
@@ -196,6 +192,17 @@ TempStars.Pages.Dentist.Profile = (function() {
             }
             return;
         }
+
+        app.confirm( 'Are you sure?', 'Save Profile', function() {
+            app.confirm( 'Are you really sure?', 'Save Profile', function() {
+                app.confirm( 'Are you really really sure?', 'Save Profile', function() {
+                    saveProfile( formData );
+                });
+            });
+        });
+    }
+
+    function saveProfile( formData ) {
 
         app.showPreloader('Saving Profile');
         uploadPhoto()
