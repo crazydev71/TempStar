@@ -8,12 +8,15 @@ TempStars.Pages.Dentist.PostJob = (function() {
         app.onPageBeforeInit( 'post-job', function( page ) {
             app.calendar({
                 input: '#dentist-post-job-date',
+                cssClass: 'open-calendar',
                 toolbar: true,
                 firstDay: 0,
                 dateFormat: 'D, M dd, yyyy',
                 minDate: moment().subtract(1, 'days'),
                 onDayClick: function(picker, dayContainer, dateYear, dateMonth, dateDay) {
-                    picker.close();
+                    setTimeout( function() {
+                        picker.close();
+                    }, 500);
                 }
             });
 
@@ -75,12 +78,6 @@ TempStars.Pages.Dentist.PostJob = (function() {
     }
 
     function postJobHandler( e ) {
-        var dentistId,
-            data,
-            fullStartTime,
-            fullEndTime,
-            hours,
-            minutes;
 
         var constraints = {
             startDate: {
@@ -113,6 +110,19 @@ TempStars.Pages.Dentist.PostJob = (function() {
             }
             return;
         }
+
+        app.confirm( 'Are you sure?', 'Post Job', function() {
+            postJob( formData );
+        });
+    }
+
+    function postJob( formData ) {
+        var dentistId,
+            data,
+            fullStartTime,
+            fullEndTime,
+            hours,
+            minutes;
 
         app.showPreloader('Posting Job');
 
