@@ -173,7 +173,7 @@ ul.menu-right {
 }
 
 .calendar-partials span {
-    border: 2px solid red;
+    border: 2px solid red !important;
     color: #fff;
     xxbackground: #D6EA00;
 }
@@ -222,7 +222,7 @@ ul.menu-right {
     height: 30px;
     line-height: 30px;
     position: relative;
-    background: red;
+    background: red !important;
     color: white;
 }
 
@@ -258,18 +258,18 @@ span.badge.bg-red {
 
 .picker-calendar-day.picker-calendar-day-has-events span:after {
     content: '';
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background: red;
     position: absolute;
-    /*margin-left: -2px;*/
-    margin-top:-1px;
-    left: 74%;
-    top:0;
-    bottom: 1px
+    left: 100%;
+    top:-3px;
 }
 
+/*.picker-calendar-day.picker-calendar-day-selected span:after {
+    display: block !important;
+}*/
 
 /*.picker-calendar-day-selected span {
      background: transparent !important;
@@ -277,14 +277,58 @@ span.badge.bg-red {
      border:1px black solid;
 }*/
 
-.calendar-inline-container .picker-calendar-day-selected span {
-    background: #fff !important;
-    color: #000 !important;
+/*.calendar-inline-container .picker-calendar-day-selected span {
+    xbackground: #fff !important;
+    color: green !important;
 }
 
 .calendar-inline-container .picker-calendar-day-today span {
     background: #007aff !important;
-    color: #fff !important;
+    color: purple !important;
+}
+
+.picker-calendar-day.picker-calendar-day-selected span {
+    border-bottom: 2px solid blue;
+    border-radius: 0;
+}*/
+
+/*.picker-calendar-day.picker-calendar-day-selected {
+    xxbackground: #eee;
+    xxborder:2px dotted #000;
+}
+*/
+
+/*
+picker-calendar-day
+picker-calendar-day-today
+picker-calendar-day-has-events
+calendar-worked
+picker-calendar-day-selected
+*/
+
+/*.picker-calendar-day-selected span {
+    background: #fff;
+    color:#000;
+}*/
+
+/*.picker-calendar-day.picker-calendar-day-selected span*/
+/*.picker-calendar-day.picker-calendar-day-selected span {
+    background: inherit;
+}*/
+
+/*.picker-calendar-day-selected  {
+    xxoutline: 1px dotted blue;
+    background: #E9F7FF;
+}*/
+
+.picker-calendar-day.picker-calendar-day-today {
+    background: #E9F7FF;
+
+    /*outline: 1px dotted blue;
+    z-index:100;*/
+    /*border-radius: 0;
+    background: #fff !important;
+    color:#000 !important;*/
 }
 
 .main ul.home:before {
@@ -472,4 +516,8 @@ input[type=number]::-webkit-outer-spin-button {
 .app-title {
     font-size: 20px;
     margin-bottom: 10px;
+}
+
+.item-title.label {
+    font-weight: bold !important;
 }
