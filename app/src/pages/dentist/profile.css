@@ -1,0 +1,19 @@
+.page[data-page="dentist-profile"] .content-block-title {
+    margin:4px 15px;
+}
+
+.page[data-page="dentist-profile"] .content-block {
+    margin:0px 0px 20px 0px;
+}
+
+input[type="text"] {
+    padding-left: 10px;
+}
+.editicon {
+    /*
+    margin-right: 1px;
+    margin-top: -24px;
+    position: relative;
+    z-index: 2;*/
+    color: #666;
+}
