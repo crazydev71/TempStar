@@ -111,7 +111,11 @@ TempStars.Pages.Dentist.PostJob = (function() {
             return;
         }
 
-        app.confirm( 'Are you sure?', 'Post Job', function() {
+        app.confirm( 
+            formData.startDate + '<br>' +
+            formData.postedStart + ' - ' +
+            formData.postedEnd + '<br>',
+            'Post Job?', function() {
             postJob( formData );
         });
     }
