@@ -47,8 +47,9 @@ TempStars.Pages.Dentist.Home = (function() {
             },
             events: [
                 // JS month starts with zero
-                new Date(2016, 8, 23),
+                new Date(2016, 8, 26),
                 new Date(2016, 8, 27),
+                new Date(2016, 8, 29),
                 new Date(2016, 8, 9)
             ],
 
