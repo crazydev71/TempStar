@@ -2258,6 +2258,7 @@
                         t7_rendered_content = t7_template(t7_ctx);
                     }
                     catch(e){
+                        console.log( e.message );
                         t7_rendered_content = '';
                     }
                 }
