@@ -22,7 +22,7 @@ TempStars.Pages.Dentist.Hygienists = (function() {
         app.confirm('Are you sure you want to remove ' + name + '?', 'Remove Blocked Hygienist', function() {
             TempStars.Api.removeBlockedHygienist( dentistId, blockedHygienistId )
             .then( function(){
-                $('#dentist-menu-hygienists').click();
+                TempStars.Dentist.Router.reloadPage('hygienists');
             })
             .catch( function( err ) {
                 app.alert('Error removing hygienist. Please try again.' );
@@ -38,7 +38,7 @@ TempStars.Pages.Dentist.Hygienists = (function() {
         app.confirm('Are you sure you want to remove ' + name + '?', 'Remove Favourite Hygienist', function() {
             TempStars.Api.removeFavouriteHygienist( dentistId, favHygienistId )
             .then( function(){
-                $$('#dentist-menu-hygienists').click();
+                TempStars.Dentist.Router.reloadPage('hygienists');
             })
             .catch( function( err ) {
                 app.alert('Error removing hygienist. Please try again.' );

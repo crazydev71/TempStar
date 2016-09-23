@@ -7,12 +7,12 @@ TempStars.Pages.Dentist.Invoice = (function() {
     function init() {
         app.onPageBeforeInit( 'dentist-invoice', function( page ) {
             $$('#dentist-invoice-paid-checkbox').on( 'change', paidToggleHandler );
-            $$('.detailback').on( 'click', backHandler );
+            //$$('.detailback').on( 'click', backHandler );
         });
 
         app.onPageBeforeRemove( 'dentist-invoice', function( page ) {
             $$('#dentist-invoice-paid-checkbox').off( 'change', paidToggleHandler );
-            $$('.detailback').off( 'click', backHandler );
+            //$$('.detailback').off( 'click', backHandler );
         });
 
     }
@@ -37,21 +37,21 @@ TempStars.Pages.Dentist.Invoice = (function() {
         }
     }
 
-    function backHandler( e ) {
-
-        TempStars.Pages.Dentist.Invoices.getData()
-        .then( function( data ) {
-            mainView.router.load({
-                url: 'dentist/invoices.html',
-                context: data,
-                ignoreCache: true,
-                reload: true
-            });
-        })
-        .catch( function( err ) {
-            console.log( 'error getting data');
-        });
-    }
+    // function backHandler( e ) {
+    //
+    //     TempStars.Pages.Dentist.Invoices.getData()
+    //     .then( function( data ) {
+    //         mainView.router.load({
+    //             url: 'dentist/invoices.html',
+    //             context: data,
+    //             ignoreCache: true,
+    //             reload: true
+    //         });
+    //     })
+    //     .catch( function( err ) {
+    //         console.log( 'error getting data');
+    //     });
+    // }
 
     return {
         init: init,

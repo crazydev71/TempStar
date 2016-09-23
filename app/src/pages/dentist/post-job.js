@@ -111,7 +111,7 @@ TempStars.Pages.Dentist.PostJob = (function() {
             return;
         }
 
-        app.confirm( 
+        app.confirm(
             formData.startDate + '<br>' +
             formData.postedStart + ' - ' +
             formData.postedEnd + '<br>',
@@ -164,7 +164,7 @@ TempStars.Pages.Dentist.PostJob = (function() {
         .then( function() {
             app.hidePreloader();
             app.alert( 'Job Posted', function() {
-                mainView.router.back();
+                TempStars.Dentist.Router.goBackPage('home');
             });
         })
         .catch( function( err ) {

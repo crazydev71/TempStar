@@ -19,6 +19,12 @@ TempStars.Router = (function() {
         goPage( 'back', page, params, data );
     }
 
+    function reloadPage( page, params, data ) {
+        params = params || {};
+        params.reload = true;
+        goPage( 'forward', page, params, data );
+    }
+
     function goPage( direction, page, params, data ) {
 
         var moduleName = _.upperFirst( _.camelCase( page ));
@@ -38,6 +44,10 @@ TempStars.Router = (function() {
             reload: false
         };
 
+        if ( params.reload ) {
+            options.reload = params.reload;
+        }
+
         // If we have the data, use it
         if ( data ) {
             if ( direction == 'forward' ) {
@@ -54,6 +64,7 @@ TempStars.Router = (function() {
         .then( function( data ) {
             options.context = data;
             if ( direction == 'forward' ) {
+                //options.reload = true;
                 mainView.router.load( options );
             }
             else {
@@ -70,7 +81,8 @@ TempStars.Router = (function() {
     return {
         init: init,
         goForwardPage: goForwardPage,
-        goBackPage: goBackPage
+        goBackPage: goBackPage,
+        reloadPage: reloadPage
     };
 
 })();
@@ -94,12 +106,18 @@ TempStars.Dentist.Router = (function() {
         router.goBackPage( page, params, data );
     }
 
+    function reloadPage( page, params, data ) {
+        router.reloadPage( page, params, data );
+    }
+
 
     return {
         init: init,
         goForwardPage: goForwardPage,
-        goBackPage: goBackPage
-    }
+        goBackPage: goBackPage,
+        reloadPage: reloadPage
+    };
+    
 })();
 
 TempStars.Dentist.Router.init();

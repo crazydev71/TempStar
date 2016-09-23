@@ -61,12 +61,14 @@ TempStars.Pages.Dentist.Invoices = (function() {
 
         if ( data && data.jobs ) {
             data.jobs = _.orderBy( data.jobs, ['invoice.sentOn'], ['desc'] );
-            mainView.router.load({
-                url:'dentist/invoices.html',
-                context: data,
-                ignoreCache: true,
-                reload: true
-            });
+            TempStars.Dentist.Router.reloadPage( 'invoices', {}, data );
+
+            // mainView.router.load({
+            //     url:'dentist/invoices.html',
+            //     context: data,
+            //     ignoreCache: true,
+            //     reload: true
+            // });
         }
     }
 
@@ -76,12 +78,14 @@ TempStars.Pages.Dentist.Invoices = (function() {
 
         if ( data && data.jobs ) {
             data.jobs = _.sortBy( data.jobs, 'hygienist.lastName' );
-            mainView.router.load({
-                url:'dentist/invoices.html',
-                context: data,
-                ignoreCache: true,
-                reload: true
-            });
+            TempStars.Dentist.Router.reloadPage( 'invoices', {}, data );
+
+            // mainView.router.load({
+            //     url:'dentist/invoices.html',
+            //     context: data,
+            //     ignoreCache: true,
+            //     reload: true
+            // });
         }
     }
 
@@ -89,7 +93,7 @@ TempStars.Pages.Dentist.Invoices = (function() {
         var id = parseInt( $$(this).attr('data-id') );
         var invoiceData = _.find( data.jobs, { 'id': id });
         TempStars.Dentist.Router.goForwardPage( 'invoice', {}, invoiceData );
-        //
+
         // mainView.router.load({
         //     url: 'dentist/invoice.html',
         //     context: invoiceData,

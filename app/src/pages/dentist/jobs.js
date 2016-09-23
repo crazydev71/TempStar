@@ -60,12 +60,14 @@ TempStars.Pages.Dentist.Jobs = (function() {
 
         if ( data && data.jobs ) {
             data.jobs = _.orderBy( data.jobs, ['invoice.sentOn'], ['desc'] );
-            mainView.router.load({
-                url:'dentist/jobs.html',
-                context: data,
-                ignoreCache: true,
-                reload: true
-            });
+            TempStars.Dentist.Router.reloadPage( 'jobs', {}, data );
+
+            // mainView.router.load({
+            //     url:'dentist/jobs.html',
+            //     context: data,
+            //     ignoreCache: true,
+            //     reload: true
+            // });
         }
     }
 
@@ -75,12 +77,14 @@ TempStars.Pages.Dentist.Jobs = (function() {
 
         if ( data && data.jobs ) {
             data.jobs = _.sortBy( data.jobs, 'hygienist.lastName' );
-            mainView.router.load({
-                url:'dentist/jobs.html',
-                context: data,
-                ignoreCache: true,
-                reload: true
-            });
+            TempStars.Dentist.Router.reloadPage( 'jobs', {}, data );
+            //
+            // mainView.router.load({
+            //     url:'dentist/jobs.html',
+            //     context: data,
+            //     ignoreCache: true,
+            //     reload: true
+            // });
         }
     }
 
