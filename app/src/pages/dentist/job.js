@@ -50,18 +50,20 @@ TempStars.Pages.Dentist.Job = (function() {
 
     function backHandler( e ) {
 
-        TempStars.Pages.Dentist.Jobs.getData()
-        .then( function( data ) {
-            mainView.router.load({
-                url: 'dentist/jobs.html',
-                context: data,
-                ignoreCache: true,
-                reload: true
-            });
-        })
-        .catch( function( err ) {
-            console.log( 'error getting data');
-        });
+        TempStars.Dentist.Router.goBackPage( 'jobs' );
+        
+        // TempStars.Pages.Dentist.Jobs.getData()
+        // .then( function( data ) {
+        //     mainView.router.load({
+        //         url: 'dentist/jobs.html',
+        //         context: data,
+        //         ignoreCache: true,
+        //         reload: true
+        //     });
+        // })
+        // .catch( function( err ) {
+        //     console.log( 'error getting data');
+        // });
     }
 
     return {

@@ -87,12 +87,13 @@ TempStars.Pages.Dentist.Jobs = (function() {
     function jobPageHandler( e ) {
         var id = parseInt( $$(this).attr('data-id') );
         var jobData = _.find( data.jobs, { 'id': id });
-        mainView.router.load({
-            url: 'dentist/job.html',
-            context: jobData,
-            ignoreCache: true,
-            reload:true
-        });
+        TempStars.Dentist.Router.goForwardPage('job', {}, jobData );
+        // mainView.router.load({
+        //     url: 'dentist/job.html',
+        //     context: jobData,
+        //     ignoreCache: true,
+        //     reload:true
+        // });
     }
 
     return {

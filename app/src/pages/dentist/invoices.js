@@ -88,12 +88,14 @@ TempStars.Pages.Dentist.Invoices = (function() {
     function invoicePageHandler( e ) {
         var id = parseInt( $$(this).attr('data-id') );
         var invoiceData = _.find( data.jobs, { 'id': id });
-        mainView.router.load({
-            url: 'dentist/invoice.html',
-            context: invoiceData,
-            ignoreCache: true,
-            reload:true
-        });
+        TempStars.Dentist.Router.goForwardPage( 'invoice', {}, invoiceData );
+        //
+        // mainView.router.load({
+        //     url: 'dentist/invoice.html',
+        //     context: invoiceData,
+        //     ignoreCache: true,
+        //     reload:true
+        // });
     }
 
     return {

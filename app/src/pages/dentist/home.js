@@ -55,48 +55,74 @@ TempStars.Pages.Dentist.Home = (function() {
 
             rangesClasses: [
                 {
-                    cssClass: 'calendar-openings',
+                    cssClass: 'calendar-posted',
                     range: [
                         new Date(2016, 8, 29),
                         new Date(2016, 8, 30)
                     ]
                 },
-
                 {
-                    cssClass: 'calendar-partials',
+                    cssClass: 'calendar-partial',
                     range: [
                         new Date(2016, 8, 26),
                         new Date(2016, 8, 27)
                     ]
                 },
-                // {
-                //     cssClass: 'calendar-offers',
-                //     range: [
-                //         new Date(2016, 7, 23),
-                //         new Date(2016, 7, 24)
-                //     ]
-                // },
                 {
-                    cssClass: 'calendar-booked',
+                    cssClass: 'calendar-confirmed',
                     range: [
                         new Date(2016, 8, 22),
                         new Date(2016, 8, 23)
                     ]
                 },
                 {
-                    cssClass: 'calendar-worked',
+                    cssClass: 'calendar-completed',
                     range: [
                         new Date(2016, 8, 8),
                         new Date(2016, 8, 9)
                     ]
                 }
-            ]
+            ],
+
+            onDayClick: function(picker, dayContainer, dateYear, dateMonth, dateDay) {
+                if ( $(dayContainer).hasClass('calendar-completed') ) {
+                    completedDayHandler(picker, dayContainer, dateYear, dateMonth, dateDay);
+                }
+                else if ( $(dayContainer).hasClass('calendar-confirmed') ) {
+                    confirmedDayHandler(picker, dayContainer, dateYear, dateMonth, dateDay);
+                }
+                else if ( $(dayContainer).hasClass('calendar-partial') ) {
+                    partialDayHandler(picker, dayContainer, dateYear, dateMonth, dateDay);
+                }
+                else if ( $(dayContainer).hasClass('calendar-posted') ) {
+                    postedDayHandler(picker, dayContainer, dateYear, dateMonth, dateDay);
+                }
+            }
         });
     }
 
+    function completedDayHandler(picker, dayContainer, dateYear, dateMonth, dateDay) {
+        console.log( 'completed ' + dateYear + ' ' + dateMonth + ' ' + dateDay );
+        //var param = { jobId: 4, year: dateYear, month: dateMonth, day: dateDay};
+        //TempStars.Dentist.Router.goForwardPage( 'job-completed', param );
+    }
+
+    function confirmedDayHandler(picker, dayContainer, dateYear, dateMonth, dateDay) {
+        console.log( 'confirmed ' + dateYear + ' ' + dateMonth + ' ' + dateDay );
+    }
+
+    function partialDayHandler(picker, dayContainer, dateYear, dateMonth, dateDay) {
+        console.log( 'partial ' + dateYear + ' ' + dateMonth + ' ' + dateDay );
+    }
+
+    function postedDayHandler(picker, dayContainer, dateYear, dateMonth, dateDay) {
+        console.log( 'posted ' + dateYear + ' ' + dateMonth + ' ' + dateDay );
+    }
+
+
     return {
         init: init,
-        getData: function() {
+        getData: function( params ) {
             return Promise.resolve( TempStars.User.getCurrentUser() );
         }
     };

@@ -36,7 +36,8 @@ TempStars.bootstrap = {
         // Initialize main view
         window.mainView = app.addView('.view-main', {
             dynamicNavbar: true,
-            domCache: false
+            domCache: false,
+            preloadPreviousPage: false
         });
 
         // Handle device events

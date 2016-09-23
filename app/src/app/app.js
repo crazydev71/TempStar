@@ -38,7 +38,12 @@ TempStars.App = (function() {
             });
 
             // TODO
-            Stripe.setPublishableKey('pk_test_fPZwN5y87Dx9r3C4FWhdzGVH');
+            try {
+                Stripe.setPublishableKey('pk_test_fPZwN5y87Dx9r3C4FWhdzGVH');
+            }
+            catch(e) {
+                console.log( e.message );
+            }
 
             TempStars.User.autoLogin()
             .then( function() {

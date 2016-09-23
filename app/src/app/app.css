@@ -172,12 +172,12 @@ ul.menu-right {
     padding:0;
 }
 
-.calendar-partials span {
+.calendar-partial span {
     border: 2px solid red !important;
     color: #fff;
     xxbackground: #D6EA00;
 }
-.calendar-partials span:before {
+.calendar-partial span:before {
     content: " ";
     position: absolute;
     z-index: -1;
@@ -191,7 +191,7 @@ ul.menu-right {
 }
 
 
-.calendar-partials span {
+.calendar-partial span {
     display: inline-block;
     border-radius: 100%;
     width: 30px;
@@ -205,7 +205,7 @@ ul.menu-right {
 }
 
 
-.calendar-openings span {
+.calendar-posted span {
     display: inline-block;
     border-radius: 100%;
     width: 30px;
@@ -215,7 +215,7 @@ ul.menu-right {
     border: 2px solid red;
 }
 
-.calendar-booked span {
+.calendar-confirmed span {
     display: inline-block;
     border-radius: 100%;
     width: 30px;
@@ -226,7 +226,7 @@ ul.menu-right {
     color: white;
 }
 
-.calendar-worked span {
+.calendar-completed span {
     display: inline-block;
     width: 30px;
     height: 30px;
@@ -267,9 +267,9 @@ span.badge.bg-red {
     top:-3px;
 }
 
-/*.picker-calendar-day.picker-calendar-day-selected span:after {
+.picker-calendar-day.picker-calendar-day-selected span:after {
     display: block !important;
-}*/
+}
 
 /*.picker-calendar-day-selected span {
      background: transparent !important;
