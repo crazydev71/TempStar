@@ -521,3 +521,10 @@ input[type=number]::-webkit-outer-spin-button {
 .item-title.label {
     font-weight: bold !important;
 }
+
+.button-small {
+    font-size: 12px !important;
+    height: 26px;
+    line-height: 24px;
+    width: 130px;
+}
