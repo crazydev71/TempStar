@@ -10352,7 +10352,7 @@
                         day = $(e.target);
                     }
                     if (day.length === 0) return;
-                    if (day.hasClass('picker-calendar-day-selected') && !(p.params.multiple || p.params.rangePicker)) return;
+                    // MB if (day.hasClass('picker-calendar-day-selected') && !(p.params.multiple || p.params.rangePicker)) return;
                     if (day.hasClass('picker-calendar-day-disabled')) return;
                     if (!p.params.rangePicker) {
                         if (day.hasClass('picker-calendar-day-next')) p.nextMonth();
