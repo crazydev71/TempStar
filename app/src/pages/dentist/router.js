@@ -1,5 +1,7 @@
 
 TempStars.Router = (function() {
+    'use strict';
+
     var area,
         urlPath,
         classPath;
@@ -16,6 +18,19 @@ TempStars.Router = (function() {
     }
 
     function goBackPage( page, params, data ) {
+        var len,
+            previousPageIndex,
+            url;
+
+        // If page wasn't provided, pull from history
+        if ( ! page ) {
+            len = mainView.history.length;
+            previousPageIndex = (len >= 2) ? len - 2 : 0;
+            url = document.createElement('a');
+            url.href = mainView.history[previousPageIndex];
+            page = url.pathname.split('/').reverse()[0].replace('.html', '');
+        }
+
         goPage( 'back', page, params, data );
     }
 
@@ -117,7 +132,7 @@ TempStars.Dentist.Router = (function() {
         goBackPage: goBackPage,
         reloadPage: reloadPage
     };
-    
+
 })();
 
 TempStars.Dentist.Router.init();
