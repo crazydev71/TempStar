@@ -116,6 +116,14 @@ TempStars.Pages.Dentist.PostJob = (function() {
             return;
         }
 
+        // Validate start time is before end time
+        if ( moment(formData.postedStart, 'hh:mm a').toDate().getTime() >= moment(formData.postedEnd, 'hh:mm a').toDate().getTime() ) {
+            $$('#dentist-post-job-form .form-error-msg')
+                .html('<span class="ti-alert"></span> Starting time must be before ending time.')
+                .show();
+            return;
+        }
+
         app.confirm(
             formData.startDate + '<br>' +
             formData.postedStart + ' - ' +
