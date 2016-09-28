@@ -65,8 +65,16 @@ TempStars.Api = (function() {
             return TempStars.Ajax.get( 'dentists/' + dentistId + '/favouritehygienists' );
         },
 
+        addBlockedHygienist: function addBlockedHygienist( dentistId, data ) {
+            return TempStars.Ajax.post( 'dentists/' + dentistId + '/blockedhygienists', data  );
+        },
+
         removeBlockedHygienist: function removeBlockedHygienist( dentistId, hygienistId ) {
             return TempStars.Ajax.del( 'dentists/' + dentistId + '/blockedhygienists/' + hygienistId );
+        },
+
+        addFavouriteHygienist: function addFavouriteHygienist( dentistId, data ) {
+            return TempStars.Ajax.post( 'dentists/' + dentistId + '/favouritehygienists', data );
         },
 
         removeFavouriteHygienist: function removeFavouriteHygienist( dentistId, hygienistId ) {
@@ -74,7 +82,16 @@ TempStars.Api = (function() {
         },
 
         getJobHistory: function getJobHistory( dentistId ) {
-            return TempStars.Ajax.get( 'dentists/' + dentistId + '/jobs?filter={"where":{"status":{"gt":6}}}' );
+            return TempStars.Ajax.get( 'dentists/' + dentistId + '/jobs?filter={"where":{"status":4}}' );
+        },
+
+        getJobs: function getJobs( dentistId, filter ) {
+            var queryParam = (filter) ? '?filter=' + filter : '';
+            return TempStars.Ajax.get( 'dentists/' + dentistId + '/jobs' + queryParam );
+        },
+
+        getJob: function getJob( dentistId, jobId ) {
+            return TempStars.Ajax.get( 'dentists/' + dentistId + '/jobs/' + jobId );
         },
 
         createJob: function createJob( dentistId, data ) {
@@ -85,8 +102,16 @@ TempStars.Api = (function() {
             return TempStars.Ajax.put( 'jobs/' + jobId, data );
         },
 
-        deleteJob: function deleteJob( dentistId, data ) {
-            return TempStars.Ajax.del( 'dentists/' + dentistId + '/jobs', data );
+        modifyJob: function modifyJob( jobId, shiftId, data ) {
+            return TempStars.Ajax.put( 'jobs/' + jobId + '/shifts/' + shiftId, data ).minDelay(1000);
+        },
+
+        acceptPartialOffer: function acceptPartialOffer( jobId, poId ) {
+            return TempStars.Ajax.put( 'jobs/' + jobId + '/partialoffers/' + poId + '/accept' ).minDelay(1000);
+        },
+
+        rejectPartialOffer: function rejectPartialOffer( jobId, poId, data ) {
+            return TempStars.Ajax.put( 'jobs/' + jobId + '/partialoffers/' + poId, data ).minDelay(1000);
         },
 
         getInvoice: function getInvoice( jobId ) {
@@ -94,7 +119,7 @@ TempStars.Api = (function() {
         },
 
         getInvoices: function getInvoices( dentistId ) {
-            return TempStars.Ajax.get( 'dentists/' + dentistId + '/jobs?filter={"where":{"status":{"gt":6}}}' );
+            return TempStars.Ajax.get( 'dentists/' + dentistId + '/jobs?filter={"where":{"status":4}}' );
         },
 
         updateInvoice: function updateInvoice( invoiceId, data ) {
@@ -103,6 +128,10 @@ TempStars.Api = (function() {
 
         postJob: function postJob( dentistId, data ) {
             return TempStars.Ajax.post( 'dentists/' + dentistId + '/jobshifts', data, authToken ).minDelay(1000);
+        },
+
+        cancelJob: function cancelJob( dentistId, jobId ) {
+            return TempStars.Ajax.del( 'dentists/' + dentistId + '/jobshifts/' + jobId ).minDelay(1000);
         }
 
     };
