@@ -6,6 +6,7 @@
     "port": 3306,
     "database": "tempstars",
     "user": "tempstars",
-    "password": "tempstars"
-}
+    "password": "tempstars",
+    "dateStrings": true
+  }
 }
