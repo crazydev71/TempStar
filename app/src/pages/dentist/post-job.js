@@ -16,8 +16,9 @@ TempStars.Pages.Dentist.PostJob = (function() {
                 onDayClick: function(picker, dayContainer, dateYear, dateMonth, dateDay) {
                     setTimeout( function() {
                         picker.close();
-                    }, 500);
-                }
+                    }, 400);
+                },
+                disabled: page.context
             });
 
             app.picker({
@@ -75,6 +76,10 @@ TempStars.Pages.Dentist.PostJob = (function() {
 
             $$('#denist-post-job-button').on( 'click', postJobHandler );
         });
+    }
+
+    function getJobDate( job ) {
+        return moment(job.startDate).startOf('day').toDate();
     }
 
     function postJobHandler( e ) {
@@ -137,6 +142,7 @@ TempStars.Pages.Dentist.PostJob = (function() {
         fullStartTime = moment( formData.startDate )
                         .add( hours, 'hours' )
                         .add( minutes, 'minutes' )
+                        .utc()
                         .format('YYYY-MM-DD HH:mm');
 
         hours = moment( formData.postedEnd, 'h:mm a' ).hours(),
@@ -144,16 +150,18 @@ TempStars.Pages.Dentist.PostJob = (function() {
         fullEndTime = moment( formData.startDate )
                         .add( hours, 'hours' )
                         .add( minutes, 'minutes' )
+                        .utc()
                         .format('YYYY-MM-DD HH:mm');
 
         data = {
             job: {
-                postedOn: moment().format('YYYY-MM-DD HH:mm:ss'),
-                startDate: formData.startDate
+                postedOn: moment.utc().format('YYYY-MM-DD HH:mm:ss'),
+                startDate: moment( formData.startDate ).format('YYYY-MM-DD'),
+                status: TempStars.Job.status.POSTED
             },
             shifts: [
                 {
-                    shiftDate: formData.startDate,
+                    shiftDate: moment( formData.startDate ).format('YYYY-MM-DD'),
                     startTime: fullStartTime,
                     endTime: fullEndTime
                 }
@@ -163,9 +171,9 @@ TempStars.Pages.Dentist.PostJob = (function() {
         TempStars.Api.postJob( dentistId, data )
         .then( function() {
             app.hidePreloader();
-            app.alert( 'Job Posted', function() {
+            // app.alert( 'Job Posted', function() {
                 TempStars.Dentist.Router.goBackPage('home');
-            });
+            // });
         })
         .catch( function( err ) {
             app.hidePreloader();
@@ -174,15 +182,22 @@ TempStars.Pages.Dentist.PostJob = (function() {
 
     }
 
-    function backHandler( e ) {
-        $('#dentist-post-job-back').click();
-    }
-
     return {
         init: init,
 
         getData: function() {
-            return Promise.resolve( {} );
+            return new Promise( function( resolve, reject ) {
+                TempStars.Dentist.getAllJobs()
+                .then( function( data ) {
+                    var jobs = _(data)
+                        .map( getJobDate )
+                        .value();
+                    resolve( jobs );
+                })
+                .catch( function( err ) {
+                    reject( err );
+                });
+            });
         }
     };
 

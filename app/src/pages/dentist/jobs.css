@@ -52,6 +52,11 @@
     border-bottom:1px solid #eee;
 }
 
+.job-box table tr.bigitem td{
+    border-bottom:1px solid #ccc;
+    padding-bottom: 10px;
+}
+
 .job-box table tr.item.last td{
     border-bottom:none;
 }

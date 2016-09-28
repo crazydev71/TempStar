@@ -193,13 +193,24 @@ TempStars.Pages.Dentist.Profile = (function() {
             return;
         }
 
-        app.confirm( 'Are you sure?', 'Save Profile', function() {
-            app.confirm( 'Are you really sure?', 'Save Profile', function() {
-                app.confirm( 'Are you really really sure?', 'Save Profile', function() {
-                    saveProfile( formData );
-                });
-            });
+        app.modal({
+          title:  'Save Profile',
+          text: 'Are you sure?',
+          buttons: [
+              { text: 'No' },
+              { text: 'Yes', bold: true, onClick: function() {
+                  saveProfile( formData );
+                }}
+          ]
         });
+
+        // app.confirm( 'Are you sure?', 'Save Profile', function() {
+        //     app.confirm( 'Are you really sure?', 'Save Profile', function() {
+        //         app.confirm( 'Are you really really sure?', 'Save Profile', function() {
+        //             saveProfile( formData );
+        //         });
+        //     });
+        // });
     }
 
     function saveProfile( formData ) {
