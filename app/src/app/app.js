@@ -84,11 +84,13 @@ TempStars.App = (function() {
                     });
                     $('#panel-menu').html(menuContent);
 
-                    mainView.router.loadPage({
-                        url: 'dentist/home.html',
-                        context: user,
-                        animatePages: false
-                    });
+                    TempStars.Dentist.Router.goForwardPage( 'home');
+
+                    // mainView.router.loadPage({
+                    //     url: 'dentist/home.html',
+                    //     context: user,
+                    //     animatePages: false
+                    // });
                 }
                 else {
                     // Go back to signup
