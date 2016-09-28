@@ -6,6 +6,13 @@ var app      = require('../tempstars-api.js' );
 var stripe   = require( 'stripe' )(app.get('stripeSecretKey'));
 var location = require( 'location' );
 
+var  jobStatus =  {
+    'POSTED': 1,
+    'PARTIAL': 2,
+    'CONFIRMED': 3,
+    'COMPLETED': 4
+};
+
 module.exports = function( Dentist ) {
 
     Dentist.disableRemoteMethod('createChangeStream', true);
@@ -250,5 +257,77 @@ module.exports = function( Dentist ) {
         });
     };
 
+
+
+    Dentist.remoteMethod( 'cancelJob', {
+        accepts: [
+            {arg: 'dentistId', type: 'number', required: true},
+            {arg: 'jobId', type: 'number', required: true}],
+        returns: { arg: 'result', type: 'object' },
+        http: { verb: 'delete', path: '/:dentistId/jobshifts/:jobId' }
+    });
+
+    /**
+    * Cancel job
+    *
+    * if job status is posted, delete job and shifts
+    * if job status is partial, delete job, shifts, and partial offers and notify
+    * if job status is confirmed delete job, shifts, and notify
+    * if job status is complete, don't do anything
+    */
+    Dentist.cancelJob = function( dentistId, jobId, callback ) {
+
+        var Job = app.models.Job;
+        var job;
+
+        console.log( 'cancel job' );
+        // Get the job
+        Job.findById( jobId )
+        .then( function( j ) {
+            job = j;
+            console.log( 'got job with status:' + job.status );
+
+            switch ( job.status ) {
+                case jobStatus.COMPLETED:
+                    console.log( 'cancel completed job' );
+                    callback( new Error( 'cannot cancel completed job') );
+                    return;
+                    break;
+
+                case jobStatus.CONFIRMED:
+                    console.log( 'cancel confirmed job' );
+                    // Notify hygienist
+                    break;
+
+                case jobStatus.PARTIAL:
+                    // Notify hygienists
+                    // Delete partial offers
+                    console.log( 'cancel partial offer job' );
+                    return job.partialOffers.destroyAll();
+                    break;
+
+                case jobStatus.POSTED:
+                    console.log( 'cancel posted job' );
+                    break;
+            }
+        })
+        .then( function() {
+            // Delete job and shifts
+            console.log( 'delete shifts' );
+            return job.shifts.destroyAll();
+        })
+        .then( function() {
+            console.log( 'delete job' );
+            return Job.deleteById( jobId );
+        })
+        .then( function() {
+            console.log( 'cancel job worked!' );
+            callback( null, {} );
+        })
+        .catch( function( err ) {
+            console.log( 'cancel job error!' );
+            callback( err );
+        });
+    };
 
 };
