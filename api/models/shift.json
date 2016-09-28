@@ -42,7 +42,7 @@
       }
     },
     "shiftDate": {
-      "type": "Date",
+      "type": "String",
       "required": true,
       "length": null,
       "precision": null,
@@ -57,7 +57,7 @@
       }
     },
     "postedStart": {
-      "type": "Date",
+      "type": "String",
       "required": true,
       "length": null,
       "precision": null,
@@ -72,7 +72,7 @@
       }
     },
     "postedEnd": {
-      "type": "Date",
+      "type": "String",
       "required": true,
       "length": null,
       "precision": null,
@@ -87,7 +87,7 @@
       }
     },
     "actualStart": {
-      "type": "Date",
+      "type": "String",
       "required": false,
       "length": null,
       "precision": null,
@@ -102,7 +102,7 @@
       }
     },
     "actualEnd": {
-      "type": "Date",
+      "type": "String",
       "required": false,
       "length": null,
       "precision": null,

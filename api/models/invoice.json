@@ -43,7 +43,7 @@
     },
     "manualDentistId": {
       "type": "Number",
-      "required": true,
+      "required": false,
       "length": null,
       "precision": 10,
       "scale": 0,
@@ -58,7 +58,7 @@
     },
     "manualHygienistId": {
       "type": "Number",
-      "required": true,
+      "required": false,
       "length": null,
       "precision": 10,
       "scale": 0,
@@ -72,8 +72,8 @@
       }
     },
     "totalHours": {
-      "type": "String",
-      "required": true,
+      "type": "Number",
+      "required": false,
       "length": null,
       "precision": 4,
       "scale": 2,
@@ -87,8 +87,8 @@
       }
     },
     "totalUnpaidHours": {
-      "type": "String",
-      "required": true,
+      "type": "Number",
+      "required": false,
       "length": null,
       "precision": 4,
       "scale": 2,
@@ -103,7 +103,7 @@
     },
     "hourlyRate": {
       "type": "Number",
-      "required": true,
+      "required": false,
       "length": null,
       "precision": 10,
       "scale": 0,
@@ -117,8 +117,8 @@
       }
     },
     "totalInvoice": {
-      "type": "String",
-      "required": true,
+      "type": "Number",
+      "required": false,
       "length": null,
       "precision": 6,
       "scale": 2,
@@ -132,8 +132,8 @@
       }
     },
     "hygienistMarkedPaid": {
-      "type": "Number",
-      "required": true,
+      "type": "Boolean",
+      "required": false,
       "length": null,
       "precision": 3,
       "scale": 0,
@@ -147,8 +147,8 @@
       }
     },
     "dentistMarkedPaid": {
-      "type": "Number",
-      "required": true,
+      "type": "Boolean",
+      "required": false,
       "length": null,
       "precision": 3,
       "scale": 0,
@@ -162,8 +162,8 @@
       }
     },
     "sent": {
-      "type": "Number",
-      "required": true,
+      "type": "Boolean",
+      "required": false,
       "length": null,
       "precision": 3,
       "scale": 0,
@@ -193,7 +193,7 @@
     },
     "sentOn": {
       "type": "Date",
-      "required": true,
+      "required": false,
       "length": null,
       "precision": null,
       "scale": null,
@@ -208,7 +208,7 @@
     },
     "paidOn": {
       "type": "Date",
-      "required": true,
+      "required": false,
       "length": null,
       "precision": null,
       "scale": null,

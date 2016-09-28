@@ -9,7 +9,7 @@
     }
   },
   "scope": {
-      "include": [ "invoice", "hygienist", "shifts" ]
+      "include": [ "invoice", "hygienist", "shifts", "partialOffers" ]
   },
   "properties": {
     "id": {
@@ -179,14 +179,14 @@
         "nullable": "Y"
       }
     },
-    "dentistinvoicePaid": {
+    "dentistSurvey": {
       "type": "Number",
       "required": false,
       "length": null,
       "precision": 3,
       "scale": 0,
       "mysql": {
-        "columnName": "dentistinvoicePaid",
+        "columnName": "dentistSurvey",
         "dataType": "tinyint",
         "dataLength": null,
         "dataPrecision": 3,
@@ -194,44 +194,14 @@
         "nullable": "Y"
       }
     },
-    "hygienistInvoicePaid": {
+    "hygienistSurvey": {
       "type": "Number",
       "required": false,
       "length": null,
       "precision": 3,
       "scale": 0,
       "mysql": {
-        "columnName": "hygienistInvoicePaid",
-        "dataType": "tinyint",
-        "dataLength": null,
-        "dataPrecision": 3,
-        "dataScale": 0,
-        "nullable": "Y"
-      }
-    },
-    "dentistEvalComplete": {
-      "type": "Number",
-      "required": false,
-      "length": null,
-      "precision": 3,
-      "scale": 0,
-      "mysql": {
-        "columnName": "dentistEvalComplete",
-        "dataType": "tinyint",
-        "dataLength": null,
-        "dataPrecision": 3,
-        "dataScale": 0,
-        "nullable": "Y"
-      }
-    },
-    "hygienistEvalComplete": {
-      "type": "Number",
-      "required": false,
-      "length": null,
-      "precision": 3,
-      "scale": 0,
-      "mysql": {
-        "columnName": "hygienistEvalComplete",
+        "columnName": "hygienistSurvey",
         "dataType": "tinyint",
         "dataLength": null,
         "dataPrecision": 3,
@@ -255,7 +225,7 @@
       }
     },
     "startDate": {
-      "type": "Date",
+      "type": "String",
       "required": true,
       "length": null,
       "precision": null,
