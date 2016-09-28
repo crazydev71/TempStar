@@ -18,7 +18,7 @@ TempStars.Pages.Dentist.JobConfirmed = (function() {
 
     function modifyButtonHandler( e ) {
         e.preventDefault();
-        job.pageTitle = "Confirmed Job";
+        job.pageTitle = "Booked Job";
         TempStars.Dentist.Router.goForwardPage('modify-job', {}, job );
     }
 
