@@ -78,7 +78,7 @@ CREATE TABLE `BlockedHygienist` (
   `dentistId` int(11) NOT NULL,
   `hygienistId` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -188,7 +188,7 @@ CREATE TABLE `FavouriteHygienist` (
   `hygienistId` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index2` (`dentistId`,`hygienistId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -272,7 +272,7 @@ CREATE TABLE `Invoice` (
   PRIMARY KEY (`id`),
   KEY `index2` (`jobId`),
   KEY `index3` (`manualHygienistId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -294,17 +294,15 @@ CREATE TABLE `Job` (
   `cascadeInterval` int(11) NOT NULL,
   `modifiedOn` datetime NOT NULL,
   `invoiceSent` tinyint(1) DEFAULT NULL,
-  `dentistinvoicePaid` tinyint(1) DEFAULT NULL,
-  `hygienistInvoicePaid` tinyint(1) DEFAULT NULL,
-  `dentistEvalComplete` tinyint(1) DEFAULT NULL,
-  `hygienistEvalComplete` tinyint(1) DEFAULT NULL,
+  `dentistSurvey` tinyint(1) DEFAULT NULL,
+  `hygienistSurvey` tinyint(1) DEFAULT NULL,
   `dentistBilled` tinyint(1) DEFAULT NULL,
   `startDate` date DEFAULT NULL,
   `privateNotes` text,
   PRIMARY KEY (`id`),
   KEY `index2` (`dentistId`),
   KEY `index3` (`hygienistId`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -327,7 +325,7 @@ CREATE TABLE `PartialOffer` (
   PRIMARY KEY (`id`),
   KEY `index2` (`jobId`),
   KEY `index3` (`hygienistId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -414,7 +412,7 @@ CREATE TABLE `Shift` (
   `modifiedOn` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index2` (`jobId`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -452,4 +450,4 @@ CREATE TABLE `User` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-20 22:09:13
+-- Dump completed on 2016-09-28 10:30:25
