@@ -14,8 +14,12 @@ TempStars.bootstrap = {
         window.$$ = Dom7;
 
         // Register helpers
-        Template7.registerHelper('date_format', function(dateString) {
+        Template7.registerHelper('date_time_format', function(dateString) {
             return moment.utc( dateString ).local().format('MMM D, YYYY');
+        });
+
+        Template7.registerHelper('date_format', function(dateString) {
+            return moment( dateString ).format('MMM D, YYYY');
         });
 
         Template7.registerHelper('time_format', function(timeString) {

@@ -45,7 +45,7 @@
                             <div class="item-subtitle">{{date_format shiftDate}} &nbsp;&nbsp; {{time_format postedStart}} - {{time_format postedEnd}}</div>
                             {{/each}} -->
                             <div class="item-subtitle">
-                                invoice date: {{date_format invoice.sentOn}}<br>
+                                invoice date: {{date_time_format invoice.sentOn}}<br>
                                 paid: {{#if invoice.dentistMarkedPaid}}yes{{else}}no{{/if}}
                             </div>
                           </div>
