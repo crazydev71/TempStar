@@ -1,0 +1,110 @@
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="left sliding">
+            <a href="#" class="internal-back">
+                <span class="ti-angle-left"></span> back
+            </a>
+        </div>
+        <div class="center sliding">Completed Job</div>
+        <div class="right">
+            <a href="#" data-panel="right" class="link icon-only open-panel">
+                <span class="ti-menu"></span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div data-page="job-completed" class="page">
+    <div class="page-content">
+        <div class="content-block">
+            <div class="job-box">
+
+            <div class="login-screen-title" style="margin-bottom:20px;">{{hygienist.firstName}} {{hygienist.lastName}}</div>
+
+            <table cellpadding="0" cellspacing="0">
+                <tr class="heading">
+                    <td>Date</td>
+                    <td style="text-align:left;">Hours</td>
+                </tr>
+
+                {{#each shifts}}
+                <tr class="item">
+                    <td>{{date_format shiftDate}}</td>
+                    <td style="text-align:left;">
+                        {{time_format postedStart}} - {{time_format postedEnd}}
+                    </td>
+                </tr>
+                {{/each}}
+
+                <tr colspan="2"><td>&nbsp;</td></tr>
+            </table>
+            </div>
+
+            <form id="dentist-job-completed-form">
+                <div class="row" style="margin-bottom:20px;">
+                    <div class="col-40" style="line-height:26px;font-size:12px;">
+                        Paid?
+                    </div>
+                    <div class="col-60" style="line-height:26px;font-size:12px;vertical-align:center;">
+                        {{#if invoice.dentistMarkedPaid}}
+                        paid!
+                        {{else}}
+                        <a href="#" id="dentist-job-completed-view-invoice-button" data-id="{{invoice.id}}" data-page="invoice" class="button button-round button-small">View Invoice</a>
+                        {{/if}}
+
+                        <!-- <label class="label-switch">
+                            <input id="dentist-job-completed-paid-checkbox" data-id="{{invoice.id}}" type="checkbox" {{#if invoice.dentistMarkedPaid}}checked{{/if}}>
+                            <div class="checkbox"></div>
+                        </label>
+                        <span id="dentist-job-completed-paid-label" style="display:inline-block;margin-left:10px;font-size:12px;">
+                            {{#if invoice.dentistMarkedPaid}}
+                            paid!
+                            {{else}}
+                            not paid
+                            {{/if}}
+                        </span> -->
+                    </div>
+                </div>
+
+                <div class="row" style="margin-bottom:20px;">
+                    <div class="col-40" style="line-height:26px;font-size:12px;">
+                        Survey&nbsp;Complete?
+                    </div>
+                    <div class="col-60" style="line-height:26px;font-size:12px;vertical-align:center;">
+                        {{#if dentistSurvey}}
+                        done!
+                        {{else}}
+                        <a href="#" id="dentist-job-completed-view-survey-button" class="button button-round button-small">Complete Survey</a>
+                        {{/if}}
+
+                        <!-- <label class="label-switch">
+                            <input id="dentist-job-completed-survey-checkbox" data-id="{{id}}" type="checkbox" {{#if dentistEvalComplete}}checked{{/if}}>
+                            <div class="checkbox"></div>
+                        </label>
+                        <span id="dentist-job-completed-survey-label" style="display:inline-block;margin-left:10px;font-size:12px;">
+                            {{#if dentistEvalComplete}}
+                            done!
+                            {{else}}
+                            not done
+                            {{/if}}
+                        </span> -->
+                    </div>
+                </div>
+
+                <div class="label">Private Notes</div>
+                <div class="item-input">
+                    <textarea id="dentist-job-completed-notes" class="resizable" style="width:96%;" placeholder="enter private notes" rows="6">{{privateNotes}}</textarea>
+                </div>
+
+                <div class="row" style="margin-top:20px">
+                    <div class="col-20">&nbsp;</div>
+                    <div class="col-60">
+                        <a id="dentist-job-completed-notes-save-button" href="#" data-id="{{id}}" class="button button-round">Save Notes</a>
+                    </div>
+                    <div class="col-20">&nbsp;</div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

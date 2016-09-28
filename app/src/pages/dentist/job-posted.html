@@ -1,0 +1,56 @@
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="left sliding">
+            <a href="#" class="internal-back">
+                <span class="ti-angle-left"></span> back
+            </a>
+        </div>
+        <div class="center sliding">Posted Job</div>
+        <div class="right">
+            <a href="#" data-panel="right" class="link icon-only open-panel">
+                <span class="ti-menu"></span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div data-page="job-posted" class="page">
+    <div class="page-content">
+        <div class="content-block">
+            <div class="job-box">
+
+            <table cellpadding="0" cellspacing="0">
+                <tr class="heading">
+                    <td>Date</td>
+                    <td style="text-align:left;">Hours</td>
+                </tr>
+
+                {{#each shifts}}
+                <tr class="item">
+                    <td>{{date_format shiftDate}}</td>
+                    <td style="text-align:left;">
+                        {{time_format postedStart}} - {{time_format postedEnd}}
+                    </td>
+                </tr>
+                {{/each}}
+
+                <tr colspan="2"><td>&nbsp;</td></tr>
+            </table>
+            </div>
+
+            <form id="dentist-job-completed-form">
+                <div class="row" style="margin-top:20px">
+                    <div class="col-20">&nbsp;</div>
+                    <div class="col-60">
+                        <a id="dentist-job-posted-modify-button" href="#" data-id="{{id}}" class="button button-round">Modify Job</a>
+                        <br><br>
+                        <a id="dentist-job-posted-cancel-button" href="#" data-id="{{id}}" class="button button-round">Cancel Job</a>
+                    </div>
+                    <div class="col-20">&nbsp;</div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
