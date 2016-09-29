@@ -298,7 +298,12 @@
     },
     "favouriteDentists": {
       "type": "hasMany",
-      "model": "favouriteDentist",
+      "model": "FavouriteDentist",
+      "foreignKey": "hygienistId"
+    },
+    "jobs": {
+      "type": "hasMany",
+      "model": "Job",
       "foreignKey": "hygienistId"
     },
     "manualInvoices": {

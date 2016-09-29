@@ -9,7 +9,7 @@
     }
   },
   "scope": {
-      "include": [ "invoice", "hygienist", "shifts", "partialOffers" ]
+      "include": [ "invoice", "hygienist", "shifts", "partialOffers", "dentist" ]
   },
   "properties": {
     "id": {
@@ -239,14 +239,29 @@
         "nullable": "N"
       }
     },
-    "privateNotes": {
+    "dentistPrivateNotes": {
       "type": "String",
       "required": false,
       "length": 65535,
       "precision": null,
       "scale": null,
       "mysql": {
-        "columnName": "privateNotes",
+        "columnName": "dentistPrivateNotes",
+        "dataType": "text",
+        "dataLength": 65535,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "N"
+      }
+  },
+    "hygienistPrivateNotes": {
+      "type": "String",
+      "required": false,
+      "length": 65535,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "hygienistPrivateNotes",
         "dataType": "text",
         "dataLength": 65535,
         "dataPrecision": null,
