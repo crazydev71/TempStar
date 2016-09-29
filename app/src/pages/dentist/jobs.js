@@ -33,7 +33,7 @@ TempStars.Pages.Dentist.Jobs = (function() {
     function getData() {
 
         return new Promise( function( resolve, reject ) {
-            TempStars.Api.getJobHistory( TempStars.User.getCurrentUser().dentistId )
+            TempStars.Api.getDentistJobHistory( TempStars.User.getCurrentUser().dentistId )
             .then( function( jobs ) {
 
                 data = { jobs: jobs };

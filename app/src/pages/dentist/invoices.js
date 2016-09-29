@@ -34,7 +34,7 @@ TempStars.Pages.Dentist.Invoices = (function() {
     function getData() {
 
         return new Promise( function( resolve, reject ) {
-            TempStars.Api.getInvoices( TempStars.User.getCurrentUser().dentistId )
+            TempStars.Api.getDentistInvoices( TempStars.User.getCurrentUser().dentistId )
             .then( function( jobs ) {
 
                 data = { jobs: jobs };

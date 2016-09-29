@@ -26,7 +26,7 @@ TempStars.Pages.Dentist.JobCompleted = (function() {
         var jobId = $$(this).attr('data-id');
         var notes = $$('#dentist-job-completed-notes').val();
 
-        TempStars.Api.updateJob( jobId, { privateNotes: notes} )
+        TempStars.Api.updateJob( jobId, { dentistPrivateNotes: notes} )
         .then( function() {
             TempStars.Dentist.Router.goBackPage('home');
         })
@@ -114,7 +114,7 @@ TempStars.Pages.Dentist.JobCompleted = (function() {
         TempStars.Api.updateJob( job.id, {dentistSurvey: result} )
         .then( function() {
             var data = { hygienistId: job.hygienistId };
-            
+
             if ( result == TempStars.Survey.VERY_HAPPY ) {
                 return TempStars.Api.addFavouriteHygienist( job.dentistId, data );
             }
