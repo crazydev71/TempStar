@@ -20,11 +20,14 @@ TempStars.Pages.Dentist.Hygienists = (function() {
         var dentistId = TempStars.User.getCurrentUser().dentistId;
 
         app.confirm('Are you sure you want to remove ' + name + '?', 'Remove Blocked Hygienist', function() {
+            app.showPreloader('Removing Blocked Hygienist');
             TempStars.Api.removeBlockedHygienist( dentistId, blockedHygienistId )
-            .then( function(){
+            .then( function() {
+                app.hidePreloader();
                 TempStars.Dentist.Router.reloadPage('hygienists');
             })
             .catch( function( err ) {
+                app.hidePreloader();
                 app.alert('Error removing hygienist. Please try again.' );
             });
         });
@@ -36,11 +39,14 @@ TempStars.Pages.Dentist.Hygienists = (function() {
         var dentistId = TempStars.User.getCurrentUser().dentistId;
 
         app.confirm('Are you sure you want to remove ' + name + '?', 'Remove Favourite Hygienist', function() {
+            app.showPreloader('Removing Favourite Hygienist');
             TempStars.Api.removeFavouriteHygienist( dentistId, favHygienistId )
-            .then( function(){
+            .then( function() {
+                app.hidePreloader();
                 TempStars.Dentist.Router.reloadPage('hygienists');
             })
             .catch( function( err ) {
+                app.hidePreloader();
                 app.alert('Error removing hygienist. Please try again.' );
             });
         });
