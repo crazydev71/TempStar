@@ -85,12 +85,6 @@ TempStars.App = (function() {
                     $('#panel-menu').html(menuContent);
 
                     TempStars.Dentist.Router.goForwardPage( 'home');
-
-                    // mainView.router.loadPage({
-                    //     url: 'dentist/home.html',
-                    //     context: user,
-                    //     animatePages: false
-                    // });
                 }
                 else {
                     // Go back to signup
@@ -115,7 +109,7 @@ TempStars.App = (function() {
                     });
                     $('#panel-menu').html(menuContent);
 
-                    mainView.router.loadPage( { url: 'hygienist/home.html', animatePages: false } );
+                    TempStars.Hygienist.Router.goForwardPage('home');
                 }
                 else {
                     mainView.router.loadPage( { url: 'landing/hygienist-signup.html', animatePages: false } );
