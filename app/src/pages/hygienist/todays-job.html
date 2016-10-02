@@ -1,0 +1,134 @@
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="left sliding">
+            <a href="#" class="hygienist-internal-back">
+                <span class="ti-angle-left"></span> back
+            </a>
+        </div>
+        <div class="center sliding">Today's Job</div>
+        <div class="right">
+            <a href="#" data-panel="right" class="link icon-only open-panel">
+                <span class="ti-menu"></span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div data-page="todays-job" class="page">
+    <div class="page-content">
+        <div class="content-block">
+            {{#if job.id}}
+            <div class="job-box">
+                <div class="login-screen-title" style="margin-bottom:20px;">{{date_format_day job.startDate}}</div>
+                <hr>
+                <div class="center-box" style="font-size:125%;font-weight:bold;padding:8px;">
+                {{job.dentist.practiceName}}
+                </div>
+                <div class="center-box" style="padding:2px;">
+                {{job.dentist.address}}
+                </div>
+                <div class="center-box" style="padding:2px;">
+                {{job.dentist.city}}, {{job.dentist.province}}
+                </div>
+                <div class="center-box" style="padding:2px;">
+                {{job.dentist.postalCode}}
+                </div>
+
+                {{#each job.shifts}}
+                <div class="center-box" style="font-size:125%;margin-top:10px;">
+                    {{time_format postedStart}} - {{time_format postedEnd}}
+                </div>
+                {{/each}}
+
+                <div class="center-box" style="padding-top:10px;">
+                phone: {{job.dentist.phone}}
+                </div>
+
+
+                <div class="list-block">
+                  <ul>
+                    <li class="accordion-item"><a href="#" class="item-content item-link">
+                        <div class="item-inner">
+                          <div class="item-title" style="font-size:75%;">Office Information</div>
+                        </div></a>
+                      <div class="accordion-item-content">
+                        <div class="content-block">
+                            Arrival: {{job.dentist.detail.hygienistArrival}}<br>
+                            Primary Contact: {{job.dentist.detail.primaryContact}}<br>
+                            Parking: {{job.dentist.detail.parking}}<br>
+                            Payment: {{job.dentist.detail.payment}}<br>
+                            Radiography: {{job.dentist.detail.radiography}}<br>
+                            Ultrasonic: {{job.dentist.detail.ultrasonic}}<br>
+                            Avg Recall: {{job.dentist.detail.avgApptTime}}<br>
+                            Charting: {{job.dentist.detail.charting}}<br>
+                            Software: {{job.dentist.detail.software}}<br>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="accordion-item"><a href="#" class="item-content item-link">
+                        <div class="item-inner">
+                          <div class="item-title" style="font-size:75%;">Work History Notes</div>
+                        </div></a>
+                      <div class="accordion-item-content">
+                        <div class="content-block">
+                            {{#each workHistory}}
+                            {{startDate}} - {{hygienistPrivateNotes}}<br>
+                            {{else}}
+                            No work history notes.
+                            {{/each}}
+                        </div>
+                      </div>
+                    </li>
+
+                  </ul>
+                </div>
+
+                {{#if job.isComplete}}
+                <div class="row" style="margin-top:30px">
+                    <div class="col-20">&nbsp;</div>
+                    <div class="col-60">
+                        <a id="hygienist-todays-job-invoice-button" href="#" data-id="{{id}}" class="button button-round">
+                        {{#if job.hasInvoice}}
+                        View Invoice
+                        {{else}}
+                        Create &amp; Send Invoice</a>
+                        {{/if}}
+                        </a>
+                    </div>
+                    <div class="col-20">&nbsp;</div>
+                </div>
+                <div class="row" style="margin-top:20px">
+                    <div class="col-20">&nbsp;</div>
+                    <div class="col-60" style="text-align:center;">
+                        {{#if job.hygienistSurvey}}
+                        <span class="ti-check"></span>&nbsp;Survey completed.
+                        {{else}}
+                        <a id="hygienist-todays-job-survey-button" href="#" data-id="{{id}}" class="button button-round">Complete Survey</a>
+                        {{/if}}
+                    </div>
+                    <div class="col-20">&nbsp;</div>
+                </div>
+                {{else}}
+                <div class="row" style="margin-top:30px">
+                    <div class="col-20">&nbsp;</div>
+                    <div class="col-60">
+                        <a id="hygienist-todays-job-complete-button" href="#" data-id="{{id}}" class="button button-round">Mark as Complete</a>
+                    </div>
+                    <div class="col-20">&nbsp;</div>
+                </div>
+                <div class="row" style="margin-top:20px">
+                    <div class="col-20">&nbsp;</div>
+                    <div class="col-60">
+                        <a id="hygienist-todays-job-cancel-button" href="#" data-id="{{id}}" class="button button-round">Cancel Job</a>
+                    </div>
+                    <div class="col-20">&nbsp;</div>
+                </div>
+                {{/if}}
+
+            </div>
+            {{else}}
+            <h3 class="center-box">You don't have a job today.&nbsp;&nbsp;  <span class="ti-face-sad"></span></h3>
+            {{/if}}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,110 @@
+
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="left sliding">
+                <a href="#" class="hygienist-internal-back"  data-id="{{id}}">
+                    <span class="ti-angle-left"></span> back
+                </a>
+            </div>
+            <div class="center sliding">Make Partial Offer</div>
+            <div class="right">
+                <a href="#" data-panel="right" class="link icon-only open-panel">
+                    <span class="ti-menu"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div data-page="make-partial-offer" class="page">
+        <div class="page-content">
+
+            <div class="content-block">
+
+                <div class="login-screen-title" style="margin-bottom:0px;">{{date_format_day startDate}}</div>
+                <hr>
+                <div class="center-box" style="font-size:125%;font-weight:bold;padding-top:0px;">
+                {{dentist.practiceName}}
+                </div>
+                <div class="center-box" style="padding:0px;">
+                {{dentist.address}}
+                </div>
+                <div class="center-box" style="padding:0px;">
+                {{dentist.city}}, {{dentist.province}}
+                </div>
+                <div class="center-box" style="padding-bottom:10px;">
+                {{dentist.postalCode}}
+                </div>
+
+            <div class="invoice-box">
+
+                <table cellpadding="0" cellspacing="0">
+                    <tr class="heading">
+                        <td colspan="2">Posted Hours</td>
+                    </tr>
+
+                    {{#each shifts}}
+                    <tr class="item">
+                        <td>{{date_format shiftDate}}</td>
+                        <td style="text-align:left;">
+                            {{time_format postedStart}} - {{time_format postedEnd}}
+                            <br>&nbsp;
+                        </td>
+                    </tr>
+                    {{/each}}
+
+                    <tr class="heading">
+                        <td colspan="2">Offered Hours</td>
+                    </tr>
+                </table>
+
+                <form id="hygienist-make-partial-offer-form" style="margin-top:-1px">
+                    <div class="form-error-msg"></div>
+                    <div class="list-block" style="margin:0;">
+                      <ul>
+
+                        {{#each shifts}}
+                        <li>
+                          <div class="item-content" style="padding-left:0;">
+                            <div class="item-inner">
+                              <div class="item-title label"><span style="color:red">&bull;</span> Start Time</div>
+                              <div class="item-input" style="margin-left: 30px;">
+                                <input type="text" placeholder="enter offered start time" name="offeredStart" readonly id="hygienist-make-partial-offer-starttime">
+                                <div class="field-error-msg"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+
+                        <li>
+                            <div class="item-content" style="padding-left:0;">
+                            <div class="item-inner">
+                              <div class="item-title label"><span style="color:red">&bull;</span> End Time</div>
+                              <div class="item-input" style="margin-left: 30px;">
+                                  <input type="text" placeholder="enter offered end time" name="offeredEnd" readonly id="hygienist-make-partial-offer-endtime">
+                                  <div class="field-error-msg"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                        {{/each}}
+
+                      </ul>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+
+            <div class="content-block">
+                <div class="row">
+                    <div class="col-15">&nbsp;</div>
+                    <div class="col-70">
+                        <a href="#" id="hygienist-make-partial-offer-submit-button" class="button button-round">Submit Partial Offer</a>
+                    </div>
+                    <div class="col-15">&nbsp;</div>
+                </div>
+            </div>
+
+        </div>
+    </div>

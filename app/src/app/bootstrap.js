@@ -22,9 +22,27 @@ TempStars.bootstrap = {
             return moment( dateString ).format('MMM D, YYYY');
         });
 
+        Template7.registerHelper('date_format_day', function(dateString) {
+            return moment( dateString ).format('ddd MMM D, YYYY');
+        });
+
         Template7.registerHelper('time_format', function(timeString) {
             return moment.utc( timeString ).local().format('h:mm a');
         });
+
+        Template7.registerHelper('hour_format', function(h) {
+            var totalMinutes =  h * 60;
+            var hours = totalMinutes / 60 | 0;
+            var minutes = totalMinutes % 60 | 0;
+            hours = (hours < 0) ? '0' : hours;
+            minutes = (minutes < 0) ? '0' : minutes;
+            return hours + ':' + _.padStart( minutes, 2, '0');
+        });
+
+        Template7.registerHelper('currency_format', function(moneyString ) {
+            return moneyString.toFixed(2);
+        });
+
 
         // Setup app
         window.app = new Framework7({

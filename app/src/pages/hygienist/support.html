@@ -1,44 +1,62 @@
-<div class="views">
-    <div class="view view-main">
-        <div class="pages navbar-through">
-            <div class="navbar">
-                <div class="navbar-inner">
-                    <!-- <div class="left sliding">
-                        <a href="#" class="link icon-only back">
-                            <span class="ti-angle-left"></span>
-                        </a>
-                    </div> -->
-                    <div class="center sliding">Support</div>
-                    <div class="right">
-                        <a href="#" data-panel="right" class="link icon-only open-panel">
-                            <span class="ti-menu"></span>
-                        </a>
-                    </div>
-                </div>
+
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="left">
+                <a href="#" data-page="home" class="hygienist-internal-back icon-only">
+                    <span class="ti-home"></span>
+                </a>
             </div>
-        <div data-page="settings" class="page">
-            <div class="page-content" style="padding-left:80px;">
-                <div class="content-block">
-                    <h2>We're here to help</h2>
-                </div>
-                <div class="content-block-title">PHONE</div>
-                <div class="content-block">
-                    <span class="ti-mobile"> <a href="tel:555-222-4499" class="external">555-222-4499</a><br>
-                    Available 8:00am - 6:00pm, ET
-                </div>
-                <div class="content-block-title">EMAIL</div>
-                <div class="content-block">
-                    <span class="ti-email"> <a href="mailto:help@tempstars.ca" class="external">help@tempstars.ca</a>
-                </div>
-                <div class="content-block-title">FACEBOOK</div>
-                <div class="content-block">
-                    <span class="ti-facebook"> <a href="http://facebook.com/tempstars" class="external">facebook.com/tempstars</a>
-                </div>
-                <div class="content-block-title">TWITTER</div>
-                <div class="content-block">
-                    <span class="ti-twitter-alt"> <a href="http://twitter.com/tempstars" class="external">twitter.com/tempstars</a>
-                </div>
+            <div class="center sliding">Support</div>
+            <div class="right">
+                <a href="#" data-panel="right" class="link icon-only open-panel">
+                    <span class="ti-menu"></span>
+                </a>
             </div>
         </div>
     </div>
-</div>
+
+    <div data-page="support" class="page">
+        <div class="page-content">
+            <div class="login-screen-title">Need Help?</div>
+            <div class="content-block">
+                <p class="page-subtitle">Contact us anytime
+                </p>
+            </div>
+
+            <div class="content-block-title">PHONE</div>
+            <div class="content-block">
+                <span class="ti-mobile"></span> <a href="tel:555-222-4499" class="external">905-299-2777</a><br>
+            </div>
+
+            <div class="content-block-title">EMAIL</div>
+            <div class="content-block">
+                <span class="ti-email"></span> <a href="mailto:help@tempstars.ca" class="external">help@tempstars.ca</a>
+            </div>
+
+            <div class="content-block-title">FACEBOOK</div>
+            <div class="content-block">
+                <span class="ti-facebook"></span> <a href="http://facebook.com/tempstars" class="external">facebook.com/tempstars</a>
+            </div>
+
+            <div class="content-block-title">TWITTER</div>
+            <div class="content-block">
+                <span class="ti-twitter-alt"></span> <a href="http://twitter.com/tempstars" class="external">twitter.com/tempstars</a>
+            </div>
+
+            <div class="content-block-title">LEGAL</div>
+            <div class="content-block">
+                <a href="#" data-page="terms-of-service" class="hygienist-internal-forward">Terms of Service</a>
+                <br><br>
+                <a href="#" data-page="privacy-policy" class="hygienist-internal-forward" >Privacy Policy</a>
+            </div>
+
+            <div class="content-block-title">SUPPORT INFO</div>
+            <div class="content-block">
+                &bull; App Version: {{version}}
+                <br>
+                &bull; Platform: {{platform}} {{platformVersion}}
+                <br>
+                &bull; Model: {{manufacturer}} {{model}}
+            </div>
+        </div>
+    </div>

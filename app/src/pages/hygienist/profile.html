@@ -1,166 +1,158 @@
-<div class="views">
-    <div class="view view-main">
-        <div class="navbar">
-            <div class="navbar-inner">
-                <!-- <div class="left sliding">
-                    <a href="#" class="link icon-only back">
-                        <span class="ti-angle-left"></span>
-                    </a>
-                </div> -->
-                <div class="center sliding">Profile</div>
-                <div class="right">
-                    <a href="#" data-panel="right" class="link icon-only open-panel">
-                        <span class="ti-menu"></span>
-                    </a>
-                </div>
+
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="left">
+                <a href="#" data-page="home" class="hygienist-internal-back icon-only">
+                    <span class="ti-home"></span>
+                </a>
+            </div>
+            <div class="center sliding">Profile</div>
+            <div class="right">
+                <a href="#" data-panel="right" class="link icon-only open-panel">
+                    <span class="ti-menu"></span>
+                </a>
             </div>
         </div>
+    </div>
 
-        <div class="pages navbar-through">
-        <div data-page="settings" class="page">
-            <div class="page-content">
-                <div class="content-block">
-                    <div style="margin:auto; width:100px;">
-                        <img width="100" height="100" style="border-radius:100%" src="img/user2.jpg">
-                        <button class="button button-round">upload photo</button>
+    <div data-page="hygienist-profile" class="page">
+        <div class="page-content">
+            <div class="login-screen-title">Edit Hygienist Profile</div>
+            <div class="content-block">
+                <p class="page-subtitle">Change your profile information here
+                </p>
+            </div>
+
+            <form id="hygienist-profile-form">
+                <div class="row" style="margin-top:20px">
+                    <div class="col-20">&nbsp;</div>
+                    <div class="col-60">
+                        <a id="hygienist-profile-save-button" class="button button-round">Save</a>
                     </div>
+                    <div class="col-20">&nbsp;</div>
                 </div>
-                    <div class="list-block">
-                      <ul>
-                        <!-- Text inputs -->
-                        <li>
-                          <div class="item-content">
-                            <div class="item-inner">
-                              <div class="item-title label">First Name</div>
-                              <div class="item-input">
-                                <input type="text" placeholder="first name">
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="item-content">
-                            <div class="item-inner">
-                              <div class="item-title label">Last Name</div>
-                              <div class="item-input">
-                                <input type="text" placeholder="last name">
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="item-content">
-                            <div class="item-inner">
-                              <div class="item-title label">Email</div>
-                              <div class="item-input">
-                                <input type="email" placeholder="email">
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="item-content">
-                            <div class="item-inner">
-                              <div class="item-title label">Address</div>
-                              <div class="item-input">
-                                <input type="text" placeholder="address">
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="item-content">
-                            <div class="item-inner">
-                              <div class="item-title label">City</div>
-                              <div class="item-input">
-                                <input type="text" placeholder="city">
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="item-content">
-                            <div class="item-inner">
-                              <div class="item-title label">Province</div>
-                              <div class="item-input">
-                                <select>
-                                  <option>Alberta</option>
-                                  <option>British Columbia</option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="item-content">
-                            <div class="item-inner">
-                              <div class="item-title label">Postal Code</div>
-                              <div class="item-input">
-                                <input type="text" placeholder="postal code">
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="item-content">
-                            <div class="item-inner">
-                              <div class="item-title label">Phone</div>
-                              <div class="item-input">
-                                <input type="text" placeholder="phone">
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="item-content">
-                            <div class="item-inner">
-                              <div class="item-title label">CDHO Number</div>
-                              <div class="item-input">
-                                <input type="text" placeholder="CDHO number">
-                              </div>
-                            </div>
-                          </div>
-                        </li>
 
-                        <!-- <li>
-                          <div class="item-content">
-                            <div class="item-inner">
-                              <div class="item-title label">Show For Hire</div>
-                              <div class="item-input">
-                                <label class="label-switch">
-                                  <input type="checkbox">
-                                  <div class="checkbox"></div>
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-
-                        <li>
-                          <div class="item-content">
-                            <div class="item-inner">
-                              <div class="item-title label">Resume</div>
-                              <div class="item-input">
-                                  <button class="button button-round">upload resume</button>
-                              </div>
-                            </div>
-                          </div>
-                        </li> -->
-
-                      </ul>
-                    </div>
-                <div class="content-block">
-                    <div class="row">
-                        <div class="col-30">&nbsp;</div>
-                        <div class="col-40">
-                            <a href="#" class="button button-big button-round">Save</a>
+                <div class="list-block inset formfields">
+                    <div class="form-error-msg"></div>
+                <ul>
+                    <li class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title label">First Name</div>
+                        <div class="item-input">
+                          <input type="text" name="firstName" maxlength="50" placeholder="first name" value="{{firstName}}">
+                          <div class="field-error-msg"></div>
                         </div>
-                        <!-- <div class="col-30">
-                            <a href="#" class="" style="line-height:28px;vertical-align:center;">Cancel</a>
-                        </div> -->
-                        <div class="col-30">&nbsp;</div>
+                      </div>
+                    </li>
+
+                    <li class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title label">Last Name</div>
+                        <div class="item-input">
+                          <input type="text" name="lastName" maxlength="50" placeholder="last name" value="{{lastName}}">
+                          <div class="field-error-msg"></div>
+                        </div>
+                      </div>
+                    </li>
+
+                    <li class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title label">Address</div>
+                          <div class="item-input">
+                            <input type="text" name="address" maxlength="100" placeholder="address" value="{{address}}">
+                            <div class="field-error-msg"></div>
+                          </div>
+                        </div>
+                    </li>
+
+                      <li class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title label">City</div>
+                          <div class="item-input">
+                            <input type="text" name="city" maxlength="50" placeholder="city" value="{{city}}">
+                            <div class="field-error-msg"></div>
+                          </div>
+                        </div>
+                    </li>
+
+                      <li class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title label">Province</div>
+                          <div class="item-input">
+                            <select class="no-fastclick" name="province">
+                              <option value="">select province &dtrif; </option>
+                              <option value="ON">Ontario</option>
+                              <option value="AB" disabled>Alberta (coming soon)</option>
+                              <option value="BC" disabled>British Columbia (coming soon)</option>
+                              <option value="MB" disabled>Manitoba (coming soon)</option>
+                              <option value="NB" disabled>New Brunswick (coming soon)</option>
+                              <option value="NL" disabled>Newfoundland and Labrador (coming soon)</option>
+                              <option value="NT" disabled>Northwest Territories (coming soon)</option>
+                              <option value="NS" disabled>Nova Scotia (coming soon)</option>
+                              <option value="NU" disabled>Nunavut (coming soon)</option>
+                              <option value="PE" disabled>Prince Edward Island (coming soon)</option>
+                              <option value="QC" disabled>Quebec (coming soon)</option>
+                              <option value="SK" disabled>Saskatchewan (coming soon)</option>
+                              <option value="YT" disabled>Yukon (coming soon)</option>
+                            </select>
+                            <div class="field-error-msg"></div>
+                          </div>
+                        </div>
+                    </li>
+
+                      <li class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title label">Postal Code</div>
+                          <div class="item-input">
+                            <input type="text" name="postalCode" maxlength="7" placeholder="postal code" value="{{postalCode}}">
+                            <div class="field-error-msg"></div>
+                          </div>
+                        </div>
+                    </li>
+
+                      <li class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title label">Cell Phone</div>
+                          <div class="item-input">
+                            <input type="tel" name="phone" maxlength="15" placeholder="cell phone" value="{{phone}}">
+                            <div class="field-error-msg"></div>
+                          </div>
+                        </div>
+                    </li>
+
+                      <li class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title label">CDHO Reg. #</div>
+                          <div class="item-input">
+                            <input type="number" pattern="[0-9]*" inputmode="numeric" name="CDHONumber" maxlength="6" placeholder="CDHO reg number" value="{{CDHONumber}}">
+                            <div class="field-error-msg"></div>
+                          </div>
+                        </div>
+                    </li>
+
+                  <li class="item-content">
+                    <div class="item-inner">
+                      <div class="item-title label">Profile Picture</div>
+                      <div class="item-input" style="padding-top:4px;">
+                        <div id="hygienist-profile-photo-remove" style="display:none;">
+                            <a id="hygienist-profile-remove-photo-button" href="#">
+                                <img id="hygienist-profile-photo" src="img/hygienist.png" style="width:20px;height:20px">
+                                remove photo
+                            </a>
+                        </div>
+                        <div id="hygienist-profile-photo-add">
+                            <a id="hygienist-profile-upload-photo-button" href="#">
+                                <img id="hygienist-profile-add-photo" src="img/hygienist.png" style="width:20px;height:20px">
+                                upload photo
+                            </a>
+                            <i style="color:#aaa">(optional)</i>
+                        </div>
+                      </div>
+
                     </div>
-                </div>
+                </li>
+                </ul>
+              </div>
+          </form>f
         </div>
     </div>
-</div>

@@ -2,11 +2,11 @@
     <div class="navbar">
         <div class="navbar-inner">
             <div class="left">
-                <a href="#" data-page="home" class="hygienist-internal-back icon-only">
-                    <span class="ti-home"></span>
+                <a href="#" class="hygienist-internal-back">
+                    <span class="ti-angle-left"></span> back
                 </a>
             </div>
-            <div class="center sliding">Job History</div>
+            <div class="center sliding">Available Jobs</div>
             <div class="right">
                 <a href="#" data-panel="right" class="link icon-only open-panel">
                     <span class="ti-menu"></span>
@@ -15,15 +15,16 @@
         </div>
     </div>
 
-    <div data-page="hygienist-jobs" class="page">
+    <div data-page="hygienist-available-jobs" class="page">
         <div class="page-content">
             <div class="content-block">
                     <div class="row">
                         <div class="col-80">
                             <div style="padding-bottom:6px">Sort by</div>
                                 <div class="buttons-row">
-                                    <a id="hygienist-jobs-date-sorting-button" href="#" class="button active">Job Start Date</a>
-                                    <a id="hygienist-jobs-dentist-sorting-button" href="#" class="button">Office</a>
+                                    <a id="hygienist-available-jobs-newest-sorting-button" href="#" class="button active">Newest</a>
+                                    <a id="hygienist-available-jobs-soonest-sorting-button" href="#" class="button">Soonest</a>
+                                    <a id="hygienist-available-jobs-closest-sorting-button" href="#" class="button">Closest</a>
                                 </div>
                         </div>
                         <div class="col-20">
@@ -39,9 +40,13 @@
                           <div class="item-inner">
                             <div class="item-title-row">
                                 <div class="item-title">{{dentist.practiceName}}</div>
-                                <div class="item-after"><span class="ti-angle-right" style="margin-top:16px;xxfont-size:20px"></span></div>
+                                <div class="item-after"><span class="ti-angle-right" style="margin-top:4px;xxfont-size:20px"></span></div>
                             </div>
-                            <div class="item-subtitle">job start date: {{date_format startDate}}</div>
+                            <div class="item-subtitle">
+                                posted on: {{date_format postedOn}}<br>
+                                start date: {{date_format startDate}}<br>
+                                distance: 4 km
+                            </div>
                           </div>
                         </a>
                       </li>
@@ -49,7 +54,7 @@
                       <li>
                           <div class="item-link item-content">
                             <div class="item-inner">
-                                No completed jobs &nbsp;<span class="ti-face-sad"></span>
+                                No available jobs &nbsp;<span class="ti-face-sad"></span>
                             </div>
                           </div>
                       </li>

@@ -1,118 +1,76 @@
-<div class="views">
-    <div class="view view-main">
-        <div class="pages navbar-through">
-            <div class="navbar">
-                <div class="navbar-inner">
-                    <!-- <div class="left sliding">
-                        <a href="#" class="link icon-only back">
-                            <span class="ti-angle-left"></span>
-                        </a>
-                    </div> -->
-                    <div class="center sliding">Dental Offices</div>
-                    <div class="right">
-                        <a href="#" data-panel="right" class="link icon-only open-panel">
-                            <span class="ti-menu"></span>
-                        </a>
-                    </div>
-                </div>
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="left">
+                <a href="#" data-page="home" class="hygienist-internal-back icon-only">
+                    <span class="ti-home"></span>
+                </a>
             </div>
-        <div data-page="settings" class="page">
-            <div class="page-content">
-                <div class="content-block-title">Favourite Offices</div>
-                <div class="list-block media-list">
-                  <ul>
-                    <li>
-                      <div class="item-link item-content">
-                        <div class="item-inner">
-                          <div class="item-title-row">
-                            <div class="item-title">Apple Valley Dental</div>
-                                <div class="item-after">
-                                    <button class="settings-remove-fav-button button button-round">Remove</button>
-                                </div>
-                            </div>
-                            <div class="item-subtitle">August 16th, 9am - 4pm</div>
-                        </div>
-                      </div>
-                    </li>
-
-                    <li>
-                      <div class="item-link item-content">
-                        <div class="item-inner">
-                          <div class="item-title-row">
-                            <div class="item-title">Apple Valley Dental</div>
-                                <div class="item-after">
-                                    <button class="settings-remove-fav-button button button-round">Remove</button>
-                                </div>
-                            </div>
-                            <div class="item-subtitle">August 16th, 9am - 4pm</div>
-                        </div>
-                      </div>
-                    </li>
-
-                    <li>
-                      <div class="item-link item-content">
-                        <div class="item-inner">
-                          <div class="item-title-row">
-                            <div class="item-title">Apple Valley Dental</div>
-                                <div class="item-after">
-                                    <button class="settings-remove-fav-button button button-round">Remove</button>
-                                </div>
-                            </div>
-                            <div class="item-subtitle">August 16th, 9am - 4pm</div>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-                <div class="content-block-title">Blocked Offices</div>
-                <div class="list-block media-list">
-                  <ul>
-                    <li>
-                      <div class="item-link item-content">
-                        <div class="item-inner">
-                          <div class="item-title-row">
-                            <div class="item-title">Apple Valley Dental</div>
-                                <div class="item-after">
-                                    <button class="settings-remove-blocked-button button button-round">Remove</button>
-                                </div>
-                            </div>
-                            <div class="item-subtitle">August 16th, 9am - 4pm</div>
-                        </div>
-                      </div>
-                    </li>
-
-                    <li>
-                      <div class="item-link item-content">
-                        <div class="item-inner">
-                          <div class="item-title-row">
-                            <div class="item-title">Apple Valley Dental</div>
-                                <div class="item-after">
-                                    <button class="settings-remove-blocked-button button button-round">Remove</button>
-                                </div>
-                            </div>
-                            <div class="item-subtitle">August 16th, 9am - 4pm</div>
-                        </div>
-                      </div>
-                    </li>
-
-                    <li>
-                      <div class="item-link item-content">
-                        <div class="item-inner">
-                          <div class="item-title-row">
-                            <div class="item-title">Apple Valley Dental</div>
-                                <div class="item-after">
-                                    <button class="settings-remove-blocked-button button button-round">Remove</button>
-                                </div>
-                            </div>
-                            <div class="item-subtitle">August 16th, 9am - 4pm</div>
-                        </div>
-                      </div>
-                    </li>
-
-                  </ul>
-                  <br>&nbsp;
-                </div>
+            <div class="center sliding">Dental Offices</div>
+            <div class="right">
+                <a href="#" data-panel="right" class="link icon-only open-panel">
+                    <span class="ti-menu"></span>
+                </a>
             </div>
         </div>
     </div>
-</div>
+
+    <div data-page="dental-offices" class="page">
+        <div class="page-content">
+            <div class="content-block-title">Favourite Dental Offices</div>
+            <div class="list-block media-list">
+              <ul>
+                  {{#each favourites}}
+                  <li>
+                      <div class="item-link item-content">
+                        <div class="item-inner">
+                          <div class="item-title-row">
+                            <div class="item-title">{{dentist.practiceName}}</div>
+                                <div class="item-after">
+                                    <button data-id="{{id}}" data-name="{{dentist.practiceName}}" class="hygienist-dentaloffices-remove-fav-button button button-round">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                  </li>
+                  {{else}}
+                  <li>
+                      <div class="item-link item-content">
+                        <div class="item-inner">
+                            No favourite dental offices &nbsp;<span class="ti-face-sad"></span>
+                        </div>
+                      </div>
+                  </li>
+                  {{/each}}
+              </ul>
+            </div>
+
+            <div class="content-block-title">Blocked Dental Offices</div>
+            <div class="list-block media-list">
+              <ul>
+                  {{#each blocked}}
+                  <li>
+                    <div class="item-link item-content">
+                      <div class="item-inner">
+                        <div class="item-title-row">
+                          <div class="item-title">{{dentist.practiceName}}</div>
+                              <div class="item-after">
+                                  <button data-id="{{id}}" data-name="{{dentist.practiceName}}" class="hygienist-dentaloffices-remove-blocked-button button button-round">Remove</button>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                  </li>
+                  {{else}}
+                  <li>
+                      <div class="item-link item-content">
+                        <div class="item-inner">
+                            No blocked dental offices &nbsp;<span class="ti-face-smile"></span>
+                        </div>
+                      </div>
+                  </li>
+                  {{/each}}
+              </ul>
+              <br>&nbsp;
+            </div>
+        </div>
+    </div>

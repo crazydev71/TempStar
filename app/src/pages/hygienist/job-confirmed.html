@@ -5,7 +5,7 @@
                 <span class="ti-angle-left"></span> back
             </a>
         </div>
-        <div class="center sliding">Job Detail</div>
+        <div class="center sliding">Booked/Confirmed Job</div>
         <div class="right">
             <a href="#" data-panel="right" class="link icon-only open-panel">
                 <span class="ti-menu"></span>
@@ -14,7 +14,7 @@
     </div>
 </div>
 
-<div data-page="hygienist-job" class="page">
+<div data-page="job-confirmed" class="page">
     <div class="page-content">
         <div class="content-block">
             <div class="job-box">
@@ -40,19 +40,15 @@
             </table>
             </div>
 
-            <form id="hygienist-job-notes-form">
-                <div class="label">Private Notes</div>
-                <div class="item-input">
-                    <textarea id="hygienist-job-notes" class="resizable" style="width:96%;" placeholder="enter private notes" rows="6">{{hygienistPrivateNotes}}</textarea>
-                </div>
-
+            <form id="hygienist-job-completed-form">
                 <div class="row" style="margin-top:20px">
                     <div class="col-20">&nbsp;</div>
                     <div class="col-60">
-                        <a id="hygienist-job-notes-save-button" href="#" data-id="{{id}}" class="button button-round">Save Notes</a>
+                        <a id="hygienist-job-confirmed-cancel-button" href="#" data-id="{{id}}" class="button button-round">Cancel Job</a>
                     </div>
                     <div class="col-20">&nbsp;</div>
                 </div>
+
             </form>
 
         </div>

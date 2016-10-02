@@ -1,0 +1,165 @@
+
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="left sliding">
+                <a href="#" class="hygienist-internal-back">
+                    <span class="ti-angle-left"></span> back
+                </a>
+            </div>
+            <div class="center sliding">Create Invoice</div>
+            <div class="right">
+                <a href="#" data-panel="right" class="link icon-only open-panel">
+                    <span class="ti-menu"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div data-page="create-invoice" class="page">
+        <div class="page-content">
+
+            <div class="content-block">
+
+            <div class="invoice-box">
+
+                <div class="row" style="padding-bottom:20px;">
+                    <div class="col-65" style="xxpadding-left:15px; text-align:left;">
+                        {{dentist.practiceName}}<br>
+                        {{dentist.address}}<br>
+                        {{dentist.city}}, {{dentist.province}}<br>
+                        {{dentist.postalCode}}
+                    </div>
+                    <div class="col-35" style="xxpadding-right:15px; text-align:right;">
+                        Invoice # {{id}}<br>
+                        {{date_time_format sentOn}}
+                    </div>
+                </div>
+
+                <table cellpadding="0" cellspacing="0">
+                    <tr class="heading">
+                        <td colspan="2">Posted</td>
+                    </tr>
+
+                    {{#each shifts}}
+                    <tr class="item">
+                        <td>{{date_format shiftDate}}</td>
+                        <td style="text-align:left;">
+                            {{time_format postedStart}} - {{time_format postedEnd}}
+                            <br>&nbsp;
+                        </td>
+                    </tr>
+                    {{/each}}
+
+                    <tr class="heading">
+                        <td colspan="2">Actual</td>
+                    </tr>
+                </table>
+
+                <form id="hygienist-create-invoice-form" style="margin-top:-1px">
+                    <div class="form-error-msg"></div>
+                    <div class="list-block" style="margin:0;">
+                      <ul>
+
+                        {{#each shifts}}
+                        <!-- <li style="background:#eee">
+                          <div class="item-content">
+                            <div class="item-inner">
+                              <div class="item-title label">Job Date</div>
+                              <div class="item-input" style="color:#aaa">
+                                  {{date_format startDate}}
+                              </div>
+                            </div>
+                          </div>
+                        </li> -->
+
+                        <li>
+                          <div class="item-content" style="padding-left:0;">
+                            <div class="item-inner">
+                              <div class="item-title label"><span style="color:red">&bull;</span> Start Time</div>
+                              <div class="item-input" style="margin-left: 30px;">
+                                <input type="text" placeholder="enter actual start time" name="actualStart" readonly id="hygienist-create-invoice-starttime">
+                                <div class="field-error-msg"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+
+                        <li>
+                            <div class="item-content" style="padding-left:0;">
+                            <div class="item-inner">
+                              <div class="item-title label"><span style="color:red">&bull;</span> End Time</div>
+                              <div class="item-input" style="margin-left: 30px;">
+                                  <input type="text" placeholder="enter actual end time" name="actualEnd" readonly id="hygienist-create-invoice-endtime">
+                                  <div class="field-error-msg"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+
+                        <li>
+                            <div class="item-content" style="padding-left:0;">
+                            <div class="item-inner">
+                              <div class="item-title label"><span style="color:red">&bull;</span> Unpaid Time</div>
+                              <div class="item-input" style="margin-left: 30px;">
+                                  <input type="text" placeholder="enter time not worked" name="unpaidTime" readonly id="hygienist-create-invoice-unpaid">
+                                  <div class="field-error-msg"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                        {{/each}}
+
+                      </ul>
+                    </div>
+                </form>
+
+                    <table cellpadding="0" cellspacing="0">
+
+                    <tr class="heading">
+                        <td>Totals</td>
+                        <td>&nbsp;</td>
+                    </tr>
+
+                    <tr class="item">
+                        <td>total time</td>
+                        <td id="hygienist-create-invoice-total-hours">{{totalHours}}</td>
+                    </tr>
+
+                    <tr class="item">
+                        <td>unpaid time</td>
+                        <td id="hygienist-create-invoice-total-unpaid">{{totalUnpaidHours}}</td>
+                    </tr>
+
+                    <tr class="item">
+                        <td>billable time</td>
+                        <td id="hygienist-create-invoice-billable-hours">{{totalHours}}</td>
+                    </tr>
+
+                    <tr class="item last">
+                        <td>hourly rate</td>
+                        <td>${{hourlyRate}}/hr</td>
+                    </tr>
+
+                    <tr class="total">
+                        <td>&nbsp;</td>
+                        <td>
+                           Total: $<span id="hygienist-create-invoice-total-invoice">{{totalInvoice}}</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+            <div class="content-block">
+                <div class="row">
+                    <div class="col-15">&nbsp;</div>
+                    <div class="col-70">
+                        <a href="#" id="hygienist-create-invoice-button" class="button button-round">Create &amp; Send Invoice</a>
+                    </div>
+                    <div class="col-15">&nbsp;</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
