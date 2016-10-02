@@ -17,7 +17,7 @@ TempStars.Pages.Dentist.Home = (function() {
         var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August' , 'September' , 'October', 'November', 'December'];
 
         var calendarInline = app.calendar({
-            container: '#calendar-inline-container',
+            container: '#dentist-calendar-inline-container',
             value: [new Date()],
             weekHeader: true,
             firstDay: 0,

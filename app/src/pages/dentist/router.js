@@ -6,7 +6,7 @@ TempStars.Dentist.Router = (function() {
     var router;
 
     function init() {
-        router = TempStars.Router.init( 'dentist' );
+        router = new TempStars.Router( 'dentist' );
     }
 
     function goForwardPage( page, params, data ) {

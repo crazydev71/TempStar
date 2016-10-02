@@ -74,7 +74,7 @@ TempStars.Pages.Dentist.PostJob = (function() {
                 }]
             });
 
-            $$('#denist-post-job-button').on( 'click', postJobHandler );
+            $$('#dentist-post-job-button').on( 'click', postJobHandler );
         });
     }
 

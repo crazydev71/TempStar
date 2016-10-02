@@ -6332,7 +6332,7 @@ html.pixel-ratio-3 .picker-calendar-row:after {
 }
 .picker-calendar-day.picker-calendar-day-today span {
   /*background: #e3e3e3;*/
-  background: #E9F7FF;
+  /*background: #E9F7FF;*/
 }
 
 .open-calendar .picker-calendar-day.picker-calendar-day-selected span{

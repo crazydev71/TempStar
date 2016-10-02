@@ -5,14 +5,14 @@ TempStars.Dentist.Menu = (function() {
 
     function init() {
 
-        $$(document).on( 'click', '.internal-forward', function(e) {
+        $$(document).on( 'click', '.dentist-internal-forward', function(e) {
 
             e.preventDefault();
             var page = $$(this).attr('data-page');
             TempStars.Dentist.Router.goForwardPage( page );
         });
 
-        $$(document).on( 'click', '.internal-back', function(e) {
+        $$(document).on( 'click', '.dentist-internal-back', function(e) {
             var page,
                 id,
                 params;
