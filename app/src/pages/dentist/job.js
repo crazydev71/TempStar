@@ -19,7 +19,7 @@ TempStars.Pages.Dentist.Job = (function() {
         var jobId = $$(this).attr('data-id');
         var notes = $$('#dentist-job-notes').val();
 
-        TempStars.Api.updateJob( jobId, { privateNotes: notes} )
+        TempStars.Api.updateJob( jobId, { dentistPrivateNotes: notes} )
         .then( function() {
             backHandler();
         })
@@ -51,7 +51,7 @@ TempStars.Pages.Dentist.Job = (function() {
     function backHandler( e ) {
 
         TempStars.Dentist.Router.goBackPage( 'jobs' );
-        
+
         // TempStars.Pages.Dentist.Jobs.getData()
         // .then( function( data ) {
         //     mainView.router.load({

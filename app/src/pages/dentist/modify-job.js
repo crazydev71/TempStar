@@ -65,7 +65,7 @@ TempStars.Pages.Dentist.ModifyJob = (function() {
                 }]
             });
 
-            $$('#denist-modify-job-button').on( 'click', modifyJobHandler );
+            $$('#dentist-modify-job-button').on( 'click', modifyJobHandler );
         });
     }
 
