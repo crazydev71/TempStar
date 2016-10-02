@@ -10,7 +10,7 @@
   },
   "scope": {
       "include": [ "hygienist" ]
-  },  
+  },
   "properties": {
     "id": {
       "type": "Number",
@@ -60,7 +60,7 @@
       }
     },
     "offeredStartTime": {
-      "type": "Date",
+      "type": "String",
       "required": true,
       "length": null,
       "precision": null,
@@ -75,7 +75,7 @@
       }
     },
     "offeredEndTime": {
-      "type": "Date",
+      "type": "String",
       "required": true,
       "length": null,
       "precision": null,

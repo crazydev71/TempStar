@@ -16,7 +16,7 @@
       "type": "Number",
       "id": true,
       "generated": true,
-      "required": true,
+      "required": false,
       "length": null,
       "precision": 10,
       "scale": 0,
@@ -66,7 +66,7 @@
         "type": "belongsTo",
         "model": "Dentist",
         "foreignKey": "dentistId"
-      }             
+      }
   },
   "acls": [],
   "methods": {}

@@ -101,6 +101,21 @@
         "nullable": "N"
       }
     },
+    "totalBillableHours": {
+      "type": "Number",
+      "required": false,
+      "length": null,
+      "precision": 4,
+      "scale": 2,
+      "mysql": {
+        "columnName": "totalBillableHours",
+        "dataType": "decimal",
+        "dataLength": null,
+        "dataPrecision": 4,
+        "dataScale": 2,
+        "nullable": "N"
+      }
+    },
     "hourlyRate": {
       "type": "Number",
       "required": false,
@@ -116,14 +131,14 @@
         "nullable": "N"
       }
     },
-    "totalInvoice": {
+    "totalInvoiceAmt": {
       "type": "Number",
       "required": false,
       "length": null,
       "precision": 6,
       "scale": 2,
       "mysql": {
-        "columnName": "totalInvoice",
+        "columnName": "totalInvoiceAmt",
         "dataType": "decimal",
         "dataLength": null,
         "dataPrecision": 6,
@@ -177,7 +192,7 @@
       }
     },
     "createdOn": {
-      "type": "Date",
+      "type": "String",
       "required": true,
       "length": null,
       "precision": null,
@@ -192,7 +207,7 @@
       }
     },
     "sentOn": {
-      "type": "Date",
+      "type": "String",
       "required": false,
       "length": null,
       "precision": null,

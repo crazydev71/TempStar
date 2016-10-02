@@ -60,7 +60,7 @@
       }
     },
     "postedOn": {
-      "type": "Date",
+      "type": "String",
       "required": true,
       "length": null,
       "precision": null,
@@ -75,7 +75,7 @@
       }
     },
     "bookedOn": {
-      "type": "Date",
+      "type": "String",
       "required": false,
       "length": null,
       "precision": null,
@@ -90,7 +90,7 @@
       }
     },
     "completedOn": {
-      "type": "Date",
+      "type": "String",
       "required": false,
       "length": null,
       "precision": null,
@@ -150,7 +150,7 @@
       }
     },
     "modifiedOn": {
-      "type": "Date",
+      "type": "String",
       "required": false,
       "length": null,
       "precision": null,
@@ -162,21 +162,6 @@
         "dataPrecision": null,
         "dataScale": null,
         "nullable": "N"
-      }
-    },
-    "invoiceSent": {
-      "type": "Number",
-      "required": false,
-      "length": null,
-      "precision": 3,
-      "scale": 0,
-      "mysql": {
-        "columnName": "invoiceSent",
-        "dataType": "tinyint",
-        "dataLength": null,
-        "dataPrecision": 3,
-        "dataScale": 0,
-        "nullable": "Y"
       }
     },
     "dentistSurvey": {

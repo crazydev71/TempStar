@@ -15,7 +15,6 @@ module.exports = function( Job ){
         accepts: [
             {arg: 'jobId', type: 'number', required: true},
             {arg: 'poId', type: 'number', required: true}],
-            // {arg: 'data', type: 'object', http: { source: 'body' } } ],
         returns: { arg: 'result', type: 'object' },
         http: { verb: 'put', path: '/:jobId/partialoffers/:poId/accept' }
     });
@@ -78,6 +77,77 @@ module.exports = function( Job ){
         })
         .catch( function( err ) {
             console.log( 'accept partial offer error!' );
+            callback( err );
+        });
+    };
+
+
+    Job.remoteMethod( 'resend', {
+        accepts: [
+            {arg: 'jobId', type: 'number', required: true}],
+        returns: { arg: 'result', type: 'object' },
+        http: { verb: 'put', path: '/:jobId/resend' }
+    });
+
+    Job.resend = function( jobId, callback ) {
+        console.log( 'resend invoice for job' );
+        callback( null, {} );
+    };
+
+
+    Job.remoteMethod( 'send', {
+        accepts: [
+            {arg: 'jobId', type: 'number', required: true},
+            {arg: 'data', type: 'object', http: { source: 'body' } } ],
+        returns: { arg: 'result', type: 'object' },
+        http: { verb: 'post', path: '/:jobId/invoices/send' }
+    });
+
+    Job.send = function( jobId, data, callback ) {
+
+        var Shift = app.models.Shift;
+        var Invoice = app.models.Invoice;
+
+        // TODO send notification
+        console.log( 'send invoice for job: ' + jobId );
+        console.dir( data );
+
+        Shift.findOne( {where: {jobId: jobId}} )
+        .then( function( shift ) {
+            console.log( 'got shift');
+            console.dir( shift );
+            // Update shift
+            return shift.updateAttributes({
+                actualStart: data.actualStart,
+                actualEnd: data.actualEnd,
+                totalHours: data.totalHours,
+                unpaidHours: data.unpaidHours,
+                billableHours: data.billableHours
+            });
+        })
+        .then( function() {
+            console.log( 'create invoice' );
+            // Create invoice
+            return Invoice.create({
+                jobId: jobId,
+                totalHours: data.totalHours,
+                totalUnpaidHours: data.unpaidHours,
+                totalBillableHours: data.billableHours,
+                hourlyRate: data.hourlyRate,
+                totalInvoiceAmt: data.totalAmt,
+                hygienistMarkedPaid: 0,
+                dentistMarkedPaid: 0,
+                sent: 1,
+                createdOn: data.createdOn,
+                sentOn: data.sentOn
+            });
+        })
+        .then( function() {
+            console.log( 'create invoice worked!' );
+            callback( null, {} );
+        })
+        .catch( function( err ) {
+            console.log( 'create invoice error: ' + err.message );
             callback( err );
         });
     };

@@ -117,7 +117,7 @@
       }
     },
     "unpaidHours": {
-      "type": "String",
+      "type": "Number",
       "required": false,
       "length": null,
       "precision": 4,
@@ -127,12 +127,27 @@
         "dataType": "decimal",
         "dataLength": null,
         "dataPrecision": 4,
-        "dataScale": 0,
+        "dataScale": 2,
+        "nullable": "N"
+      }
+    },
+    "billableHours": {
+      "type": "Number",
+      "required": false,
+      "length": null,
+      "precision": 4,
+      "scale": 0,
+      "mysql": {
+        "columnName": "billableHours",
+        "dataType": "decimal",
+        "dataLength": null,
+        "dataPrecision": 4,
+        "dataScale": 2,
         "nullable": "N"
       }
     },
     "totalHours": {
-      "type": "String",
+      "type": "Number",
       "required": false,
       "length": null,
       "precision": 4,
@@ -142,7 +157,7 @@
         "dataType": "decimal",
         "dataLength": null,
         "dataPrecision": 4,
-        "dataScale": 0,
+        "dataScale": 2,
         "nullable": "N"
       }
     },
