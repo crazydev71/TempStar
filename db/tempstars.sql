@@ -63,7 +63,7 @@ CREATE TABLE `BlockedDentist` (
   `dentistId` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index2` (`hygienistId`,`dentistId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -78,7 +78,7 @@ CREATE TABLE `BlockedHygienist` (
   `dentistId` int(11) NOT NULL,
   `hygienistId` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -172,7 +172,7 @@ CREATE TABLE `FavouriteDentist` (
   `dentistId` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `hygienistId_favDentistId_index` (`hygienistId`,`dentistId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -188,7 +188,7 @@ CREATE TABLE `FavouriteHygienist` (
   `hygienistId` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index2` (`dentistId`,`hygienistId`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -218,7 +218,7 @@ CREATE TABLE `Hygienist` (
   `lastJobIdViewed` int(11) DEFAULT NULL,
   `isComplete` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -259,8 +259,9 @@ CREATE TABLE `Invoice` (
   `jobId` int(11) NOT NULL,
   `totalHours` decimal(4,2) NOT NULL,
   `totalUnpaidHours` decimal(4,2) NOT NULL,
+  `totalBillableHours` decimal(4,2) DEFAULT NULL,
   `hourlyRate` int(11) NOT NULL,
-  `totalInvoice` decimal(6,2) NOT NULL,
+  `totalInvoiceAmt` decimal(6,2) NOT NULL,
   `hygienistMarkedPaid` tinyint(1) NOT NULL,
   `dentistMarkedPaid` tinyint(1) NOT NULL,
   `sent` tinyint(1) NOT NULL,
@@ -272,7 +273,7 @@ CREATE TABLE `Invoice` (
   PRIMARY KEY (`id`),
   KEY `index2` (`jobId`),
   KEY `index3` (`manualHygienistId`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -293,16 +294,16 @@ CREATE TABLE `Job` (
   `status` int(11) NOT NULL,
   `cascadeInterval` int(11) NOT NULL,
   `modifiedOn` datetime NOT NULL,
-  `invoiceSent` tinyint(1) DEFAULT NULL,
   `dentistSurvey` tinyint(1) DEFAULT NULL,
   `hygienistSurvey` tinyint(1) DEFAULT NULL,
   `dentistBilled` tinyint(1) DEFAULT NULL,
   `startDate` date DEFAULT NULL,
-  `privateNotes` text,
+  `dentistPrivateNotes` text,
+  `hygienistPrivateNotes` text,
   PRIMARY KEY (`id`),
   KEY `index2` (`dentistId`),
   KEY `index3` (`hygienistId`)
-) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -325,7 +326,7 @@ CREATE TABLE `PartialOffer` (
   PRIMARY KEY (`id`),
   KEY `index2` (`jobId`),
   KEY `index3` (`hygienistId`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -389,7 +390,7 @@ CREATE TABLE `RoleMapping` (
   `principalId` varchar(512) DEFAULT NULL,
   `roleId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=114 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -407,12 +408,13 @@ CREATE TABLE `Shift` (
   `postedEnd` datetime NOT NULL,
   `actualStart` datetime NOT NULL,
   `actualEnd` datetime NOT NULL,
-  `unpaidHours` decimal(4,0) NOT NULL,
-  `totalHours` decimal(4,0) NOT NULL,
+  `totalHours` decimal(4,2) NOT NULL,
+  `unpaidHours` decimal(4,2) NOT NULL,
+  `billableHours` decimal(4,2) DEFAULT NULL,
   `modifiedOn` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index2` (`jobId`)
-) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -438,7 +440,7 @@ CREATE TABLE `User` (
   `dentistId` int(11) DEFAULT NULL,
   `hygienistId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -450,4 +452,4 @@ CREATE TABLE `User` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-28 10:30:25
+-- Dump completed on 2016-10-02 11:58:29
