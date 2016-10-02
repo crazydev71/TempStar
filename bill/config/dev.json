@@ -1,0 +1,13 @@
+{
+    "db": {
+        "name": "tempstarsDB",
+        "connector": "mysql",
+        "host": "tempstars.cj22hu7lczao.us-east-1.rds.amazonaws.com",
+        "port": 3306,
+        "database": "tempstars",
+        "user": "tempstars_root",
+        "password": "aquarius22molar",
+        "dateStrings": true,
+        "ssl": "Amazon RDS"
+    }
+}
