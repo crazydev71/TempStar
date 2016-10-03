@@ -47,16 +47,16 @@ module.exports = function( Job ){
                 hygienistId: partialOffer.hygienistId,
             });
         })
-        // .then( function() {
-        //     return Shift.find( {where: {jobId: job.id}} );
-        // })
-        // .then( function( shift ) {
-        //     console.dir( shift );
-        //     return shift.updateAttributes({
-        //         postedStart: partialOffer.offeredStartTime,
-        //         postedEnd: partialOffer.offeredEndTime
-        //     });
-        // })
+        .then( function() {
+            return Shift.find( {where: {jobId: jobId}} );
+        })
+        .then( function( shift ) {
+            console.dir( shift );
+            return shift.updateAttributes({
+                postedStart: partialOffer.offeredStartTime,
+                postedEnd: partialOffer.offeredEndTime
+            });
+        })
         .then( function() {
             return partialOffer.updateAttributes({
                 status: 2,
