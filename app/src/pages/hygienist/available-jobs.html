@@ -45,6 +45,10 @@
                             <div class="item-subtitle">
                                 posted on: {{date_format postedOn}}<br>
                                 start date: {{date_format startDate}}<br>
+                                {{#each shifts}}
+                                hours: {{time_format postedStart}} - {{time_format postedEnd}}<br>
+                                {{/each}}
+
                                 distance: 4 km
                             </div>
                           </div>
