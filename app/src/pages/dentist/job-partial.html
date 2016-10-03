@@ -55,12 +55,20 @@
                         {{time_format offeredStartTime}} - {{time_format offeredEndTime}}
                     </td>
                 </tr>
+                {{#js_compare "this.status !== 0"}}
+                <tr class="item">
+                    <td colspan="2">
+                        status: rejected
+                    </td>
+                </tr>
+                {{else}}
                 <tr class="bigitem">
                     <td><a href="#" data-id="{{id}}" class="dentist-partial-job-accept-button button button-round button-small">Accept</a></td>
                     <td><a href="#" data-id="{{id}}" class="dentist-partial-job-reject-button button button-round button-small">Reject</a></td>
                 </tr>
+                {{/js_compare}}
                 {{else}}
-                <tr><td colspan="2">No unrejected partial offers</td></tr>
+                <tr><td colspan="2">No partial offers</td></tr>
                 {{/each}}
 
                 <tr colspan="2"><td>&nbsp;</td></tr>

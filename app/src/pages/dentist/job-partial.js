@@ -65,6 +65,7 @@ TempStars.Pages.Dentist.JobPartial = (function() {
         .catch( function( err ) {
             app.hidePreloader();
             app.alert( 'Error cancelling job. Please try again.' );
+            TempStars.Dentist.Router.reloadPage();
         });
     }
 
@@ -95,6 +96,7 @@ TempStars.Pages.Dentist.JobPartial = (function() {
         .catch( function( err ) {
             app.hidePreloader();
             app.alert( 'Error accepting offer. Please try again.' );
+            TempStars.Dentist.Router.reloadPage();
         });
     }
 
@@ -126,6 +128,7 @@ TempStars.Pages.Dentist.JobPartial = (function() {
         .catch( function( err ) {
             app.hidePreloader();
             app.alert( 'Error rejecting offer. Please try again.' );
+            TempStars.Dentist.Router.reloadPage();
         });
     }
 
@@ -137,7 +140,7 @@ TempStars.Pages.Dentist.JobPartial = (function() {
                     TempStars.Dentist.getJob( params.id )
                     .then( function( job ) {
                         // Filter out rejected partial jobs
-                        job.partialOffers = _(job.partialOffers).filter(['status', 0]).value();
+                        //job.partialOffers = _(job.partialOffers).filter(['status', 0]).value();
                         resolve( job );
                     })
                     .catch( function( err ) {
