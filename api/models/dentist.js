@@ -297,6 +297,7 @@ module.exports = function( Dentist ) {
                 case jobStatus.CONFIRMED:
                     console.log( 'cancel confirmed job' );
                     // Notify hygienist
+                    return job.partialOffers.destroyAll();                    
                     break;
 
                 case jobStatus.PARTIAL:
