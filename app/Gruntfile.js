@@ -145,7 +145,7 @@ module.exports = function (grunt) {
                     $$: true, TempStars: true, Promise: true, _: true, app: true,
                     Stripe: true, mainView: true, moment: true, NativeStorage: true,
                     validate: true, Camera: true, FileUploadOptions: true, uuid: true,
-                    FileTransfer: true, device: true, cordova: true },
+                    FileTransfer: true, device: true, cordova: true, PushNotification: true },
                 '-W027': true
             },
             gruntfile: {
