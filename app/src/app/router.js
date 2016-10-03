@@ -1,5 +1,8 @@
 
 TempStars.Router = function( a ) {
+
+    'use strict';
+
         var area,
             urlPath,
             classPath;
@@ -7,34 +10,6 @@ TempStars.Router = function( a ) {
         area = a;
         urlPath = _.toLower( a );
         classPath = _.upperFirst( a );
-
-        this.goForwardPage = function( page, params, data ) {
-            goPage( 'forward', page, params, data );
-        };
-
-        this.goBackPage = function( page, params, data ) {
-            var len,
-                previousPageIndex,
-                url;
-
-            // If page wasn't provided, pull from history
-            if ( ! page ) {
-                len = mainView.history.length;
-                previousPageIndex = (len >= 2) ? len - 2 : 0;
-                url = document.createElement('a');
-                url.href = mainView.history[previousPageIndex];
-                page = url.pathname.split('/').reverse()[0].replace('.html', '');
-            }
-
-            goPage( 'back', page, params, data );
-        };
-
-        this.reloadPage = function( page, params, data ) {
-            params = params || {};
-            params.reload = true;
-            goPage( 'forward', page, params, data );
-        };
-
 
         var goPage = function( direction, page, params, data ) {
 
@@ -88,7 +63,35 @@ TempStars.Router = function( a ) {
                     console.log( 'error going to page ' + page );
                 });
         };
-}
+
+        this.goForwardPage = function( page, params, data ) {
+            goPage( 'forward', page, params, data );
+        };
+
+        this.goBackPage = function( page, params, data ) {
+            var len,
+                previousPageIndex,
+                url;
+
+            // If page wasn't provided, pull from history
+            if ( ! page ) {
+                len = mainView.history.length;
+                previousPageIndex = (len >= 2) ? len - 2 : 0;
+                url = document.createElement('a');
+                url.href = mainView.history[previousPageIndex];
+                page = url.pathname.split('/').reverse()[0].replace('.html', '');
+            }
+
+            goPage( 'back', page, params, data );
+        };
+
+        this.reloadPage = function( page, params, data ) {
+            params = params || {};
+            params.reload = true;
+            goPage( 'forward', page, params, data );
+        };
+        
+};
 
 //     return Router;
 // })();

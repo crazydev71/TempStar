@@ -134,6 +134,12 @@ TempStars.Pages.Hygienist.Home = (function() {
                     data.pos = data.all.pos;
 
                     data.partial = _(data.pos)
+                        .filter( function(o) {
+                            if (o.status != 1 && o.status != 2) {
+                                return true;
+                            }
+                            return false;
+                        })
                         .map('job')
                         .map( getJobDate )
                         .value();

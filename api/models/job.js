@@ -58,6 +58,11 @@ module.exports = function( Job ){
             });
         })
         .then( function() {
+            // Reject all the partial offers for this job
+            return PartialOffer.updateAll( {jobId: jobId}, { status: 1 } );
+        })
+        .then( function() {
+            // Accept the real partial offer
             return partialOffer.updateAttributes({
                 status: 2,
                 hygienistId: partialOffer.hygienistId

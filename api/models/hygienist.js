@@ -149,7 +149,7 @@ module.exports = function( Hygienist ) {
         //     hygienist = h;
         //     return
 
-        Job.find( {where: {status: {inq: [1]}}} )
+        Job.find( {where: {status: {inq: [1,2]}}} )
         .then( function( jobs ) {
             callback( null, jobs );
         })
