@@ -28,7 +28,7 @@ TempStars.Pages.Hygienist.CreateInvoice = (function() {
                 '</div>' +
                 '</div>',
 
-                rotateEffect: true,
+                rotateEffect: false,
                 cols: [
                     { values: (function() {
                             var vals = [],
@@ -63,7 +63,7 @@ TempStars.Pages.Hygienist.CreateInvoice = (function() {
                     '<a href="#" class="link close-picker">{{closeText}}</a>' +
                 '</div>' +
                 '</div>',
-                rotateEffect: true,
+                rotateEffect: false,
                 cols: [
                     { values: (function() {
                             var vals = [],
@@ -99,7 +99,7 @@ TempStars.Pages.Hygienist.CreateInvoice = (function() {
                     '<a href="#" class="link close-picker">{{closeText}}</a>' +
                 '</div>' +
                 '</div>',
-                rotateEffect: true,
+                rotateEffect: false,
                 value: [ '0 min'],
                 cols: [
                     { values: (function() {

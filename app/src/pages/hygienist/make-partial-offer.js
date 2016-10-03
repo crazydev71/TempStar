@@ -125,6 +125,36 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
             return;
         }
 
+        // Validate start time is not before the posted start time
+        var offeredStartMin = moment(formData.offeredStart, 'hh:mm a').hour() * 60 + moment(formData.offeredStart, 'hh:mm a').minute();
+        var postedStartMin = moment.utc(job.shifts[0].postedStart).local().hour() * 60 + moment.utc(job.shifts[0].postedStart).local().minute();
+
+        if ( offeredStartMin < postedStartMin ) {
+            $$('#hygienist-make-partial-offer-form .form-error-msg')
+                .html('<span class="ti-alert"></span> Offered start time can\'t be before the posted start time.')
+                .show();
+            return;
+        }
+
+        // Validate end time is not after posted end time
+        var offeredEndMin = moment(formData.offeredEnd, 'hh:mm a').hour() * 60 + moment(formData.offeredEnd, 'hh:mm a').minute();
+        var postedEndMin = moment.utc(job.shifts[0].postedEnd).local().hour() * 60 + moment.utc(job.shifts[0].postedEnd).local().minute();
+
+        if ( offeredEndMin > postedEndMin ) {
+            $$('#hygienist-make-partial-offer-form .form-error-msg')
+                .html('<span class="ti-alert"></span> Offered end time can\'t be after the posted end time.')
+                .show();
+            return;
+        }
+
+        // Validate offer is not same as posted hours
+        if ( offeredStartMin == postedStartMin && offeredEndMin == postedEndMin ) {
+            $$('#hygienist-make-partial-offer-form .form-error-msg')
+                .html('<span class="ti-alert"></span> Offered times can\'t be the same as the posted times.')
+                .show();
+            return;
+        }
+
         app.modal({
             title:  'Make Partial Offer',
             text: 'You are committing to work at:<br>' +

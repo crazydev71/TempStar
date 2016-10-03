@@ -107,6 +107,36 @@ TempStars.Pages.Hygienist.ModifyPartialOffer = (function() {
             return;
         }
 
+        // Validate start time is not before the posted start time
+        var offeredStartMin = moment(formData.offeredStartTime, 'hh:mm a').hour() * 60 + moment(formData.offeredStartTime, 'hh:mm a').minute();
+        var postedStartMin = moment.utc(partialOffer.postedStart).local().hour() * 60 + moment.utc(partialOffer.postedStart).local().minute();
+
+        if ( offeredStartMin < postedStartMin ) {
+            $$('#hygienist-modify-partial-offer-form .form-error-msg')
+                .html('<span class="ti-alert"></span> Start time can\'t be before the posted start.')
+                .show();
+            return;
+        }
+
+        // Validate end time is not after posted end time
+        var offeredEndMin = moment(formData.offeredEndTime, 'hh:mm a').hour() * 60 + moment(formData.offeredEndTime, 'hh:mm a').minute();
+        var postedEndMin = moment.utc(partialOffer.postedEnd).local().hour() * 60 + moment.utc(partialOffer.postedEnd).local().minute();
+
+        if ( offeredEndMin > postedEndMin ) {
+            $$('#hygienist-modify-partial-offer-form .form-error-msg')
+                .html('<span class="ti-alert"></span> End time can\'t be after the posted end.')
+                .show();
+            return;
+        }
+
+        // Validate offer is not same as posted hours
+        if ( offeredStartMin == postedStartMin && offeredEndMin == postedEndMin ) {
+            $$('#hygienist-modify-partial-offer-form .form-error-msg')
+                .html('<span class="ti-alert"></span> Offered times can\'t be the same as the posted times.')
+                .show();
+            return;
+        }
+
         var confirmMessage =
             moment( partialOffer.startDate ).format('ddd, MMM D, YYYY') + '<br>' +
             formData.offeredStartTime + ' - ' +

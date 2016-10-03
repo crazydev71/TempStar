@@ -23,6 +23,8 @@ TempStars.Pages.Hygienist.JobPartial = (function() {
         var po = job.partialOffers[0];
         po.startDate = job.startDate;
         po.jobId = job.id;
+        po.postedStart = job.shifts[0].postedStart;
+        po.postedEnd = job.shifts[0].postedEnd;
         TempStars.Hygienist.Router.goForwardPage('modify-partial-offer', {}, po );
     }
 
