@@ -24,7 +24,7 @@ TempStars.Pages.Hygienist.ModifyPartialOffer = (function() {
                 '</div>' +
                 '</div>',
 
-                rotateEffect: true,
+                rotateEffect: false,
                 value: [ startTime ],
                 cols: [
                     { values: (function() {
@@ -50,7 +50,7 @@ TempStars.Pages.Hygienist.ModifyPartialOffer = (function() {
                     '<a href="#" class="link close-picker">{{closeText}}</a>' +
                 '</div>' +
                 '</div>',
-                rotateEffect: true,
+                rotateEffect: false,
                 value: [ endTime ],
                 cols: [
                     { values: (function() {

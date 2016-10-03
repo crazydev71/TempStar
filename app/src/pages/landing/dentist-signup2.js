@@ -22,7 +22,7 @@ TempStars.Pages.DentistSignup2 = (function() {
 
             expDatePicker = app.picker({
                 input: '#dentist-signup2-exp-date-field',
-                rotateEffect: true,
+                rotateEffect: false,
                 formatValue: function (p, values, displayValues) {
                     return values[0] + ' / ' + values[1];
                 },

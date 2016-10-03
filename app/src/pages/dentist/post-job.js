@@ -31,7 +31,8 @@ TempStars.Pages.Dentist.PostJob = (function() {
                 '</div>' +
                 '</div>',
 
-                rotateEffect: true,
+                rotateEffect: false,
+                updateValuesOnTouchmove: false,
                 value: [ '8:00 am'],
                 cols: [
                     { values: (function() {
@@ -57,7 +58,8 @@ TempStars.Pages.Dentist.PostJob = (function() {
                     '<a href="#" class="link close-picker">{{closeText}}</a>' +
                 '</div>' +
                 '</div>',
-                rotateEffect: true,
+                rotateEffect: false,
+                updateValuesOnTouchmove: false,
                 value: [ '5:00 pm'],
                 cols: [
                     { values: (function() {

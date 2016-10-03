@@ -22,7 +22,7 @@ TempStars.Pages.Dentist.ModifyJob = (function() {
                 '</div>' +
                 '</div>',
 
-                rotateEffect: true,
+                rotateEffect: false,
                 value: [ job.postedStart ],
                 cols: [
                     { values: (function() {
@@ -48,7 +48,7 @@ TempStars.Pages.Dentist.ModifyJob = (function() {
                     '<a href="#" class="link close-picker">{{closeText}}</a>' +
                 '</div>' +
                 '</div>',
-                rotateEffect: true,
+                rotateEffect: false,
                 value: [ job.postedEnd ],
                 cols: [
                     { values: (function() {

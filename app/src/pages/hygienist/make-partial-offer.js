@@ -28,7 +28,7 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
                 '</div>' +
                 '</div>',
 
-                rotateEffect: true,
+                rotateEffect: false,
                 cols: [
                     { values: (function() {
                             var vals = [],
@@ -60,7 +60,7 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
                     '<a href="#" class="link close-picker">{{closeText}}</a>' +
                 '</div>' +
                 '</div>',
-                rotateEffect: true,
+                rotateEffect: false,
                 cols: [
                     { values: (function() {
                             var vals = [],
