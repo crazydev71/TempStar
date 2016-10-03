@@ -132,6 +132,7 @@ TempStars.bootstrap = {
     },
 
     onResume: function() {
+        TempStars.App.gotoStartingPage();
     }
 };
 
