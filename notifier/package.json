@@ -1,0 +1,19 @@
+{
+  "name": "tempstars-notifier",
+  "description": "TempStars Notification Service",
+  "version": "1.0.0",
+  "main": "tempstars-notifier.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "private": true,
+  "license": "UNLICENSED",
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "config": "^1.21.0",
+    "lodash": "^4.14.1",
+    "moment": "^2.15.1",
+    "node-gcm": "^0.14.4",
+    "push": "file:../api/local_modules/push"    
+  }
+}
