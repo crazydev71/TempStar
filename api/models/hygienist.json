@@ -9,6 +9,9 @@
       "table": "Hygienist"
     }
   },
+  "scope": {
+      "include": [ "user" ]
+  },
   "properties": {
     "id": {
       "type": "Number",
@@ -279,6 +282,15 @@
         "dataLength": null,
         "dataPrecision": 3,
         "dataScale": 0,
+        "nullable": "Y"
+      }
+    },
+    "location": {
+      "type": "GeoPoint",
+      "required": false,
+      "mysql": {
+        "columnName": "location",
+        "dataType": "point",
         "nullable": "Y"
       }
     }

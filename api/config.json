@@ -22,5 +22,6 @@
     "handleErrors": false
   },
   "legacyExplorer": false,
-  "stripeSecretKey": "sk_test_PCAtzsYTShhPQLkwJLGrQ6xP"
+  "stripeSecretKey": "sk_test_PCAtzsYTShhPQLkwJLGrQ6xP",
+  "gcmApiKey": "AIzaSyBpqJVshqasod9SEdJoCSIHX5aqRkY-zg8"
 }

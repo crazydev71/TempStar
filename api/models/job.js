@@ -1,5 +1,8 @@
 
 var app      = require('../tempstars-api.js' );
+var push     = require( 'push' );
+
+push.init( app.get('gcmApiKey') );
 
 var  jobStatus =  {
     'POSTED': 1,
@@ -32,7 +35,9 @@ module.exports = function( Job ){
         var PartialOffer = app.models.PartialOffer;
         var Shift = app.models.Shift;
         var partialOffer,
-            job;
+            job,
+            jj,
+            msg;
 
         // Get the partial offer
         PartialOffer.findById( poId )
@@ -42,6 +47,8 @@ module.exports = function( Job ){
         })
         .then( function( j ) {
             job = j;
+            jj = job.toJSON();
+
             return job.updateAttributes({
                 status: jobStatus.CONFIRMED,
                 hygienistId: partialOffer.hygienistId,
@@ -51,7 +58,6 @@ module.exports = function( Job ){
             return Shift.find( {where: {jobId: jobId}} );
         })
         .then( function( shift ) {
-            console.dir( shift );
             return shift.updateAttributes({
                 postedStart: partialOffer.offeredStartTime,
                 postedEnd: partialOffer.offeredEndTime
@@ -61,6 +67,9 @@ module.exports = function( Job ){
             // Reject all the partial offers for this job
             return PartialOffer.updateAll( {jobId: jobId}, { status: 1 } );
         })
+        .then( function( rpo ) {
+            rejectedPartialOffers = rpo;
+        })
         .then( function() {
             // Accept the real partial offer
             return partialOffer.updateAttributes({
@@ -68,14 +77,25 @@ module.exports = function( Job ){
                 hygienistId: partialOffer.hygienistId
             });
         })
-        // .then( function() {
-        //     // Notify accepted hygienist
-        // })
-        // .then( function() {
-        //     // Get other partial offers
-        //     // Update other partial offers to rejected
-        //     // Notify
-        // })
+        .then( function() {
+            // Notify accepted hygienist
+            msg = 'Your partial offer on ';
+            msg += moment(jj.startDate).format('ddd MMM Do');
+            msg += ' with ' + jj.dentist.practiceName;
+            msg += ' has been accepted, booked, and confirmed.';
+            return push.send( msg, [jj.hygienist.user.registrationId])
+        })
+        .then( function() {
+            // Notify hygienists who have rejected partial offers
+            return Promise.map( rejectedPartialOffers, function( rpo ) {
+                var jj = job.toJSON();
+                msg = 'Your partial offer on ';
+                msg += moment(jj.startDate).format('ddd MMM Do');
+                msg += ' with ' + jj.dentist.practiceName;
+                msg += ' has been declined.';
+                return push.send( msg, [rpo.hygienist.user.registrationId])
+            });
+        })
         .then( function() {
             console.log( 'accept partial offer worked!' );
             callback( null, {} );
@@ -112,6 +132,7 @@ module.exports = function( Job ){
 
         var Shift = app.models.Shift;
         var Invoice = app.models.Invoice;
+        var Job = app.models.Job;
 
         // TODO send notification
         console.log( 'send invoice for job: ' + jobId );
@@ -146,6 +167,15 @@ module.exports = function( Job ){
                 createdOn: data.createdOn,
                 sentOn: data.sentOn
             });
+        })
+        .then( function( invoice ) {
+            return Job.findById( jobId );
+        })
+        .then( function( job ) {
+            var jj = job.toJSON();
+            msg = 'You have a new invoice from  ';
+            msg += jj.hygienist.firstName + ' ' + jj.hygienist.lastName;
+            return push.send( msg, [jj.dentist.user.registrationId] );
         })
         .then( function() {
             console.log( 'create invoice worked!' );

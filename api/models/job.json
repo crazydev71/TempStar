@@ -164,33 +164,33 @@
         "nullable": "N"
       }
     },
-    "dentistSurvey": {
+    "dentistRating": {
       "type": "Number",
       "required": false,
       "length": null,
-      "precision": 3,
-      "scale": 0,
+      "precision": 12,
+      "scale": null,
       "mysql": {
-        "columnName": "dentistSurvey",
-        "dataType": "tinyint",
+        "columnName": "dentistRating",
+        "dataType": "float",
         "dataLength": null,
-        "dataPrecision": 3,
-        "dataScale": 0,
+        "dataPrecision": 12,
+        "dataScale": null,
         "nullable": "Y"
       }
     },
-    "hygienistSurvey": {
+    "hygienistRating": {
       "type": "Number",
       "required": false,
       "length": null,
-      "precision": 3,
-      "scale": 0,
+      "precision": 12,
+      "scale": null,
       "mysql": {
-        "columnName": "hygienistSurvey",
-        "dataType": "tinyint",
+        "columnName": "hygienistRating",
+        "dataType": "float",
         "dataLength": null,
-        "dataPrecision": 3,
-        "dataScale": 0,
+        "dataPrecision": 12,
+        "dataScale": null,
         "nullable": "Y"
       }
     },

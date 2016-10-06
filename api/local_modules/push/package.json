@@ -1,0 +1,12 @@
+{
+  "name": "push",
+  "version": "0.1.0",
+  "main": "push.js",
+  "author": "Mike Betts",
+  "private": true,
+  "license": "UNLICENSED",
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "node-gcm": "^0.14.4"
+  }
+}

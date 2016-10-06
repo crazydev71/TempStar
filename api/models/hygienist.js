@@ -5,6 +5,10 @@ var Promise  = require( 'bluebird' );
 var app      = require('../tempstars-api.js' );
 var location = require( 'location' );
 var moment   = require( 'moment' );
+var push     = require( 'push' );
+var notifier = require( 'notifier' );
+
+push.init( app.get('gcmApiKey') );
 
 var  jobStatus =  {
     'POSTED': 1,
@@ -181,6 +185,13 @@ module.exports = function( Hygienist ) {
             });
         })
         .then( function( job ) {
+            var jj = job.toJSON();
+            msg = 'Your job on ';
+            msg += moment(jj.startDate).format('ddd MMM Do');
+            msg += ' has been filled.';
+            return push.send( msg, [jj.dentist.user.registrationId])
+        })
+        .then( function( job ) {
             console.log( 'booked job worked!' );
             callback( null, job );
         })
@@ -228,6 +239,13 @@ module.exports = function( Hygienist ) {
                 createdOn: data.createdOn
             });
         })
+        .then( function( job ) {
+            var jj = job.toJSON();
+            msg = 'You have a new offer for your job on  ';
+            msg += moment(jj.startDate).format('ddd MMM Do');
+            msg += '.';
+            return push.send( msg, [jj.dentist.user.registrationId] );
+        })
         .then( function( po ) {
             console.log( 'make partial offer worked!' );
             callback( null, po );
@@ -242,10 +260,10 @@ module.exports = function( Hygienist ) {
 
     Hygienist.remoteMethod( 'cancelJob', {
         accepts: [
-            {arg: 'dentistId', type: 'number', required: true},
+            {arg: 'hygienistId', type: 'number', required: true},
             {arg: 'jobId', type: 'number', required: true}],
         returns: { arg: 'result', type: 'object' },
-        http: { verb: 'delete', path: '/:dentistId/jobshifts/:jobId' }
+        http: { verb: 'delete', path: '/:hygienistId/jobshifts/:jobId' }
     });
 
     /**
@@ -256,9 +274,11 @@ module.exports = function( Hygienist ) {
     Hygienist.cancelJob = function( hygienistId, jobId, callback ) {
 
         var Job = app.models.Job;
+        var jj;
 
         Job.findById( jobId )
         .then( function( job ) {
+            jj = job.toJSON();
 
             if ( job.status != jobStatus.CONFIRMED ) {
                 callback( new Error( 'cannot cancel non-confirmed job') );
@@ -270,6 +290,17 @@ module.exports = function( Hygienist ) {
                 hygienistId: null
             });
         })
+        .then( function( job ) {
+            return notifier.createJobNotifications( loopback, app, jj.id, 'New job posted' );
+        })
+        .then( function( job ) {
+            msg = 'Your job on ';
+            msg += moment(jj.startDate).format('ddd MMM Do');
+            msg += ' has been cancelled by ';
+            msg += jj.hygienist.firstName + ' ' + jj.hygienist.lastName;
+            msg += ' It has been automatically reposted to the system as a open job.';
+            return push.send( msg, [jj.dentist.user.registrationId] );
+        })
         .then( function() {
             console.log( 'cancel job worked!' );
             callback( null, {} );
@@ -279,4 +310,84 @@ module.exports = function( Hygienist ) {
             callback( err );
         });
     };
+
+    Hygienist.remoteMethod( 'saveDentistRating', {
+        accepts: [
+            {arg: 'hygienistId', type: 'number', required: true},
+            {arg: 'jobId', type: 'number', required: true},
+            {arg: 'data', type: 'object', http: { source: 'body' } } ],
+        returns: { arg: 'result', type: 'object' },
+        http: { verb: 'put', path: '/:hygienistId/jobs/:jobId/rating' }
+    });
+
+    Hygienist.saveDentistRating = function( hygienistId, jobId, data, callback ) {
+        var Job = app.models.Job;
+        var FavouriteDentist = app.models.FavouriteDentist;
+        var BlockedDentist = app.models.BlockedDentist;
+        var Dentist = app.models.Dentist;
+
+        var job;
+
+        Job.findById( jobId )
+        .then( function( j ) {
+            // Add survey result to job
+            job = j;
+            return job.updateAttributes({
+                dentistRating: data.dentistRating
+            });
+        })
+        .then( function() {
+            // Add fav/blocked dentist
+            if ( data.dentistRating == rating.VERY_HAPPY ) {
+                return FavouriteDentist.create({
+                    hygienistId: hygienistId,
+                    dentistId: job.dentistId
+                });
+            }
+            else if ( data.dentistRating == rating.NO_THANK_YOU ) {
+                return BlockedHygienist.create({
+                    hygienistId: hygienistId,
+                    dentistId: job.dentistId
+                });
+            }
+            else {
+                return Promise.resolve();
+            }
+        })
+        .then( function() {
+            // Get Dentist
+            return Dentist.findById( job.dentistId );
+        })
+        .then( function( dentist ) {
+            // Get avg score for last 5 jobs
+            return Job.find({
+                where: {
+                    dentistId: job.dentistId,
+                    status: 4
+                },
+                limit: 5,
+                order: 'completedOn DESC'
+            });
+        })
+        .then( function( jobs ) {
+            // Calc star score
+            var i, avgRating, sum;
+
+            for ( i = 0, sum = 0; i < jobs.length; i++ ) {
+                sum += jobs.dentistRating;
+            }
+            avgRating = sum / jobs.length;
+
+            return dentist.updateAttributes({
+                starScore: avgRating
+            });
+        })
+        .then( function() {
+            callback( null, {} );
+        })
+        .catch( function( err ) {
+            callback( err );
+        });
+    };
+
 };

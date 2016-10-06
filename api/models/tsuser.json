@@ -43,6 +43,21 @@
         "dataScale": 0,
         "nullable": "Y"
       }
+    },
+    "registrationId": {
+      "type": "String",
+      "required": false,
+      "length": 512,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "registrationId",
+        "dataType": "varchar",
+        "dataLength": 512,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
     }
   },
   "validations": [],
@@ -62,7 +77,12 @@
       "type": "belongsTo",
       "model": "Hygienist",
       "foreignKey": "hygienistId"
-    }
+  },
+  "notifications": {
+    "type": "hasMany",
+    "model": "Notification",
+    "foreignKey": "userId"
+  }  
   },
   "acls": [
     {

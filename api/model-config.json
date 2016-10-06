@@ -97,6 +97,10 @@
     "dataSource": "tempstarsDB",
     "public": true
   },
+  "Notification": {
+    "dataSource": "tempstarsDB",
+    "public": true
+  },
   "Container": {
     "dataSource": "storage",
     "public": true

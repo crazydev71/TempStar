@@ -1,16 +1,29 @@
 
 'use strict';
 
+var _        = require( 'lodash');
 var Promise  = require( 'bluebird' );
+var loopback = require( 'loopback' );
 var app      = require('../tempstars-api.js' );
 var stripe   = require( 'stripe' )(app.get('stripeSecretKey'));
+var moment   = require( 'moment' );
 var location = require( 'location' );
+var push     = require( 'push' );
+var notifier = require( 'notifier' );
+
+push.init( app.get('gcmApiKey') );
 
 var  jobStatus =  {
     'POSTED': 1,
     'PARTIAL': 2,
     'CONFIRMED': 3,
     'COMPLETED': 4
+};
+
+var rating = {
+    'VERY_HAPPY': 5,
+    'PLEASED': 3.5,
+    'NO_THANK_YOU': 2
 };
 
 module.exports = function( Dentist ) {
@@ -205,7 +218,6 @@ module.exports = function( Dentist ) {
         });
     };
 
-
     Dentist.remoteMethod( 'postJob', {
         accepts: [
             {arg: 'id', type: 'number', required: true},
@@ -218,26 +230,19 @@ module.exports = function( Dentist ) {
 
         var Job = app.models.Job;
         var Shift = app.models.Shift;
-/*
-        {
-            job: {
-                dentistId: id,
-                hygienistId: 14,
-                postedOn: '2016-09-19',
-                startDate: '2016-09-22'
-            },
-            shifts: [
-                { shiftDate: '2016-09-22', startTime:'9:00', endTime: '17:00'},
-                { shiftDate: '2016-09-23', startTime:'9:00', endTime: '17:00'}
-            ]
-        }
-*/
-    console.dir( data );
+        var job;
+
         // Create a new job and the shifts for that job
-        var j = data.job;
-        j.dentistId = parseInt(id);
-        Job.create( j )
-        .then( function( job ) {
+        // Then create notifications for each potential hygienist
+
+        var jobData = data.job;
+        jobData.dentistId = parseInt(id);
+        jobData.dentistRating = 0;
+        jobData.hygienistRating = 0;
+        jobData.hygienistId = 0;
+        Job.create( jobData )
+        .then( function( j ) {
+            job = j;
             return Promise.map( data.shifts, function( shift ) {
                 var s = {};
                 s.jobId = job.id;
@@ -246,6 +251,10 @@ module.exports = function( Dentist ) {
                 s.postedEnd = shift.endTime;
                 return Shift.create( s );
             });
+        })
+        .then( function() {
+            var jj = job.toJSON();
+            return notifier.createJobNotifications( loopback, app, jj.id, 'New job posted' );
         })
         .then( function() {
             console.log( 'post job worked!' );
@@ -284,6 +293,8 @@ module.exports = function( Dentist ) {
         // Get the job
         Job.findById( jobId )
         .then( function( j ) {
+            var jj, msg;
+
             job = j;
             console.log( 'got job with status:' + job.status );
 
@@ -297,13 +308,35 @@ module.exports = function( Dentist ) {
                 case jobStatus.CONFIRMED:
                     console.log( 'cancel confirmed job' );
                     // Notify hygienist
-                    return job.partialOffers.destroyAll();                    
+                    jj = job.toJSON();
+                    msg = 'Your job on ';
+                    msg += moment(jj.startDate).format('ddd MMM D, YYYY');
+                    msg += ' with ' + jj.dentist.practiceName;
+                    msg += ' has been cancelled.';
+                    push.send( msg, [jj.hygienist.user.registrationId])
+                    .then( function( response ) {
+                        return job.partialOffers.destroyAll();
+                    })
+                    .catch( function( err ) {
+                        console.log( err.message );
+                    })
+
                     break;
 
                 case jobStatus.PARTIAL:
-                    // Notify hygienists
-                    // Delete partial offers
                     console.log( 'cancel partial offer job' );
+
+                    // Notify hygienists
+                    jj = job.toJSON();
+                    msg = 'Your partial offer for the job on  ';
+                    msg += moment(jj.startDate).format('ddd MMM D, YYYY');
+                    msg += ' with ' + jj.dentist.practiceName;
+                    msg += ' has been remove since the job was cancelled.';
+                    _.map( jj.partialOffers, function( po ) {
+                        push.send( msg, [po.hygienist.user.registrationId])
+                    });
+
+                    // Delete partial offers
                     return job.partialOffers.destroyAll();
                     break;
 
@@ -327,6 +360,171 @@ module.exports = function( Dentist ) {
         })
         .catch( function( err ) {
             console.log( 'cancel job error!' );
+            callback( err );
+        });
+    };
+
+    Dentist.remoteMethod( 'saveHygienistRating', {
+        accepts: [
+            {arg: 'dentistId', type: 'number', required: true},
+            {arg: 'jobId', type: 'number', required: true},
+            {arg: 'data', type: 'object', http: { source: 'body' } } ],
+        returns: { arg: 'result', type: 'object' },
+        http: { verb: 'put', path: '/:dentistId/jobs/:jobId/survey' }
+    });
+
+    Dentist.saveHygienistRating = function( dentistId, jobId, data, callback ) {
+        var Job = app.models.Job;
+        var FavouriteHygienist = app.models.FavouriteHygienist;
+        var BlockedHygienist = app.models.BlockedHygienist;
+        var Hygienist = app.models.Hygienist;
+
+        var job;
+
+        Job.findById( jobId )
+        .then( function( j ) {
+            // Add survey result to job
+            job = j;
+            return job.updateAttributes({
+                hygienistRating: data.hygienistRating
+            });
+        })
+        .then( function() {
+            // Add fav/blocked hygienist
+            if ( data.hygienistRating == rating.VERY_HAPPY ) {
+                return FavouriteHygienist.create({
+                    dentistId: dentistId,
+                    hygienistId: data.hygienistId
+                });
+            }
+            else if ( data.surveyResult == rating.NO_THANK_YOU ) {
+                return BlockedHygienist.create({
+                    dentistId: dentistId,
+                    hygienistId: data.hygienistId
+                });
+            }
+            else {
+                return Promise.resolve();
+            }
+        })
+        .then( function() {
+            // Get Hygienist
+            return Hygienist.findById( data.hygienistId );
+        })
+        .then( function( hygienist ) {
+            // Get avg score for last 5 jobs
+            return Job.find({
+                where: {
+                    hygienistId: hygienist.id,
+                    status: 4
+                },
+                limit: 5,
+                order: 'completedOn DESC'
+            });
+        })
+        .then( function( jobs ) {
+            // Calc star score
+            var i, avgRating, sum;
+
+            for ( i = 0, sum = 0; i < jobs.length; i++ ) {
+                sum += jobs.hygienistRating;
+            }
+            avgRating = sum / jobs.length;
+
+            return hygienist.updateAttributes({
+                starScore: avgRating
+            });
+        })
+        .then( function() {
+            callback( null, {} );
+        })
+        .catch( function( err ) {
+            callback( err );
+        });
+    };
+
+    Dentist.remoteMethod( 'modifyJob', {
+        accepts: [
+            {arg: 'dentistId', type: 'number', required: true},
+            {arg: 'jobId', type: 'number', required: true},
+            {arg: 'data', type: 'object', http: { source: 'body' } } ],
+        returns: { arg: 'result', type: 'object' },
+        http: { verb: 'put', path: '/:dentistId/jobshifts/:jobId' }
+    });
+
+    Dentist.modifyJob = function( dentistId, jobId, data, callback ) {
+
+        var Job = app.models.Job;
+        var Shift = app.models.Shift;
+        var job, shiftId;
+
+        console.log( 'modify job' );
+
+        // Get the job
+
+        Job.findById( jobId )
+        .then( function( j ) {
+            var jj, msg;
+
+            job = j;
+            jj = job.toJSON();
+            shiftId = jj.shifts[0].id;
+            return Shift.findById( shiftId );
+        })
+        .then( function( shift ) {
+            return shift.updateAttributes( data );
+        })
+        .then( function(){
+
+            switch ( job.status ) {
+                case jobStatus.COMPLETED:
+                    console.log( 'modify completed job' );
+                    callback( new Error( 'cannot modify completed job') );
+                    return;
+                    break;
+
+                case jobStatus.CONFIRMED:
+                    console.log( 'modify confirmed job' );
+                    // Notify hygienist
+                    msg = 'Your job on ';
+                    msg += moment(jj.startDate).format('ddd MMM D, YYYY');
+                    msg += ' with ' + jj.dentist.practiceName;
+                    msg += ' has been modified.';
+                    push.send( msg, [jj.hygienist.user.registrationId])
+                    .then( function( response ) {
+                        return job.partialOffers.destroyAll();
+                    })
+                    .catch( function( err ) {
+                        console.log( err.message );
+                    })
+
+                    break;
+
+                case jobStatus.PARTIAL:
+                    console.log( 'modify partial offer job' );
+
+                    // Notify hygienists
+                    jj = job.toJSON();
+                    msg = 'The job for your partial offer on  ';
+                    msg += moment(jj.startDate).format('ddd MMM D, YYYY');
+                    msg += ' with ' + jj.dentist.practiceName;
+                    msg += ' has been modified.';
+                    _.map( jj.partialOffers, function( po ) {
+                        push.send( msg, [po.hygienist.user.registrationId])
+                    });
+                    break;
+
+                case jobStatus.POSTED:
+                    console.log( 'modify posted job' );
+                    break;
+            }
+        })
+        .then( function() {
+            console.log( 'modify job worked!' );
+            callback( null, {} );
+        })
+        .catch( function( err ) {
+            console.log( 'modify job error!' );
             callback( err );
         });
     };
