@@ -110,21 +110,10 @@ TempStars.Pages.Dentist.JobCompleted = (function() {
         });
     }
 
-    function saveSurvey( result ) {
-        TempStars.Api.updateJob( job.id, {dentistSurvey: result} )
-        .then( function() {
-            var data = { hygienistId: job.hygienistId };
+    // TODO
+    function rateHygienist( result ) {
 
-            if ( result == TempStars.Survey.VERY_HAPPY ) {
-                return TempStars.Api.addFavouriteHygienist( job.dentistId, data );
-            }
-            else if ( result == TempStars.Survey.NO_THANK_YOU ) {
-                return TempStars.Api.addBlockedHygienist( job.dentistId, data );
-            }
-            else {
-                return Promise.resolve();
-            }
-        })
+        TempStars.Api.rateHygienist( job.id, {hygienistRating: result} )
         .then( function() {
             TempStars.Dentist.Router.reloadPage('job-completed', { id: job.id } );
         });

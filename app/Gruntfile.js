@@ -17,6 +17,7 @@ module.exports = function (grunt) {
                 files: [
                     { cwd: 'src/lib/', src: '**', dest: 'www/lib/', expand: true },
                     { cwd: 'src/img/', src: '**', dest: 'www/img/', expand: true },
+                    { cwd: 'src/pages/', src: 'home.html', dest: 'www/', expand: true },
                     { cwd: 'src/app/', src: 'android.css', dest: 'www/css/', expand: true }
                 ]
             }
@@ -105,19 +106,21 @@ module.exports = function (grunt) {
         uglify: {
             options: {
                 banner: '<%= banner %>',
-                mangle: true
+                mangle: true,
+                mangle: true,
+                sourceMap: true
             },
             app: {
-                src: 'dist/tempstars.app.js',
-                dest: 'dist/tempstars.app.min.js'
+                src: 'www/js/tempstars.app.js',
+                dest: 'www/js/tempstars.app.min.js'
             },
             dentist: {
-                src: 'dist/tempstars.dentist.js',
-                dest: 'dist/tempstars.dentist.min.js'
+                src: 'www/js/tempstars.dentist.js',
+                dest: 'www/js/tempstars.dentist.min.js'
             },
             hygienist: {
-                src: 'dist/tempstars.hygienist.js',
-                dest: 'dist/tempstars.hygienist.min.js'
+                src: 'www/js/tempstars.hygienist.js',
+                dest: 'www/js/tempstars.hygienist.min.js'
             }
         },
 
@@ -156,10 +159,10 @@ module.exports = function (grunt) {
             },
             dentist: {
                 src: ['src/pages/dentist/*.js']
+            },
+            hygienist: {
+                src: ['src/pages/hygienist/*.js']
             }
-            // hygienist: {
-            //     src: ['src/pages/hygienist/*.js']
-            // }
         },
 
         htmlhint: {
@@ -247,7 +250,7 @@ module.exports = function (grunt) {
         grunt.log.writeln( ' "grunt --target=local|dev"' );
     });
 
-    grunt.registerTask( 'default',  [ 'init', 'clean', 'exec:create_version', 'copy', 'concat', 'template:browser', 'includereplace' ]);
+    grunt.registerTask( 'default',  [ 'init', 'clean', 'exec:create_version', 'copy', 'concat', 'template:browser', 'includereplace', 'uglify' ]);
     grunt.registerTask( 'ios',      [ 'init', 'clean', 'exec:create_version', 'copy', 'concat', 'template:ios',     'includereplace', 'exec:run_ios']);
     grunt.registerTask( 'android',  [ 'init', 'clean', 'exec:create_version', 'copy', 'concat', 'template:android', 'includereplace', 'exec:run_android']);
     grunt.registerTask( 'browser',  [ 'init', 'clean', 'exec:create_version', 'copy', 'concat', 'template:browser', 'includereplace', 'exec:run_browser']);

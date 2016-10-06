@@ -10,6 +10,9 @@ TempStars.Config = (function() {
         },
         bucket: {
             baseUrl: 'https://s3.amazonaws.com/tempstars.ca/'
+        },
+        push: {
+            senderID: '210360814619'
         }
     };
 })();

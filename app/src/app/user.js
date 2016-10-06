@@ -23,7 +23,7 @@ TempStars.User = (function() {
                 TempStars.User.getAccount()
                 .then( function( account ) {
                     userAccount = account;
-                    TempStars.Storage.set( 'userAccount', account );                    
+                    TempStars.Storage.set( 'userAccount', account );
                     resolve();
                 })
                 .catch( function( err ) {
@@ -49,6 +49,10 @@ TempStars.User = (function() {
                 })
                 .then( function( account ) {
                     userAccount = account;
+                    TempStars.Push.init();
+                    return TempStars.User.updateRegistration();
+                })
+                .then( function() {
                     resolve();
                 })
                 .catch( function( err ) {
@@ -77,6 +81,10 @@ TempStars.User = (function() {
                 .then( function( account ) {
                     userAccount = account;
                     TempStars.Storage.set( 'userAccount', account );
+                    // Setup push notifications
+                    TempStars.Push.init();
+                })
+                .then( function() {
                     resolve();
                 })
                 .catch( function( err ) {
@@ -157,6 +165,7 @@ TempStars.User = (function() {
                     TempStars.Api.setAuthToken( null );
                     TempStars.Storage.remove( 'userAuth' );
                     TempStars.Storage.remove( 'userAccount' );
+                    delete window.registrationId;
                     resolve();
                 });
 
@@ -186,6 +195,31 @@ TempStars.User = (function() {
 
         requestPasswordReset: function requestPasswordReset( email ) {
             return TempStars.Api.resetPassword( email );
+        },
+
+        updateRegistration: function updateRegistration() {
+            return new Promise( function( resolve, reject ) {
+
+                if ( ! userLoggedIn || window.registrationId ) {
+                    if ( ! userAccount.registrationId || (window.registrationId != userAccount.registrationId )) {
+                        TempStars.Api.updateRegistrationId( userAccount.id, window.registrationId )
+                        .then( TempStars.User.refresh )
+                        .then( function() {
+                            delete window.registrationId;
+                            resolve();
+                        })
+                        .catch( function(err) {
+                            resolve();
+                        });
+                    }
+                    else {
+                        resolve();
+                    }
+                }
+                else {
+                    resolve();
+                }
+            });
         }
 
     };

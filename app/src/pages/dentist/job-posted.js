@@ -52,8 +52,9 @@ TempStars.Pages.Dentist.JobPosted = (function() {
         console.log( 'modifying job');
     }
 
-    function saveSurvey( result ) {
-        TempStars.Api.updateJob( job.id, {dentistSurvey: result} )
+    // TODO
+    function rateHygienist( result ) {
+        TempStars.Api.updateJob( job.id, {hygienistRating: result} )
         .then( function() {
             TempStars.Dentist.Router.reloadPage('job-completed', { id: job.id } );
         });

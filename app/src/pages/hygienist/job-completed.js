@@ -10,7 +10,7 @@ TempStars.Pages.Hygienist.JobCompleted = (function() {
             // $$('#hygienist-job-completed-survey-checkbox').on( 'change', surveyToggleHandler );
             $$('#hygienist-job-completed-notes-save-button').on( 'click', saveNotesHandler );
             $$('#hygienist-job-completed-view-invoice-button').on( 'click', viewInvoiceHandler );
-            $$('#hygienist-job-completed-view-survey-button').on( 'click', viewSurveyHandler );
+            $$('#hygienist-job-completed-view-survey-button').on( 'click', surveyButtonHandler );
         });
 
         app.onPageBeforeRemove( 'job-completed', function( page ) {
@@ -81,66 +81,38 @@ TempStars.Pages.Hygienist.JobCompleted = (function() {
         TempStars.Hygienist.Router.goForwardPage( 'invoice', {}, job );
     }
 
-    function viewSurveyHandler( e ) {
-        app.modal({
-          title:  'Rate Dental Office',
-          text: 'How happy would you be to work at this office again?',
-          verticalButtons: true,
-          buttons: [
-            {
-                text: 'Very Happy',
-                onClick: function() {
-                    app.alert('Great, they will be added to your favourites.', function() {
-                        saveSurvey( TempStars.Survey.VERY_HAPPY );
-                    });
-                }
-            },
-            {
-                text: 'Pleased',
-                onClick: function() {
-                    app.alert('Thanks, all set.', function() {
-                        saveSurvey( TempStars.Survey.PLEASED );
-                    });
-                }
-            },
-            {
-                text: 'No Thank You!',
-                onClick: function() {
-                    app.alert('Sorry, they will be added to your blocked list.', function() {
-                        saveSurvey( TempStars.Survey.NO_THANK_YOU );
-                    });
-                }
-            }
-          ]
-        });
+    function surveyButtonHandler( e ) {
+        e.preventDefault();
+        TempStars.Hygienist.surveyButtonHandler( e, job.id );
     }
 
-    function saveSurvey( result ) {
-
-        app.showPreloader('Saving Survey');
-        TempStars.Api.updateJob( job.id, {hygienistSurvey: result} )
-        .then( function() {
-            var data = { dentistId: job.dentistId };
-
-            if ( result == TempStars.Survey.VERY_HAPPY ) {
-                return TempStars.Api.addFavouriteDentist( job.hygienistId, data );
-            }
-            else if ( result == TempStars.Survey.NO_THANK_YOU ) {
-                return TempStars.Api.addBlockedDentist( job.hygienistId, data );
-            }
-            else {
-                return Promise.resolve();
-            }
-        })
-        .then( function() {
-            app.hidePreloader();
-            TempStars.Hygienist.Router.reloadPage('job-completed', { id: job.id } );
-        })
-        .catch( function() {
-            app.hidePreloader();
-            app.alert( 'Error saving survey. Please try again.' );
-        });
-    }
+    // // TODO
+    // function rateDentist( result ) {
+    //
+    //     app.showPreloader('Saving Survey');
+    //     TempStars.Api.updateJob( job.id, {dentistRating: result} )
+    //     .then( function() {
+    //         var data = { dentistId: job.dentistId };
+    //
+    //         if ( result == TempStars.Survey.VERY_HAPPY ) {
+    //             return TempStars.Api.addFavouriteDentist( job.hygienistId, data );
+    //         }
+    //         else if ( result == TempStars.Survey.NO_THANK_YOU ) {
+    //             return TempStars.Api.addBlockedDentist( job.hygienistId, data );
+    //         }
+    //         else {
+    //             return Promise.resolve();
+    //         }
+    //     })
+    //     .then( function() {
+    //         app.hidePreloader();
+    //         TempStars.Hygienist.Router.reloadPage('job-completed', { id: job.id } );
+    //     })
+    //     .catch( function() {
+    //         app.hidePreloader();
+    //         app.alert( 'Error saving survey. Please try again.' );
+    //     });
+    // }
 
     return {
         init: init,

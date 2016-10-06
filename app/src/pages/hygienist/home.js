@@ -114,7 +114,7 @@ TempStars.Pages.Hygienist.Home = (function() {
 
         if ( job.status == TempStars.Job.status.COMPLETED ) {
 
-            if ( ! job.hygienistSurvey || job.invoice && (! job.invoice.hygienistMarkedPaid ) ) {
+            if ( ! job.dentistRating || job.invoice && (! job.invoice.hygienistMarkedPaid ) ) {
                 job.actionRequired = true;
             }
         }

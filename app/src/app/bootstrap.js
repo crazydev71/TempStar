@@ -132,6 +132,7 @@ TempStars.bootstrap = {
     },
 
     onResume: function() {
+        TempStars.User.updateRegistration();
         TempStars.App.gotoStartingPage();
     }
 };

@@ -119,8 +119,8 @@ TempStars.Api = (function() {
             return TempStars.Ajax.put( 'jobs/' + jobId, data ).minDelay(1000);
         },
 
-        modifyJob: function modifyJob( jobId, shiftId, data ) {
-            return TempStars.Ajax.put( 'jobs/' + jobId + '/shifts/' + shiftId, data ).minDelay(1000);
+        modifyJob: function modifyJob( dentistId, jobId, data ) {
+            return TempStars.Ajax.put( 'dentists/' + dentistId + '/jobshifts/' + jobId, data ).minDelay(1000);            
         },
 
         acceptPartialOffer: function acceptPartialOffer( jobId, poId ) {
@@ -217,8 +217,15 @@ TempStars.Api = (function() {
 
         getJob: function getJob( jobId ) {
             return TempStars.Ajax.get( 'jobs/' + jobId );
-        }
+        },
 
+        updateRegistrationId: function updateRegistrationId( userId, registrationId ) {
+            return TempStars.Ajax.put( 'tsusers/' + userId, { registrationId: registrationId }, authToken );
+        },
+
+        saveHygienistRating: function saveHygienistRating( dentistId, jobId, data ) {
+            return TempStars.Ajax.put( 'dentists/' + dentistId + '/jobs/' + jobId, data ).minDelay(1000);
+        }
 
     };
 

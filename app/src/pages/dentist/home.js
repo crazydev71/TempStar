@@ -120,7 +120,7 @@ TempStars.Pages.Dentist.Home = (function() {
 
         if ( job.status == TempStars.Job.status.COMPLETED ) {
 
-            if ( ! job.dentistSurvey || job.invoice && (! job.invoice.dentistMarkedPaid ) ) {
+            if ( ! job.hygienistRating || job.invoice && (! job.invoice.dentistMarkedPaid ) ) {
                 job.actionRequired = true;
             }
         }
