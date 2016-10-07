@@ -30,9 +30,9 @@ TempStars.Pages.DentistSignup1 = (function() {
             mainView.showNavbar();
         });
 
-        app.onPageAfterAnimation( 'dentist-signup1', function( page ) {
-            displayNotification();
-        });
+        // app.onPageAfterAnimation( 'dentist-signup1', function( page ) {
+        //     displayNotification();
+        // });
     }
 
     function displayNotification() {
@@ -138,7 +138,7 @@ TempStars.Pages.DentistSignup1 = (function() {
         })
         .catch( function( err ) {
             console.log( err );
-            app.hidePreloader();            
+            app.hidePreloader();
             return;
         });
     }

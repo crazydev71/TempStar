@@ -456,7 +456,7 @@ module.exports = function( Dentist ) {
 
         var Job = app.models.Job;
         var Shift = app.models.Shift;
-        var job, shiftId;
+        var job, jj, shiftId, msg;
 
         console.log( 'modify job' );
 
@@ -464,8 +464,6 @@ module.exports = function( Dentist ) {
 
         Job.findById( jobId )
         .then( function( j ) {
-            var jj, msg;
-
             job = j;
             jj = job.toJSON();
             shiftId = jj.shifts[0].id;
@@ -474,7 +472,7 @@ module.exports = function( Dentist ) {
         .then( function( shift ) {
             return shift.updateAttributes( data );
         })
-        .then( function(){
+        .then( function() {
 
             switch ( job.status ) {
                 case jobStatus.COMPLETED:

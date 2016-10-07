@@ -1,7 +1,9 @@
 
 'use strict';
 
+var _        = require( 'lodash' );
 var Promise  = require( 'bluebird' );
+var loopback = require( 'loopback' );
 var app      = require('../tempstars-api.js' );
 var location = require( 'location' );
 var moment   = require( 'moment' );
@@ -143,17 +145,40 @@ module.exports = function( Hygienist ) {
     Hygienist.availableJobs = function( id, callback ) {
 
         var Job = app.models.Job;
-        var hygienist;
+        var Hygienist = app.models.Hygienist;
+        var hygienist,
+            hygienistLocation,
+            distance;
+
 
         // Get the hygienist location
-        // Get the available jobs within 100km
+        // Get the available jobs
+        // Filter by location
 
-        // Hygienist.findById( id )
-        // .then( function( h ) {
-        //     hygienist = h;
-        //     return
+        Hygienist.findById( id )
+        .then( function( h ) {
+            hygienist = h;
+            return Job.find( {where: {status: {inq: [1,2]}}} );
+        })
+        .then( function( jobs ) {
+            // If don't have a location for the hygienist, return all the jobs
+            if ( ! hygienist.location ) {
+                return _.map( jobs, function( job ) {
+                    job.distance = 'unknown';
+                });
+            }
+            hygienistLocation = new loopback.GeoPoint({ lat: hygienist.lat, lng: hygienist.lon});
 
-        Job.find( {where: {status: {inq: [1,2]}}} )
+            return _.map( jobs, function( job ) {
+                var jj = job.toJSON();
+                var jobLocation = new loopback.GeoPoint( { lng: jj.dentist.lon, lat: jj.dentist.lat} );
+                distance = loopback.GeoPoint.distanceBetween( jobLocation, hygienistLocation, {type: 'kilometers'});
+                if ( distance <= 110 ) {
+                    jj.distance = distance.toFixed(1);
+                    return jj;
+                }
+            });
+        })
         .then( function( jobs ) {
             callback( null, jobs );
         })
@@ -186,7 +211,7 @@ module.exports = function( Hygienist ) {
         })
         .then( function( job ) {
             var jj = job.toJSON();
-            msg = 'Your job on ';
+            var msg = 'Your job on ';
             msg += moment(jj.startDate).format('ddd MMM Do');
             msg += ' has been filled.';
             return push.send( msg, [jj.dentist.user.registrationId])
@@ -215,16 +240,13 @@ module.exports = function( Hygienist ) {
 
         console.log( 'make partial offer' );
 
-        // create po
-        // change job status
-        // notify
-        console.dir( data );
-
         var Job = app.models.Job;
         var PartialOffer = app.models.PartialOffer;
+        var job;
 
         Job.findById( jobId )
-        .then( function( job ) {
+        .then( function( j ) {
+            job = j;
             return job.updateAttributes({
                 status: 2
             });
@@ -239,16 +261,16 @@ module.exports = function( Hygienist ) {
                 createdOn: data.createdOn
             });
         })
-        .then( function( job ) {
+        .then( function( po ) {
             var jj = job.toJSON();
-            msg = 'You have a new offer for your job on  ';
+            var msg = 'You have a new offer for your job on  ';
             msg += moment(jj.startDate).format('ddd MMM Do');
             msg += '.';
             return push.send( msg, [jj.dentist.user.registrationId] );
         })
-        .then( function( po ) {
+        .then( function() {
             console.log( 'make partial offer worked!' );
-            callback( null, po );
+            callback( null, {} );
         })
         .catch( function( err ) {
             console.log( 'make partial offer error!' );
@@ -294,7 +316,7 @@ module.exports = function( Hygienist ) {
             return notifier.createJobNotifications( loopback, app, jj.id, 'New job posted' );
         })
         .then( function( job ) {
-            msg = 'Your job on ';
+            var msg = 'Your job on ';
             msg += moment(jj.startDate).format('ddd MMM Do');
             msg += ' has been cancelled by ';
             msg += jj.hygienist.firstName + ' ' + jj.hygienist.lastName;

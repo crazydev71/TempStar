@@ -8,7 +8,7 @@ var moment   = require( 'moment' );
 var loopback,
     app;
 
-function createJobNotifications( lp, a, jobId, message ) {
+function createJobNotifications( lb, a, jobId, message ) {
     loopback = lb;
     app = a;
 

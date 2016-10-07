@@ -66,6 +66,11 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
                         job = j;
                         job.isComplete = (job.status == TempStars.Job.status.COMPLETED ) ? true : false;
                         job.hasInvoice = (job.invoice) ? true : false;
+
+                        // var hygienistLocation = new loopback.GeoPoint({ lat: job.hygienist.lat, lng: job.hygienist.lon});
+                        // var dentistLocation = new loopback.GeoPoint({ lat: job.dentist.lat, lng: job.dentist.lon});
+                        // job.distance = loopback.GeoPoint.distanceBetween( dentistLocation, hygienistLocation, {type: 'kilometers'});
+                        job.distance = 0;
                         return TempStars.Hygienist.getJobsByDentist( job.dentistId );
                     })
                     .then( function( dentistJobs ) {
@@ -94,6 +99,11 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
                         job = jobs[0];
                         job.isComplete = (job.status == TempStars.Job.status.COMPLETED ) ? true : false;
                         job.hasInvoice = (job.invoice) ? true : false;
+                        // var hygienistLocation = new loopback.GeoPoint({ lat: job.hygienist.lat, lng: job.hygienist.lon});
+                        // var dentistLocation = new loopback.GeoPoint({ lat: job.dentist.lat, lng: job.dentist.lon});
+                        // job.distance = loopback.GeoPoint.distanceBetween( dentistLocation, hygienistLocation, {type: 'kilometers'});
+                        job.distance = 0;
+
                         return TempStars.Hygienist.getJobsByDentist( job.dentistId );
                     })
                     .then( function( dentistJobs ) {

@@ -163,7 +163,7 @@ TempStars.Pages.Dentist.ModifyJob = (function() {
             postedEnd: fullEndTime
         };
 
-        TempStars.Api.modifyJob( job.id, shiftId, data )
+        TempStars.Api.modifyJob( dentistId, job.id, data )
         .then( function() {
             app.hidePreloader();
             //app.alert( 'Job Modified', function() {

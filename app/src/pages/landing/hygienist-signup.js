@@ -25,9 +25,9 @@ TempStars.Pages.HygienistSignup = (function() {
             $$('#hygienist-signup-form input').off( 'keypress', keyHandler );
         });
 
-        app.onPageAfterAnimation( 'hygienist-signup', function( page ) {
-            displayNotification();
-        });
+        // app.onPageAfterAnimation( 'hygienist-signup', function( page ) {
+        //     displayNotification();
+        // });
 
     }
 
