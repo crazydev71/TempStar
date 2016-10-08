@@ -37,6 +37,9 @@ module.exports = function( Job ){
 
         var PartialOffer = app.models.PartialOffer;
         var Shift = app.models.Shift;
+        var Hygienist = app.models.Hygienist;
+        var rateAdjustment = 0;
+        var hourlyRate;
         var partialOffer,
             job,
             jj,
@@ -54,13 +57,36 @@ module.exports = function( Job ){
             job = j;
             jj = job.toJSON();
 
+            return Hygienist.findById( partialOffer.hygienistId );
+        })
+        .then( function( h ) {
+
             if ( jj.status != jobStatus.PARTIAL ) {
                 reject( new Error( 'Job is no longer accepting partial offers'));
             }
 
+            if ( h.starScore == 5 ) {
+                rateAdjustment = 4;
+            }
+            else if ( h.starScore < 5 && h.starScore >= 4) {
+                rateAdjustment = 2;
+            }
+            else if ( h.starScore < 4 && h.starScore >= 3) {
+                rateAdjustment = 0;
+            }
+            else if ( h.starScore < 3 && h.starScore >= 2) {
+                rateAdjustment = -2;
+            }
+            else if ( h.starScore < 2 ) {
+                rateAdjustment = -4;
+            }
+            hourlyRate = jj.hourlyRate + rateAdjustment;
+
             return job.updateAttributes({
                 status: jobStatus.CONFIRMED,
                 hygienistId: partialOffer.hygienistId,
+                bookedOn: moment.utc().format('YYYY-MM-DD hh:mm:ss'),
+                hourlyRate: hourlyRate
             });
         })
         .then( function() {

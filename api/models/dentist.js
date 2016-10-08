@@ -230,17 +230,26 @@ module.exports = function( Dentist ) {
 
         var Job = app.models.Job;
         var Shift = app.models.Shift;
-        var job;
+        var Dentist = app.models.Dentist;
+        var Region = app.models.Region;
+        var region, job;
 
         // Create a new job and the shifts for that job
         // Then create notifications for each potential hygienist
 
-        var jobData = data.job;
-        jobData.dentistId = parseInt(id);
-        jobData.dentistRating = 0;
-        jobData.hygienistRating = 0;
-        jobData.hygienistId = 0;
-        Job.create( jobData )
+        Dentist.findById( parseInt(id) )
+        .then( function( d ) {
+            return Region.findById( d.regionId );
+        })
+        .then( function( r ) {
+            var jobData = data.job;
+            jobData.dentistId = parseInt(id);
+            jobData.dentistRating = 0;
+            jobData.hygienistRating = 0;
+            jobData.hygienistId = 0;
+            jobData.hourlyRate = r.rate;
+            return Job.create( jobData );
+        })
         .then( function( j ) {
             job = j;
             return Promise.map( data.shifts, function( shift ) {

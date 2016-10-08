@@ -198,19 +198,44 @@ module.exports = function( Hygienist ) {
     Hygienist.bookJob = function( hygienistId, jobId, callback ) {
 
         var Job = app.models.Job;
+        var Hygienist = app.models.Hygienist;
+        var rateAdjustment = 0;
+        var hourlyRate;
 
         console.log( 'book job' );
-        // Get the job
-        Job.findById( jobId )
+
+        // Get the hygienist
+        Hygienist.findById( hygienistId )
+        .then( function( h ) {
+            if ( h.starScore == 5 ) {
+                rateAdjustment = 4;
+            }
+            else if ( h.starScore < 5 && h.starScore >= 4) {
+                rateAdjustment = 2;
+            }
+            else if ( h.starScore < 4 && h.starScore >= 3) {
+                rateAdjustment = 0;
+            }
+            else if ( h.starScore < 3 && h.starScore >= 2) {
+                rateAdjustment = -2;
+            }
+            else if ( h.starScore < 2 ) {
+                rateAdjustment = -4;
+            }
+            return Job.findById( jobId );
+        })
         .then( function( job ) {
 
             if ( job.status != jobStatus.POSTED ) {
                 reject( new Error( 'job is no longer available'));
+                return;
             }
 
+            hourlyRate = job.hourlyRate + rateAdjustment;
             return job.updateAttributes({
                 hygienistId: hygienistId,
                 bookedOn: moment.utc().format('YYYY-MM-DD hh:mm:ss'),
+                hourlyRate: hourlyRate,
                 status: jobStatus.CONFIRMED
             });
         })
