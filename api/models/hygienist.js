@@ -201,6 +201,7 @@ module.exports = function( Hygienist ) {
         var Hygienist = app.models.Hygienist;
         var rateAdjustment = 0;
         var hourlyRate;
+        var job;
 
         console.log( 'book job' );
 
@@ -224,10 +225,20 @@ module.exports = function( Hygienist ) {
             }
             return Job.findById( jobId );
         })
-        .then( function( job ) {
+        .then( function( j ) {
+            job = j;
 
             if ( job.status != jobStatus.POSTED ) {
                 throw new Error( 'Job is no longer available.');
+                return;
+            }
+
+            return Job.find({ hygienistId: hygienistId, startDate: job.startDate });
+        })
+        .then( function( alreadyBooked ) {
+
+            if ( alreadyBooked ) {
+                throw new Error( 'You are already booked for that day.');
                 return;
             }
 
@@ -281,11 +292,22 @@ module.exports = function( Hygienist ) {
 
             if ( job == null ) {
                 throw new Error( 'Job is no longer available.');
+                return;
             }
 
             jj = job.toJSON();
-            if ( j.status == jobStatus.CONFIRMED || jj.status == jobStatus.COMPLETED ) {
+            if ( jj.status == jobStatus.CONFIRMED || jj.status == jobStatus.COMPLETED ) {
                 throw new Error( 'Job is no longer available.');
+                return;
+            }
+
+            return Job.find({ hygienistId: hygienistId, startDate: job.startDate });
+        })
+        .then( function( alreadyBooked ) {
+
+            if ( alreadyBooked ) {
+                throw new Error( 'You are already booked for that day.');
+                return;
             }
 
             return job.updateAttributes({
