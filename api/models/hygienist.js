@@ -203,10 +203,15 @@ module.exports = function( Hygienist ) {
         // Get the job
         Job.findById( jobId )
         .then( function( job ) {
+
+            if ( job.status != jobStatus.POSTED ) {
+                reject( new Error( 'job is no longer available'));
+            }
+
             return job.updateAttributes({
                 hygienistId: hygienistId,
                 bookedOn: moment.utc().format('YYYY-MM-DD hh:mm:ss'),
-                status: 3
+                status: jobStatus.CONFIRMED
             });
         })
         .then( function( job ) {

@@ -54,6 +54,10 @@ module.exports = function( Job ){
             job = j;
             jj = job.toJSON();
 
+            if ( jj.status != jobStatus.PARTIAL ) {
+                reject( new Error( 'Job is no longer accepting partial offers'));
+            }
+
             return job.updateAttributes({
                 status: jobStatus.CONFIRMED,
                 hygienistId: partialOffer.hygienistId,
