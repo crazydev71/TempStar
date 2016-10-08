@@ -227,7 +227,7 @@ module.exports = function( Hygienist ) {
         .then( function( job ) {
 
             if ( job.status != jobStatus.POSTED ) {
-                reject( new Error( 'job is no longer available'));
+                throw new Error( 'Job is no longer available.');
                 return;
             }
 
@@ -273,12 +273,23 @@ module.exports = function( Hygienist ) {
         var Job = app.models.Job;
         var PartialOffer = app.models.PartialOffer;
         var job;
+        var jj;
 
         Job.findById( jobId )
         .then( function( j ) {
             job = j;
+
+            if ( job == null ) {
+                throw new Error( 'Job is no longer available.');
+            }
+
+            jj = job.toJSON();
+            if ( j.status == jobStatus.CONFIRMED || jj.status == jobStatus.COMPLETED ) {
+                throw new Error( 'Job is no longer available.');
+            }
+
             return job.updateAttributes({
-                status: 2
+                status: jobStatus.PARTIAL
             });
         })
         .then( function( job ) {
@@ -292,7 +303,6 @@ module.exports = function( Hygienist ) {
             });
         })
         .then( function( po ) {
-            var jj = job.toJSON();
             var msg = 'You have a new offer for your job on  ';
             msg += moment(jj.startDate).format('ddd MMM Do');
             msg += '.';

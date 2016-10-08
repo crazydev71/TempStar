@@ -52,7 +52,11 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
         })
         .catch( function( err ) {
             app.hidePreloader();
-            app.alert( 'Error booking job. Please try again.' );
+            app.alert( 'Error booking job: ' + err.error.message, function() {
+                if ( err.error.message == 'Job is no longer available.' ) {
+                    TempStars.Hygienist.Router.goBackPage('available-jobs');
+                }
+            });
         });
     }
 

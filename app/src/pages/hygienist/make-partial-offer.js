@@ -220,7 +220,11 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
         })
         .catch( function( err ) {
             app.hidePreloader();
-            app.alert( 'Error submitting partial offer.  Please try again' );
+            app.alert( 'Error submitting partial offer: ' + err.error.message, function() {
+                if ( err.error.message == 'Job is no longer available.' ) {
+                    TempStars.Hygienist.Router.goBackPage('available-jobs');
+                }
+            });
         });
 
     }
