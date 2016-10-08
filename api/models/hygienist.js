@@ -279,6 +279,59 @@ module.exports = function( Hygienist ) {
     };
 
 
+    Hygienist.remoteMethod( 'cancelPartialOffer', {
+        accepts: [
+            {arg: 'hygienistId', type: 'number', required: true},
+            {arg: 'jobId', type: 'number', required: true},
+            {arg: 'partialOfferId', type: 'number', required: true}],
+        returns: { arg: 'result', type: 'object' },
+        http: { verb: 'delete', path: '/:hygienistId/jobs/:jobId/partialoffers/:partialOfferId' }
+    });
+
+    Hygienist.cancelPartialOffer = function( hygienistId, jobId, partialOfferId, callback ) {
+
+        console.log( 'cancel partial offer' );
+
+        var Job = app.models.Job;
+        var PartialOffer = app.models.PartialOffer;
+        var job;
+
+        // Delete partial offer
+        // If last partial offer on this job, change job status back to POSTED
+
+        Job.findById( jobId )
+        .then( function( j ) {
+            job = j;
+            return PartialOffer.findById( partialOfferId );
+        })
+        .then( function( po ) {
+            return po.destroy();
+        })
+        .then( function() {
+            return PartialOffer.count({
+                jobId: jobId
+            });
+        })
+        .then( function( numRemaining ) {
+            if ( numRemaining == 0 ) {
+                return job.updateAttributes({
+                    status: 1
+                });
+            }
+            else {
+                return;
+            }
+        })
+        .then( function() {
+            console.log( 'cancel partial offer worked!' );
+            callback( null, {} );
+        })
+        .catch( function( err ) {
+            console.log( 'cancel partial offer error!' );
+            callback( err );
+        });
+    };
+
 
     Hygienist.remoteMethod( 'cancelJob', {
         accepts: [
@@ -290,8 +343,6 @@ module.exports = function( Hygienist ) {
 
     /**
     * Cancel job
-    *
-    * if job status is confirmed, "unconfirm"
     */
     Hygienist.cancelJob = function( hygienistId, jobId, callback ) {
 
@@ -301,11 +352,6 @@ module.exports = function( Hygienist ) {
         Job.findById( jobId )
         .then( function( job ) {
             jj = job.toJSON();
-
-            if ( job.status != jobStatus.CONFIRMED ) {
-                callback( new Error( 'cannot cancel non-confirmed job') );
-                return;
-            }
 
             return job.updateAttributes({
                 status: jobStatus.POSTED,

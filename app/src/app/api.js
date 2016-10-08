@@ -120,7 +120,7 @@ TempStars.Api = (function() {
         },
 
         modifyJob: function modifyJob( dentistId, jobId, data ) {
-            return TempStars.Ajax.put( 'dentists/' + dentistId + '/jobshifts/' + jobId, data ).minDelay(1000);            
+            return TempStars.Ajax.put( 'dentists/' + dentistId + '/jobshifts/' + jobId, data ).minDelay(1000);
         },
 
         acceptPartialOffer: function acceptPartialOffer( jobId, poId ) {
@@ -179,8 +179,8 @@ TempStars.Api = (function() {
             return TempStars.Ajax.put( 'partialoffers/' + partialOfferId, data ).minDelay(1000);
         },
 
-        cancelPartialOffer: function cancelPartialOffer( partialOfferId ) {
-            return TempStars.Ajax.del( 'partialoffers/' + partialOfferId ).minDelay(1000);
+        cancelPartialOffer: function cancelPartialOffer( hygienistId, jobId, partialOfferId ) {
+            return TempStars.Ajax.del( 'hygienists/' + hygienistId + '/jobs/' + jobId + '/partialoffers/' + partialOfferId ).minDelay(1000);
         },
 
         getHygienistPartialOffers: function getHygienistPartialOffers( hygienistId ) {

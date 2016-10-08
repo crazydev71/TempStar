@@ -32,11 +32,10 @@ TempStars.Pages.Hygienist.JobPartial = (function() {
     function cancelButtonHandler( e ) {
         e.preventDefault();
 
-        var cancelMessage = 'Are you sure?<br><br>' + job.dentist.practiceName +
-                            ' will be notified.';
+        var cancelMessage = 'Are you sure?';
 
         app.modal({
-          title:  'Cancel Job',
+          title:  'Cancel Partial Offer',
           text: cancelMessage,
           buttons: [
               { text: 'No' },
@@ -47,7 +46,7 @@ TempStars.Pages.Hygienist.JobPartial = (function() {
 
     function cancelPartialOffer() {
         app.showPreloader('Cancelling Partial Offer');
-        TempStars.Api.cancelPartialOffer( job.partialOffers[0].id )
+        TempStars.Api.cancelPartialOffer( TempStars.User.getCurrentUser().hygienistId, job.id, job.partialOffers[0].id )
         .then( function() {
             app.hidePreloader();
             TempStars.Hygienist.Router.goBackPage();
