@@ -43,8 +43,7 @@
                                 <div class="item-after"><span class="ti-angle-right" style="margin-top:4px;xxfont-size:20px"></span></div>
                             </div>
                             <div class="item-subtitle">
-                                posted on: {{date_format postedOn}}<br>
-                                start date: {{date_format startDate}}<br>
+                                start date: {{date_format_day startDate}}<br>
                                 {{#each shifts}}
                                 hours: {{time_format postedStart}} - {{time_format postedEnd}}<br>
                                 {{/each}}
