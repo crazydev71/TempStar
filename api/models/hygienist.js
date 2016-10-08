@@ -233,7 +233,7 @@ module.exports = function( Hygienist ) {
                 return;
             }
 
-            return Job.find({ hygienistId: hygienistId, startDate: job.startDate });
+            return Job.count({ hygienistId: hygienistId, startDate: job.startDate });
         })
         .then( function( alreadyBooked ) {
 
@@ -301,7 +301,7 @@ module.exports = function( Hygienist ) {
                 return;
             }
 
-            return Job.find({ hygienistId: hygienistId, startDate: job.startDate });
+            return Job.count({ hygienistId: hygienistId, startDate: job.startDate });
         })
         .then( function( alreadyBooked ) {
 

@@ -56,13 +56,21 @@ module.exports = function( Job ){
         .then( function( j ) {
             job = j;
             jj = job.toJSON();
-
             return Hygienist.findById( partialOffer.hygienistId );
         })
         .then( function( h ) {
+            return Job.count({ hygienistId: h.id, startDate: jj.startDate });
+        })
+        .then( function( alreadyBooked ) {
+
+            if ( alreadyBooked ) {
+                throw new Error( 'This hygienist is already booked for that day.');
+                return;
+            }
 
             if ( jj.status != jobStatus.PARTIAL ) {
-                reject( new Error( 'Job is no longer accepting partial offers'));
+                throw new Error( 'Job is no longer accepting partial offers');
+                return;
             }
 
             if ( h.starScore == 5 ) {
