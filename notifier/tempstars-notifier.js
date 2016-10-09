@@ -8,7 +8,7 @@ var push    = require( 'push' );
 
 push.init( app.get('gcmApiKey') );
 
-console.log( 'Notification Service running...');
+console.log( 'Notification Service started: ' + moment().toString() );
 
 // Get all notifications that need to be sent
 var Notification = app.models.Notification;
@@ -36,13 +36,11 @@ Notification.find({
 .then( function( results ) {
     results = _.compact( results );
     console.log( '- sent ' + results.length + ' push notifications' );
-    console.log( 'Notification Server completed.');
-    process.exit(0);
+    console.log( 'Notification Service ended:   ' + moment().toString() + '.');
 })
 .catch( function( err ) {
     console.log( 'error: ' + err.message );
-    console.log( 'Notification Server completed.');
-    process.exit(0);
+    console.log( 'Notification Service ended:   ' + moment().toString() + '.');
 });
 
 function sendNotification( notification ) {

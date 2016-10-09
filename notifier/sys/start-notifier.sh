@@ -8,7 +8,7 @@ cd $NOTIFIER_SYS_PATH
 cd ..
 npm install
 
-# Start bill server, passing along any options such as --env production
+# Start notifier server, passing along any options such as --env production
 cd $NOTIFIER_SYS_PATH
 pm2 start pm2-notifier.json "$@"
 
