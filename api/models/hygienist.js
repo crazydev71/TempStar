@@ -237,7 +237,7 @@ module.exports = function( Hygienist ) {
         .then( function( jobs ) {
             var maji, maxJob;
 
-            if ( ! js  ) {
+            if ( ! jobs  ) {
                 maji = 0;
             }
             else {
