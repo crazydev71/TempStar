@@ -2,9 +2,16 @@
 TempStars.Hygienist = (function() {
     'use strict';
 
+    var lastJobIdViewed;
+
     return {
+
         save: function save( data ) {
             return TempStars.Api.saveHygienist( data );
+        },
+
+        getMaxAvailableJobId: function getMaxAvailableJobId() {
+            return TempStars.Api.getMaxAvailableJobId( TempStars.User.getCurrentUser().hygienistId );
         },
 
         getJobsByDate: function getJobByDate( date ) {

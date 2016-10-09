@@ -220,6 +220,12 @@ TempStars.User = (function() {
                     resolve();
                 }
             });
+        },
+
+        updateLastJobId: function updateLastJobId( jobId ) {
+            if ( jobId > userAccount.hygienist.lastJobIdViewed ) {
+                userAccount.hygienist.lastJobIdViewed = jobId;
+            }
         }
 
     };

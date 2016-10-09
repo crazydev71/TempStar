@@ -127,7 +127,8 @@ TempStars.Pages.Hygienist.Home = (function() {
             return new Promise( function( resolve, reject ) {
                 Promise.props({
                     user: TempStars.User.getCurrentUser(),
-                    all: TempStars.Hygienist.getAllJobs()
+                    all: TempStars.Hygienist.getAllJobs(),
+                    maxJob: TempStars.Hygienist.getMaxAvailableJobId()
                 })
                 .then( function( data ) {
                     data.jobs = data.all.jobs;
@@ -159,6 +160,18 @@ TempStars.Pages.Hygienist.Home = (function() {
                         .filter( 'actionRequired' )
                         .map( getJobDate )
                         .value();
+
+                    var available = _(data.jobs)
+                        .filter(['status', TempStars.Job.status.POSTED])
+                        .value();
+
+
+                    if ( data.maxJob.result > data.user.hygienist.lastJobIdViewed ) {
+                        data.haveNewJobs = true;
+                    }
+                    else {
+                        data.haveNewJobs = false;
+                    }
 
                     resolve( data );
                 })

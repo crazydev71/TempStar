@@ -17,3 +17,20 @@ bottom: 3px;
 border-radius: 100%;
 background: red;
 }
+
+.badge {
+    /*position: absolute;
+    right: 26px;
+    top: -3px;
+    z-index: 111;*/
+    position: absolute;
+    z-index:11;
+    right:12px;
+    top: 52px;
+    background-color: red;
+    border-radius: 100%;
+    margin:0;
+    padding:0;
+    width: 10px;
+    height: 10px;
+}

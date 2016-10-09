@@ -148,12 +148,14 @@ module.exports = function( Hygienist ) {
         var Hygienist = app.models.Hygienist;
         var hygienist,
             hygienistLocation,
-            distance;
+            distance,
+            jobs;
 
 
         // Get the hygienist location
         // Get the available jobs
         // Filter by location
+        // Filter out jobs already booked on or have partial offers on
 
         Hygienist.findById( id )
         .then( function( h ) {
@@ -179,8 +181,63 @@ module.exports = function( Hygienist ) {
                 }
             });
         })
-        .then( function( jobs ) {
+        .then( function( js ) {
+            jobs = js;
+            var maxJob = _.maxBy( jobs, 'id' );
+            return hygienist.updateAttributes({ lastJobIdViewed: maxJob.id });
+        })
+        .then( function() {
             callback( null, jobs );
+        })
+        .catch( function( err ) {
+            callback( err );
+        });
+    };
+
+    Hygienist.remoteMethod( 'getMaxAvailableJobId', {
+        accepts: [
+            {arg: 'id', type: 'number', required: true}],
+        returns: { arg: 'result', type: 'object' },
+        http: { verb: 'get', path: '/:id/maji' }
+    });
+
+    Hygienist.getMaxAvailableJobId = function( id, callback ) {
+
+        var Job = app.models.Job;
+        var Hygienist = app.models.Hygienist;
+        var hygienist,
+            hygienistLocation,
+            distance,
+            jobs;
+
+        Hygienist.findById( id )
+        .then( function( h ) {
+            hygienist = h;
+            return Job.find( {where: {status: {inq: [1,2]}}} );
+        })
+        .then( function( jobs ) {
+            // If don't have a location for the hygienist, return all the jobs
+            if ( ! hygienist.location ) {
+                return _.map( jobs, function( job ) {
+                    job.distance = 'unknown';
+                });
+            }
+            hygienistLocation = new loopback.GeoPoint({ lat: hygienist.lat, lng: hygienist.lon});
+
+            return _.map( jobs, function( job ) {
+                var jj = job.toJSON();
+                var jobLocation = new loopback.GeoPoint( { lng: jj.dentist.lon, lat: jj.dentist.lat} );
+                distance = loopback.GeoPoint.distanceBetween( jobLocation, hygienistLocation, {type: 'kilometers'});
+                if ( distance <= 110 ) {
+                    jj.distance = distance.toFixed(1);
+                    return jj;
+                }
+            });
+        })
+        .then( function( js ) {
+            jobs = js;
+            var maxJob = _.maxBy( jobs, 'id' );
+            callback( null, maxJob.id );
         })
         .catch( function( err ) {
             callback( err );
