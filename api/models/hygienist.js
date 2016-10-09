@@ -234,10 +234,22 @@ module.exports = function( Hygienist ) {
                 }
             });
         })
-        .then( function( js ) {
-            jobs = js;
-            var maxJob = _.maxBy( jobs, 'id' );
-            callback( null, maxJob.id );
+        .then( function( jobs ) {
+            var maji, maxJob;
+
+            if ( ! js  ) {
+                maji = 0;
+            }
+            else {
+                maxJob = _.maxBy( jobs, 'id' );
+                if ( maxJob ) {
+                    maji = maxJob.id;
+                }
+                else {
+                    maji = 0;
+                }
+            }
+            callback( null, maji );
         })
         .catch( function( err ) {
             callback( err );
