@@ -126,6 +126,7 @@ TempStars.Pages.Dentist.JobCompleted = (function() {
                 if ( params.id ) {
                     TempStars.Dentist.getJob( params.id )
                     .then( function( job ) {
+                        job.hasInvoice = (job.invoice) ? true : false;                                                
                         resolve( job );
                     })
                     .catch( function( err ) {
@@ -136,6 +137,7 @@ TempStars.Pages.Dentist.JobCompleted = (function() {
                     TempStars.Dentist.getJobsByDate( params.date )
                     .then( function( jobs ) {
                         job = jobs[0];
+                        job.hasInvoice = (job.invoice) ? true : false;
                         resolve( job );
                     })
                     .catch( function( err ) {

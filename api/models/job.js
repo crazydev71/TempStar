@@ -163,9 +163,39 @@ module.exports = function( Job ){
 
     Job.resend = function( jobId, callback ) {
         console.log( 'resend invoice for job' );
-        callback( null, {} );
-    };
+        var Job = app.models.Job;
+        var jj, msg;
 
+        Job.findById( jobId )
+        .then( function( job ) {
+            jj = job.toJSON();
+            msg = 'You have a new invoice from  ';
+            msg += jj.hygienist.firstName + ' ' + jj.hygienist.lastName;
+            return push.send( msg, [jj.dentist.user.registrationId] );
+        })
+        .then( function() {
+            Email.send({
+                //to: jj.dentist.user.email,
+                to: 'mbetts@me.com',
+                from: "no-reply@tempstars.net",
+                subject: 'Invoice from ' + jj.hygienist.firstName + ' ' + jj.hygienist.lastName,
+                html: '' },
+                function(err) {
+                    if (err) {
+                        return new Error( 'error resending email: '+ err.message );
+                    }
+                    return;
+            });
+        })
+        .then( function() {
+            console.log( 'resend invoice worked!' );
+            callback( null, {} );
+        })
+        .catch( function( err ) {
+            console.log( 'resend invoice error: ' + err.message );
+            callback( err );
+        });
+    };
 
     Job.remoteMethod( 'send', {
         accepts: [
@@ -180,6 +210,8 @@ module.exports = function( Job ){
         var Shift = app.models.Shift;
         var Invoice = app.models.Invoice;
         var Job = app.models.Job;
+        var Email = app.models.Email;
+        var jj;
 
         // TODO send notification
         console.log( 'send invoice for job: ' + jobId );
@@ -219,10 +251,24 @@ module.exports = function( Job ){
             return Job.findById( jobId );
         })
         .then( function( job ) {
-            var jj = job.toJSON();
+            jj = job.toJSON();
             msg = 'You have a new invoice from  ';
             msg += jj.hygienist.firstName + ' ' + jj.hygienist.lastName;
             return push.send( msg, [jj.dentist.user.registrationId] );
+        })
+        .then( function() {
+            Email.send({
+                //to: jj.dentist.user.email,
+                to: 'mbetts@me.com',
+                from: "no-reply@tempstars.net",
+                subject: 'Invoice from ' + jj.hygienist.firstName + ' ' + jj.hygienist.lastName,
+                html: '' },
+                function(err) {
+                    if (err) {
+                        return console.log('error sending invoice email');
+                    }
+                    return;
+            });
         })
         .then( function() {
             console.log( 'create invoice worked!' );

@@ -46,10 +46,14 @@
                         Paid?
                     </div>
                     <div class="col-60" style="line-height:26px;font-size:12px;vertical-align:center;">
+                        {{#if hasInvoice}}
                         {{#if invoice.dentistMarkedPaid}}
                         paid!
                         {{else}}
                         <a href="#" id="dentist-job-completed-view-invoice-button" data-id="{{invoice.id}}" data-page="invoice" class="button button-round button-small">View Invoice</a>
+                        {{/if}}
+                        {{else}}
+                        invoice not received yet
                         {{/if}}
 
                         <!-- <label class="label-switch">

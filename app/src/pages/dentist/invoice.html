@@ -46,7 +46,7 @@
                             </td>
                         </tr>
                         {{/each}}
-
+                        
                         <tr colspan="2"><td>&nbsp;</td></tr>
 
                         <tr class="heading">
@@ -55,14 +55,20 @@
                         </tr>
 
                         <tr class="item">
-                            <td>unpaid hours</td>
-                            <td>{{invoice.totalUnpaidHours}}</td>
+                            <td>total time</td>
+                            <td>{{hour_format invoice.totalHours}}</td>
                         </tr>
 
                         <tr class="item">
-                            <td>total hours</td>
-                            <td>{{invoice.totalHours}}</td>
+                            <td>unpaid time</td>
+                            <td>{{hour_format invoice.totalUnpaidHours}}</td>
                         </tr>
+
+                        <tr class="item">
+                            <td>billable time</td>
+                            <td>{{hour_format invoice.totalBillableHours}}</td>
+                        </tr>
+
 
                         <tr class="item last">
                             <td>hourly rate</td>
@@ -72,7 +78,7 @@
                         <tr class="total">
                             <td>&nbsp;</td>
                             <td>
-                               Total: ${{invoice.totalInvoice}}
+                               Total: ${{currency_format invoice.totalInvoiceAmt}}
                             </td>
                         </tr>
                     </table>

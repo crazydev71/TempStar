@@ -37,21 +37,6 @@ TempStars.Pages.Dentist.Invoice = (function() {
         }
     }
 
-    // function backHandler( e ) {
-    //
-    //     TempStars.Pages.Dentist.Invoices.getData()
-    //     .then( function( data ) {
-    //         mainView.router.load({
-    //             url: 'dentist/invoices.html',
-    //             context: data,
-    //             ignoreCache: true,
-    //             reload: true
-    //         });
-    //     })
-    //     .catch( function( err ) {
-    //         console.log( 'error getting data');
-    //     });
-    // }
 
     return {
         init: init,
