@@ -200,25 +200,29 @@ TempStars.User = (function() {
         updateRegistration: function updateRegistration() {
             return new Promise( function( resolve, reject ) {
 
-                if ( ! userLoggedIn || window.registrationId ) {
-                    if ( ! userAccount.registrationId || (window.registrationId != userAccount.registrationId )) {
-                        TempStars.Api.updateRegistrationId( userAccount.id, window.registrationId )
-                        .then( TempStars.User.refresh )
-                        .then( function() {
-                            delete window.registrationId;
-                            resolve();
-                        })
-                        .catch( function(err) {
-                            resolve();
-                        });
-                    }
-                    else {
-                        resolve();
-                    }
-                }
-                else {
+                console.log( 'updating push registration' );
+
+                if ( ! userLoggedIn ) {
+                    console.log( 'updating push registration - user not logged in' );
                     resolve();
+                    return;
                 }
+
+                if ( window.registrationId == userAccount.registrationId ) {
+                    console.log( 'updating push registration - push token not changed' );
+                    resolve();
+                    return;
+                }
+
+                console.log( 'updating push registration token for user' );                
+                TempStars.Api.updateRegistrationId( userAccount.id, window.registrationId )
+                .then( TempStars.User.refresh )
+                .then( function() {
+                    resolve();
+                })
+                .catch( function( err) {
+                    resolve();
+                });
             });
         },
 

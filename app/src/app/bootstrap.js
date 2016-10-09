@@ -132,6 +132,8 @@ TempStars.bootstrap = {
     },
 
     onResume: function() {
+        console.log( 'on resume');
+        TempStars.Push.init();
         TempStars.User.updateRegistration();
         TempStars.App.gotoStartingPage();
     }

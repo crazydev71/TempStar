@@ -4,9 +4,7 @@ TempStars.Push = (function() {
     var push;
 
     function init() {
-        if ( initialized ) {
-            return;
-        }
+        console.log( 'push init' );
         
         if ( window.device.platform == 'iOS' || window.device.platform == 'Android' ) {
             console.log( 'push init' );

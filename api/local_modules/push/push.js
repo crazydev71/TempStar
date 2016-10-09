@@ -25,7 +25,7 @@ function send( message, regTokens ) {
             console.log( '2 token is invalid' );
         }
         if ( ! regTokens[0] ) {
-            console.log( '3 token is invalid' );            
+            console.log( '3 token is invalid' );
         }
         if ( ! regTokens || ! regTokens.length || ! regTokens[0] ) {
             console.dir( regTokens );
@@ -36,8 +36,9 @@ function send( message, regTokens ) {
         var notification = new gcm.Message({
             "notification": {
                 "title": "TempStars",
-                "body": message
-            }
+                "body": message,
+            },
+            "priority": "high"
         });
 
         gcmSender.send( notification, { registrationTokens: regTokens }, function (err, response) {
