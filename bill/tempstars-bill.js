@@ -24,7 +24,8 @@ db = mysql.createConnection( config.db );
 
 
 // Billing run
-console.log( 'Starting billing run...' );
+console.log( 'Billing run started at ' + moment.utc().format('YYYY-MM-DD hh:ss') + '.');
+
 console.log( '- getting billing date' );
 getBillDate()
 .then( function( bd ) {
@@ -55,12 +56,12 @@ getBillDate()
 })
 .then( function() {
     console.log( '- sent email' );
-    console.log( 'Billing run complete' );
-    process.exit(0);
+    console.log( 'Billing run ended at ' + moment.utc().format('YYYY-MM-DD hh:ss') + '.');
+    //process.exit(0);
 })
 .catch( function( err ) {
     console.log( err.message );
-    process.exit(-1);
+    //process.exit(-1);
 });
 
 function getBillDate() {
