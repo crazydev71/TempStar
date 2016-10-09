@@ -86,11 +86,21 @@ TempStars.Router = function( a ) {
         };
 
         this.reloadPage = function( page, params, data ) {
+            var url;
+            
             params = params || {};
             params.reload = true;
+
+            // If page wasn't provided, pull from history
+            if ( ! page ) {
+                url = document.createElement('a');
+                url.href = mainView.history[mainView.history.length - 1];
+                page = url.pathname.split('/').reverse()[0].replace('.html', '');
+            }
+
             goPage( 'forward', page, params, data );
         };
-        
+
 };
 
 //     return Router;

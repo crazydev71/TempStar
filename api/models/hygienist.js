@@ -19,6 +19,12 @@ var  jobStatus =  {
     'COMPLETED': 4
 };
 
+var rating = {
+    'VERY_HAPPY': 5,
+    'PLEASED': 3.5,
+    'NO_THANK_YOU': 2
+};
+
 module.exports = function( Hygienist ) {
 
     Hygienist.disableRemoteMethod('createChangeStream', true);
@@ -510,13 +516,14 @@ module.exports = function( Hygienist ) {
         });
     };
 
+
     Hygienist.remoteMethod( 'saveDentistRating', {
         accepts: [
             {arg: 'hygienistId', type: 'number', required: true},
             {arg: 'jobId', type: 'number', required: true},
             {arg: 'data', type: 'object', http: { source: 'body' } } ],
         returns: { arg: 'result', type: 'object' },
-        http: { verb: 'put', path: '/:hygienistId/jobs/:jobId/rating' }
+        http: { verb: 'put', path: '/:hygienistId/jobs/:jobId' }
     });
 
     Hygienist.saveDentistRating = function( hygienistId, jobId, data, callback ) {
@@ -525,25 +532,25 @@ module.exports = function( Hygienist ) {
         var BlockedDentist = app.models.BlockedDentist;
         var Dentist = app.models.Dentist;
 
-        var job;
+        var job, dentist;
 
         Job.findById( jobId )
         .then( function( j ) {
             // Add survey result to job
             job = j;
             return job.updateAttributes({
-                dentistRating: data.dentistRating
+                dentistRating: data.rating
             });
         })
         .then( function() {
             // Add fav/blocked dentist
-            if ( data.dentistRating == rating.VERY_HAPPY ) {
+            if ( data.rating == rating.VERY_HAPPY ) {
                 return FavouriteDentist.create({
                     hygienistId: hygienistId,
                     dentistId: job.dentistId
                 });
             }
-            else if ( data.dentistRating == rating.NO_THANK_YOU ) {
+            else if ( data.rating == rating.NO_THANK_YOU ) {
                 return BlockedHygienist.create({
                     hygienistId: hygienistId,
                     dentistId: job.dentistId
@@ -557,12 +564,13 @@ module.exports = function( Hygienist ) {
             // Get Dentist
             return Dentist.findById( job.dentistId );
         })
-        .then( function( dentist ) {
+        .then( function( d ) {
+            dentist = d;
             // Get avg score for last 5 jobs
             return Job.find({
                 where: {
                     dentistId: job.dentistId,
-                    status: 4
+                    status: jobStatus.COMPLETED
                 },
                 limit: 5,
                 order: 'completedOn DESC'
@@ -573,12 +581,12 @@ module.exports = function( Hygienist ) {
             var i, avgRating, sum;
 
             for ( i = 0, sum = 0; i < jobs.length; i++ ) {
-                sum += jobs.dentistRating;
+                sum += jobs[i].dentistRating;
             }
             avgRating = sum / jobs.length;
 
             return dentist.updateAttributes({
-                starScore: avgRating
+                rating: avgRating
             });
         })
         .then( function() {

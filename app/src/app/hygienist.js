@@ -43,12 +43,12 @@ TempStars.Hygienist = (function() {
             return TempStars.Api.getHygienistJobs( TempStars.User.getCurrentUser().hygienistId, filterString );
         },
 
-        rateDentist: function rateDentist( jobId, rating ) {
+        saveDentistRating: function saveDentistRating( jobId, rating ) {
             app.showPreloader('Saving Survey');
-            TempStars.Api.rateDentist( TempStars.User.getCurrentUser().hygienistId, jobId, rating )
+            TempStars.Api.saveDentistRating( TempStars.User.getCurrentUser().hygienistId, jobId, rating )
             .then( function() {
                 app.hidePreloader();
-                TempStars.Hygienist.Router.reloadPage();
+                TempStars.Hygienist.Router.reloadPage('', { id: jobId });
             })
             .catch( function(err) {
                 app.hidePreloader();
@@ -66,7 +66,7 @@ TempStars.Hygienist = (function() {
                     text: 'Very Happy',
                     onClick: function() {
                         app.alert('Great, they will be added to your favourites.', function() {
-                            TempStars.Hygienist.rateDentist( jobId, TempStars.Rating.VERY_HAPPY );
+                            TempStars.Hygienist.saveDentistRating( jobId, TempStars.Rating.VERY_HAPPY );
                         });
                     }
                 },
@@ -74,7 +74,7 @@ TempStars.Hygienist = (function() {
                     text: 'Pleased',
                     onClick: function() {
                         app.alert('Thanks, all set.', function() {
-                            TempStars.Hygienist.rateDentist( jobId, TempStars.Rating.PLEASED );
+                            TempStars.Hygienist.saveDentistRating( jobId, TempStars.Rating.PLEASED );
                         });
                     }
                 },
@@ -82,7 +82,7 @@ TempStars.Hygienist = (function() {
                     text: 'No Thank You!',
                     onClick: function() {
                         app.alert('Sorry, they will be added to your blocked list.', function() {
-                            TempStars.Hygienist.rateDentist( jobId, TempStars.Rating.NO_THANK_YOU );
+                            TempStars.Hygienist.saveDentistRating( jobId, TempStars.Rating.NO_THANK_YOU );
                         });
                     }
                 }

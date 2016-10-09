@@ -229,8 +229,12 @@ TempStars.Api = (function() {
 
         getMaxAvailableJobId: function getMaxAvailableJobId( hygienistId ) {
             return TempStars.Ajax.get( 'hygienists/' + hygienistId + '/maji' );
-        }
+        },
 
+        saveDentistRating: function saveDentistRating( hygienistId, jobId, rating ) {
+            var data = { rating: rating };
+            return TempStars.Ajax.put( 'hygienists/' + hygienistId + '/jobs/' + jobId, data ).minDelay(1000);
+        }
 
     };
 

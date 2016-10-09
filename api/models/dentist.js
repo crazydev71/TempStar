@@ -388,7 +388,7 @@ module.exports = function( Dentist ) {
         var BlockedHygienist = app.models.BlockedHygienist;
         var Hygienist = app.models.Hygienist;
 
-        var job;
+        var job, hygienist;
 
         Job.findById( jobId )
         .then( function( j ) {
@@ -420,7 +420,8 @@ module.exports = function( Dentist ) {
             // Get Hygienist
             return Hygienist.findById( data.hygienistId );
         })
-        .then( function( hygienist ) {
+        .then( function( h ) {
+            hygienist = h;
             // Get avg score for last 5 jobs
             return Job.find({
                 where: {
@@ -436,7 +437,7 @@ module.exports = function( Dentist ) {
             var i, avgRating, sum;
 
             for ( i = 0, sum = 0; i < jobs.length; i++ ) {
-                sum += jobs.hygienistRating;
+                sum += jobs[i].hygienistRating;
             }
             avgRating = sum / jobs.length;
 
