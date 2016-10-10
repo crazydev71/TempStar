@@ -35,42 +35,6 @@ TempStars.Pages.Dentist.JobCompleted = (function() {
         });
     }
 
-    // function paidToggleHandler( e ) {
-    //     var isChecked = $$(this).prop('checked');
-    //     var invoiceId = $$(this).attr('data-id');
-    //
-    //     if ( isChecked ) {
-    //         TempStars.Api.updateInvoice( invoiceId, {dentistMarkedPaid: 1} )
-    //         .then( function() {
-    //             $$('#dentist-job-completed-paid-label').html( 'paid!');
-    //         });
-    //     }
-    //     else {
-    //         TempStars.Api.updateInvoice( invoiceId, {dentistMarkedPaid: 0} )
-    //         .then( function() {
-    //             $$('#dentist-job-completed-paid-label').html( 'NOT paid');
-    //         });
-    //     }
-    // }
-
-    // function surveyToggleHandler( e ) {
-    //     var isChecked = $$(this).prop('checked');
-    //     var jobId = $$(this).attr('data-id');
-    //
-    //     if ( isChecked ) {
-    //         TempStars.Api.updateJob( jobId, {dentistEvalComplete: 1} )
-    //         .then( function() {
-    //             $$('#dentist-job-completed-survey-label').html( 'done!');
-    //         });
-    //     }
-    //     else {
-    //         TempStars.Api.updateJob( jobId, {dentistEvalComplete: 0} )
-    //         .then( function() {
-    //             $$('#dentist-job-completed-survey-label').html( 'NOT done');
-    //         });
-    //     }
-    // }
-
     function viewInvoiceHandler( e ) {
         var id = parseInt( $$(this).attr('data-id') );
         TempStars.Dentist.Router.goForwardPage( 'invoice', {}, job );
@@ -86,7 +50,7 @@ TempStars.Pages.Dentist.JobCompleted = (function() {
                 text: 'Very Happy',
                 onClick: function() {
                     app.alert('Great, they will be added to your favourites.', function() {
-                        saveSurvey( TempStars.Survey.VERY_HAPPY );
+                        saveSurvey( TempStars.Rating.VERY_HAPPY );
                     });
                 }
             },
@@ -94,7 +58,7 @@ TempStars.Pages.Dentist.JobCompleted = (function() {
                 text: 'Pleased',
                 onClick: function() {
                     app.alert('Thanks, all set.', function() {
-                        saveSurvey( TempStars.Survey.PLEASED );
+                        saveSurvey( TempStars.Rating.PLEASED );
                     });
                 }
             },
@@ -102,7 +66,7 @@ TempStars.Pages.Dentist.JobCompleted = (function() {
                 text: 'No Thank You!',
                 onClick: function() {
                     app.alert('Sorry, they will be added to your blocked list.', function() {
-                        saveSurvey( TempStars.Survey.NO_THANK_YOU );
+                        saveSurvey( TempStars.Rating.NO_THANK_YOU );
                     });
                 }
             }
@@ -110,10 +74,8 @@ TempStars.Pages.Dentist.JobCompleted = (function() {
         });
     }
 
-    // TODO
-    function rateHygienist( result ) {
-
-        TempStars.Api.rateHygienist( job.id, {hygienistRating: result} )
+    function saveSurvey( result ) {
+        TempStars.Api.saveHygienistRating( TempStars.User.getCurrentUser().dentistId, job.id, {hygienistRating: result} )
         .then( function() {
             TempStars.Dentist.Router.reloadPage('job-completed', { id: job.id } );
         });
@@ -126,7 +88,7 @@ TempStars.Pages.Dentist.JobCompleted = (function() {
                 if ( params.id ) {
                     TempStars.Dentist.getJob( params.id )
                     .then( function( job ) {
-                        job.hasInvoice = (job.invoice) ? true : false;                                                
+                        job.hasInvoice = (job.invoice) ? true : false;
                         resolve( job );
                     })
                     .catch( function( err ) {
