@@ -153,6 +153,67 @@ module.exports = function( Job ){
         });
     };
 
+    Job.remoteMethod( 'rejectPartialOffer', {
+        accepts: [
+            {arg: 'jobId', type: 'number', required: true},
+            {arg: 'poId', type: 'number', required: true}],
+        returns: { arg: 'result', type: 'object' },
+        http: { verb: 'put', path: '/:jobId/partialoffers/:poId/reject' }
+    });
+
+    Job.rejectPartialOffer = function( jobId, poId, callback ) {
+
+        console.log( 'reject partial offer' );
+
+        // change PO status to rejected
+        // if no other partial offers, change job status to POSTED
+        // notify hygienist
+
+        var PartialOffer = app.models.PartialOffer;
+        var Job = app.models.Job;
+        var jj, pj;
+
+        // Get the partial offer
+        PartialOffer.findById( poId )
+        .then( function( po ) {
+            pj = po.toJSON();
+            // Change to rejected
+            return po.updateAttributes({
+                status: 1
+            });
+        })
+        .then( function() {
+            // Count the number of partial offers for this job
+            return PartialOffer.count({ jobId: jobId });
+        })
+        .then( function( numPartialOffers ) {
+            if ( numPartialOffers == 1 ) {
+                return Job.findById( jobId )
+                .then( function( job ) {
+                    return job.updateAttributes({ status: 1 });
+                });
+            }
+            return;
+        })
+        .then( function( job ) {
+            // Notify hygienist
+            jj = job.toJSON();
+            msg = 'Your partial offer on ';
+            msg += moment(jj.startDate).format('ddd MMM Do');
+            msg += ' with ' + jj.dentist.practiceName;
+            msg += ' has been declined.';
+            return push.send( msg, [pj.hygienist.user.registrationId] );
+        })
+        .then( function() {
+            console.log( 'rejected partial offer worked!' );
+            callback( null, {} );
+        })
+        .catch( function( err ) {
+            console.log( 'rejected partial offer error!' );
+            callback( err );
+        });
+    };
+
 
     Job.remoteMethod( 'resend', {
         accepts: [

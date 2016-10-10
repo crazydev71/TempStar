@@ -127,8 +127,8 @@ TempStars.Api = (function() {
             return TempStars.Ajax.put( 'jobs/' + jobId + '/partialoffers/' + poId + '/accept' ).minDelay(1000);
         },
 
-        rejectPartialOffer: function rejectPartialOffer( jobId, poId, data ) {
-            return TempStars.Ajax.put( 'jobs/' + jobId + '/partialoffers/' + poId, data ).minDelay(1000);
+        rejectPartialOffer: function rejectPartialOffer( jobId, poId ) {
+            return TempStars.Ajax.put( 'jobs/' + jobId + '/partialoffers/' + poId + '/reject' ).minDelay(1000);
         },
 
         getInvoice: function getInvoice( jobId ) {

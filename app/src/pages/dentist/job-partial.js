@@ -119,8 +119,7 @@ TempStars.Pages.Dentist.JobPartial = (function() {
     function rejectJob( poId ) {
 
         app.showPreloader('Rejecting Partial Offer');
-        var data = { status: TempStars.PartialOffer.status.REJECTED };
-        TempStars.Api.rejectPartialOffer( job.id, poId, data )
+        TempStars.Api.rejectPartialOffer( job.id, poId )
         .then( function() {
             app.hidePreloader();
             TempStars.Dentist.Router.reloadPage( 'job-partial' );
