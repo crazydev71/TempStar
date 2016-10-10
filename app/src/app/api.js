@@ -184,7 +184,7 @@ TempStars.Api = (function() {
         },
 
         getHygienistPartialOffers: function getHygienistPartialOffers( hygienistId ) {
-            return TempStars.Ajax.get( 'partialoffers?filter={"include": "job","where":{"hygienistId":' + hygienistId + '}}' ).minDelay(1000);
+            return TempStars.Ajax.get( 'partialoffers?filter={"include": "job","where":{"hygienistId":' + hygienistId + ',"status":0}}' ).minDelay(1000);
         },
 
         getBlockedDentists: function getBlockedDentists( hygienistId ) {

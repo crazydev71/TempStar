@@ -189,6 +189,9 @@ module.exports = function( Hygienist ) {
         })
         .then( function( js ) {
             jobs = js;
+            if ( jobs.length == 0 ) {
+                return jobs;
+            }
             var maxJob = _.maxBy( jobs, 'id' );
             return hygienist.updateAttributes({ lastJobIdViewed: maxJob.id });
         })
@@ -274,6 +277,7 @@ module.exports = function( Hygienist ) {
 
         var Job = app.models.Job;
         var Hygienist = app.models.Hygienist;
+        var PartialOffer = app.models.PartialOffer;
         var rateAdjustment = 0;
         var hourlyRate;
         var job;
@@ -331,6 +335,9 @@ module.exports = function( Hygienist ) {
             msg += moment(jj.startDate).format('ddd MMM Do');
             msg += ' has been filled.';
             return push.send( msg, [jj.dentist.user.registrationId])
+        })
+        .then( function() {
+            return PartialOffer.updateAll( {jobId: jobId}, { status: 1 } );
         })
         .then( function() {
             return notifyPartialOffers( job );

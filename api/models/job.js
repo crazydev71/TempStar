@@ -110,12 +110,6 @@ module.exports = function( Job ){
             // Reject all the partial offers for this job
             return PartialOffer.updateAll( {jobId: jobId}, { status: 1 } );
         })
-        // .then( function() {
-        //     return PartialOffer.find( {jobId: jobId, status: 1} );
-        // })
-        // .then( function( rpo ) {
-        //     rejectedPartialOffers = rpo;
-        // })
         .then( function() {
             // Accept the real partial offer
             return partialOffer.updateAttributes({

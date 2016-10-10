@@ -78,6 +78,7 @@ TempStars.Pages.Hygienist.JobPartial = (function() {
                     .then( function( pos ) {
                         var a = _(pos).filter(['job.startDate', params.date] ).value();
                         job = a[0].job;
+                        job.partialOffers = a;
                         resolve( job );
                     })
                     // TempStars.Hygienist.getHygienistPartialOffers( params.date )

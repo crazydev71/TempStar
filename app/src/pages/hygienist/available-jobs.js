@@ -44,6 +44,10 @@ TempStars.Pages.Hygienist.AvailableJobs = (function() {
 
                 data = { jobs: jobs.result };
 
+                if ( jobs.result.length == 0 ) {
+                    resolve( data );
+                    return;
+                }
                 var maxJob = _.maxBy( data.jobs, 'id' );
                 TempStars.User.updateLastJobId( maxJob.id );
 
