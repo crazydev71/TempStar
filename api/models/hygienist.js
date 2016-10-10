@@ -303,7 +303,7 @@ module.exports = function( Hygienist ) {
         .then( function( j ) {
             job = j;
 
-            if ( job.status != jobStatus.POSTED ) {
+            if ( job.status == jobStatus.CONFIRMED || job.status == jobStatus.COMPLETED ) {
                 throw new Error( 'Job is no longer available.');
                 return;
             }
@@ -332,9 +332,12 @@ module.exports = function( Hygienist ) {
             msg += ' has been filled.';
             return push.send( msg, [jj.dentist.user.registrationId])
         })
-        .then( function( job ) {
+        .then( function() {
+            return notifyPartialOffers( job );
+        })
+        .then( function() {
             console.log( 'booked job worked!' );
-            callback( null, job );
+            callback( null, {} );
         })
         .catch( function( err ) {
             console.log( 'booked job error!' );
@@ -342,6 +345,26 @@ module.exports = function( Hygienist ) {
         });
     };
 
+    function notifyPartialOffers( job ) {
+        // Get all the partial offers for this job
+        // Notify all the hygienists except the booked one
+        var PartialOffer = app.models.PartialOffer;
+        var jj = job.toJSON();
+        var pj;
+
+        return PartialOffer.find({jobId: job.id})
+        .then( function( pos ) {
+            return Promise.map( pos, function( po ) {
+                pj = po.toJSON();
+                if ( po.hygienistId != job.hygienistId ) {
+                    var msg = 'Your partial offer on ';
+                    msg += moment(jj.startDate).format('ddd MMM Do');
+                    msg += ' has been rejected.';
+                    return push.send( msg, [pj.hygienist.user.registrationId])
+                }
+            });
+        });
+    }
 
     Hygienist.remoteMethod( 'makePartialOffer', {
         accepts: [
