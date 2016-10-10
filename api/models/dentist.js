@@ -379,7 +379,7 @@ module.exports = function( Dentist ) {
             {arg: 'jobId', type: 'number', required: true},
             {arg: 'data', type: 'object', http: { source: 'body' } } ],
         returns: { arg: 'result', type: 'object' },
-        http: { verb: 'put', path: '/:dentistId/jobs/:jobId/survey' }
+        http: { verb: 'put', path: '/:dentistId/jobs/:jobId' }
     });
 
     Dentist.saveHygienistRating = function( dentistId, jobId, data, callback ) {
@@ -403,13 +403,13 @@ module.exports = function( Dentist ) {
             if ( data.hygienistRating == rating.VERY_HAPPY ) {
                 return FavouriteHygienist.create({
                     dentistId: dentistId,
-                    hygienistId: data.hygienistId
+                    hygienistId: job.hygienistId
                 });
             }
-            else if ( data.surveyResult == rating.NO_THANK_YOU ) {
+            else if ( data.hygienistRating == rating.NO_THANK_YOU ) {
                 return BlockedHygienist.create({
                     dentistId: dentistId,
-                    hygienistId: data.hygienistId
+                    hygienistId: job.hygienistId
                 });
             }
             else {
@@ -418,7 +418,7 @@ module.exports = function( Dentist ) {
         })
         .then( function() {
             // Get Hygienist
-            return Hygienist.findById( data.hygienistId );
+            return Hygienist.findById( job.hygienistId );
         })
         .then( function( h ) {
             hygienist = h;
@@ -426,7 +426,7 @@ module.exports = function( Dentist ) {
             return Job.find({
                 where: {
                     hygienistId: hygienist.id,
-                    status: 4
+                    status: jobStatus.COMPLETED
                 },
                 limit: 5,
                 order: 'completedOn DESC'
