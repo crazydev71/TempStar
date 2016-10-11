@@ -197,7 +197,8 @@ module.exports = function( Hygienist ) {
             });
         })
         .then( function( js ) {
-            jobs = js;
+
+            jobs = _.compact( js );
             if ( jobs.length == 0 ) {
                 return jobs;
             }
