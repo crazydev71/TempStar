@@ -34,6 +34,10 @@ TempStars.Push = (function() {
                 // data.sound,
                 // data.image,
                 // data.additionalData
+                app.addNotification({
+                    title: 'TempStars',
+                    message: data.message
+                });
                 console.log( 'push notification: ' + data.message);
             });
 
