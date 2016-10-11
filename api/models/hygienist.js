@@ -617,13 +617,17 @@ module.exports = function( Hygienist ) {
             });
         })
         .then( function( jobs ) {
-            // Calc star score
-            var i, avgRating, sum;
+            // Calc rating
+            var i, rating, avgRating, sum, nonzero;
 
-            for ( i = 0, sum = 0; i < jobs.length; i++ ) {
-                sum += jobs[i].dentistRating;
+            for ( i = sum = nonzero = 0; i < jobs.length; i++ ) {
+                rating = jobs[i].dentistRating;
+                if ( rating ) {
+                    sum += rating;
+                    nonzero++;
+                }
             }
-            avgRating = sum / jobs.length;
+            avgRating = sum / nonzero;
 
             return dentist.updateAttributes({
                 rating: avgRating

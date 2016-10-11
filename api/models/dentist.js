@@ -443,12 +443,16 @@ module.exports = function( Dentist ) {
         })
         .then( function( jobs ) {
             // Calc star score
-            var i, avgRating, sum;
+            var i, rating, avgRating, sum, nonzero;
 
-            for ( i = 0, sum = 0; i < jobs.length; i++ ) {
-                sum += jobs[i].hygienistRating;
+            for ( i = sum = nonzero = 0; i < jobs.length; i++ ) {
+                rating = jobs[i].hygienistRating;
+                if ( rating ) {
+                    sum += rating;
+                    nonzero++;
+                }
             }
-            avgRating = sum / jobs.length;
+            avgRating = sum / nonzero;
 
             return hygienist.updateAttributes({
                 starScore: avgRating
