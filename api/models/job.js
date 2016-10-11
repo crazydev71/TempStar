@@ -53,7 +53,8 @@ module.exports = function( Job ){
             job,
             jj,
             msg,
-            poJSON;
+            poJSON,
+            hygienist;
 
         // Get the partial offer
         PartialOffer.findById( poId )
@@ -68,6 +69,7 @@ module.exports = function( Job ){
             return Hygienist.findById( partialOffer.hygienistId );
         })
         .then( function( h ) {
+            hygienist = h;
             return Job.count({ hygienistId: h.id, startDate: jj.startDate });
         })
         .then( function( alreadyBooked ) {
@@ -82,19 +84,19 @@ module.exports = function( Job ){
                 return;
             }
 
-            if ( h.starScore == 5 ) {
+            if ( hygienist.starScore == 5 ) {
                 rateAdjustment = 4;
             }
-            else if ( h.starScore < 5 && h.starScore >= 4) {
+            else if ( hygienist.starScore < 5 && hygienist.starScore >= 4) {
                 rateAdjustment = 2;
             }
-            else if ( h.starScore < 4 && h.starScore >= 3) {
+            else if ( hygienist.starScore < 4 && hygienist.starScore >= 3) {
                 rateAdjustment = 0;
             }
-            else if ( h.starScore < 3 && h.starScore >= 2) {
+            else if ( hygienist.starScore < 3 && hygienist.starScore >= 2) {
                 rateAdjustment = -2;
             }
-            else if ( h.starScore < 2 ) {
+            else if ( hygienist.starScore < 2 ) {
                 rateAdjustment = -4;
             }
             hourlyRate = jj.hourlyRate + rateAdjustment;
