@@ -19,7 +19,7 @@ TempStars.Pages.Hygienist.AvailableJobs = (function() {
             }
             else if ( sortBy == 'closest' ) {
                 $('#hygienist-available-jobs-closest-sorting-button').addClass('active').siblings().removeClass('active');
-                data.jobs = _.sortBy( data.jobs, 'dentist.practiceName' );
+                data.jobs = _.sortBy( data.jobs, ['distance'], ['asc'] );
             }
 
             $('#hygienist-available-jobs-newest-sorting-button').on( 'click', sortByNewestHandler );
