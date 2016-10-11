@@ -161,6 +161,8 @@ module.exports = function( Hygienist ) {
 
         var Job = app.models.Job;
         var Hygienist = app.models.Hygienist;
+        var BlockedHygienist = app.models.BlockedHygienist;
+        var BlockedDentist = app.models.BlockedDentist;
         var hygienist,
             hygienistLocation,
             distance,
@@ -168,7 +170,7 @@ module.exports = function( Hygienist ) {
 
 
         // Get the hygienist location
-        // Get the available jobs
+        // Get the available jobs not blocked
         // Filter by location
         // Filter out jobs already booked on or have partial offers on
 
@@ -176,6 +178,36 @@ module.exports = function( Hygienist ) {
         .then( function( h ) {
             hygienist = h;
             return Job.find( {where: {status: {inq: [1,2]}}} );
+        })
+        .then( function( js ) {
+            jobs = js;
+            return BlockedHygienist.find( { hygienistId: id});
+        })
+        .then( function( blocked ) {
+            return _.filter( jobs, function( job ) {
+                if ( _.find( blocked, { 'dentistId': job.dentistId} ) ) {
+                    // If we find them in the blocked list, want to remove the job
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            });
+        })
+        .then( function( js ) {
+            jobs = js;
+            return BlockedDentist.find( { hygienistId: id});
+        })
+        .then( function( blockedDentists ) {
+            return _.filter( jobs, function( job ) {
+                if ( _.find( blockedDentists, { 'dentistId': job.dentistId} ) ) {
+                    // If we find them in the blocked list, want to remove the job
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            });
         })
         .then( function( jobs ) {
             // If don't have a location for the hygienist, return all the jobs
