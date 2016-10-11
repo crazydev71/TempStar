@@ -157,7 +157,7 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
 
         app.modal({
             title:  'Make Partial Offer',
-            text: 'You are committing to work at:<br>' +
+            text: 'If the dentist accepts your offer, you are committing to work at:<br>' +
                 job.dentist.practiceName + '<br>' +
                 moment( job.startDate ).format('ddd MMM D, YYYY') + '<br>' +
                 formData.offeredStart + ' - ' +
