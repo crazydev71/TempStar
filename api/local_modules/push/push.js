@@ -8,11 +8,15 @@ var apnSender;
 
 function init( gcmApiKey, apnToken, env ) {
 
+    console.log( 'push apn initialized with env: ' + env );
+    var isProd = (env === 'prod');
+    console.log( 'push apn is prod: ' + isProd );
+
     gcmSender = new gcm.Sender( gcmApiKey );
 
     apnSender = new apn.Provider({
         token: apnToken,
-        production: (env === 'prod')
+        production: isProd
     });
 }
 
@@ -30,6 +34,7 @@ function send( message, platform, regToken ) {
 
 function sendiOSMessage( message, regToken ) {
     return new Promise( function( resolve, reject ) {
+        var response;
 
         if ( ! apnSender ) {
             console.log( 'iOS push not initialized');
@@ -40,7 +45,7 @@ function sendiOSMessage( message, regToken ) {
         if ( ! regToken ) {
             console.log( 'iOS token is invalid' );
             // Don't fail
-            resolve();
+            resolve( {success: 0} );
             return;
         }
 
@@ -51,10 +56,16 @@ function sendiOSMessage( message, regToken ) {
 
         apnSender.send( msg, [regToken] )
         .then( function( result ) {
-            // look at results for status
-            console.log( 'sent iOS push message' );
-            console.dir( result, {depth:null} );
-            resolve();
+            if ( result.failed.length == 0 ) {
+                console.log( 'iOS push message sent' );
+                response = { success: 1 };
+            }
+            else {
+                console.log( 'iOS push message failed' );
+                console.dir( result, {depth:null} );
+                response = { success: 0 };
+            }
+            resolve( response );
         })
         .catch( function( err ) {
             console.log( 'error sending iOS push message');
@@ -75,7 +86,7 @@ function sendAndroidMessage( message, regToken ) {
 
         if ( ! regToken ) {
             console.log( 'Android token is invalid' );
-            resolve();
+            resolve( {success: 0} );
             return;
         }
 
