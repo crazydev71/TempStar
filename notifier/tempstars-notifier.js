@@ -6,7 +6,15 @@ var moment  = require('moment');
 var app     = require( '../api/tempstars-api' );
 var push    = require( 'push' );
 
-push.init( app.get('gcmApiKey') );
+push.init(
+    app.get('gcmApiKey'),
+    {
+        key: app.get('apnKey'),
+        keyId: app.get('apnKeyId'),
+        teamId: app.get('apnTeamId')
+    },
+    app.get('pushEnv')
+);
 
 console.log( 'Notification Service started: ' + moment().toString() );
 
@@ -51,7 +59,8 @@ function sendNotification( notification ) {
             resolve(null);
             return;
         }
-        push.send( n.message, [n.user.registrationId] )
+        
+        push.send( n.message, n.user.platform, n.user.registrationId )
         .then( function( pushResult ) {
             if ( pushResult.success == 1 ) {
                 console.log( '- send notification id: ' + n.id );
