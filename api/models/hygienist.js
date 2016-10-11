@@ -585,13 +585,13 @@ module.exports = function( Hygienist ) {
         .then( function() {
             // Add fav/blocked dentist
             if ( data.rating == rating.VERY_HAPPY ) {
-                return FavouriteDentist.create({
+                return FavouriteDentist.findOrCreate({
                     hygienistId: hygienistId,
                     dentistId: job.dentistId
                 });
             }
             else if ( data.rating == rating.NO_THANK_YOU ) {
-                return BlockedHygienist.create({
+                return BlockedDentist.findOrCreate({
                     hygienistId: hygienistId,
                     dentistId: job.dentistId
                 });

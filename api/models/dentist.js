@@ -410,13 +410,13 @@ module.exports = function( Dentist ) {
         .then( function() {
             // Add fav/blocked hygienist
             if ( data.hygienistRating == rating.VERY_HAPPY ) {
-                return FavouriteHygienist.create({
+                return FavouriteHygienist.findOrCreate({
                     dentistId: dentistId,
                     hygienistId: job.hygienistId
                 });
             }
             else if ( data.hygienistRating == rating.NO_THANK_YOU ) {
-                return BlockedHygienist.create({
+                return BlockedHygienist.findOrCreate({
                     dentistId: dentistId,
                     hygienistId: job.hygienistId
                 });
