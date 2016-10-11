@@ -58,6 +58,21 @@
         "dataScale": null,
         "nullable": "Y"
       }
+    },
+    "platform": {
+      "type": "String",
+      "required": false,
+      "length": 10,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "platform",
+        "dataType": "varchar",
+        "dataLength": 10,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
     }
   },
   "validations": [],
@@ -82,7 +97,7 @@
     "type": "hasMany",
     "model": "Notification",
     "foreignKey": "userId"
-  }  
+  }
   },
   "acls": [
     {

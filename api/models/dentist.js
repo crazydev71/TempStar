@@ -11,7 +11,16 @@ var location = require( 'location' );
 var push     = require( 'push' );
 var notifier = require( 'notifier' );
 
-push.init( app.get('gcmApiKey') );
+
+push.init(
+    app.get('gcmApiKey'),
+    {
+        key: app.get('apnKey'),
+        keyId: app.get('apnKeyId'),
+        teamId: app.get('apnTeamId')
+    },
+    app.get('pushEnv')
+);
 
 var  jobStatus =  {
     'POSTED': 1,
@@ -322,7 +331,7 @@ module.exports = function( Dentist ) {
                     msg += moment(jj.startDate).format('ddd MMM D, YYYY');
                     msg += ' with ' + jj.dentist.practiceName;
                     msg += ' has been cancelled.';
-                    push.send( msg, [jj.hygienist.user.registrationId])
+                    push.send( msg, jj.hygienist.user.platform, jj.hygienist.user.registrationId )
                     .then( function( response ) {
                         return job.partialOffers.destroyAll();
                     })
@@ -342,7 +351,7 @@ module.exports = function( Dentist ) {
                     msg += ' with ' + jj.dentist.practiceName;
                     msg += ' has been remove since the job was cancelled.';
                     _.map( jj.partialOffers, function( po ) {
-                        push.send( msg, [po.hygienist.user.registrationId])
+                        push.send( msg, po.hygienist.user.platform, po.hygienist.user.registrationId );
                     });
 
                     // Delete partial offers
@@ -498,7 +507,7 @@ module.exports = function( Dentist ) {
                     msg += moment(jj.startDate).format('ddd MMM D, YYYY');
                     msg += ' with ' + jj.dentist.practiceName;
                     msg += ' has been modified.';
-                    push.send( msg, [jj.hygienist.user.registrationId])
+                    push.send( msg, jj.hygienist.user.platform, jj.hygienist.user.registrationId )
                     .then( function( response ) {
                         return job.partialOffers.destroyAll();
                     })
@@ -518,7 +527,7 @@ module.exports = function( Dentist ) {
                     msg += ' with ' + jj.dentist.practiceName;
                     msg += ' has been modified.';
                     _.map( jj.partialOffers, function( po ) {
-                        push.send( msg, [po.hygienist.user.registrationId])
+                        push.send( msg, po.hygienist.user.platform, po.hygienist.user.registrationId );
                     });
                     break;
 

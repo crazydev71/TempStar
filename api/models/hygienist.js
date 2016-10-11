@@ -10,7 +10,16 @@ var moment   = require( 'moment' );
 var push     = require( 'push' );
 var notifier = require( 'notifier' );
 
-push.init( app.get('gcmApiKey') );
+
+push.init(
+    app.get('gcmApiKey'),
+    {
+        key: app.get('apnKey'),
+        keyId: app.get('apnKeyId'),
+        teamId: app.get('apnTeamId')
+    },
+    app.get('pushEnv')
+);
 
 var  jobStatus =  {
     'POSTED': 1,
@@ -334,7 +343,7 @@ module.exports = function( Hygienist ) {
             var msg = 'Your job on ';
             msg += moment(jj.startDate).format('ddd MMM Do');
             msg += ' has been filled.';
-            return push.send( msg, [jj.dentist.user.registrationId])
+            return push.send( msg, jj.dentist.user.platform, jj.dentist.user.registrationId );
         })
         .then( function() {
             return PartialOffer.updateAll( {jobId: jobId}, { status: 1 } );
@@ -367,7 +376,7 @@ module.exports = function( Hygienist ) {
                     var msg = 'Your partial offer on ';
                     msg += moment(jj.startDate).format('ddd MMM Do');
                     msg += ' has been rejected.';
-                    return push.send( msg, [pj.hygienist.user.registrationId])
+                    return push.send( msg, pj.hygienist.user.platform, pj.hygienist.user.registrationId );
                 }
             });
         });
@@ -433,7 +442,7 @@ module.exports = function( Hygienist ) {
             var msg = 'You have a new offer for your job on  ';
             msg += moment(jj.startDate).format('ddd MMM Do');
             msg += '.';
-            return push.send( msg, [jj.dentist.user.registrationId] );
+            return push.send( msg, jj.dentist.user.platform, jj.dentist.user.registrationId );
         })
         .then( function() {
             console.log( 'make partial offer worked!' );
@@ -534,7 +543,7 @@ module.exports = function( Hygienist ) {
             msg += ' has been cancelled by ';
             msg += jj.hygienist.firstName + ' ' + jj.hygienist.lastName;
             msg += ' It has been automatically reposted to the system as a open job.';
-            return push.send( msg, [jj.dentist.user.registrationId] );
+            return push.send( msg, jj.dentist.user.platform, jj.dentist.user.registrationId );
         })
         .then( function() {
             console.log( 'cancel job worked!' );

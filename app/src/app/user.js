@@ -208,14 +208,20 @@ TempStars.User = (function() {
                     return;
                 }
 
+                if ( ! window.registrationId ) {
+                    console.log( 'updating push registration - push token not set' );
+                    resolve();
+                    return;
+                }
+
                 if ( window.registrationId == userAccount.registrationId ) {
                     console.log( 'updating push registration - push token not changed' );
                     resolve();
                     return;
                 }
 
-                console.log( 'updating push registration token for user' );                
-                TempStars.Api.updateRegistrationId( userAccount.id, window.registrationId )
+                console.log( 'updating push registration token for user' );
+                TempStars.Api.updateRegistration( userAccount.id, device.platform, window.registrationId )
                 .then( TempStars.User.refresh )
                 .then( function() {
                     resolve();

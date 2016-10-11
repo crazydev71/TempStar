@@ -219,8 +219,8 @@ TempStars.Api = (function() {
             return TempStars.Ajax.get( 'jobs/' + jobId );
         },
 
-        updateRegistrationId: function updateRegistrationId( userId, registrationId ) {
-            return TempStars.Ajax.put( 'tsusers/' + userId, { registrationId: registrationId }, authToken );
+        updateRegistration: function updateRegistration( userId, platform, registrationId ) {
+            return TempStars.Ajax.put( 'tsusers/' + userId, { platform: platform, registrationId: registrationId }, authToken );
         },
 
         saveHygienistRating: function saveHygienistRating( dentistId, jobId, data ) {

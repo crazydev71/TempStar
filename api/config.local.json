@@ -23,5 +23,6 @@
   },
   "legacyExplorer": false,
   "stripeSecretKey": "sk_test_PCAtzsYTShhPQLkwJLGrQ6xP",
-  "resetPasswordLink": "http://0.0.0.0:3000/reset-password"
+  "resetPasswordLink": "http://0.0.0.0:3000/reset-password",
+  "pushEnv": "local"
 }

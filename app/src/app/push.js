@@ -5,7 +5,7 @@ TempStars.Push = (function() {
 
     function init() {
         console.log( 'push init' );
-        
+
         if ( window.device.platform == 'iOS' || window.device.platform == 'Android' ) {
             console.log( 'push init' );
             push = PushNotification.init({
@@ -13,11 +13,9 @@ TempStars.Push = (function() {
                     senderID: TempStars.Config.push.senderID
                 },
                 ios: {
-                    senderID: TempStars.Config.push.senderID,
                     alert: "true",
                     badge: "true",
-                    sound: "true",
-                    gcmSandbox: true
+                    sound: "true"
                 },
                 windows: {}
             });

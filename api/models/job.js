@@ -5,7 +5,16 @@ var moment   = require( 'moment' );
 var app      = require('../tempstars-api.js' );
 var push     = require( 'push' );
 
-push.init( app.get('gcmApiKey') );
+
+push.init(
+    app.get('gcmApiKey'),
+    {
+        key: app.get('apnKey'),
+        keyId: app.get('apnKeyId'),
+        teamId: app.get('apnTeamId')
+    },
+    app.get('pushEnv')
+);
 
 var  jobStatus =  {
     'POSTED': 1,
@@ -123,7 +132,7 @@ module.exports = function( Job ){
             msg += moment(jj.startDate).format('ddd MMM Do');
             msg += ' with ' + jj.dentist.practiceName;
             msg += ' has been accepted, booked, and confirmed.';
-            return push.send( msg, [poJSON.hygienist.user.registrationId] );
+            return push.send( msg, poJSON.hygienist.user.platform, poJSON.hygienist.user.registrationId );
         })
         // .then( function() {
         //     // Notify hygienists who have rejected partial offers
@@ -196,7 +205,7 @@ module.exports = function( Job ){
             msg += moment(jj.startDate).format('ddd MMM Do');
             msg += ' with ' + jj.dentist.practiceName;
             msg += ' has been declined.';
-            return push.send( msg, [pj.hygienist.user.registrationId] );
+            return push.send( msg, pj.hygienist.user.platform, pj.hygienist.user.registrationId );
         })
         .then( function() {
             console.log( 'rejected partial offer worked!' );
@@ -226,7 +235,7 @@ module.exports = function( Job ){
             jj = job.toJSON();
             msg = 'You have a new invoice from  ';
             msg += jj.hygienist.firstName + ' ' + jj.hygienist.lastName;
-            return push.send( msg, [jj.dentist.user.registrationId] );
+            return push.send( msg, jj.dentist.user.platform, jj.dentist.user.registrationId );
         })
         .then( function() {
             Email.send({
@@ -309,7 +318,7 @@ module.exports = function( Job ){
             jj = job.toJSON();
             msg = 'You have a new invoice from  ';
             msg += jj.hygienist.firstName + ' ' + jj.hygienist.lastName;
-            return push.send( msg, [jj.dentist.user.registrationId] );
+            return push.send( msg, jj.dentist.user.platform, jj.dentist.user.registrationId );
         })
         .then( function() {
             Email.send({

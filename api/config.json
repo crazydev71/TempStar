@@ -23,5 +23,9 @@
   },
   "legacyExplorer": false,
   "stripeSecretKey": "sk_test_PCAtzsYTShhPQLkwJLGrQ6xP",
-  "gcmApiKey": "AIzaSyBpqJVshqasod9SEdJoCSIHX5aqRkY-zg8"
+  "gcmApiKey": "AIzaSyBpqJVshqasod9SEdJoCSIHX5aqRkY-zg8",
+  "apnKey": "sys/APNSAuthKey_4W5923BGDZ.p8",
+  "apnKeyId": "4W5923BGDZ",
+  "apnTeamId": "UM68DRFZYZ",
+  "pushEnv": "prod"
 }
