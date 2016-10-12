@@ -33,7 +33,11 @@ Notification.find({
     return Promise.map( notifications, sendNotification );
 })
 .then( function( successfullNotifications ) {
+    console.log( '- successful notifications:');
+    console.dir( successfullNotifications );
     return Promise.map( successfullNotifications, function( sn ) {
+        console.log( '- updating sn' );
+        console.dir( sn );
         if ( sn != null ) {
             return sn.updateAttributes({
                 sentOn:  moment.utc().format('YYYY-MM-DD hh:ss')
@@ -42,24 +46,30 @@ Notification.find({
     });
 })
 .then( function( results ) {
+    console.log( 'send results');
+    console.dir( results );
     results = _.compact( results );
+    console.log( 'compacted results' );
+    console.log( results );
     console.log( '- sent ' + results.length + ' push notifications' );
     console.log( 'Notification Service ended:   ' + moment().toString() + '.');
 })
 .catch( function( err ) {
-    console.log( 'error: ' + err.message );
+    console.log( '- error: ' + err.message );
     console.log( 'Notification Service ended:   ' + moment().toString() + '.');
 });
 
 function sendNotification( notification ) {
     return new Promise( function( resolve, reject ) {
         var n = notification.toJSON();
+        console.log( '- sending notification' );
+        console.dir( n );
         if ( ! n.user.registrationId ) {
             console.log( '- can\'t send notification id: ' + n.id + ' no reg token');
             resolve(null);
             return;
         }
-        
+
         push.send( n.message, n.user.platform, n.user.registrationId )
         .then( function( pushResult ) {
             if ( pushResult.success == 1 ) {
@@ -67,10 +77,12 @@ function sendNotification( notification ) {
                 resolve( notification );
             }
             else {
+                console.log( '- send notification failed for id: ' + n.id );
                 reject( new Error( 'push failed'));
             }
         })
         .catch( function(err) {
+            console.log( '- send notification rejected for id: ' + n.id );
             reject( err );
         });
     });
