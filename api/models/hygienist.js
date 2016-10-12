@@ -181,7 +181,7 @@ module.exports = function( Hygienist ) {
         })
         .then( function( js ) {
             jobs = js;
-            return BlockedHygienist.find( { hygienistId: id});
+            return BlockedHygienist.find( {where: { hygienistId: id}} );
         })
         .then( function( blocked ) {
             return _.filter( jobs, function( job ) {
@@ -196,7 +196,7 @@ module.exports = function( Hygienist ) {
         })
         .then( function( js ) {
             jobs = js;
-            return BlockedDentist.find( { hygienistId: id});
+            return BlockedDentist.find( { where: { hygienistId: id}} );
         })
         .then( function( blockedDentists ) {
             return _.filter( jobs, function( job ) {
@@ -401,14 +401,14 @@ module.exports = function( Hygienist ) {
         var jj = job.toJSON();
         var pj;
 
-        return PartialOffer.find({jobId: job.id})
+        return PartialOffer.find( {where: {jobId: job.id}} )
         .then( function( pos ) {
             return Promise.map( pos, function( po ) {
                 pj = po.toJSON();
                 if ( po.hygienistId != job.hygienistId ) {
                     var msg = 'Your partial offer on ';
                     msg += moment(jj.startDate).format('ddd MMM Do');
-                    msg += ' has been rejected.';
+                    msg += ' has been declined.';
                     return push.send( msg, pj.hygienist.user.platform, pj.hygienist.user.registrationId );
                 }
             });
