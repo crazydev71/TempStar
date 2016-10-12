@@ -65,18 +65,28 @@ function createJobNotifications( lb, a, jobId, message ) {
 
             var sendTime;
             now = moment.utc();
+            console.log( 'now: ' + now.toDate() );
+
             minutesTillStart = moment.utc( job.shifts[0].postedStart ).diff( now, 'minutes');
-            interval = Math.floor( minutesTillStart / 35 );
+            console.log( 'minutes until job start: ' + minutesTillStart );
+
+            interval = Math.round( minutesTillStart / 35 );
+            console.log( 'interval: ' + interval );
 
             favSendTime = now.clone();
-            above4SendTime = now.clone().add( 1 * interval, 'minutes' );
-            above3SendTime = now.clone().add( 2 * interval, 'minutes' );
-            above2SendTime = now.clone().add( 3 * interval, 'minutes' );
-            bottomSendTime = now.clone().add( 4 * interval, 'minutes' );
-
             console.log( 'favSendTime: ' + favSendTime.toDate() );
+
+            above4SendTime = now.clone().add( 1 * interval, 'minutes' );
             console.log( 'above4SendTime: ' + above4SendTime.toDate() );
+
+            above3SendTime = now.clone().add( 2 * interval, 'minutes' );
+            console.log( 'above3SendTime: ' + above3SendTime.toDate() );
+
+            above2SendTime = now.clone().add( 3 * interval, 'minutes' );
             console.log( 'above2SendTime: ' + above2SendTime.toDate() );
+
+            bottomSendTime = now.clone().add( 4 * interval, 'minutes' );
+            console.log( 'bottomSendTime: ' + bottomSendTime.toDate() );
 
             return Promise.all( hygienists.map( function( hygienist ) {
 
@@ -103,7 +113,8 @@ function createJobNotifications( lb, a, jobId, message ) {
                 return Notification.create({
                     sendTime: moment(sendTime).utc().format('YYYY-MM-DD hh:mm' ),
                     message: message,
-                    userId: hygienist.user.id
+                    userId: hygienist.user.id,
+                    jobId: jobId
                 });
 
             }));
