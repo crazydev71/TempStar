@@ -6,6 +6,7 @@
     "port": 3306,
     "database": "tempstars",
     "user": "tempstars_root",
-    "password": "aquarius22molar"
+    "password": "aquarius22molar",
+    "dateStrings": true    
   }
 }
