@@ -151,7 +151,7 @@ TempStars.Pages.HygienistSignup = (function() {
             // Add the hygienist id
             formData.id = userAccount.hygienistId;
             formData.isComplete = 1;
-            formData.starScore = TempStars.Rating.PLEASED;
+            formData.starScore = 4;
             return TempStars.Hygienist.save( formData );
         })
         .then( function() {
