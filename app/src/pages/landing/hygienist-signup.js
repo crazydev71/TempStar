@@ -160,6 +160,8 @@ TempStars.Pages.HygienistSignup = (function() {
         .then(function() {
             app.hidePreloader();
             app.formDeleteData('hygienist-signup-form');
+            TempStars.Push.init();
+            TempStars.User.updateRegistration();            
             TempStars.App.gotoStartingPage();
         })
         .catch( function( err ) {

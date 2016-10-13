@@ -112,6 +112,8 @@ TempStars.Pages.DentistSignup3 = (function() {
         })
         .then(function() {
             app.hidePreloader();
+            TempStars.Push.init();
+            TempStars.User.updateRegistration();            
             TempStars.App.gotoStartingPage();
         })
         .catch( function( err ) {
