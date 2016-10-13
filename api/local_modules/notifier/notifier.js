@@ -140,7 +140,7 @@ function isFavHygienist( dentistId, hygienistId ) {
             }
         })
         .then( function( fav ) {
-            if ( fav.length > 0 ) {
+            if ( fav ) {
                 resolve( true );
             }
             else {
