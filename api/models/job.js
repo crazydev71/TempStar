@@ -324,11 +324,11 @@ module.exports = function( Job ){
         })
         .then( function() {
             Email.send({
-                //to: jj.dentist.user.email,
-                to: 'mbetts@me.com',
+                to: jj.dentist.user.email,
+                //to: 'mbetts@me.com',
                 from: "no-reply@tempstars.net",
                 subject: 'Invoice from ' + jj.hygienist.firstName + ' ' + jj.hygienist.lastName,
-                html: '' },
+                html: data.html },
                 function(err) {
                     if (err) {
                         return console.log('error sending invoice email');

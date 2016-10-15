@@ -8,8 +8,8 @@ TempStars.Menu = (function() {
                 app.closePanel();
                 TempStars.User.logout()
                 .then( function() {
-                    mainView.router.loadPage( { url: 'index.html', animatePages: false } );
-                });                
+                    mainView.router.loadPage( 'index.html' );
+                });
             });
         }
     };

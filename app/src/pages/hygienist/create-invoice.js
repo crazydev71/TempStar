@@ -268,19 +268,37 @@ TempStars.Pages.Hygienist.CreateInvoice = (function() {
             sentOn: now
         };
 
+        // Render HTML and send to server
+        $.get( 'hygienist/invoice-template.html' )
+        .then( function( template ) {
+            var compiledTemplate = Template7.compile( template );
+            var htmlData = data;
+            htmlData.job = job;
+            var html = compiledTemplate( htmlData );
 
-        TempStars.Api.sendInvoice( job.id, data )
-        .then( function() {
-            app.hidePreloader();
-            app.alert( 'Invoice Sent', function() {
-                TempStars.Hygienist.Router.goBackPage();
+            data.html = html;
+            TempStars.Api.sendInvoice( job.id, data )
+            .then( function() {
+                app.hidePreloader();
+                app.alert( 'Invoice Sent', function() {
+                    TempStars.Hygienist.Router.goBackPage();
+                });
+            })
+            .catch( function( err ) {
+                app.hidePreloader();
+                app.alert( 'Error sending invoice. Please try again' );
             });
         })
         .catch( function( err ) {
             app.hidePreloader();
-            app.alert( 'Error sending invoice.  Please try again' );
+            app.alert( 'Error sending invoice. Please try again.')
         });
 
+        // $.get( 'hygienist/invoice-template.html', function( template ) {
+        // });
+
+        // var template = $$('#invoice-template').html();
+        // var compiledTemplate = Template7.compile( template );
     }
 
     return {
