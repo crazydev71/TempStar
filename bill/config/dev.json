@@ -9,5 +9,11 @@
         "password": "aquarius22molar",
         "dateStrings": true,
         "ssl": "Amazon RDS"
+    },
+
+    "email": {
+        "from": "billing@tempstars.net",
+        "to": "mbetts@me.com,drjyounger@hotmail.com"
     }
+
 }

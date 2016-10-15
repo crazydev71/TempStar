@@ -11,7 +11,8 @@ var stripe       = require('stripe')(config.stripe.secretKey);
 
 var db,
     sql,
-    billingDate,
+    today,
+    msg,
     overallResults = [];
 
 // Initialize
@@ -22,67 +23,38 @@ var mailer = nodemailer.createTransport( sesTransport({
 }));
 db = mysql.createConnection( config.db );
 
-
 // Billing run
-console.log( 'Billing run started at ' + moment.utc().format('YYYY-MM-DD hh:ss') + '.');
+log( 'Billing run started at ' + moment.utc().format('YYYY-MM-DD hh:ss') + ' UTC.' );
 
-console.log( '- getting billing date' );
-getBillDate()
-.then( function( bd ) {
-    billingDate = bd;
-    console.log( '- billing date: ' + billingDate );
-    overallResults.push( 'Billing date: ' + billingDate );
-    console.log( '- updating job status' );
-    return updateJobStatus( billingDate );
-})
+today = moment.utc().format('YYYY-MM-DD');
+log( '- billing dentists for jobs completed before: ' + today );
+
+updateJobStatus( today )
 .then( function() {
     console.log( '- getting dentists to bill' );
-    return getDentistsToBill( billingDate );
+    return getDentistsToBill( today );
 })
 .then( function( dentists ) {
-    console.log( '- found ' + dentists.length + ' dentists to bill' );
-    overallResults.push( 'Dentists to bill: ' + dentists.length );
+    log( '- dentists to bill: ' + dentists.length );
     return billDentists( dentists );
 })
 .then( function() {
-    console.log( '- billing done' );
-    console.log( '- saving new billing date' );
-    return saveBillDate( billingDate );
+    log( 'Billing run ended at ' + moment.utc().format('YYYY-MM-DD hh:ss') + ' UTC.');
 })
 .then( function() {
-    console.log( '- saved new billing date' );
     console.log( '- sending email' );
     return sendEmail();
 })
-.then( function() {
-    console.log( '- sent email' );
-    console.log( 'Billing run ended at ' + moment.utc().format('YYYY-MM-DD hh:ss') + '.');
-    //process.exit(0);
-})
 .catch( function( err ) {
     console.log( err.message );
-    //process.exit(-1);
 });
 
-function getBillDate() {
+// Update jobs that were booked before today to completed
+function updateJobStatus( today ) {
     return new Promise( function( resolve, reject ) {
-        db.queryAsync( "select lastBillDate from billing" )
+        db.queryAsync( "update Job set status = 4 where status = 3 and startDate < ?", [today] )
         .then( function( results ) {
-            var billDate = moment( results[0].lastBillDate ).add( 1, 'days').format('YYYY-MM-DD');
-            resolve( billDate );
-        })
-        .catch( function( err ) {
-            reject( err );
-        });
-    });
-}
-
-// Update jobs that were booked for date to completed
-function updateJobStatus( billDate ) {
-    return new Promise( function( resolve, reject ) {
-        db.queryAsync( "update Job set status = 4 where status = 3 and startDate =?", [billDate])
-        .then( function( results ) {
-            console.log( '- updated ' + results.affectedRows + ' jobs status to COMPLETED');
+            log( '- updated ' + results.affectedRows + ' jobs status to COMPLETED' );
             resolve();
         })
         .catch( function(err) {
@@ -91,16 +63,16 @@ function updateJobStatus( billDate ) {
     });
 }
 
-function getDentistsToBill( billDate ) {
+function getDentistsToBill( today ) {
     return new Promise( function( resolve, reject ) {
         var sql = 'select * from Job j ' +
                   'inner join Dentist d on d.id = j.dentistId ' +
                   'inner join Invoice i on i.jobId = j.id ' +
-                  'where j.startDate = ? ' +
+                  'where j.startDate < ? ' +
                   'and j.status = 4 ' +
                   'and j.dentistBilled is null';
 
-        db.queryAsync( sql, [billDate] )
+        db.queryAsync( sql, [today] )
         .then( function( results ) {
             resolve( results );
         })
@@ -111,9 +83,10 @@ function getDentistsToBill( billDate ) {
 }
 
 function billDentists( dentists ) {
-    return Promise.map( dentists, function( dentist ) {
-        return billDentist( dentist );
-    });
+    // return Promise.map( dentists, function( dentist ) {
+    //     return billDentist( dentist );
+    // });
+    return Promise.map( dentists, billDentist, { concurrency: 1 } );
 }
 
 function billDentist( billingInfo ) {
@@ -128,6 +101,7 @@ function billDentist( billingInfo ) {
               customer: billingInfo.stripeCustomerId
         })
         .catch( function(err) {
+            log( '- error billing dentist: ' + billingInfo.practiceName + ' for job ' +  billingInfo.jobId + ' ' + err.message );
             reject( err );
             return;
         })
@@ -136,25 +110,13 @@ function billDentist( billingInfo ) {
             return db.queryAsync( "update Job set dentistBilled = 1 where id = ?", [billingInfo.jobId] );
         })
         .then( function( results ) {
-            console.log( '- billed dentist: ' + billingInfo.practiceName );
-            overallResults.push( '- billed ' + billingInfo.practiceName + ' for job ' +  billingInfo.jobId );
+            log( '- billed dentist: ' + billingInfo.practiceName + ' for job ' +  billingInfo.jobId );
             resolve();
         })
         .catch( function(err) {
+            log( '- error updating billing status dentist: ' + billingInfo.practiceName + ' for job ' +  billingInfo.jobId );
             reject( err );
-        })
-    });
-}
-
-function saveBillDate( billDate ) {
-    return new Promise( function( resolve, reject ) {
-        db.queryAsync( "update billing set lastBillDate = ? limit 1", [billDate] )
-        .then( function( results ) {
-            resolve();
-        })
-        .catch( function(err) {
-            reject( err );
-        })
+        });
     });
 }
 
@@ -163,8 +125,13 @@ function sendEmail() {
     var message = {
         from: config.email.from,
         to: config.email.to,
-        subject: 'Billing Service Results',
+        subject: 'TempStars Billing Service Report',
         text: text
     };
     return mailer.sendMail( message );
+}
+
+function log( msg ) {
+    console.log( msg );
+    overallResults.push( msg );
 }
