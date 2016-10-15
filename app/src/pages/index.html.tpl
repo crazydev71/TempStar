@@ -18,12 +18,6 @@
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
   </head>
   <body>
-    @@include( 'hygienist/popover-office-info.html' )
-    @@include( 'hygienist/popover-office-notes.html' )
-    @@include( 'hygienist/popover-office-full.html' )
-    @@include( 'dentist/popover-hygienist-info.html' )
-    @@include( 'dentist/popover-hygienist-notes.html' )
-
     <div class="statusbar-overlay"></div>
     <div class="panel-overlay"></div>
 
@@ -127,13 +121,6 @@
             </div>
         </div>
     </div>
-
-    @@include( 'shared/popup-privacy.html' )
-    @@include( 'hygienist/popup-available-jobs.html' )
-    @@include( 'hygienist/popup-offered-jobs.html' )
-    @@include( 'hygienist/popup-booked-jobs.html' )
-    @@include( 'hygienist/popup-worked-jobs.html' )
-    @@include( 'hygienist/dentist-list.html' )
 
     <script src="cordova.js"></script>
     <script src="lib/framework7/js/framework7.js"></script>
