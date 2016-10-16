@@ -348,7 +348,7 @@ module.exports = function( Hygienist ) {
         .then( function( j ) {
             job = j;
 
-            if ( job.status == jobStatus.CONFIRMED || job.status == jobStatus.COMPLETED ) {
+            if ( job == null || job.status == jobStatus.CONFIRMED || job.status == jobStatus.COMPLETED ) {
                 throw new Error( 'Job is no longer available.');
                 return;
             }
