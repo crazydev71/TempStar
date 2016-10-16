@@ -222,14 +222,16 @@ module.exports = function( Job ){
 
     Job.remoteMethod( 'resend', {
         accepts: [
-            {arg: 'jobId', type: 'number', required: true}],
+            {arg: 'jobId', type: 'number', required: true},
+            {arg: 'data', type: 'object', http: { source: 'body' } } ],
         returns: { arg: 'result', type: 'object' },
         http: { verb: 'put', path: '/:jobId/resend' }
     });
 
-    Job.resend = function( jobId, callback ) {
+    Job.resend = function( jobId, data, callback ) {
         console.log( 'resend invoice for job' );
         var Job = app.models.Job;
+        var Email = app.models.Email;
         var jj, msg;
 
         Job.findById( jobId )
@@ -241,11 +243,10 @@ module.exports = function( Job ){
         })
         .then( function() {
             Email.send({
-                //to: jj.dentist.user.email,
-                to: 'mbetts@me.com',
+                to: jj.dentist.user.email,
                 from: "no-reply@tempstars.net",
                 subject: 'Invoice from ' + jj.hygienist.firstName + ' ' + jj.hygienist.lastName,
-                html: '' },
+                html: data.html },
                 function(err) {
                     if (err) {
                         return new Error( 'error resending email: '+ err.message );
@@ -281,12 +282,10 @@ module.exports = function( Job ){
 
         // TODO send notification
         console.log( 'send invoice for job: ' + jobId );
-        console.dir( data );
 
         Shift.findOne( {where: {jobId: jobId}} )
         .then( function( shift ) {
             console.log( 'got shift');
-            console.dir( shift );
             // Update shift
             return shift.updateAttributes({
                 actualStart: data.actualStart,
@@ -325,7 +324,6 @@ module.exports = function( Job ){
         .then( function() {
             Email.send({
                 to: jj.dentist.user.email,
-                //to: 'mbetts@me.com',
                 from: "no-reply@tempstars.net",
                 subject: 'Invoice from ' + jj.hygienist.firstName + ' ' + jj.hygienist.lastName,
                 html: data.html },

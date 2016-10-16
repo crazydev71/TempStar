@@ -125,7 +125,6 @@ module.exports = function( Hygienist ) {
         })
         .then( function( gc ) {
             geocode = gc;
-            console.dir( gc );
             //geocode = { lat: -1.0, lon: 1.0};
             var PostalCode = app.models.PostalCode;
             var prefix = hygienist.postalCode.substr(0,2);

@@ -151,8 +151,8 @@ TempStars.Api = (function() {
             return TempStars.Ajax.post( 'jobs/' + jobId + '/invoices/send', data ).minDelay(1000);
         },
 
-        resendInvoice: function resendInvoice( jobId ) {
-            return TempStars.Ajax.put( 'jobs/' + jobId + '/resend' ).minDelay(1000);
+        resendInvoice: function resendInvoice( jobId, data ) {
+            return TempStars.Ajax.put( 'jobs/' + jobId + '/resend', data ).minDelay(1000);
         },
 
         postJob: function postJob( dentistId, data ) {
