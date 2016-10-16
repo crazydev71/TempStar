@@ -47,41 +47,6 @@ TempStars.Pages.Hygienist.JobCompleted = (function() {
         });
     }
 
-    // function paidToggleHandler( e ) {
-    //     var isChecked = $$(this).prop('checked');
-    //     var invoiceId = $$(this).attr('data-id');
-    //
-    //     if ( isChecked ) {
-    //         TempStars.Api.updateInvoice( invoiceId, {dentistMarkedPaid: 1} )
-    //         .then( function() {
-    //             $$('#hygienist-job-completed-paid-label').html( 'paid!');
-    //         });
-    //     }
-    //     else {
-    //         TempStars.Api.updateInvoice( invoiceId, {dentistMarkedPaid: 0} )
-    //         .then( function() {
-    //             $$('#hygienist-job-completed-paid-label').html( 'NOT paid');
-    //         });
-    //     }
-    // }
-
-    // function surveyToggleHandler( e ) {
-    //     var isChecked = $$(this).prop('checked');
-    //     var jobId = $$(this).attr('data-id');
-    //
-    //     if ( isChecked ) {
-    //         TempStars.Api.updateJob( jobId, {dentistEvalComplete: 1} )
-    //         .then( function() {
-    //             $$('#hygienist-job-completed-survey-label').html( 'done!');
-    //         });
-    //     }
-    //     else {
-    //         TempStars.Api.updateJob( jobId, {dentistEvalComplete: 0} )
-    //         .then( function() {
-    //             $$('#hygienist-job-completed-survey-label').html( 'NOT done');
-    //         });
-    //     }
-    // }
 
     function viewInvoiceHandler( e ) {
         var id = parseInt( $$(this).attr('data-id') );
@@ -92,34 +57,6 @@ TempStars.Pages.Hygienist.JobCompleted = (function() {
         e.preventDefault();
         TempStars.Hygienist.surveyButtonHandler( e, job.id );
     }
-
-    // // TODO
-    // function rateDentist( result ) {
-    //
-    //     app.showPreloader('Saving Survey');
-    //     TempStars.Api.updateJob( job.id, {dentistRating: result} )
-    //     .then( function() {
-    //         var data = { dentistId: job.dentistId };
-    //
-    //         if ( result == TempStars.Survey.VERY_HAPPY ) {
-    //             return TempStars.Api.addFavouriteDentist( job.hygienistId, data );
-    //         }
-    //         else if ( result == TempStars.Survey.NO_THANK_YOU ) {
-    //             return TempStars.Api.addBlockedDentist( job.hygienistId, data );
-    //         }
-    //         else {
-    //             return Promise.resolve();
-    //         }
-    //     })
-    //     .then( function() {
-    //         app.hidePreloader();
-    //         TempStars.Hygienist.Router.reloadPage('job-completed', { id: job.id } );
-    //     })
-    //     .catch( function() {
-    //         app.hidePreloader();
-    //         app.alert( 'Error saving survey. Please try again.' );
-    //     });
-    // }
 
     return {
         init: init,
@@ -139,7 +76,7 @@ TempStars.Pages.Hygienist.JobCompleted = (function() {
                     TempStars.Hygienist.getJobsByDate( params.date )
                     .then( function( jobs ) {
                         job = jobs[0];
-                        job.hasInvoice = (job.invoice) ? true : false;                        
+                        job.hasInvoice = (job.invoice) ? true : false;
                         resolve( job );
                     })
                     .catch( function( err ) {

@@ -281,7 +281,7 @@ TempStars.Pages.Hygienist.CreateInvoice = (function() {
             .then( function() {
                 app.hidePreloader();
                 app.alert( 'Invoice Sent', function() {
-                    TempStars.Hygienist.Router.goBackPage();
+                    TempStars.Hygienist.Router.goBackPage('', {id: job.id} );
                 });
             })
             .catch( function( err ) {
@@ -293,12 +293,6 @@ TempStars.Pages.Hygienist.CreateInvoice = (function() {
             app.hidePreloader();
             app.alert( 'Error sending invoice. Please try again.')
         });
-
-        // $.get( 'hygienist/invoice-template.html', function( template ) {
-        // });
-
-        // var template = $$('#invoice-template').html();
-        // var compiledTemplate = Template7.compile( template );
     }
 
     return {

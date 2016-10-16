@@ -45,40 +45,6 @@ TempStars.Pages.Hygienist.TodaysJob = (function() {
         });
     }
 
-    // function surveyButtonHandler( e ) {
-    //     app.modal({
-    //       title:  'Rate the Dental Office',
-    //       text: 'How happy would you be to work at this office again?',
-    //       verticalButtons: true,
-    //       buttons: [
-    //         {
-    //             text: 'Very Happy',
-    //             onClick: function() {
-    //                 app.alert('Great, they will be added to your favourites.', function() {
-    //                     TempStars.Hygienist.rateDentist( job.id, TempStars.Rating.VERY_HAPPY );
-    //                 });
-    //             }
-    //         },
-    //         {
-    //             text: 'Pleased',
-    //             onClick: function() {
-    //                 app.alert('Thanks, all set.', function() {
-    //                     TempStars.Hygienist.rateDentist( job.id, TempStars.Rating.PLEASED );
-    //                 });
-    //             }
-    //         },
-    //         {
-    //             text: 'No Thank You!',
-    //             onClick: function() {
-    //                 app.alert('Sorry, they will be added to your blocked list.', function() {
-    //                     TempStars.Hygienist.rateDentist( job.id, TempStars.Rating.NO_THANK_YOU );
-    //                 });
-    //             }
-    //         }
-    //       ]
-    //     });
-    // }
-
     function invoiceButtonHandler( e ) {
         if ( job.hasInvoice ) {
             TempStars.Hygienist.Router.goForwardPage( 'invoice', {}, job );
@@ -115,52 +81,10 @@ TempStars.Pages.Hygienist.TodaysJob = (function() {
         });
     }
 
-    // TODO
     function surveyButtonHandler( e ) {
         e.preventDefault();
         TempStars.Hygienist.surveyButtonHandler( e, job.id );
     }
-
-    //
-    //
-    // TempStars.Hygienist.rateDentist( rating ) {
-    //     app.showPreloader('Saving Survey');
-    //     TempStars.Api.rateDentist( hygienistId, jobId, rating )
-    //     .then( function() {
-    //         app.hidePreloader();
-    //         TempStars.Hygienist.Router.reloadPage();
-    //     })
-    //     .catch( function(err) {
-    //         app.hidePreloader();
-    //         app.alert( 'Error saving survey. Please try again.' );
-    //     })
-    // }
-    // function rateDentist( result ) {
-    //     app.showPreloader('Saving Survey');
-    //     TempStars.Api.updateJob( job.id, {dentistRating: result} )
-    //     .then( function() {
-    //
-    //         var data = { dentistId: job.dentistId };
-    //
-    //         if ( result == TempStars.Survey.VERY_HAPPY ) {
-    //             return TempStars.Api.addFavouriteDentist( job.hygienistId, data );
-    //         }
-    //         else if ( result == TempStars.Survey.NO_THANK_YOU ) {
-    //             return TempStars.Api.addBlockedDentist( job.hygienistId, data );
-    //         }
-    //         else {
-    //             return Promise.resolve();
-    //         }
-    //     })
-    //     .then( function() {
-    //         app.hidePreloader();
-    //         TempStars.Hygienist.Router.reloadPage('todays-job');
-    //     })
-    //     .catch( function( err ) {
-    //         app.hidePreloader();
-    //         app.alert( 'Error saving survey. Please try again.' );
-    //     });
-    // }
 
     return {
         init: init,
