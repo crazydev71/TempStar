@@ -362,6 +362,9 @@ module.exports = function( Hygienist ) {
                 return;
             }
 
+            console.log( 'hr: ' + job.hourlyRate );
+            console.log( 'ra: ' + rateAdjustment );
+
             hourlyRate = job.hourlyRate + rateAdjustment;
             return job.updateAttributes({
                 hygienistId: hygienistId,
@@ -555,14 +558,21 @@ module.exports = function( Hygienist ) {
     Hygienist.cancelJob = function( hygienistId, jobId, callback ) {
 
         var Job = app.models.Job;
-        var jj;
+        var Region = app.models.Region;
+        var job, jj;
+        var baseRate;
 
         Job.findById( jobId )
-        .then( function( job ) {
+        .then( function( j ) {
+            job = j;
             jj = job.toJSON();
-
+            return Region.findById( jj.dentist.regionId );
+        })
+        .then( function( region ) {
+            baseRate = region.rate;
             return job.updateAttributes({
                 status: jobStatus.POSTED,
+                hourlyRate: baseRate,
                 hygienistId: null
             });
         })
