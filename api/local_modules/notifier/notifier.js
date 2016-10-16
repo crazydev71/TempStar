@@ -71,7 +71,9 @@ function createJobNotifications( lb, a, jobId, message ) {
             console.log( 'minutes until job start: ' + minutesTillStart );
 
             interval = Math.round( minutesTillStart / 35 );
+            interval = (interval < 1) ? 1 : interval;
             console.log( 'interval: ' + interval );
+
 
             favSendTime = now.clone();
             console.log( 'favSendTime: ' + favSendTime.toDate() );
@@ -111,7 +113,7 @@ function createJobNotifications( lb, a, jobId, message ) {
                 }
 
                 return Notification.create({
-                    sendTime: moment(sendTime).utc().format('YYYY-MM-DD hh:mm' ),
+                    sendTime: moment(sendTime).utc().format('YYYY-MM-DD HH:mm' ),
                     message: message,
                     userId: hygienist.user.id,
                     jobId: jobId
