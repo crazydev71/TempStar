@@ -22,6 +22,6 @@
     "handleErrors": false
   },
   "legacyExplorer": false,
-  "stripeSecretKey": "sk_test_6RfrY1kO3xkVyDrKgvumnnFX",
-  "resetPasswordLink": "https://api.tempstars.net/reset-password"
+  "stripeSecretKey": "sk_live_cjRvWqrIhEQaL5Yo1pG1wMWN",
+  "resetPasswordLink": "https://api.tempstars.ca/reset-password"
 }

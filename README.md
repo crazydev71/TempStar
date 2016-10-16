@@ -1,5 +1,3 @@
 # TempStars
 
-This is the repo for the TempStars apps...
-
-coming soon....
+This is the repo for TempStars.  See the wiki for documentation.

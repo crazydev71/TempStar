@@ -22,7 +22,7 @@
     "handleErrors": false
   },
   "legacyExplorer": false,
-  "stripeSecretKey": "sk_test_PCAtzsYTShhPQLkwJLGrQ6xP",
+  "stripeSecretKey": "sk_test_6RfrY1kO3xkVyDrKgvumnnFX",
   "gcmApiKey": "AIzaSyBpqJVshqasod9SEdJoCSIHX5aqRkY-zg8",
   "apnKey": "sys/APNSAuthKey_4W5923BGDZ.p8",
   "apnKeyId": "4W5923BGDZ",

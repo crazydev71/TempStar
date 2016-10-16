@@ -1,7 +1,7 @@
 {
   "name": "tempstars-app",
   "description": "Tempstars app",
-  "version": "1.0.0",
+  "version": "2.0.12",
   "main": "index.js",
   "author": "Mike Betts",
   "private": true,

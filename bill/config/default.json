@@ -10,7 +10,7 @@
     },
 
     "stripe": {
-        "secretKey": "sk_test_PCAtzsYTShhPQLkwJLGrQ6xP",
+        "secretKey": "sk_test_6RfrY1kO3xkVyDrKgvumnnFX",
         "currency": "usd",
         "amount": 2500
     },
