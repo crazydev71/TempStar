@@ -39,7 +39,7 @@ TempStars.App = (function() {
 
             // TODO
             try {
-                Stripe.setPublishableKey('pk_test_fPZwN5y87Dx9r3C4FWhdzGVH');
+                Stripe.setPublishableKey( TempStars.Config.stripe.pubKey );
             }
             catch(e) {
                 console.log( e.message );

@@ -13,6 +13,9 @@ TempStars.Config = (function() {
         },
         push: {
             senderID: '210360814619'
-        }                
+        },
+        stripe: {
+            pubKey: 'pk_test_yzhl7dmUrMvdEB9BaKuKhgpL'
+        }
     };
 })();
