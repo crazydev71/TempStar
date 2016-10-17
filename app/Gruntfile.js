@@ -202,6 +202,7 @@ module.exports = function (grunt) {
         },
 
         exec: {
+            build_android: 'cordova build android --release',
             run_ios: 'cordova run ios',
             run_android: 'cordova run android',
             run_browser: 'cordova run browser',
@@ -253,6 +254,7 @@ module.exports = function (grunt) {
     grunt.registerTask( 'default',  [ 'init', 'clean', 'exec:create_version', 'copy', 'concat', 'template:browser', 'includereplace', 'uglify' ]);
     grunt.registerTask( 'ios',      [ 'init', 'clean', 'exec:create_version', 'copy', 'concat', 'template:ios',     'includereplace', 'exec:run_ios']);
     grunt.registerTask( 'android',  [ 'init', 'clean', 'exec:create_version', 'copy', 'concat', 'template:android', 'includereplace', 'exec:run_android']);
+    grunt.registerTask( 'android-buildsrc',  [ 'init', 'clean', 'exec:create_version', 'copy', 'concat', 'template:android', 'includereplace']);
     grunt.registerTask( 'browser',  [ 'init', 'clean', 'exec:create_version', 'copy', 'concat', 'template:browser', 'includereplace', 'exec:run_browser']);
     grunt.registerTask( 'serve',    ['connect', 'watch']);
 
