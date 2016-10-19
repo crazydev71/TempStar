@@ -104,6 +104,13 @@ TempStars.Pages.HygienistSignup = (function() {
         // Check province
         if ( $$('#hygienist-signup-form select[name=province]').val() == "" ) {
             $('#hygienist-signup-form select[name="province"]').next().addClass('error').html( 'Province must be selected' );
+            if ( errors ) {
+                errors.province = true;
+            }
+            else {
+                errors = {};
+                errors.province = true;
+            }
         }
 
         // Save form data
@@ -122,9 +129,9 @@ TempStars.Pages.HygienistSignup = (function() {
             if ( errors.city ) {
                 $$('#hygienist-signup-form input[name="city"]').addClass('error').next().html( errors.city[0] );
             }
-            if ( errors.province ) {
-                $$('#hygienist-signup-form input[name="province"]').addClass('error').next().html( errors.province[0] );
-            }
+            // if ( errors.province ) {
+            //     $$('#hygienist-signup-form input[name="province"]').addClass('error').next().html( errors.province[0] );
+            // }
             if ( errors.postalCode ) {
                 $$('#hygienist-signup-form input[name="postalCode"]').addClass('error').next().html( errors.postalCode[0] );
             }
@@ -161,7 +168,7 @@ TempStars.Pages.HygienistSignup = (function() {
             app.hidePreloader();
             app.formDeleteData('hygienist-signup-form');
             TempStars.Push.init();
-            TempStars.User.updateRegistration();            
+            TempStars.User.updateRegistration();
             TempStars.App.gotoStartingPage();
         })
         .catch( function( err ) {

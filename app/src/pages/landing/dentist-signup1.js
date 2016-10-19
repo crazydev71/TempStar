@@ -94,6 +94,13 @@ TempStars.Pages.DentistSignup1 = (function() {
         // Check province
         if ( $$('#dentist-signup1-form select[name=province]').val() == "" ) {
             $('#dentist-signup1-form select[name="province"]').next().addClass('error').html( 'Province must be selected' );
+            if ( errors ) {
+                errors.province = true;
+            }
+            else {
+                errors = {};
+                errors.province = true;
+            }
         }
 
         if ( errors ) {
@@ -109,9 +116,9 @@ TempStars.Pages.DentistSignup1 = (function() {
             if ( errors.city ) {
                 $$('#dentist-signup1-form input[name="city"]').addClass('error').next().html( errors.city[0] );
             }
-            if ( errors.province ) {
-                $$('#dentist-signup1-form input[name="province"]').addClass('error').next().html( errors.province[0] );
-            }
+            // if ( errors.province ) {
+            //     $$('#dentist-signup1-form input[name="province"]').addClass('error').next().html( errors.province[0] );
+            // }
             if ( errors.postalCode ) {
                 $$('#dentist-signup1-form input[name="postalCode"]').addClass('error').next().html( errors.postalCode[0] );
             }
