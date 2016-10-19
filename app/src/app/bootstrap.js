@@ -69,10 +69,10 @@ TempStars.bootstrap = {
         }
         else {
             window.device = {};
-            window.device.platform = 'dev',
-            window.device.version = '&infin;',
-            window.device.manufacturer = 'Mike',
-            window.device.model = 'latest &amp; greatest',
+            window.device.platform = platform.name;
+            window.device.version = platform.version;
+            window.device.manufacturer = platform.os;
+            window.device.model = '';
             this.onDeviceReady();
         }
     },

@@ -54,9 +54,9 @@
             <div class="content-block">
                 &bull; App Version: {{version}}
                 <br>
-                &bull; Platform: {{platform}} {{platformVersion}}
+                &bull; {{#if isBrowser}}Browser{{else}}Platform{{/if}}: {{platform}} {{platformVersion}}
                 <br>
-                &bull; Model: {{manufacturer}} {{model}}
+                &bull; {{#if isBrowser}}OS{{else}}Model{{/if}}: {{manufacturer}} {{model}}
             </div>
         </div>
     </div>
