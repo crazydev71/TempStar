@@ -12,6 +12,7 @@ TempStars.Pages.DentistSignup1 = (function() {
             $$('#dentist-signup1-logout-link').on( 'click', logoutHandler );
             $$('#dentist-signup1-form input[name="postalCode"]').on( 'focusout', upcasePostalCode );
             $$('#dentist-signup1-form input').on( 'keypress', keyHandler );
+            $$('#dentist-signup1-web-photo').on( 'change', webPhotoHandler );
 
             userAccount = TempStars.User.getCurrentUser();
             $$( '#dentist-signup-email').html( userAccount.email );
@@ -24,6 +25,7 @@ TempStars.Pages.DentistSignup1 = (function() {
             $$('#dentist-signup1-logout-link').off( 'click', logoutHandler );
             $$('#dentist-signup1-form input[name="postalCode"]').off( 'focusout', upcasePostalCode );
             $$('#dentist-signup1-form input').off( 'keypress', keyHandler );
+            $$('#dentist-signup1-web-photo').off( 'change', webPhotoHandler );
         });
 
         app.onPageBeforeAnimation( 'dentist-signup1', function( page ) {
@@ -134,7 +136,7 @@ TempStars.Pages.DentistSignup1 = (function() {
         .then( function( photoFileName ) {
             // Save form data
             if ( photoFileName ) {
-                formData.photoUrl = TempStars.Config.bucket.baseUrl + photoFileName;
+                formData.photoUrl = photoFileName;
             }
 
             app.formStoreData('dentist-signup1-form', formData );
@@ -150,22 +152,30 @@ TempStars.Pages.DentistSignup1 = (function() {
         });
     }
 
-    function addPhotoHandler() {
-        navigator.camera.getPicture (
-          function(result) {
-              $$('#dentist-signup1-photo').attr('src', result );
-              $$('#dentist-signup1-photo-remove').show();
-              $$('#dentist-signup1-photo-add').hide();
-          },
-          function(errmsg) {
-              app.alert( errmsg )
-          },
-          {
-              sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-              quality: 80,
-              targetWidth: 200,
-              targetHeight: 200
-        });
+    function addPhotoHandler(e) {
+        e.preventDefault();
+
+        if ( window.cordova ) {
+
+            navigator.camera.getPicture (
+              function(result) {
+                  $$('#dentist-signup1-photo').attr('src', result );
+                  $$('#dentist-signup1-photo-remove').show();
+                  $$('#dentist-signup1-photo-add').hide();
+              },
+              function(errmsg) {
+                  app.alert( errmsg )
+              },
+              {
+                  sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                  quality: 80,
+                  targetWidth: 200,
+                  targetHeight: 200
+            });
+        }
+        else {
+            $$('#dentist-signup1-web-photo').click();
+        }
     }
 
     function removePhotoHandler( e ) {
@@ -173,6 +183,19 @@ TempStars.Pages.DentistSignup1 = (function() {
         $$('#dentist-signup1-photo-remove').hide();
         $$('#dentist-signup1-photo-add').show();
     }
+
+
+    function webPhotoHandler( e ) {
+        var f = e.target.files[0];
+        var reader = new FileReader();
+        reader.onload = function(event) {
+            $$('#dentist-signup1-photo-remove').show();
+            $$('#dentist-signup1-photo-add').hide();
+            $$('#dentist-signup1-photo').attr( 'src', event.target.result );
+        };
+        reader.readAsDataURL(f);
+    }
+
 
     function uploadPhoto() {
         return new Promise( function( resolve, reject ) {
@@ -182,20 +205,66 @@ TempStars.Pages.DentistSignup1 = (function() {
                 resolve();
                 return;
             }
-            var options = new FileUploadOptions();
-            options.fileName = uuid.v4() + '.jpg';
-            var ft = new FileTransfer();
-            var uploadURL = TempStars.Config.server.baseUrl + 'containers/tempstars.ca/upload';
-            ft.upload( photoURI,
-               encodeURI( uploadURL ),
-               function( result ) {
-                  resolve( options.fileName );
-               },
-               function( error ) {
-                  reject( error );
-               },
-               options
-            );
+
+            if ( window.cordova ) {
+
+                var options = new FileUploadOptions();
+                options.fileName = uuid.v4() + '.jpg';
+                var ft = new FileTransfer();
+                var uploadURL = TempStars.Config.server.baseUrl + 'containers/tempstars.ca/upload';
+                ft.upload( photoURI,
+                   encodeURI( uploadURL ),
+                   function( result ) {
+                      resolve( options.fileName );
+                   },
+                   function( error ) {
+                      reject( error );
+                   },
+                   options
+                );
+            }
+            else {
+                // Browser
+                var ext, f;
+
+                f = $('#dentist-signup1-web-photo')[0].files[0];
+                switch (f.type) {
+                    case 'image/jpeg':
+                    case 'image/jpg':
+                        ext = '.jpg';
+                        break;
+
+                    case 'image/gif':
+                        ext = '.gif';
+                        break;
+
+                    case 'image/png':
+                        ext = '.png';
+                        break;
+
+                    default:
+                        reject( new Error( 'unknown image type'));
+                        return;
+                }
+
+                var dataURI = $('#dentist-signup1-photo').attr( "src" );
+                var blob = TempStars.File.convertDataURItoBlobSync( dataURI );
+
+                // Rename file
+                var fileName = uuid.v4() + ext;
+
+                var uploadURL = 'containers/tempstars.ca/upload';
+                var formData = new FormData();
+                formData.append( 'photo', blob, fileName );
+                TempStars.Ajax.upload( uploadURL, formData )
+                .then( function( result ) {
+                    resolve( TempStars.Config.bucket.baseUrl + fileName );
+                })
+                .catch( function( err ) {
+                    reject( err );
+                });
+            }
+
         });
     }
 

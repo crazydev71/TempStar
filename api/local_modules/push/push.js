@@ -50,7 +50,7 @@ function sendiOSMessage( message, regToken ) {
         }
 
         var msg = new apn.Notification();
-        msg.topic = 'ca.tempstars.app2';
+        msg.topic = 'ca.version1.TempStars';
         msg.alert = message;
         msg.expiry = Math.floor(Date.now() / 1000) + 3600 * 24; // Expires in 24 hours
 

@@ -13,9 +13,11 @@ TempStars.Pages.Hygienist.Profile = (function() {
                 $$('#hygienist-profile-photo').attr('src', data.photoUrl );
                 $$('#hygienist-profile-photo-remove').show();
                 $$('#hygienist-profile-photo-add').hide();
-                $$('#hygienist-profile-upload-photo-button').on( 'click', addPhotoHandler );
-                $$('#hygienist-profile-remove-photo-button').on( 'click', removePhotoHandler );
             }
+            $$('#hygienist-profile-upload-photo-button').on( 'click', addPhotoHandler );
+            $$('#hygienist-profile-remove-photo-button').on( 'click', removePhotoHandler );
+            $$('#hygienist-profile-web-photo').on( 'change', webPhotoHandler );
+            $$('#hygienist-profile-upload-photo-button').on( 'click', addPhotoHandler );
         });
 
         app.onPageBeforeInit( 'hygienist-profile', function( page ) {
@@ -24,6 +26,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
                 $$(document).on( 'click','#hygienist-profile-save-button', submitHandler );
                 $$('#hygienist-profile-upload-photo-button').on( 'click', addPhotoHandler );
                 $$('#hygienist-profile-remove-photo-button').on( 'click', removePhotoHandler );
+                $$('#hygienist-profile-web-photo').on( 'change', webPhotoHandler );
                 $$('#hygienist-profile-form input[name="postalCode"]').on( 'focusout', upcasePostalCode );
                 $$('#hygienist-profile-form input').on( 'keypress', keyHandler );
                 initialized = true;
@@ -162,22 +165,30 @@ TempStars.Pages.Hygienist.Profile = (function() {
         });
     }
 
-    function addPhotoHandler() {
-        navigator.camera.getPicture (
-          function(result) {
-              $$('#hygienist-profile-photo').attr('src', result );
-              $$('#hygienist-profile-photo-remove').show();
-              $$('#hygienist-profile-photo-add').hide();
-          },
-          function(errmsg) {
-              app.alert( errmsg );
-          },
-          {
-              sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-              quality: 80,
-              targetWidth: 200,
-              targetHeight: 200
-        });
+    function addPhotoHandler(e) {
+        e.preventDefault();
+
+        if ( window.cordova ) {
+            navigator.camera.getPicture (
+              function(result) {
+                  $$('#hygienist-profile-photo').attr('src', result );
+                  $$('#hygienist-profile-photo-remove').show();
+                  $$('#hygienist-profile-photo-add').hide();
+              },
+              function(errmsg) {
+                  app.alert( errmsg );
+              },
+              {
+                  sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                  quality: 80,
+                  targetWidth: 200,
+                  targetHeight: 200
+            });
+        }
+        else {
+            $$('#hygienist-profile-web-photo').click();
+        }
+
     }
 
     function removePhotoHandler( e ) {
@@ -209,21 +220,77 @@ TempStars.Pages.Hygienist.Profile = (function() {
             }
 
             // Otherwise new photo so upload
-            var options = new FileUploadOptions();
-            options.fileName = uuid.v4() + '.jpg';
-            var ft = new FileTransfer();
-            var uploadURL = TempStars.Config.server.baseUrl + 'containers/tempstars.ca/upload';
-            ft.upload( photoURI,
-               encodeURI( uploadURL ),
-               function( result ) {
-                  resolve( TempStars.Config.bucket.baseUrl + options.fileName );
-               },
-               function( error ) {
-                  reject( error );
-               },
-               options
-            );
+            if ( window.cordova ) {
+                // Mobile
+                var options = new FileUploadOptions();
+                options.fileName = uuid.v4() + '.jpg';
+                var ft = new FileTransfer();
+                var uploadURL = TempStars.Config.server.baseUrl + 'containers/tempstars.ca/upload';
+                ft.upload( photoURI,
+                   encodeURI( uploadURL ),
+                   function( result ) {
+                      resolve( TempStars.Config.bucket.baseUrl + options.fileName );
+                   },
+                   function( error ) {
+                      reject( error );
+                   },
+                   options
+                );
+            }
+            else {
+                // Browser
+                var ext, f;
+
+                f = $('#hygienist-profile-web-photo')[0].files[0];
+                switch (f.type) {
+                    case 'image/jpeg':
+                    case 'image/jpg':
+                        ext = '.jpg';
+                        break;
+
+                    case 'image/gif':
+                        ext = '.gif';
+                        break;
+
+                    case 'image/png':
+                        ext = '.png';
+                        break;
+
+                    default:
+                        reject( new Error( 'unknown image type'));
+                        return;
+                }
+
+                var dataURI = $('#hygienist-profile-photo').attr( "src" );
+                var blob = TempStars.File.convertDataURItoBlobSync( dataURI );
+
+                // Rename file
+                var fileName = uuid.v4() + ext;
+
+                var uploadURL = 'containers/tempstars.ca/upload';
+                var formData = new FormData();
+                formData.append( 'photo', blob, fileName );
+                TempStars.Ajax.upload( uploadURL, formData )
+                .then( function( result ) {
+                    resolve( TempStars.Config.bucket.baseUrl + fileName );
+                })
+                .catch( function( err ) {
+                    reject( err );
+                });
+            }
         });
+    }
+
+
+    function webPhotoHandler( e ) {
+        var f = e.target.files[0];
+        var reader = new FileReader();
+        reader.onload = function(event) {
+            $$('#hygienist-profile-photo-remove').show();
+            $$('#hygienist-profile-photo-add').hide();
+            $$('#hygienist-profile-photo').attr( 'src', event.target.result );
+        };
+        reader.readAsDataURL(f);
     }
 
     function upcasePostalCode( e ) {
