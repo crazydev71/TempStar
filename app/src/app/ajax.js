@@ -52,7 +52,7 @@ TempStars.Ajax = (function() {
                 method: verb,
                 url: baseUrl + url
             };
-            
+
             if ( data ) {
                 vud.data = data;
             }
@@ -99,7 +99,16 @@ TempStars.Ajax = (function() {
 
 		del: function del( url, data, auth, settings ) {
 			return ajax( 'DELETE', url, JSON.stringify( data ), auth, settings );
-		}
+		},
+
+        upload: function upload( url, data, auth, settings ) {
+            var base = {
+                contentType: false,  // multipart/form-data
+                processData: false
+            };
+            var uploadSettings = _.merge( base, settings );
+            return ajax( 'POST', url, data, auth, uploadSettings );
+        }
     };
 
 })();
