@@ -89,7 +89,7 @@ TempStars.Pages.HygienistSignup = (function() {
                 presence: true,
                 numericality: {
                   onlyInteger: true,
-                  strict: true
+                  strict: false
                 },
                 length: {
                     is: 6

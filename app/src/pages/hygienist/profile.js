@@ -95,6 +95,16 @@ TempStars.Pages.Hygienist.Profile = (function() {
             phone: {
                 presence: true,
                 phoneNumber: true
+            },
+            CDHONumber: {
+                presence: true,
+                numericality: {
+                  onlyInteger: true,
+                  strict: false
+                },
+                length: {
+                    is: 6
+                }
             }
         };
 
@@ -127,6 +137,11 @@ TempStars.Pages.Hygienist.Profile = (function() {
             }
             if ( errors.phone ) {
                 $$('#hygienist-profile-form input[name="phone"]').addClass('error').next().html( errors.phone[0] );
+            }
+            if ( errors.CDHONumber ) {
+                // Make field name more readable
+                var msg = errors.CDHONumber[0].replace( /CDHONumber/i, 'CDHO num');
+                $$('#hygienist-profile-form input[name="CDHONumber"]').addClass('error').next().html( msg );
             }
             return;
         }
