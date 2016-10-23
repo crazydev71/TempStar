@@ -244,8 +244,19 @@ module.exports = function( Dentist ) {
 
         // Create a new job and the shifts for that job
         // Then create notifications for each potential hygienist
-
-        Dentist.findById( parseInt(id) )
+        Job.findOne({
+            dentistId: parseInt(id),
+            startDate: data.job.startDate
+        })
+        .then( function( existingJob ) {
+            if ( existingJob ) {
+                throw new Error( 'You already have a job posted for this day.' );
+                return;
+            }
+        })
+        .then( function() {
+            return Dentist.findById( parseInt(id) );
+        })
         .then( function( d ) {
             return Region.findById( d.regionId );
         })

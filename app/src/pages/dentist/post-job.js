@@ -187,7 +187,8 @@ TempStars.Pages.Dentist.PostJob = (function() {
         })
         .catch( function( err ) {
             app.hidePreloader();
-            app.alert( 'Error posting job.  Please try again' );
+            app.alert( 'Error posting job. ' + err.error.message );
+            TempStars.Dentist.Router.goBackPage();
         });
 
     }
