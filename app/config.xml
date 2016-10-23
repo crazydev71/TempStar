@@ -83,10 +83,6 @@
     <engine name="browser" spec="~4.1.0" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <plugin name="cordova-plugin-geolocation" spec="~2.2.0" />
-    <plugin name="cordova-plugin-nativestorage" spec="~2.0.2" />
-    <plugin name="cordova-plugin-device" spec="~1.1.2" />
-    <plugin name="cordova-plugin-console" spec="~1.0.3" />
-    <plugin name="com.ionic.keyboard" spec="https://github.com/Telerik-Verified-Plugins/Keyboard" />
     <plugin name="phonegap-plugin-push" spec="~1.8.2">
         <variable name="SENDER_ID" value="210360814619" />
     </plugin>
@@ -98,11 +94,15 @@
         <variable name="XWALK_MULTIPLEAPK" value="true" />
     </plugin>
     <plugin name="cordova-plugin-network-information" spec="~1.3.0" />
-    <plugin name="cordova-plugin-splashscreen" spec="~4.0.0" />
     <plugin name="cordova-plugin-camera" spec="~2.3.0">
         <variable name="CAMERA_USAGE_DESCRIPTION" value=" " />
         <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value=" " />
     </plugin>
     <plugin name="cordova-plugin-file-transfer" spec="~1.6.0" />
     <plugin name="cordova-plugin-file" spec="~4.3.0" />
+    <plugin name="cordova-plugin-device" spec="~1.1.3" />
+    <plugin name="cordova-plugin-nativestorage" spec="~2.0.2" />
+    <plugin name="cordova-plugin-splashscreen" spec="~4.0.0" />
+    <plugin name="com.ionic.keyboard" spec="https://github.com/Telerik-Verified-Plugins/Keyboard" />
+    <plugin name="cordova-plugin-console" spec="~1.0.3" />
 </widget>
