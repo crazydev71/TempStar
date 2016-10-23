@@ -3,6 +3,9 @@ TempStars.Config = (function() {
     'use strict';
 
     return {
+        env: {
+            name: 'dev'
+        },
         server: {
             authUserName: 'riff',
             authPassword: 'raff',
@@ -16,6 +19,9 @@ TempStars.Config = (function() {
         },
         stripe: {
             pubKey: 'pk_test_yzhl7dmUrMvdEB9BaKuKhgpL'
+        },
+        loggly: {
+            key: '98a8b7a7-32a0-4d93-baaa-2decead36369'
         }
     };
 })();

@@ -130,38 +130,48 @@ TempStars.Pages.Dentist.Home = (function() {
     return {
         init: init,
         getData: function( params ) {
+            TempStars.Logging.log( 'getting data for dentist home page' );
             return new Promise( function( resolve, reject ) {
                 Promise.props({
                     user: TempStars.User.getCurrentUser(),
                     jobs: TempStars.Dentist.getAllJobs()
                 })
                 .then( function( data ) {
+                    TempStars.Logging.log( 'got data for dentist home page' );
+
+                    TempStars.Logging.log( 'getting posted jobs for dentist home page' );
+
                     data.posted = _(data.jobs)
                         .filter(['status', TempStars.Job.status.POSTED])
                         .map( getJobDate )
                         .value();
 
+                    TempStars.Logging.log( 'getting partial jobs for dentist home page' );
                     data.partial = _(data.jobs)
                         .filter(['status', TempStars.Job.status.PARTIAL])
                         .map( getJobDate )
                         .value();
 
+                    TempStars.Logging.log( 'getting confirmed jobs for dentist home page' );
                     data.confirmed = _(data.jobs)
                         .filter(['status', TempStars.Job.status.CONFIRMED])
                         .map( getJobDate )
                         .value();
 
+                    TempStars.Logging.log( 'getting completed jobs for dentist home page' );
                     data.completed = _(data.jobs)
                         .filter(['status', TempStars.Job.status.COMPLETED])
                         .map( getJobDate )
                         .value();
 
+                    TempStars.Logging.log( 'getting action required for dentist home page' );
                     data.actionRequired = _(data.jobs)
                         .map( getActionRequiredJobs )
                         .filter( 'actionRequired' )
                         .map( getJobDate )
                         .value();
 
+                    TempStars.Logging.log( 'finished parsing data for dentist home page' );
                     resolve( data );
                 })
                 .catch( function( err ) {

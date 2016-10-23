@@ -123,6 +123,7 @@
     </div>
 
     <script src="cordova.js"></script>
+    <script src="lib/loggly.tracker-2.1.min.js"></script>
     <script src="lib/framework7/js/framework7.js"></script>
     <script src="lib/jquery.min.js"></script>
     <script src="lib/lodash.min.js"></script>

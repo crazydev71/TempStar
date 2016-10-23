@@ -124,6 +124,7 @@ TempStars.Pages.Hygienist.Home = (function() {
     return {
         init: init,
         getData: function( params ) {
+            TempStars.Logging.log( 'getting data for home page ' );
             return new Promise( function( resolve, reject ) {
                 Promise.props({
                     user: TempStars.User.getCurrentUser(),
@@ -131,9 +132,11 @@ TempStars.Pages.Hygienist.Home = (function() {
                     maxJob: TempStars.Hygienist.getMaxAvailableJobId()
                 })
                 .then( function( data ) {
+                    TempStars.Logging.log( 'got data for home page ' );
                     data.jobs = data.all.jobs;
                     data.pos = data.all.pos;
 
+                    TempStars.Logging.log( 'getting partial jobs for home page' );
                     data.partial = _(data.pos)
                         .filter( function(o) {
                             if (o.status != 1 && o.status != 2) {
@@ -145,22 +148,26 @@ TempStars.Pages.Hygienist.Home = (function() {
                         .map( getJobDate )
                         .value();
 
+                    TempStars.Logging.log( 'getting confirmed jobs for home page' );
                     data.confirmed = _(data.jobs)
                         .filter(['status', TempStars.Job.status.CONFIRMED])
                         .map( getJobDate )
                         .value();
 
+                    TempStars.Logging.log( 'getting completed jobs for home page' );
                     data.completed = _(data.jobs)
                         .filter(['status', TempStars.Job.status.COMPLETED])
                         .map( getJobDate )
                         .value();
 
+                    TempStars.Logging.log( 'getting action required for home page' );
                     data.actionRequired = _(data.jobs)
                         .map( getActionRequiredJobs )
                         .filter( 'actionRequired' )
                         .map( getJobDate )
                         .value();
 
+                    TempStars.Logging.log( 'getting available jobs for home page' );
                     var available = _(data.jobs)
                         .filter(['status', TempStars.Job.status.POSTED])
                         .value();
@@ -173,6 +180,7 @@ TempStars.Pages.Hygienist.Home = (function() {
                         data.haveNewJobs = false;
                     }
 
+                    TempStars.Logging.log( 'finished parsing data for home page' );
                     resolve( data );
                 })
                 .catch( function( err ) {

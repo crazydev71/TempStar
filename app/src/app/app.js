@@ -83,8 +83,7 @@ TempStars.App = (function() {
                         photoUrl: photoUrl
                     });
                     $('#panel-menu').html(menuContent);
-
-                    TempStars.Dentist.Router.goForwardPage( 'home');
+                    TempStars.Dentist.Router.goForwardPage( 'home' );
                 }
                 else {
                     // Go back to signup

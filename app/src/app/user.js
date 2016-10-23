@@ -53,9 +53,11 @@ TempStars.User = (function() {
                     return TempStars.User.updateRegistration();
                 })
                 .then( function() {
+                    TempStars.Logging.log('autologged in as: ' + userAccount.email );
                     resolve();
                 })
                 .catch( function( err ) {
+                    TempStars.Logging.log('autologin failed for: ' + userAccount.email );
                     reject();
                 });
             });
@@ -85,9 +87,11 @@ TempStars.User = (function() {
                     TempStars.Push.init();
                 })
                 .then( function() {
+                    TempStars.Logging.log('logged in as: ' + userAccount.email );
                     resolve();
                 })
                 .catch( function( err ) {
+                    TempStars.Logging.log('logged failed for: ' + userAccount.email );
                     reject( err );
                 });
             });
@@ -159,6 +163,7 @@ TempStars.User = (function() {
 
                 TempStars.Api.logout()
                 .finally( function() {
+                    TempStars.Logging.log('logged out: ' + userAccount.email );
                     userAuth = undefined;
                     userAccount = undefined;
                     userLoggedIn = false;
@@ -185,15 +190,18 @@ TempStars.User = (function() {
                 .then( function( account ) {
                     userAccount = account;
                     TempStars.Storage.set( 'userAccount', account );
+                    TempStars.Logging.log('created account for: ' + userAccount.email );
                     resolve();
                 })
                 .catch( function( err ) {
+                    TempStars.Logging.log('create account failed for: ' + email );
                     reject( err );
                 });
             });
         },
 
         requestPasswordReset: function requestPasswordReset( email ) {
+            TempStars.Logging.log('password reset request for: ' + email );
             return TempStars.Api.resetPassword( email );
         },
 
