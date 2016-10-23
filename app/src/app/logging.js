@@ -18,11 +18,13 @@ TempStars.Logging = (function() {
         data.msg = message;
         data.device = window.device;
         data.version = TempStars.version;
-        
+
         var user = TempStars.User.getCurrentUser();
         data.user = {};
-        data.user.id = user.id;
-        data.user.email = user.email;
+        if ( user ) {
+            data.user.id = user.id;
+            data.user.email = user.email;            
+        }
 
         _LTracker.push( data );
     }

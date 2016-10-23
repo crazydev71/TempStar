@@ -91,7 +91,7 @@ TempStars.User = (function() {
                     resolve();
                 })
                 .catch( function( err ) {
-                    TempStars.Logging.log('logged failed for: ' + userAccount.email );
+                    TempStars.Logging.log('login failed for: ' + email );
                     reject( err );
                 });
             });
