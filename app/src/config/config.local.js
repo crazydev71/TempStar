@@ -21,7 +21,7 @@ TempStars.Config = (function() {
             pubKey: 'pk_test_yzhl7dmUrMvdEB9BaKuKhgpL'
         },
         loggly: {
-            key: '98a8b7a7-32a0-4d93-baaa-2decead36369'
+            key: '7a96865b-dac0-4059-afcd-e08555fe10b3'
         }
     };
 })();
