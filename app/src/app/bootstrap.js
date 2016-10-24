@@ -132,10 +132,15 @@ TempStars.bootstrap = {
     },
 
     onResume: function() {
-        console.log( 'on resume');
+        console.log( 'on resume' );
         TempStars.Push.init();
-        TempStars.User.updateRegistration();
-        TempStars.App.gotoStartingPage();
+        if ( TempStars.User.isLoggedIn() ) {
+            TempStars.User.updateRegistration();
+            TempStars.App.gotoStartingPage();
+        }
+        else {
+            mainView.router.loadPage( 'index.html' );
+        }
     }
 };
 

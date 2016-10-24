@@ -158,6 +158,10 @@ TempStars.User = (function() {
             return false;
         },
 
+        isLoggedIn: function isLoggedIn() {
+            return userLoggedIn;
+        },
+
         logout: function logout() {
             return new Promise( function( resolve, reject ) {
 
