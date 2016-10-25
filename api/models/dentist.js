@@ -244,10 +244,10 @@ module.exports = function( Dentist ) {
 
         // Create a new job and the shifts for that job
         // Then create notifications for each potential hygienist
-        Job.findOne({
+        Job.findOne({ where: {
             dentistId: parseInt(id),
             startDate: data.job.startDate
-        })
+        }})
         .then( function( existingJob ) {
             if ( existingJob ) {
                 throw new Error( 'You already have a job posted for this day.' );
