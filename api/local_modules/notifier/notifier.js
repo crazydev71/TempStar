@@ -50,6 +50,23 @@ function createJobNotifications( lb, a, jobId, message ) {
         })
         .then( function( hygienists ) {
             return Promise.all( hygienists.map( function( hygienist ) {
+                return isBlockedHygienist( job.dentistId, hygienist.id )
+                    .then( function( blocked ) {
+                        if ( blocked ) {
+                            return undefined;
+                        }
+                        else {
+                            return hygienist;
+                        }
+                    })
+                    .catch( function( err ) {
+                        return undefined;
+                    });
+            }));
+        })
+        .then( function( hygienists ) {
+            hygienists = _.compact( hygienists );
+            return Promise.all( hygienists.map( function( hygienist ) {
                 return isFavHygienist( job.dentistId, hygienist.id )
                     .then( function( fav ) {
                         hygienist.isFav = fav;
@@ -73,7 +90,6 @@ function createJobNotifications( lb, a, jobId, message ) {
             interval = Math.round( minutesTillStart / 35 );
             interval = (interval < 1) ? 1 : interval;
             console.log( 'interval: ' + interval );
-
 
             favSendTime = now.clone();
             console.log( 'favSendTime: ' + favSendTime.toDate() );
@@ -155,6 +171,30 @@ function isFavHygienist( dentistId, hygienistId ) {
     });
 }
 
+function isBlockedHygienist( dentistId, hygienistId ) {
+    return new Promise( function( resolve, reject ) {
+        var BlockedHygienist = app.models.BlockedHygienist;
+
+        // Did dentist block this hygienist?
+        BlockedHygienist.findOne({
+            where: {
+                dentistId: dentistId,
+                hygienistId: hygienistId
+            }
+        })
+        .then( function( blocked ) {
+            if ( blocked ) {
+                resolve( true );
+            }
+            else {
+                resolve( false );
+            }
+        })
+        .catch( function( err ) {
+            reject( err );
+        });
+    });
+}
 
 
 module.exports = {
