@@ -23,5 +23,6 @@
   },
   "legacyExplorer": false,
   "stripeSecretKey": "sk_test_6RfrY1kO3xkVyDrKgvumnnFX",
-  "resetPasswordLink": "https://api.tempstars.net/reset-password"
+  "resetPasswordLink": "https://api.tempstars.net/reset-password",
+  "pushEnv": "dev"
 }
