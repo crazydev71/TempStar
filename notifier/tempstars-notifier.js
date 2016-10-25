@@ -44,7 +44,7 @@ getNotifications()
 
 function getNotifications() {
     return new Promise( function( resolve, reject ) {
-        var comparisonTime = moment.utc().format('YYYY-MM-DD hh:mm');
+        var comparisonTime = moment.utc().format('YYYY-MM-DD HH:mm');
         console.log( '- getting all unsent notifications before: ' + comparisonTime );
 
         // Get all notifications that need to be sent
@@ -125,7 +125,7 @@ function send( notification ) {
         // console.log( '- attempting to push ' + n.id );
         push.send( n.message, n.user.platform, n.user.registrationId )
         .then( function( pushResult ) {
-            var sentOnTime = moment.utc().format('YYYY-MM-DD hh:mm');
+            var sentOnTime = moment.utc().format('YYYY-MM-DD HH:mm');
 
             // If worked, update to SENT and log sentOn time
             if ( pushResult.success == 1 ) {
