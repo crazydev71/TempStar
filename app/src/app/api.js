@@ -12,7 +12,7 @@ TempStars.Api = (function() {
         },
 
         login: function login( email, password ) {
-            return TempStars.Ajax.post( 'tsusers/login', { email: email, password: password });
+            return TempStars.Ajax.post( 'tsusers/login', { email: email, password: password, ttl: 31556926 });
         },
 
         logout: function logout() {
