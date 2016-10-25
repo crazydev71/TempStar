@@ -104,7 +104,7 @@ module.exports = function( Job ){
             return job.updateAttributes({
                 status: jobStatus.CONFIRMED,
                 hygienistId: partialOffer.hygienistId,
-                bookedOn: moment.utc().format('YYYY-MM-DD hh:mm:ss'),
+                bookedOn: moment.utc().format('YYYY-MM-DD HH:mm:ss'),
                 hourlyRate: hourlyRate
             });
         })

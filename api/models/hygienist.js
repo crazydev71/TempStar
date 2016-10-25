@@ -368,7 +368,7 @@ module.exports = function( Hygienist ) {
             hourlyRate = job.hourlyRate + rateAdjustment;
             return job.updateAttributes({
                 hygienistId: hygienistId,
-                bookedOn: moment.utc().format('YYYY-MM-DD hh:mm:ss'),
+                bookedOn: moment.utc().format('YYYY-MM-DD HH:mm:ss'),
                 hourlyRate: hourlyRate,
                 status: jobStatus.CONFIRMED
             });
