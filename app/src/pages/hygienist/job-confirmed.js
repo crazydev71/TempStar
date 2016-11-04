@@ -8,6 +8,7 @@ TempStars.Pages.Hygienist.JobConfirmed = (function() {
         app.onPageBeforeInit( 'job-confirmed', function( page ) {
             $$('#hygienist-job-confirmed-modify-button').on( 'click', modifyButtonHandler );
             $$('#hygienist-job-confirmed-cancel-button').on( 'click', cancelButtonHandler );
+            TempStars.Analytics.track( 'Viewed Confirmed Job' );
         });
 
         app.onPageBeforeRemove( 'job-confirmed', function( page ) {
@@ -44,8 +45,8 @@ TempStars.Pages.Hygienist.JobConfirmed = (function() {
         TempStars.Api.hygienistCancelJob( TempStars.User.getCurrentUser().hygienistId, job.id )
         .then( function() {
             app.hidePreloader();
+            TempStars.Analytics.track( 'Cancelled Job' );
             TempStars.Hygienist.Router.goBackPage();
-
         })
         .catch( function( err ) {
             app.hidePreloader();

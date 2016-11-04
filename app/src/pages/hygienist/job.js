@@ -5,6 +5,7 @@ TempStars.Pages.Hygienist.Job = (function() {
     function init() {
         app.onPageBeforeInit( 'hygienist-job', function( page ) {
             $$('#hygienist-job-notes-save-button').on( 'click', saveNotesHandler );
+            TempStars.Analytics.track( 'Viewed Job Details' );
         });
 
         app.onPageBeforeRemove( 'hygienist-job', function( page ) {

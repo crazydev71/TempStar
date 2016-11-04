@@ -5,6 +5,8 @@ TempStars.Pages.Dentist.Home = (function() {
         app.onPageBeforeInit( 'home', function( page ) {
             mainView.showNavbar();
             displayCalendar( page.context );
+            TempStars.Analytics.track( 'Viewed Home Page' );            
+
         });
 
         app.onPageBeforeRemove( 'home', function( page ) {

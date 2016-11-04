@@ -77,6 +77,8 @@ TempStars.Pages.Dentist.PostJob = (function() {
             });
 
             $$('#dentist-post-job-button').on( 'click', postJobHandler );
+            TempStars.Analytics.track( 'Viewed Post Job' );
+
         });
     }
 
@@ -181,9 +183,8 @@ TempStars.Pages.Dentist.PostJob = (function() {
         TempStars.Api.postJob( dentistId, data )
         .then( function() {
             app.hidePreloader();
-            // app.alert( 'Job Posted', function() {
-                TempStars.Dentist.Router.goBackPage('home');
-            // });
+            TempStars.Dentist.Router.goBackPage('home');
+            TempStars.Analytics.track( 'Posted Job' );
         })
         .catch( function( err ) {
             app.hidePreloader();

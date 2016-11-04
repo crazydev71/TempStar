@@ -84,6 +84,7 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
             });
 
             $$('#hygienist-make-partial-offer-submit-button').on( 'click', submitButtonHandler );
+            TempStars.Analytics.track( 'Viewed Make Partial Offer' );
             initialized = true;
         });
 
@@ -215,6 +216,8 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
         .then( function() {
             app.hidePreloader();
             app.alert( 'Partial Offer Submitted!', function() {
+                TempStars.Analytics.track( 'Made Partial Offer' );
+
                 TempStars.Hygienist.Router.goForwardPage('home');
             });
         })

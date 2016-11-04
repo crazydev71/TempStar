@@ -16,6 +16,7 @@ TempStars.Pages.DentistSignup1 = (function() {
 
             userAccount = TempStars.User.getCurrentUser();
             $$( '#dentist-signup-email').html( userAccount.email );
+            TempStars.Analytics.track( 'Viewed Dentist Signup Page 1' );
         });
 
         app.onPageBeforeRemove( 'dentist-signup1', function( page ) {

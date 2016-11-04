@@ -7,6 +7,7 @@ TempStars.Pages.DentistSignup3 = (function() {
             $$('#dentist-signup3-done-button').on( 'click', doneButtonHandler );
             $$('#dentist-signup3-logout-link').on( 'click', logoutHandler );
             $$('#dentist-signup3-form input').on( 'keypress', keyHandler );
+            TempStars.Analytics.track( 'Viewed Dentist Signup Page 3' );
         });
 
         app.onPageBeforeRemove( 'dentist-signup3', function( page ) {
@@ -113,7 +114,8 @@ TempStars.Pages.DentistSignup3 = (function() {
         .then(function() {
             app.hidePreloader();
             TempStars.Push.init();
-            TempStars.User.updateRegistration();            
+            TempStars.User.updateRegistration();
+            TempStars.Analytics.track( 'Dentist Completed Signup' );
             TempStars.App.gotoStartingPage();
         })
         .catch( function( err ) {

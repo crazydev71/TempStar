@@ -6,6 +6,7 @@ TempStars.Pages.Dentist.Job = (function() {
         app.onPageBeforeInit( 'dentist-job', function( page ) {
             $$('#dentist-job-notes-save-button').on( 'click', saveNotesHandler );
             $$('.detailback').on( 'click', backHandler );
+            TempStars.Analytics.track( 'Viewed Job History Detail' );            
         });
 
         app.onPageBeforeRemove( 'dentist-job', function( page ) {

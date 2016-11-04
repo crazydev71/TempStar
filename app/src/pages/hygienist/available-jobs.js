@@ -26,6 +26,7 @@ TempStars.Pages.Hygienist.AvailableJobs = (function() {
             $('#hygienist-available-jobs-soonest-sorting-button').on( 'click', sortBySoonestHandler );
             $('#hygienist-available-jobs-closest-sorting-button').on( 'click', sortByClosestHandler );
             $(document).on( 'click', '.job', jobPageHandler );
+            TempStars.Analytics.track( 'Viewed Available Jobs' );
         });
 
         app.onPageBeforeRemove( 'hygienist-available-jobs', function( page ) {

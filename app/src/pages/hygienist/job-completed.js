@@ -10,6 +10,8 @@ TempStars.Pages.Hygienist.JobCompleted = (function() {
             $$('#hygienist-job-completed-view-invoice-button').on( 'click', viewInvoiceHandler );
             $$('#hygienist-job-completed-view-survey-button').on( 'click', surveyButtonHandler );
             $$('#hygienist-job-completed-invoice-button').on( 'click', invoiceButtonHandler );
+            TempStars.Analytics.track( 'Viewed Completed Job' );
+
         });
 
         app.onPageBeforeRemove( 'job-completed', function( page ) {

@@ -87,7 +87,27 @@ TempStars.User = (function() {
                     TempStars.Push.init();
                 })
                 .then( function() {
+                    var firstName, lastName, identity;
+
                     TempStars.Logging.log('logged in as: ' + userAccount.email );
+
+                    identity = TempStars.Config.env.name + '-' + userAccount.id;
+                    TempStars.Analytics.identify( identity );
+
+                    if ( TempStars.User.isDentist() ) {
+                        firstName = userAccount.dentist.firstName;
+                        lastName = userAccount.dentist.lastName;
+                    }
+                    else {
+                        firstName = userAccount.hygienist.firstName;
+                        lastName = userAccount.hygienist.lastName;
+                    }
+                    TempStars.Analytics.setProfileProperties({
+                        $email: userAccount.email,
+                        role: userAccount.roles[0].name,
+                        $first_name: firstName,
+                        $last_name: lastName
+                    });
                     resolve();
                 })
                 .catch( function( err ) {
@@ -195,6 +215,8 @@ TempStars.User = (function() {
                     userAccount = account;
                     TempStars.Storage.set( 'userAccount', account );
                     TempStars.Logging.log('created account for: ' + userAccount.email );
+                    var identity = TempStars.Config.env.name + '-' + userAccount.id;
+                    TempStars.Analytics.alias( identity );
                     resolve();
                 })
                 .catch( function( err ) {

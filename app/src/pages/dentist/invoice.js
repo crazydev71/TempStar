@@ -8,6 +8,7 @@ TempStars.Pages.Dentist.Invoice = (function() {
         app.onPageBeforeInit( 'dentist-invoice', function( page ) {
             $$('#dentist-invoice-paid-checkbox').on( 'change', paidToggleHandler );
             //$$('.detailback').on( 'click', backHandler );
+            TempStars.Analytics.track( 'Viewed Invoice Detail' );            
         });
 
         app.onPageBeforeRemove( 'dentist-invoice', function( page ) {

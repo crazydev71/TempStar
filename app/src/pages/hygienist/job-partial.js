@@ -7,6 +7,10 @@ TempStars.Pages.Hygienist.JobPartial = (function() {
 
     function init() {
 
+        app.onPageBeforeInit( 'job-partial', function( page ) {
+            TempStars.Analytics.track( 'Viewed Partial Job Details' );
+        });
+
         if ( ! initialized ) {
 
             app.onPageBeforeInit( 'job-partial', function( page ) {
@@ -49,8 +53,8 @@ TempStars.Pages.Hygienist.JobPartial = (function() {
         TempStars.Api.cancelPartialOffer( TempStars.User.getCurrentUser().hygienistId, job.id, job.partialOffers[0].id )
         .then( function() {
             app.hidePreloader();
+            TempStars.Analytics.track( 'Cancelled Partial Offer' );
             TempStars.Hygienist.Router.goBackPage();
-
         })
         .catch( function( err ) {
             app.hidePreloader();

@@ -8,6 +8,8 @@ TempStars.Pages.Dentist.JobPosted = (function() {
         app.onPageBeforeInit( 'job-posted', function( page ) {
             $$('#dentist-job-posted-modify-button').on( 'click', modifyButtonHandler );
             $$('#dentist-job-posted-cancel-button').on( 'click', cancelButtonHandler );
+            TempStars.Analytics.track( 'Viewed Posted Job' );
+
         });
 
         app.onPageBeforeRemove( 'job-posted', function( page ) {
@@ -39,8 +41,8 @@ TempStars.Pages.Dentist.JobPosted = (function() {
         TempStars.Api.cancelJob( TempStars.User.getCurrentUser().dentistId, job.id )
         .then( function() {
             app.hidePreloader();
+            TempStars.Analytics.track( 'Cancelled Job' );
             TempStars.Dentist.Router.goBackPage();
-
         })
         .catch( function( err ) {
             app.hidePreloader();

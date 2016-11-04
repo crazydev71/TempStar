@@ -68,6 +68,7 @@ TempStars.Pages.Hygienist.ModifyPartialOffer = (function() {
             });
 
             $$('#hygienist-modify-partial-offer-button').on( 'click', modifyPartialOfferHandler );
+            TempStars.Analytics.track( 'Viewed Modify Partial Offer' );
         });
     }
 
@@ -182,6 +183,7 @@ TempStars.Pages.Hygienist.ModifyPartialOffer = (function() {
         TempStars.Api.modifyPartialOffer( partialOffer.id, data )
         .then( function() {
             app.hidePreloader();
+            TempStars.Analytics.track( 'Modified Partial Offer' );
             TempStars.Hygienist.Router.goBackPage('', { id: partialOffer.jobId });
         })
         .catch( function( err ) {

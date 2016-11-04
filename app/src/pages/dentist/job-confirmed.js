@@ -8,6 +8,7 @@ TempStars.Pages.Dentist.JobConfirmed = (function() {
         app.onPageBeforeInit( 'job-confirmed', function( page ) {
             $$('#dentist-job-confirmed-modify-button').on( 'click', modifyButtonHandler );
             $$('#dentist-job-confirmed-cancel-button').on( 'click', cancelButtonHandler );
+            TempStars.Analytics.track( 'Viewed Confirmed Job' );            
         });
 
         app.onPageBeforeRemove( 'job-confirmed', function( page ) {

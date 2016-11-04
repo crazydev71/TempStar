@@ -118,6 +118,8 @@ TempStars.Pages.Hygienist.CreateInvoice = (function() {
 
             });
             $$('#hygienist-create-invoice-button').on( 'click', createInvoiceButtonHandler );
+            TempStars.Analytics.track( 'Viewed Create Invoice' );
+
             initialized = true;
         });
 
@@ -281,6 +283,7 @@ TempStars.Pages.Hygienist.CreateInvoice = (function() {
             .then( function() {
                 app.hidePreloader();
                 app.alert( 'Invoice Sent', function() {
+                    TempStars.Analytics.track( 'Sent Invoice' );
                     TempStars.Hygienist.Router.goBackPage('', {id: job.id} );
                 });
             })

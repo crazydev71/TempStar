@@ -10,7 +10,7 @@ TempStars.Pages.Hygienist.Invoice = (function() {
             job = page.context;
             $$('#hygienist-invoice-paid-checkbox').on( 'change', paidToggleHandler );
             $$('#hygienist-job-resend-button').on( 'click', resendButtonHandler );
-
+            TempStars.Analytics.track( 'Viewed Invoice Detail' );            
         });
 
         app.onPageBeforeRemove( 'hygienist-invoice', function( page ) {

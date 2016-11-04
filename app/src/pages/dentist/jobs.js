@@ -21,6 +21,8 @@ TempStars.Pages.Dentist.Jobs = (function() {
             $('#dentist-jobs-date-sorting-button').on( 'click', sortByDateHandler );
             $('#dentist-jobs-hygienist-sorting-button').on( 'click', sortByHygienistHandler );
             $(document).on( 'click', '.job', jobPageHandler );
+            TempStars.Analytics.track( 'Viewed Job History' );            
+
         });
 
         app.onPageBeforeRemove( 'dentist-jobs', function( page ) {

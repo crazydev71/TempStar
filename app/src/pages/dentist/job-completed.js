@@ -11,6 +11,7 @@ TempStars.Pages.Dentist.JobCompleted = (function() {
             $$('#dentist-job-completed-notes-save-button').on( 'click', saveNotesHandler );
             $$('#dentist-job-completed-view-invoice-button').on( 'click', viewInvoiceHandler );
             $$('#dentist-job-completed-view-survey-button').on( 'click', viewSurveyHandler );
+            TempStars.Analytics.track( 'Viewed Completed Job' );            
         });
 
         app.onPageBeforeRemove( 'job-completed', function( page ) {

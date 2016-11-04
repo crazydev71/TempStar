@@ -10,6 +10,7 @@ TempStars.Pages.DentistSignup2 = (function() {
             $$('#dentist-signup2-logout-link').on( 'click', logoutHandler );
             $$('#dentist-signup2-form input').on( 'keypress', keyHandler );
             mainView.showNavbar();
+            TempStars.Analytics.track( 'Viewed Dentist Signup Page 2' );                                    
         });
 
         app.onPageBeforeRemove( 'dentist-signup2', function( page ) {

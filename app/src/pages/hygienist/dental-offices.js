@@ -6,6 +6,7 @@ TempStars.Pages.Hygienist.DentalOffices = (function() {
         app.onPageBeforeInit( 'dental-offices', function( page ) {
             $$('.hygienist-dentaloffices-remove-blocked-button').on( 'click', removeBlockedHandler );
             $$('.hygienist-dentaloffices-remove-fav-button').on( 'click', removeFavHandler );
+            TempStars.Analytics.track( 'Viewed Dental Offices' );            
         });
 
         app.onPageBeforeRemove( 'dental-offices', function( page ) {
@@ -46,7 +47,7 @@ TempStars.Pages.Hygienist.DentalOffices = (function() {
                 TempStars.Hygienist.Router.reloadPage('dental-offices');
             })
             .catch( function( err ) {
-                app.hidePreloader();                
+                app.hidePreloader();
                 app.alert('Error removing dental office. Please try again.' );
             });
         });

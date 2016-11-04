@@ -39,6 +39,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
             }
 
             $$('#hygienist-profile-form select[name="province"]').val(data.province).prop('selected', true);
+            TempStars.Analytics.track( 'Viewed Profile' );
         });
 
         app.onPageBeforeRemove( 'hygienist-profile', function( page ) {
@@ -172,6 +173,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
         })
         .then(function() {
             app.hidePreloader();
+            TempStars.Analytics.track( 'Updated Profile' );
             TempStars.App.gotoStartingPage();
         })
         .catch( function( err ) {

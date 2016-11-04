@@ -134,7 +134,8 @@ TempStars.bootstrap = {
     onResume: function() {
         console.log( 'on resume' );
         TempStars.Push.init();
-
+        TempStars.Analytics.track( 'Opened App' );
+        
         TempStars.User.autoLogin()
         .then( function() {
             TempStars.App.gotoStartingPage();
@@ -142,7 +143,7 @@ TempStars.bootstrap = {
         .catch( function() {
             console.log( 'autoLogin failed' );
             mainView.router.loadPage( 'index.html' );
-        });        
+        });
     }
 };
 

@@ -5,6 +5,7 @@ TempStars.Pages.ForgotPassword = (function() {
         app.onPageInit( 'forgot-password', function( page ) {
             $('#forgot-password-button').on( 'click', forgotPasswordButtonHandler );
             mainView.showNavbar();
+            TempStars.Analytics.track( 'Viewed Forgot Password Page' );
         });
 
         app.onPageBeforeRemove( 'forgot-password', function( page ) {

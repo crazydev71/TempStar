@@ -10,6 +10,7 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
             job = page.context.job;
             $$('#hygienist-available-job-accept-button').on( 'click', acceptButtonHandler );
             $$('#hygienist-available-job-partial-button').on( 'click', partialButtonHandler );
+            TempStars.Analytics.track( 'Viewed Available Job Detail' );
         });
 
         app.onPageBeforeRemove( 'available-job', function( page ) {
@@ -47,6 +48,7 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
         .then( function() {
             app.hidePreloader();
             app.alert( 'You\'re confirmed!', function() {
+                TempStars.Analytics.track( 'Booked Job' );                
                 TempStars.Hygienist.Router.goForwardPage('home');
             });
         })

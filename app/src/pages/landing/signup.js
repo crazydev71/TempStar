@@ -8,6 +8,7 @@ TempStars.Pages.Signup = (function() {
             $$('#signup-account-type-hygienist').on( 'change', toggleHygienist );
             $$('#signup-account-type-dentist').on( 'change', toggleDentist );
             $$('#signup-form input').on( 'keypress', keyHandler );
+            TempStars.Analytics.track( 'Viewed Create Account Page' );
         });
 
         app.onPageBeforeRemove( 'signup', function( page ) {
@@ -74,6 +75,8 @@ TempStars.Pages.Signup = (function() {
         TempStars.User.create( formData.email, formData.password, role )
         .then(function() {
             app.hidePreloader();
+            TempStars.Analytics.track( 'Created Account' );
+
             TempStars.App.clearSignupData();
             TempStars.App.gotoStartingPage();
         })

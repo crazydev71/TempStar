@@ -22,6 +22,7 @@ TempStars.Pages.Hygienist.Invoices = (function() {
             $('#hygienist-invoices-date-sorting-button').on( 'click', sortByDateHandler );
             $('#hygienist-invoices-dentist-sorting-button').on( 'click', sortByDentistHandler );
             $(document).on( 'click', '.invoice', invoicePageHandler );
+            TempStars.Analytics.track( 'Viewed Invoices' );            
         });
 
         app.onPageBeforeRemove( 'hygienist-invoices', function( page ) {
@@ -84,7 +85,7 @@ TempStars.Pages.Hygienist.Invoices = (function() {
             TempStars.Hygienist.Router.goForwardPage( 'invoice', {}, invoiceData );
         }
         else {
-            TempStars.Hygienist.Router.goForwardPage( 'create-invoice', {}, invoiceData );            
+            TempStars.Hygienist.Router.goForwardPage( 'create-invoice', {}, invoiceData );
         }
     }
 

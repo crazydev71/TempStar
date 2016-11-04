@@ -22,6 +22,9 @@ TempStars.Config = (function() {
         },
         loggly: {
             key: '7a96865b-dac0-4059-afcd-e08555fe10b3'
+        },
+        mixpanel: {
+            token: '399a45b6eea7aea3f7fb578e85cf9db6'
         }
     };
 })();

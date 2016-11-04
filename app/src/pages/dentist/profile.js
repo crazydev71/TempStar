@@ -47,6 +47,8 @@ TempStars.Pages.Dentist.Profile = (function() {
             $$('#dentist-profile-form select[name="avgApptTime"]').val(data.detail.avgApptTime).prop('selected', true);
             $$('#dentist-profile-form select[name="charting"]').val(data.detail.charting).prop('selected', true);
             $$('#dentist-profile-form select[name="software"]').val(data.detail.software).prop('selected', true);
+            TempStars.Analytics.track( 'Viewed Profile' );
+
         });
 
         app.onPageBeforeRemove( 'dentist-profile', function( page ) {
@@ -231,6 +233,7 @@ TempStars.Pages.Dentist.Profile = (function() {
         })
         .then(function() {
             app.hidePreloader();
+            TempStars.Analytics.track( 'Updated Profile' );            
             TempStars.App.gotoStartingPage();
         })
         .catch( function( err ) {

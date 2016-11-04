@@ -40,6 +40,7 @@ TempStars.App = (function() {
             // TODO
             try {
                 Stripe.setPublishableKey( TempStars.Config.stripe.pubKey );
+                TempStars.Analytics.init();
             }
             catch(e) {
                 console.log( e.message );

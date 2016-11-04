@@ -6,6 +6,7 @@ TempStars.Pages.Dentist.Hygienists = (function() {
         app.onPageBeforeInit( 'hygienists', function( page ) {
             $$('.dentist-hygienists-remove-blocked-button').on( 'click', removeBlockedHandler );
             $$('.dentist-hygienists-remove-fav-button').on( 'click', removeFavHandler );
+            TempStars.Analytics.track( 'Viewed Hygienists' );            
         });
 
         app.onPageBeforeRemove( 'hygienists', function( page ) {

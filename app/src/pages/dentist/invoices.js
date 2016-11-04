@@ -22,6 +22,7 @@ TempStars.Pages.Dentist.Invoices = (function() {
             $('#dentist-invoices-date-sorting-button').on( 'click', sortByDateHandler );
             $('#dentist-invoices-hygienist-sorting-button').on( 'click', sortByHygienistHandler );
             $(document).on( 'click', '.invoice', invoicePageHandler );
+            TempStars.Analytics.track( 'Viewed Invoices' );                        
         });
 
         app.onPageBeforeRemove( 'dentist-invoices', function( page ) {

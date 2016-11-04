@@ -12,6 +12,7 @@ TempStars.Pages.Dentist.JobPartial = (function() {
             app.onPageBeforeInit( 'job-partial', function( page ) {
                 $$('#dentist-job-partial-modify-button').on( 'click', modifyButtonHandler );
                 $$('#dentist-job-partial-cancel-button').on( 'click', cancelButtonHandler );
+                TempStars.Analytics.track( 'Viewed Partial Job' );
             });
 
             $$(document).on( 'click', '.dentist-partial-job-accept-button', acceptButtonHandler );
@@ -59,8 +60,8 @@ TempStars.Pages.Dentist.JobPartial = (function() {
         TempStars.Api.cancelJob( TempStars.User.getCurrentUser().dentistId, job.id )
         .then( function() {
             app.hidePreloader();
+            TempStars.Analytics.track( 'Cancelled Job' );
             TempStars.Dentist.Router.goBackPage();
-
         })
         .catch( function( err ) {
             app.hidePreloader();
@@ -91,6 +92,7 @@ TempStars.Pages.Dentist.JobPartial = (function() {
         TempStars.Api.acceptPartialOffer( job.id, poId )
         .then( function() {
             app.hidePreloader();
+            TempStars.Analytics.track( 'Accepted Partial Offer' );
             TempStars.Dentist.Router.goBackPage();
         })
         .catch( function( err ) {
@@ -122,6 +124,7 @@ TempStars.Pages.Dentist.JobPartial = (function() {
         TempStars.Api.rejectPartialOffer( job.id, poId )
         .then( function() {
             app.hidePreloader();
+            TempStars.Analytics.track( 'Rejected Partial Offer' );
             TempStars.Dentist.Router.reloadPage( 'job-partial' );
         })
         .catch( function( err ) {

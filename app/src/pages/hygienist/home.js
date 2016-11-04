@@ -5,6 +5,7 @@ TempStars.Pages.Hygienist.Home = (function() {
         app.onPageBeforeInit( 'hygienist-home', function( page ) {
             mainView.showNavbar();
             displayCalendar( page.context );
+            TempStars.Analytics.track( 'Viewed Home Page' );
         });
 
         app.onPageBeforeRemove( 'hygienist-home', function( page ) {

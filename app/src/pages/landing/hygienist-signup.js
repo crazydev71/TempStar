@@ -16,6 +16,7 @@ TempStars.Pages.HygienistSignup = (function() {
 
             userAccount = TempStars.User.getCurrentUser();
             $$( '#hygienist-signup-email').html( userAccount.email );
+            TempStars.Analytics.track( 'Viewed Hygienist Signup Page' );
         });
 
         app.onPageBeforeRemove( 'hygienist-signup', function( page ) {
@@ -172,6 +173,7 @@ TempStars.Pages.HygienistSignup = (function() {
             app.formDeleteData('hygienist-signup-form');
             TempStars.Push.init();
             TempStars.User.updateRegistration();
+            TempStars.Analytics.track( 'Hygienist Completed Signup' );            
             TempStars.App.gotoStartingPage();
         })
         .catch( function( err ) {

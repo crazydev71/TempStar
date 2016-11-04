@@ -66,6 +66,7 @@ TempStars.Pages.Dentist.ModifyJob = (function() {
             });
 
             $$('#dentist-modify-job-button').on( 'click', modifyJobHandler );
+            TempStars.Analytics.track( 'Viewed Modify Job' );
         });
     }
 
@@ -166,9 +167,8 @@ TempStars.Pages.Dentist.ModifyJob = (function() {
         TempStars.Api.modifyJob( dentistId, job.id, data )
         .then( function() {
             app.hidePreloader();
-            //app.alert( 'Job Modified', function() {
-                TempStars.Dentist.Router.goBackPage('', { id: job.id });
-            //});
+            TempStars.Analytics.track( 'Modified Job' );
+            TempStars.Dentist.Router.goBackPage('', { id: job.id });
         })
         .catch( function( err ) {
             app.hidePreloader();
