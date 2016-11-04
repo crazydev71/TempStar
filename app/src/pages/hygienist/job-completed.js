@@ -51,7 +51,6 @@ TempStars.Pages.Hygienist.JobCompleted = (function() {
 
 
     function viewInvoiceHandler( e ) {
-        var id = parseInt( $$(this).attr('data-id') );
         TempStars.Hygienist.Router.goForwardPage( 'invoice', {}, job );
     }
 
@@ -66,7 +65,8 @@ TempStars.Pages.Hygienist.JobCompleted = (function() {
             return new Promise( function( resolve, reject ) {
                 if ( params.id ) {
                     TempStars.Api.getHygienistJob( TempStars.User.getCurrentUser().hygienistId, params.id )
-                    .then( function( job ) {
+                    .then( function( j ) {
+                        job = j;
                         job.hasInvoice = (job.invoice) ? true : false;
                         resolve( job );
                     })
