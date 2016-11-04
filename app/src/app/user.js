@@ -105,6 +105,7 @@ TempStars.User = (function() {
                     TempStars.Analytics.setProfileProperties({
                         $email: userAccount.email,
                         role: userAccount.roles[0].name,
+                        env: TempStars.Config.env.name,
                         $first_name: firstName,
                         $last_name: lastName
                     });
