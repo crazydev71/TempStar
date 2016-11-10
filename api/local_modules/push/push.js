@@ -5,15 +5,18 @@ var apn     = require('apn');
 
 var gcmSender;
 var apnSender;
+var apnToken;
+var isProd;
 
-function init( gcmApiKey, apnToken, env ) {
+function init( gcmApiKey, aToken, env ) {
 
     //console.log( 'push apn initialized with env: ' + env );
-    var isProd = (env === 'prod');
+    isProd = (env === 'prod');
     console.log( 'push apn is prod: ' + isProd );
 
     gcmSender = new gcm.Sender( gcmApiKey );
 
+    apnToken = aToken;
     apnSender = new apn.Provider({
         token: apnToken,
         production: isProd
@@ -62,6 +65,21 @@ function sendiOSMessage( message, regToken ) {
             }
             else {
                 console.log( '- iOS push message failed' );
+                if ( result.failed[0].status == '500' ) {
+                    apnSender = new apn.Provider({
+                        token: apnToken,
+                        production: isProd
+                    });
+                    apnSender.send( msg, [regToken] )
+                    .then( function( result ) {
+                        if ( result.failed.length == 0 ) {
+                            console.log( '- iOS push message2 sent' );
+                            response = { success: 1 };
+                            resolve( response );
+                            return;
+                        }
+                    })
+                }
                 console.dir( result, {depth:null} );
                 response = { success: 0 };
             }

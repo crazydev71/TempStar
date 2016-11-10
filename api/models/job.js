@@ -47,6 +47,8 @@ module.exports = function( Job ){
         var PartialOffer = app.models.PartialOffer;
         var Shift = app.models.Shift;
         var Hygienist = app.models.Hygienist;
+        var Email = app.models.Email;
+
         var rateAdjustment = 0;
         var hourlyRate;
         var partialOffer,
@@ -136,6 +138,27 @@ module.exports = function( Job ){
             msg += ' has been accepted, booked, and confirmed.';
             return push.send( msg, poJSON.hygienist.user.platform, poJSON.hygienist.user.registrationId );
         })
+        .then( function( response ) {
+            return new Promise( function( resolve, reject ) {
+                if ( ! response.success ) {
+                    Email.send({
+                        to: poJSON.hygienist.user.email,
+                        from: 'no-reply@tempstars.net',
+                        subject: 'Partial Offer on ' + moment(jj.startDate).format('ddd MMM D, YYYY') + ' accepted',
+                        text: msg
+                    }, function( err ) {
+                        if ( err ) {
+                            console.log( err.message );
+                        }
+                        resolve();
+                    });
+                }
+                else {
+                    resolve();
+                }
+            });
+        })
+
         // .then( function() {
         //     // Notify hygienists who have rejected partial offers
         //     return Promise.map( rejectedPartialOffers, function( rpo ) {
@@ -176,6 +199,8 @@ module.exports = function( Job ){
 
         var PartialOffer = app.models.PartialOffer;
         var Job = app.models.Job;
+        var Email = app.models.Email;
+        
         var jj, pj;
 
         // Get the partial offer
@@ -208,6 +233,26 @@ module.exports = function( Job ){
             msg += ' with ' + jj.dentist.practiceName;
             msg += ' has been declined.';
             return push.send( msg, pj.hygienist.user.platform, pj.hygienist.user.registrationId );
+        })
+        .then( function( response ) {
+            return new Promise( function( resolve, reject ) {
+                if ( ! response.success ) {
+                    Email.send({
+                        to: pj.hygienist.user.email,
+                        from: 'no-reply@tempstars.net',
+                        subject: 'Partial Offer on ' + moment(jj.startDate).format('ddd MMM D, YYYY') +  ' declined',
+                        text: msg
+                    }, function( err ) {
+                        if ( err ) {
+                            console.log( err.message );
+                        }
+                        resolve();
+                    });
+                }
+                else {
+                    resolve();
+                }
+            });
         })
         .then( function() {
             console.log( 'rejected partial offer worked!' );

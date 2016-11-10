@@ -319,9 +319,12 @@ module.exports = function( Hygienist ) {
         var Job = app.models.Job;
         var Hygienist = app.models.Hygienist;
         var PartialOffer = app.models.PartialOffer;
+        var Email = app.models.Email;
+
         var rateAdjustment = 0;
         var hourlyRate;
         var job;
+        var jj, msg;
 
         console.log( 'book job' );
 
@@ -374,11 +377,31 @@ module.exports = function( Hygienist ) {
             });
         })
         .then( function( job ) {
-            var jj = job.toJSON();
-            var msg = 'Your job on ';
+            jj = job.toJSON();
+            msg = 'Your job on ';
             msg += moment(jj.startDate).format('ddd MMM Do');
             msg += ' has been filled.';
             return push.send( msg, jj.dentist.user.platform, jj.dentist.user.registrationId );
+        })
+        .then( function( response ) {
+            return new Promise( function( resolve, reject ) {
+                if ( ! response.success ) {
+                    Email.send({
+                        to: jj.dentist.user.email,
+                        from: 'no-reply@tempstars.net',
+                        subject: 'Job on ' + moment(jj.startDate).format('ddd MMM D, YYYY') + ' filled',
+                        text: msg
+                    }, function( err ) {
+                        if ( err ) {
+                            console.log( err.message );
+                        }
+                        resolve();
+                    });
+                }
+                else {
+                    resolve();
+                }
+            });
         })
         .then( function() {
             return PartialOffer.updateAll( {jobId: jobId}, { status: 1 } );
@@ -400,6 +423,8 @@ module.exports = function( Hygienist ) {
         // Get all the partial offers for this job
         // Notify all the hygienists except the booked one
         var PartialOffer = app.models.PartialOffer;
+        var Email = app.models.Email;
+
         var jj = job.toJSON();
         var pj;
 
@@ -411,7 +436,27 @@ module.exports = function( Hygienist ) {
                     var msg = 'Your partial offer on ';
                     msg += moment(jj.startDate).format('ddd MMM Do');
                     msg += ' has been declined.';
-                    return push.send( msg, pj.hygienist.user.platform, pj.hygienist.user.registrationId );
+                    push.send( msg, pj.hygienist.user.platform, pj.hygienist.user.registrationId )
+                    .then( function( response ) {
+                        return new Promise( function( resolve, reject ) {
+                            if ( ! response.success ) {
+                                Email.send({
+                                    to: pj.hygienist.user.email,
+                                    from: 'no-reply@tempstars.net',
+                                    subject: 'Partial Offer for ' + moment(jj.startDate).format('ddd MMM D, YYYY') + ' declined',
+                                    text: msg
+                                }, function( err ) {
+                                    if ( err ) {
+                                        console.log( err.message );
+                                    }
+                                    resolve();
+                                });
+                            }
+                            else {
+                                resolve();
+                            }
+                        });
+                    });
                 }
             });
         });
@@ -432,8 +477,11 @@ module.exports = function( Hygienist ) {
 
         var Job = app.models.Job;
         var PartialOffer = app.models.PartialOffer;
+        var Email = app.models.Email;
+
         var job;
         var jj;
+        var msg;
 
         Job.findById( jobId )
         .then( function( j ) {
@@ -474,10 +522,30 @@ module.exports = function( Hygienist ) {
             });
         })
         .then( function( po ) {
-            var msg = 'You have a new offer for your job on  ';
+            msg = 'You have a new offer for your job on  ';
             msg += moment(jj.startDate).format('ddd MMM Do');
             msg += '.';
             return push.send( msg, jj.dentist.user.platform, jj.dentist.user.registrationId );
+        })
+        .then( function( response ) {
+            return new Promise( function( resolve, reject ) {
+                if ( ! response.success ) {
+                    Email.send({
+                        to: jj.dentist.user.email,
+                        from: 'no-reply@tempstars.net',
+                        subject: 'New offer for job on ' + moment(jj.startDate).format('ddd MMM D, YYYY'),
+                        text: msg
+                    }, function( err ) {
+                        if ( err ) {
+                            console.log( err.message );
+                        }
+                        resolve();
+                    });
+                }
+                else {
+                    resolve();
+                }
+            });
         })
         .then( function() {
             console.log( 'make partial offer worked!' );
@@ -559,7 +627,9 @@ module.exports = function( Hygienist ) {
 
         var Job = app.models.Job;
         var Region = app.models.Region;
-        var job, jj;
+        var Email = app.models.Email;
+
+        var job, jj, msg;
         var baseRate;
 
         Job.findById( jobId )
@@ -580,12 +650,32 @@ module.exports = function( Hygienist ) {
             return notifier.createJobNotifications( loopback, app, jj.id, 'New job posted' );
         })
         .then( function( job ) {
-            var msg = 'Your job on ';
+            msg = 'Your job on ';
             msg += moment(jj.startDate).format('ddd MMM Do');
             msg += ' has been cancelled by ';
             msg += jj.hygienist.firstName + ' ' + jj.hygienist.lastName;
             msg += ' It has been automatically reposted to the system as a open job.';
             return push.send( msg, jj.dentist.user.platform, jj.dentist.user.registrationId );
+        })
+        .then( function( response ) {
+            return new Promise( function( resolve, reject ) {
+                if ( ! response.success ) {
+                    Email.send({
+                        to: jj.dentist.user.email,
+                        from: 'no-reply@tempstars.net',
+                        subject: 'Job cancelled on ' + moment(jj.startDate).format('ddd MMM D, YYYY'),
+                        text: msg
+                    }, function( err ) {
+                        if ( err ) {
+                            console.log( err.message );
+                        }
+                        resolve();
+                    });
+                }
+                else {
+                    resolve();
+                }
+            });
         })
         .then( function() {
             console.log( 'cancel job worked!' );
