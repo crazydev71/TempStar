@@ -144,6 +144,7 @@ module.exports = function( Job ){
                     Email.send({
                         to: poJSON.hygienist.user.email,
                         from: 'no-reply@tempstars.net',
+                        bcc:  app.get('emailBcc'),
                         subject: 'Partial Offer on ' + moment(jj.startDate).format('ddd MMM D, YYYY') + ' accepted',
                         text: msg
                     }, function( err ) {
@@ -200,7 +201,7 @@ module.exports = function( Job ){
         var PartialOffer = app.models.PartialOffer;
         var Job = app.models.Job;
         var Email = app.models.Email;
-        
+
         var jj, pj;
 
         // Get the partial offer
@@ -240,6 +241,7 @@ module.exports = function( Job ){
                     Email.send({
                         to: pj.hygienist.user.email,
                         from: 'no-reply@tempstars.net',
+                        bcc:  app.get('emailBcc'),
                         subject: 'Partial Offer on ' + moment(jj.startDate).format('ddd MMM D, YYYY') +  ' declined',
                         text: msg
                     }, function( err ) {
@@ -294,7 +296,7 @@ module.exports = function( Job ){
                 html: data.html },
                 function(err) {
                     if (err) {
-                        return new Error( 'error resending email: '+ err.message );
+                        return new Error( 'error resending email: ' + err.message );
                     }
                     return;
             });

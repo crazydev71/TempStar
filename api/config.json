@@ -27,5 +27,6 @@
   "apnKey": "sys/APNSAuthKey_4W5923BGDZ.p8",
   "apnKeyId": "4W5923BGDZ",
   "apnTeamId": "UM68DRFZYZ",
-  "pushEnv": "prod"
+  "pushEnv": "prod",
+  "emailBcc": "drjyounger@hotmail.com"
 }

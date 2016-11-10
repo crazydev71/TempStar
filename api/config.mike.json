@@ -24,5 +24,6 @@
   "legacyExplorer": false,
   "stripeSecretKey": "sk_test_6RfrY1kO3xkVyDrKgvumnnFX",
   "resetPasswordLink": "http://0.0.0.0:3000/reset-password",
-  "pushEnv": "local"
+  "pushEnv": "local",
+  "emailBcc": "mbetts@softdevgroup.com"  
 }

@@ -349,6 +349,7 @@ module.exports = function( Dentist ) {
                                 Email.send({
                                     to: jj.hygienist.user.email,
                                     from: 'no-reply@tempstars.net',
+                                    bcc:  app.get('emailBcc'),
                                     subject: 'Job cancelled on ' + moment(jj.startDate).format('ddd MMM D, YYYY'),
                                     text: msg
                                 }, function( err ) {
@@ -388,6 +389,7 @@ module.exports = function( Dentist ) {
                                     Email.send({
                                         to: po.hygienist.user.email,
                                         from: 'no-reply@tempstars.net',
+                                        bcc:  app.get('emailBcc'),
                                         subject: 'Partial Offer for ' + moment(jj.startDate).format('ddd MMM D, YYYY') + ' removed',
                                         text: msg
                                     }, function( err ) {
@@ -530,7 +532,7 @@ module.exports = function( Dentist ) {
         var Job = app.models.Job;
         var Shift = app.models.Shift;
         var Email = app.models.Email;
-        
+
         var job, jj, shiftId, msg;
 
         console.log( 'modify job' );
@@ -570,6 +572,7 @@ module.exports = function( Dentist ) {
                                 Email.send({
                                     to: jj.hygienist.user.email,
                                     from: 'no-reply@tempstars.net',
+                                    bcc:  app.get('emailBcc'),
                                     subject: 'Job on ' + moment(jj.startDate).format('ddd MMM D, YYYY') + ' changed',
                                     text: msg
                                 }, function( err ) {
@@ -610,6 +613,7 @@ module.exports = function( Dentist ) {
                                     Email.send({
                                         to: po.hygienist.user.email,
                                         from: 'no-reply@tempstars.net',
+                                        bcc:  app.get('emailBcc'),
                                         subject: 'Partial Offer for ' + moment(jj.startDate).format('ddd MMM D, YYYY') + ' changed',
                                         text: msg
                                     }, function( err ) {
