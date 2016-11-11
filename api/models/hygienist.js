@@ -707,25 +707,42 @@ module.exports = function( Hygienist ) {
         var BlockedDentist = app.models.BlockedDentist;
         var Dentist = app.models.Dentist;
 
-        var job, dentist;
+        var job, dentist, rating;
+
+        switch ( data.rating ) {
+            case 'VH':
+                rating = 5;
+                break;
+
+            case 'PL':
+                rating = 3.5;
+                break;
+
+            case 'NTY':
+                rating = 2;
+                break;
+
+            default:
+                break;
+        }
 
         Job.findById( jobId )
         .then( function( j ) {
             // Add survey result to job
             job = j;
             return job.updateAttributes({
-                dentistRating: data.rating
+                dentistRating: rating
             });
         })
         .then( function() {
             // Add fav/blocked dentist
-            if ( data.rating == rating.VERY_HAPPY ) {
+            if ( data.rating == 'VH' ) {
                 return FavouriteDentist.findOrCreate({
                     hygienistId: hygienistId,
                     dentistId: job.dentistId
                 });
             }
-            else if ( data.rating == rating.NO_THANK_YOU ) {
+            else if ( data.rating == 'NTY' ) {
                 return BlockedDentist.findOrCreate({
                     hygienistId: hygienistId,
                     dentistId: job.dentistId
