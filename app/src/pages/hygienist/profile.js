@@ -28,6 +28,9 @@ TempStars.Pages.Hygienist.Profile = (function() {
             $$('#hygienist-profile-upload-resume-button').on( 'click', addResumeHandler );
             $$('#hygienist-profile-remove-resume-button').on( 'click', removeResumeHandler );
             $$('#hygienist-profile-web-resume').on( 'change', webResumeHandler );
+
+            $$('#hygienist-profile-form input').on( 'change', formChangeHandler );
+            $$('#hygienist-profile-form select').on( 'change', formChangeHandler );
         });
 
         app.onPageBeforeInit( 'hygienist-profile', function( page ) {
@@ -65,6 +68,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
             else {
                 $$('#hygienist-profile-form select[name="placements"]').val('').prop('selected', true);
             }
+
             TempStars.Analytics.track( 'Viewed Profile' );
         });
 
@@ -89,6 +93,10 @@ TempStars.Pages.Hygienist.Profile = (function() {
                 reject( err );
             });
         });
+    }
+
+    function formChangeHandler(e) {
+        app.alert( 'Remember to Save changes' );
     }
 
     function submitHandler(e) {
@@ -206,7 +214,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
             return TempStars.Api.updateHygienistAccount( data.id, formData );
         })
         .then( function() {
-            delete window.webresume;            
+            delete window.webresume;
             return TempStars.User.refresh();
         })
         .then(function() {
@@ -229,6 +237,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
                   $$('#hygienist-profile-photo').attr('src', result );
                   $$('#hygienist-profile-photo-remove').show();
                   $$('#hygienist-profile-photo-add').hide();
+                  app.alert( 'Remember to Save changes' );
               },
               function(errmsg) {
                   app.alert( errmsg );
@@ -250,6 +259,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
         $$('#hygienist-profile-photo').attr( 'src', '' );
         $$('#hygienist-profile-photo-remove').hide();
         $$('#hygienist-profile-photo-add').show();
+        app.alert( 'Remember to Save changes' );
     }
 
     function uploadPhoto() {
@@ -378,6 +388,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
         $$('#hygienist-profile-resume').attr( 'src', '' );
         $$('#hygienist-profile-resume-remove').hide();
         $$('#hygienist-profile-resume-add').show();
+        app.alert( 'Remember to Save changes' );
     }
 
     function uploadResume() {
