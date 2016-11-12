@@ -18,6 +18,9 @@ var dentistLocation;
 var tmpFolder;
 var zipFile;
 
+function NoResumesError() {}
+NoResumesError.prototype = Object.create(Error.prototype);
+
 console.log( 'Resume Sender Service started: ' + moment.utc().toString() );
 
 getSendResumeRequests()
@@ -76,19 +79,31 @@ function fillRequest( request ) {
         .then( function( resumeUrls ) {
             // Download resumes
             numResumes = resumeUrls.length;
-            return downloadResumes( resumeUrls );
+            if ( numResumes == 0 ) {
+                sendSorryEmail( request.email )
+            }
+            else {
+                return downloadResumes( resumeUrls );
+            }
         })
         .then( function() {
             // Zip up resumes
+            if ( numResumes == 0 ) {
+                return;
+            }
             return zip( tmpFolder.name );
         })
         .then( function( zf ) {
             // Send email
+            if ( numResumes == 0 ) {
+                return;
+            }
             zipFile = zf;
             return email( request.email, zipFile );
         })
         .then( function() {
             // Update db
+            console.log( '- updating request' );
             return request.updateAttributes({
                 resumesSent: numResumes,
                 sentOn: moment.utc().format('YYYY-MM-DD HH:mm')
@@ -96,9 +111,10 @@ function fillRequest( request ) {
         })
         .then( function() {
             // Clean up
-            rimraf.sync( tmpFolder.name );
-            //tmpFolder.removeCallback();
-            fs.unlinkSync( zipFile );
+            if ( numResumes != 0 ) {
+                rimraf.sync( tmpFolder.name );
+                fs.unlinkSync( zipFile );
+            }
             resolve();
         })
         .catch( function( err ) {
@@ -173,6 +189,23 @@ function email( emailAddress, zipFile ) {
             subject: 'TempStars resumes',
             text: 'Here are the matching resumes.',
             attachments: [ { path: zipFile } ]
+        }, function( err ) {
+            if ( err ) {
+                console.log( err.message );
+            }
+            resolve();
+        });
+    });
+}
+
+function sendSorryEmail( emailAddress ) {
+    console.log( '- emailing sorry ' + emailAddress );
+    return new Promise( function( resolve, reject ) {
+        Email.send({
+            to: emailAddress,
+            from: 'no-reply@tempstars.net',
+            subject: 'TempStars resumes',
+            text: 'Sorry there are no matching resumes at this time.'
         }, function( err ) {
             if ( err ) {
                 console.log( err.message );
