@@ -1,0 +1,23 @@
+{
+  "name": "tempstars-resume-sender",
+  "description": "TempStars Resume Sender Service",
+  "version": "1.0.0",
+  "main": "tempstars-resume-sender.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "private": true,
+  "license": "UNLICENSED",
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "config": "^1.21.0",
+    "download": "^5.0.2",
+    "folder-zip": "0.0.5",
+    "lodash": "^4.14.1",
+    "loopback": "^2.36.0",
+    "moment": "^2.15.1",
+    "request": "^2.78.0",
+    "rimraf": "^2.5.4",
+    "tmp": "0.0.30"
+  }
+}

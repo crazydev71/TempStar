@@ -101,6 +101,10 @@
     "dataSource": "tempstarsDB",
     "public": true
   },
+  "SendResumeRequest": {
+    "dataSource": "tempstarsDB",
+    "public": true
+  },
   "Container": {
     "dataSource": "storage",
     "public": true

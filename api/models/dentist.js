@@ -663,4 +663,27 @@ module.exports = function( Dentist ) {
         });
     };
 
+
+    Dentist.remoteMethod( 'sendResumes', {
+        accepts: [
+            {arg: 'dentistId', type: 'number', required: true},
+            {arg: 'data', type: 'object', http: { source: 'body' } } ],
+        returns: { arg: 'result', type: 'object' },
+        http: { verb: 'post', path: '/:dentistId/resumes' }
+    });
+
+    Dentist.sendResumes = function( dentistId, data, callback ) {
+
+        var SendResumeRequest = app.models.SendResumeRequest;
+
+        data.dentistId = dentistId;
+        SendResumeRequest.create( data )
+        .then( function() {
+            callback( null, {} );
+        })
+        .catch( function( err ) {
+            callback( err );
+        });
+    };
+
 };
