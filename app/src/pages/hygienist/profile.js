@@ -14,10 +14,20 @@ TempStars.Pages.Hygienist.Profile = (function() {
                 $$('#hygienist-profile-photo-remove').show();
                 $$('#hygienist-profile-photo-add').hide();
             }
+
+            if ( data.resumeUrl ) {
+                $$('#hygienist-profile-resume').attr('src', 'img/resume.png' );
+                $$('#hygienist-profile-resume-remove').show();
+                $$('#hygienist-profile-resume-add').hide();
+            }
+
             $$('#hygienist-profile-upload-photo-button').on( 'click', addPhotoHandler );
             $$('#hygienist-profile-remove-photo-button').on( 'click', removePhotoHandler );
             $$('#hygienist-profile-web-photo').on( 'change', webPhotoHandler );
-            $$('#hygienist-profile-upload-photo-button').on( 'click', addPhotoHandler );
+
+            $$('#hygienist-profile-upload-resume-button').on( 'click', addResumeHandler );
+            $$('#hygienist-profile-remove-resume-button').on( 'click', removeResumeHandler );
+            $$('#hygienist-profile-web-resume').on( 'change', webResumeHandler );
         });
 
         app.onPageBeforeInit( 'hygienist-profile', function( page ) {
@@ -29,6 +39,9 @@ TempStars.Pages.Hygienist.Profile = (function() {
                 $$('#hygienist-profile-web-photo').on( 'change', webPhotoHandler );
                 $$('#hygienist-profile-form input[name="postalCode"]').on( 'focusout', upcasePostalCode );
                 $$('#hygienist-profile-form input').on( 'keypress', keyHandler );
+                $$('#hygienist-profile-upload-resume-button').on( 'click', addResumeHandler );
+                $$('#hygienist-profile-remove-resume-button').on( 'click', removeResumeHandler );
+                $$('#hygienist-profile-web-resume').on( 'change', webResumeHandler );
                 initialized = true;
             }
 
@@ -38,7 +51,14 @@ TempStars.Pages.Hygienist.Profile = (function() {
                 $$('#hygienist-profile-photo-add').hide();
             }
 
+            if ( data.resumeUrl ) {
+                $$('#hygienist-profile-resume').attr('src', data.resumeUrl );
+                $$('#hygienist-profile-resume-remove').show();
+                $$('#hygienist-profile-resume-add').hide();
+            }
+
             $$('#hygienist-profile-form select[name="province"]').val(data.province).prop('selected', true);
+            $$('#hygienist-profile-form select[name="placements"]').val(data.placements).prop('selected', true);
             TempStars.Analytics.track( 'Viewed Profile' );
         });
 
@@ -106,6 +126,9 @@ TempStars.Pages.Hygienist.Profile = (function() {
                 length: {
                     is: 6
                 }
+            },
+            placements: {
+                presence: {message: "is required"}
             }
         };
 
@@ -144,6 +167,10 @@ TempStars.Pages.Hygienist.Profile = (function() {
                 var msg = errors.CDHONumber[0].replace( /CDHONumber/i, 'CDHO num');
                 $$('#hygienist-profile-form input[name="CDHONumber"]').addClass('error').next().html( msg );
             }
+            if ( errors.placements ) {
+                $$('#hygienist-profile-form select[name="placements"]').addClass('error').next().html( errors.placements[0] );
+            }
+
             return;
         }
 
@@ -166,6 +193,10 @@ TempStars.Pages.Hygienist.Profile = (function() {
         uploadPhoto()
         .then( function( photoFileName ) {
             formData.photoUrl =  photoFileName;
+            return uploadResume();
+        })
+        .then( function( resumeFileName ) {
+            formData.resumeUrl =  resumeFileName;
             return TempStars.Api.updateHygienistAccount( data.id, formData );
         })
         .then( function() {
@@ -323,6 +354,110 @@ TempStars.Pages.Hygienist.Profile = (function() {
             return false;
         }
     }
+
+    function addResumeHandler(e) {
+        e.preventDefault();
+
+        if ( ! window.cordova ) {
+            $$('#hygienist-profile-web-resume').click();
+        }
+        else {
+            app.alert( 'not on web');
+        }
+
+    }
+
+    function removeResumeHandler( e ) {
+        $$('#hygienist-profile-resume').attr( 'src', '' );
+        $$('#hygienist-profile-resume-remove').hide();
+        $$('#hygienist-profile-resume-add').show();
+    }
+
+    function uploadResume() {
+        return new Promise( function( resolve, reject ) {
+            var resumeURI = $$('#hygienist-profile-resume').attr('src');
+
+            if ( resumeURI == 'img/no-resume.png' ) {
+                resolve( '' );
+                return;
+            }
+
+            // If resume hasn't changed, don't need to upload
+            if ( ! window.webresume ) {
+                resolve( data.resumeUrl );
+                return;
+            }
+
+            // Otherwise new resume so upload
+            if (  window.cordova ) {
+                app.alert( 'not on web' );
+            }
+            else {
+                // Browser
+                var ext, f, dotIndex;
+
+                f = $('#hygienist-profile-web-resume')[0].files[0];
+                dotIndex = f.name.lastIndexOf('.');
+                if ( dotIndex != -1 && f.name.length > dotIndex ) {
+                    ext = f.name.substr( dotIndex + 1 );
+                }
+                else {
+                    switch ( f.type ) {
+                        case 'application/msword':
+                            ext = 'doc';
+                            break;
+
+                        case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+                            ext = 'docx';
+                            break;
+
+                        case 'application/pdf':
+                            ext = 'pdf';
+                            break;
+
+                        case 'application/rtf':
+                        case 'text/richtext':
+                            ext = 'rtf';
+                            break;
+
+                        case 'text/plain':
+                        default:
+                            ext = 'txt';
+                            break;
+                    }
+                }
+                var blob = TempStars.File.convertDataURItoBlobSync( window.webresume );
+
+                // Rename file
+                var fileName = uuid.v4() + '.' + ext;
+
+                var uploadURL = 'containers/tempstars.ca/upload';
+                var formData = new FormData();
+                formData.append( 'resume', blob, fileName );
+                TempStars.Ajax.upload( uploadURL, formData )
+                .then( function( result ) {
+                    resolve( TempStars.Config.bucket.baseUrl + fileName );
+                })
+                .catch( function( err ) {
+                    reject( err );
+                });
+            }
+        });
+    }
+
+
+    function webResumeHandler( e ) {
+        var f = e.target.files[0];
+        var reader = new FileReader();
+        reader.onload = function(event) {
+            $$('#hygienist-profile-resume-remove').show();
+            $$('#hygienist-profile-resume-add').hide();
+            $$('#hygienist-profile-resume').attr( 'src', 'img/resume.png' );
+            window.webresume = event.target.result;
+        };
+        reader.readAsDataURL(f);
+    }
+
 
     return {
         init: init,
