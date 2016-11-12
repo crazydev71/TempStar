@@ -379,7 +379,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
             $$('#hygienist-profile-web-resume').click();
         }
         else {
-            app.alert( 'not on web');
+            app.alert( 'Resum&eacute;s can\'t be uploaded from your phone/tablet. Sign in to your account from your computer to upload your resum&eacute;.' );
         }
 
     }
@@ -408,7 +408,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
 
             // Otherwise new resume so upload
             if (  window.cordova ) {
-                app.alert( 'not on web' );
+                app.alert( 'Resum&eacute;s can\'t be uploaded from your phone/tablet. Sign in to your account from your computer to upload your resum&eacute;.' );
             }
             else {
                 // Browser

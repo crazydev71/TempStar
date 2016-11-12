@@ -254,7 +254,7 @@ TempStars.Pages.HygienistSignup = (function() {
         e.preventDefault();
 
         if ( window.cordova ) {
-            app.alert( 'Resumes can only be uploaded from a desktop browser. Go to http://www.tempstars.ca to upload.' );
+            app.alert( 'Resum&eacute;s can\'t be uploaded from your phone/tablet. Sign in to your account from your computer to upload your resum&eacute;.' );
         }
         else {
             $$('#hygienist-signup-web-resume').click();
