@@ -206,6 +206,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
             return TempStars.Api.updateHygienistAccount( data.id, formData );
         })
         .then( function() {
+            delete window.webresume;            
             return TempStars.User.refresh();
         })
         .then(function() {
@@ -383,7 +384,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
         return new Promise( function( resolve, reject ) {
             var resumeURI = $$('#hygienist-profile-resume').attr('src');
 
-            if ( resumeURI == '' ) {
+            if ( resumeURI == '' || resumeURI == 'img/no-resume.png' ) {
                 resolve( '' );
                 return;
             }
