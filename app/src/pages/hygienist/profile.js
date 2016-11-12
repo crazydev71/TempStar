@@ -63,7 +63,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
                 $$('#hygienist-profile-form select[name="placements"]').val(data.placements).prop('selected', true);
             }
             else {
-                $$('#hygienist-profile-form select[name="placements"]').val('').prop('selected', true);                
+                $$('#hygienist-profile-form select[name="placements"]').val('').prop('selected', true);
             }
             TempStars.Analytics.track( 'Viewed Profile' );
         });
@@ -383,7 +383,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
         return new Promise( function( resolve, reject ) {
             var resumeURI = $$('#hygienist-profile-resume').attr('src');
 
-            if ( resumeURI == 'img/no-resume.png' ) {
+            if ( resumeURI == '' ) {
                 resolve( '' );
                 return;
             }
