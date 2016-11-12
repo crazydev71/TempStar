@@ -58,7 +58,13 @@ TempStars.Pages.Hygienist.Profile = (function() {
             }
 
             $$('#hygienist-profile-form select[name="province"]').val(data.province).prop('selected', true);
-            $$('#hygienist-profile-form select[name="placements"]').val(data.placements).prop('selected', true);
+
+            if ( data.placements != null ) {
+                $$('#hygienist-profile-form select[name="placements"]').val(data.placements).prop('selected', true);
+            }
+            else {
+                $$('#hygienist-profile-form select[name="placements"]').val('').prop('selected', true);                
+            }
             TempStars.Analytics.track( 'Viewed Profile' );
         });
 
