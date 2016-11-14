@@ -1,16 +1,28 @@
+
 TempStars.Pages.Dentist.Home = (function() {
     'use strict';
 
+    var interval,
+        calendar;
+
     function init() {
-        app.onPageBeforeInit( 'home', function( page ) {
+        app.onPageBeforeInit( 'dentist-home', function( page ) {
             mainView.showNavbar();
             displayCalendar( page.context );
-            TempStars.Analytics.track( 'Viewed Home Page' );            
-
+            TempStars.Analytics.track( 'Viewed Home Page' );
+            interval = setInterval( refreshPage, 5000 );
         });
 
-        app.onPageBeforeRemove( 'home', function( page ) {
+        app.onPageBeforeRemove( 'dentist-home', function( page ) {
+            clearInterval( interval );
+        });
+    }
 
+    function refreshPage() {
+        TempStars.Pages.Dentist.Home.getData()
+        .then( function( data ) {
+            calendar.updateEvents( data.actionRequired );
+            calendar.updateMarkers( [data.posted, data.partial, data.confirmed, data.completed] );
         });
     }
 
@@ -18,7 +30,7 @@ TempStars.Pages.Dentist.Home = (function() {
 
         var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August' , 'September' , 'October', 'November', 'December'];
 
-        var calendarInline = app.calendar({
+        calendar = app.calendar({
             container: '#dentist-calendar-inline-container',
             value: [new Date()],
             weekHeader: true,
@@ -38,10 +50,10 @@ TempStars.Pages.Dentist.Home = (function() {
             onOpen: function (p) {
                 $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] + ' ' + p.currentYear);
                 $$('.calendar-custom-toolbar .left .link').on('click', function () {
-                    calendarInline.prevMonth();
+                    calendar.prevMonth();
                 });
                 $$('.calendar-custom-toolbar .right .link').on('click', function () {
-                    calendarInline.nextMonth();
+                    calendar.nextMonth();
                 });
             },
             onMonthYearChangeStart: function (p) {

@@ -1,15 +1,40 @@
+
 TempStars.Pages.Hygienist.Home = (function() {
     'use strict';
+
+    var interval,
+        calendar;
 
     function init() {
         app.onPageBeforeInit( 'hygienist-home', function( page ) {
             mainView.showNavbar();
             displayCalendar( page.context );
+            if ( page.context.haveNewJobs ) {
+                $$('#hygienist-new-jobs-badge').show();
+            }
+            else {
+                $$('#hygienist-new-jobs-badge').hide();
+            }
             TempStars.Analytics.track( 'Viewed Home Page' );
+            interval = setInterval( refreshPage, 5000 );
         });
 
         app.onPageBeforeRemove( 'hygienist-home', function( page ) {
+            clearInterval( interval );
+        });
+    }
 
+    function refreshPage() {
+        TempStars.Pages.Hygienist.Home.getData()
+        .then( function( data ) {
+            calendar.updateEvents( data.actionRequired );
+            calendar.updateMarkers( [data.partial, data.confirmed, data.completed] );
+            if ( data.haveNewJobs ) {
+                $$('#hygienist-new-jobs-badge').show();
+            }
+            else {
+                $$('#hygienist-new-jobs-badge').hide();
+            }
         });
     }
 
@@ -17,7 +42,7 @@ TempStars.Pages.Hygienist.Home = (function() {
 
         var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August' , 'September' , 'October', 'November', 'December'];
 
-        var calendarInline = app.calendar({
+        calendar = app.calendar({
             container: '#hygienist-calendar-inline-container',
             value: [new Date()],
             weekHeader: true,
@@ -37,10 +62,10 @@ TempStars.Pages.Hygienist.Home = (function() {
             onOpen: function (p) {
                 $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] + ' ' + p.currentYear);
                 $$('.calendar-custom-toolbar .left .link').on('click', function () {
-                    calendarInline.prevMonth();
+                    calendar.prevMonth();
                 });
                 $$('.calendar-custom-toolbar .right .link').on('click', function () {
-                    calendarInline.nextMonth();
+                    calendar.nextMonth();
                 });
             },
             onMonthYearChangeStart: function (p) {
@@ -49,10 +74,6 @@ TempStars.Pages.Hygienist.Home = (function() {
             events: data.actionRequired,
 
             rangesClasses: [
-                {
-                    cssClass: 'calendar-posted',
-                    range: data.posted
-                },
                 {
                     cssClass: 'calendar-partial',
                     range: data.partial
@@ -71,6 +92,9 @@ TempStars.Pages.Hygienist.Home = (function() {
                 console.log('on day click');
                 if ( $(dayContainer).hasClass('calendar-completed') ) {
                     completedDayHandler(picker, dayContainer, dateYear, dateMonth, dateDay);
+                }
+                else if ( $(dayContainer).hasClass('calendar-confirmed') && $(dayContainer).hasClass('picker-calendar-day-today') ) {
+                    todayDayHandler(picker, dayContainer, dateYear, dateMonth, dateDay);
                 }
                 else if ( $(dayContainer).hasClass('calendar-confirmed') ) {
                     confirmedDayHandler(picker, dayContainer, dateYear, dateMonth, dateDay);
@@ -106,6 +130,10 @@ TempStars.Pages.Hygienist.Home = (function() {
         TempStars.Hygienist.Router.goForwardPage( 'job-partial', params );
     }
 
+    function todayDayHandler(picker, dayContainer, dateYear, dateMonth, dateDay) {
+        console.log( 'today ' + dateYear + ' ' + dateMonth + ' ' + dateDay );
+        TempStars.Hygienist.Router.goForwardPage( 'todays-job' );
+    }
 
     function getJobDate( job ) {
         return moment(job.startDate).startOf('day').toDate();
@@ -125,7 +153,7 @@ TempStars.Pages.Hygienist.Home = (function() {
     return {
         init: init,
         getData: function( params ) {
-            TempStars.Logging.log( 'getting data for hygienist home page ' );
+            //TempStars.Logging.log( 'getting data for hygienist home page ' );
             return new Promise( function( resolve, reject ) {
                 Promise.props({
                     user: TempStars.User.getCurrentUser(),
