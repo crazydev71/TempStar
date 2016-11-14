@@ -7,7 +7,7 @@ TempStars.Pages.Dentist.ModifyJob = (function() {
 
     function init() {
 
-        app.onPageBeforeInit( 'modify-job', function( page ) {
+        app.onPageBeforeInit( 'hygienist-modify-job', function( page ) {
             job = page.context;
             job.postedStart = moment.utc( job.shifts[0].postedStart ).local().format('h:mm a');
             job.postedEnd = moment.utc( job.shifts[0].postedEnd ).local().format('h:mm a');

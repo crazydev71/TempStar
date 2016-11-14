@@ -3,13 +3,13 @@ TempStars.Pages.Dentist.Hygienists = (function() {
     'use strict';
 
     function init() {
-        app.onPageBeforeInit( 'hygienists', function( page ) {
+        app.onPageBeforeInit( 'dentist-hygienists', function( page ) {
             $$('.dentist-hygienists-remove-blocked-button').on( 'click', removeBlockedHandler );
             $$('.dentist-hygienists-remove-fav-button').on( 'click', removeFavHandler );
-            TempStars.Analytics.track( 'Viewed Hygienists' );            
+            TempStars.Analytics.track( 'Viewed Hygienists' );
         });
 
-        app.onPageBeforeRemove( 'hygienists', function( page ) {
+        app.onPageBeforeRemove( 'dentist-hygienists', function( page ) {
             $$('.dentist-hygienists-remove-blocked-button').off( 'click', removeBlockedHandler );
             $$('.dentist-hygienists-remove-fav-button').off( 'click', removeFavHandler );
         });

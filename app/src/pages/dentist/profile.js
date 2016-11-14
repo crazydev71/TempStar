@@ -256,13 +256,16 @@ TempStars.Pages.Dentist.Profile = (function() {
         e.preventDefault();
 
         if ( window.cordova ) {
+            window.cameraOpen = true;
             navigator.camera.getPicture (
               function(result) {
+                  window.cameraOpen = false;
                   $$('#dentist-profile-photo').attr('src', result );
                   $$('#dentist-profile-photo-remove').show();
                   $$('#dentist-profile-photo-add').hide();
               },
               function(errmsg) {
+                  window.cameraOpen = false;
                   app.alert( errmsg );
               },
               {

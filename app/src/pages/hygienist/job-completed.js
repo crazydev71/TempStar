@@ -5,16 +5,15 @@ TempStars.Pages.Hygienist.JobCompleted = (function() {
     var job;
 
     function init() {
-        app.onPageBeforeInit( 'job-completed', function( page ) {
+        app.onPageBeforeInit( 'hygienist-job-completed', function( page ) {
             $$('#hygienist-job-completed-notes-save-button').on( 'click', saveNotesHandler );
             $$('#hygienist-job-completed-view-invoice-button').on( 'click', viewInvoiceHandler );
             $$('#hygienist-job-completed-view-survey-button').on( 'click', surveyButtonHandler );
             $$('#hygienist-job-completed-invoice-button').on( 'click', invoiceButtonHandler );
             TempStars.Analytics.track( 'Viewed Completed Job' );
-
         });
 
-        app.onPageBeforeRemove( 'job-completed', function( page ) {
+        app.onPageBeforeRemove( 'hygienist-job-completed', function( page ) {
             $$('#hygienist-job-completed-notes-save-button').off( 'click', saveNotesHandler );
             $$('#hygienist-job-completed-view-invoice-button').off( 'click', viewInvoiceHandler );
             $$('#hygienist-job-completed-view-survey-button').off( 'click', surveyButtonHandler );

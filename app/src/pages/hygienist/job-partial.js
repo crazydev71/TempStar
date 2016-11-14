@@ -7,13 +7,13 @@ TempStars.Pages.Hygienist.JobPartial = (function() {
 
     function init() {
 
-        app.onPageBeforeInit( 'job-partial', function( page ) {
+        app.onPageBeforeInit( 'hygienist-job-partial', function( page ) {
             TempStars.Analytics.track( 'Viewed Partial Job Details' );
         });
 
         if ( ! initialized ) {
 
-            app.onPageBeforeInit( 'job-partial', function( page ) {
+            app.onPageBeforeInit( 'hygienist-job-partial', function( page ) {
                 $$('#hygienist-job-partial-modify-button').on( 'click', modifyButtonHandler );
                 $$('#hygienist-job-partial-cancel-button').on( 'click', cancelButtonHandler );
             });

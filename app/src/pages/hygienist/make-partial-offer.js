@@ -16,7 +16,7 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
 
     function init() {
 
-        app.onPageBeforeInit( 'make-partial-offer', function( page ) {
+        app.onPageBeforeInit( 'hygienist-make-partial-offer', function( page ) {
             job = page.context;
             startTimePicker = app.picker({
                 input: '#hygienist-make-partial-offer-starttime',

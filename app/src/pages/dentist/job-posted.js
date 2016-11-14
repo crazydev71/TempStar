@@ -5,14 +5,14 @@ TempStars.Pages.Dentist.JobPosted = (function() {
     var job;
 
     function init() {
-        app.onPageBeforeInit( 'job-posted', function( page ) {
+        app.onPageBeforeInit( 'dentist-job-posted', function( page ) {
             $$('#dentist-job-posted-modify-button').on( 'click', modifyButtonHandler );
             $$('#dentist-job-posted-cancel-button').on( 'click', cancelButtonHandler );
             TempStars.Analytics.track( 'Viewed Posted Job' );
 
         });
 
-        app.onPageBeforeRemove( 'job-posted', function( page ) {
+        app.onPageBeforeRemove( 'dentist-job-posted', function( page ) {
             $$('#dentist-job-posted-modify-button').off( 'click', modifyButtonHandler );
             $$('#dentist-job-posted-cancel-button').off( 'click', cancelButtonHandler );
         });

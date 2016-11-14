@@ -5,7 +5,7 @@ TempStars.Pages.Dentist.PostJob = (function() {
 
     function init() {
 
-        app.onPageBeforeInit( 'post-job', function( page ) {
+        app.onPageBeforeInit( 'dentist-post-job', function( page ) {
             app.calendar({
                 input: '#dentist-post-job-date',
                 cssClass: 'open-calendar',

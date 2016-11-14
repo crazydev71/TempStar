@@ -5,16 +5,16 @@ TempStars.Pages.Dentist.JobCompleted = (function() {
     var job;
 
     function init() {
-        app.onPageBeforeInit( 'job-completed', function( page ) {
+        app.onPageBeforeInit( 'dentist-job-completed', function( page ) {
             // $$('#dentist-job-completed-paid-checkbox').on( 'change', paidToggleHandler );
             // $$('#dentist-job-completed-survey-checkbox').on( 'change', surveyToggleHandler );
             $$('#dentist-job-completed-notes-save-button').on( 'click', saveNotesHandler );
             $$('#dentist-job-completed-view-invoice-button').on( 'click', viewInvoiceHandler );
             $$('#dentist-job-completed-view-survey-button').on( 'click', viewSurveyHandler );
-            TempStars.Analytics.track( 'Viewed Completed Job' );            
+            TempStars.Analytics.track( 'Viewed Completed Job' );
         });
 
-        app.onPageBeforeRemove( 'job-completed', function( page ) {
+        app.onPageBeforeRemove( 'dentist-job-completed', function( page ) {
             // $$('#dentist-job-completed-paid-checkbox').off( 'change', paidToggleHandler );
             // $$('#dentist-job-completed-survey-checkbox').off( 'change', surveyToggleHandler );
             $$('#dentist-job-completed-notes-save-button').off( 'click', saveNotesHandler );

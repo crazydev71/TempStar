@@ -16,7 +16,7 @@ TempStars.Pages.Hygienist.CreateInvoice = (function() {
 
     function init() {
 
-        app.onPageBeforeInit( 'create-invoice', function( page ) {
+        app.onPageBeforeInit( 'hygienist-create-invoice', function( page ) {
             job = page.context;
             startTimePicker = app.picker({
                 input: '#hygienist-create-invoice-starttime',

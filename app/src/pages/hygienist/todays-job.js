@@ -6,16 +6,15 @@ TempStars.Pages.Hygienist.TodaysJob = (function() {
         workHistory;
 
     function init() {
-        app.onPageBeforeInit( 'todays-job', function( page ) {
+        app.onPageBeforeInit( 'hygienist-todays-job', function( page ) {
             $$('#hygienist-todays-job-complete-button').on( 'click', completeButtonHandler );
             $$('#hygienist-todays-job-cancel-button').on( 'click', cancelButtonHandler );
             $$('#hygienist-todays-job-invoice-button').on( 'click', invoiceButtonHandler );
             $$('#hygienist-todays-job-survey-button').on( 'click', surveyButtonHandler );
             TempStars.Analytics.track( 'Viewed Today\'s Job' );
-
         });
 
-        app.onPageBeforeRemove( 'todays-job', function( page ) {
+        app.onPageBeforeRemove( 'hygienist-todays-job', function( page ) {
             $$('#hygienist-todays-job-complete-button').off( 'click', completeButtonHandler );
             $$('#hygienist-todays-job-cancel-button').off( 'click', cancelButtonHandler );
             $$('#hygienist-todays-job-invoice-button').off( 'click', invoiceButtonHandler );
@@ -63,7 +62,6 @@ TempStars.Pages.Hygienist.TodaysJob = (function() {
             app.hidePreloader();
             TempStars.Analytics.track( 'Cancelled Job' );
             TempStars.Hygienist.Router.goBackPage();
-
         })
         .catch( function( err ) {
             app.hidePreloader();
@@ -77,7 +75,6 @@ TempStars.Pages.Hygienist.TodaysJob = (function() {
         .then( function() {
             app.hidePreloader();
             TempStars.Analytics.track( 'Marked Job as Complete' );
-
             TempStars.Hygienist.Router.goBackPage('');
         })
         .catch( function( err ) {

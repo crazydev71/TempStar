@@ -212,14 +212,17 @@ TempStars.Pages.HygienistSignup = (function() {
         e.preventDefault();
 
         if ( window.cordova ) {
+            window.cameraOpen = true;
             navigator.camera.getPicture(
               function( photoURI ) {
+                  window.cameraOpen = false;
                   $$('#hygienist-signup-photo').attr('src', photoURI );
                   $$('#hygienist-signup-photo-remove').show();
                   $$('#hygienist-signup-photo-add').hide();
               },
               function(errmsg) {
-                  app.alert( errmsg )
+                  window.cameraOpen = false;
+                  app.alert( errmsg );
               },
               {
                   sourceType: Camera.PictureSourceType.PHOTOLIBRARY,

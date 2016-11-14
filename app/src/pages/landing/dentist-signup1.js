@@ -157,15 +157,17 @@ TempStars.Pages.DentistSignup1 = (function() {
         e.preventDefault();
 
         if ( window.cordova ) {
-
+            window.cameraOpen = true;
             navigator.camera.getPicture (
               function(result) {
+                  window.cameraOpen = false;
                   $$('#dentist-signup1-photo').attr('src', result );
                   $$('#dentist-signup1-photo-remove').show();
                   $$('#dentist-signup1-photo-add').hide();
               },
               function(errmsg) {
-                  app.alert( errmsg )
+                  window.cameraOpen = false;
+                  app.alert( errmsg );
               },
               {
                   sourceType: Camera.PictureSourceType.PHOTOLIBRARY,

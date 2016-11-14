@@ -5,7 +5,7 @@ TempStars.Pages.Dentist.SendResumes = (function() {
 
     function init() {
 
-        app.onPageBeforeInit( 'send-resumes', function( page ) {
+        app.onPageBeforeInit( 'dentist-send-resumes', function( page ) {
 
             $$('#dentist-send-resumes-button').on( 'click', sendResumesHandler );
             TempStars.Analytics.track( 'Viewed Hire Staff' );

@@ -6,7 +6,6 @@ TempStars.Hygienist.Menu = (function() {
     function init() {
 
         $$(document).on( 'click', '.hygienist-internal-forward', function(e) {
-
             e.preventDefault();
             var page = $$(this).attr('data-page');
             TempStars.Hygienist.Router.goForwardPage( page );

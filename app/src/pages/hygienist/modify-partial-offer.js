@@ -9,7 +9,7 @@ TempStars.Pages.Hygienist.ModifyPartialOffer = (function() {
 
     function init() {
 
-        app.onPageBeforeInit( 'modify-partial-offer', function( page ) {
+        app.onPageBeforeInit( 'hygienist-modify-partial-offer', function( page ) {
             partialOffer = page.context;
             startTime = moment.utc( partialOffer.offeredStartTime ).local().format('h:mm a');
             endTime = moment.utc( partialOffer.offeredEndTime ).local().format('h:mm a');

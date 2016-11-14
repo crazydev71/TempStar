@@ -3,13 +3,13 @@ TempStars.Pages.Hygienist.DentalOffices = (function() {
     'use strict';
 
     function init() {
-        app.onPageBeforeInit( 'dental-offices', function( page ) {
+        app.onPageBeforeInit( 'hygienist-dental-offices', function( page ) {
             $$('.hygienist-dentaloffices-remove-blocked-button').on( 'click', removeBlockedHandler );
             $$('.hygienist-dentaloffices-remove-fav-button').on( 'click', removeFavHandler );
-            TempStars.Analytics.track( 'Viewed Dental Offices' );            
+            TempStars.Analytics.track( 'Viewed Dental Offices' );
         });
 
-        app.onPageBeforeRemove( 'dental-offices', function( page ) {
+        app.onPageBeforeRemove( 'hygienist-dental-offices', function( page ) {
             $$('.hygienist-dentaloffices-remove-blocked-button').off( 'click', removeBlockedHandler );
             $$('.hygienist-dentaloffices-remove-fav-button').off( 'click', removeFavHandler );
         });

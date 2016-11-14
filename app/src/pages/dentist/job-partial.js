@@ -9,7 +9,7 @@ TempStars.Pages.Dentist.JobPartial = (function() {
 
         if ( ! initialized ) {
 
-            app.onPageBeforeInit( 'job-partial', function( page ) {
+            app.onPageBeforeInit( 'dentist-job-partial', function( page ) {
                 $$('#dentist-job-partial-modify-button').on( 'click', modifyButtonHandler );
                 $$('#dentist-job-partial-cancel-button').on( 'click', cancelButtonHandler );
                 TempStars.Analytics.track( 'Viewed Partial Job' );
