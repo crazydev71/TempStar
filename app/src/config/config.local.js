@@ -21,10 +21,13 @@ TempStars.Config = (function() {
             pubKey: 'pk_test_yzhl7dmUrMvdEB9BaKuKhgpL'
         },
         loggly: {
-            key: '7a96865b-dac0-4059-afcd-e08555fe10b3'
+            enabled: false,
+            key: 'xxx'
         },
         mixpanel: {
-            token: '399a45b6eea7aea3f7fb578e85cf9db6'
-        }
+            enabled: false,
+            token: 'xxx'
+        },
+        debug: true
     };
 })();

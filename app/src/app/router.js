@@ -87,7 +87,7 @@ TempStars.Router = function( a ) {
 
         this.reloadPage = function( page, params, data ) {
             var url;
-            
+
             params = params || {};
             params.reload = true;
 
@@ -102,45 +102,3 @@ TempStars.Router = function( a ) {
         };
 
 };
-
-//     return Router;
-// })();
-
-//
-//     function init( a ) {
-//         area = a;
-//         urlPath = _.toLower( a );
-//         classPath = _.upperFirst( a );
-//         return this;
-//     }
-//
-//     function goForwardPage( page, params, data ) {
-//         goPage( 'forward', page, params, data );
-//     }
-//
-//     function goBackPage( page, params, data ) {
-//         var len,
-//             previousPageIndex,
-//             url;
-//
-//         // If page wasn't provided, pull from history
-//         if ( ! page ) {
-//             len = mainView.history.length;
-//             previousPageIndex = (len >= 2) ? len - 2 : 0;
-//             url = document.createElement('a');
-//             url.href = mainView.history[previousPageIndex];
-//             page = url.pathname.split('/').reverse()[0].replace('.html', '');
-//         }
-//
-//         goPage( 'back', page, params, data );
-//     }
-//
-//
-//     return {
-//         init: init,
-//         goForwardPage: goForwardPage,
-//         goBackPage: goBackPage,
-//         reloadPage: reloadPage
-//     };
-//
-// })();

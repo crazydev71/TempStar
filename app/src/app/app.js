@@ -3,41 +3,45 @@ TempStars.App = (function() {
 
     'use strict';
 
+    var userInterface = 'landing';
+
     return {
         init: function init() {
-            app.onPageBeforeInit( '*', function( page ) {
-                console.log( page.name + ': onPageBeforeInit' );
-            });
+            if ( TempStars.Config.debug ) {
 
-            app.onPageInit( '*', function( page ) {
-                console.log( page.name + ': onPageInit' );
-            });
+                app.onPageBeforeInit( '*', function( page ) {
+                    console.log( page.name + ': onPageBeforeInit' );
+                });
 
-            app.onPageReinit( '*', function( page ) {
-                console.log( page.name + ': onPageReinit' );
-            });
+                app.onPageInit( '*', function( page ) {
+                    console.log( page.name + ': onPageInit' );
+                });
 
-            app.onPageBeforeAnimation( '*', function( page ) {
-                console.log( page.name + ': onPageBeforeAnimation' );
-            });
+                app.onPageReinit( '*', function( page ) {
+                    console.log( page.name + ': onPageReinit' );
+                });
 
-            app.onPageAfterAnimation( '*', function( page ) {
-                console.log( page.name + ': onPageAfterAnimation' );
-            });
+                app.onPageBeforeAnimation( '*', function( page ) {
+                    console.log( page.name + ': onPageBeforeAnimation' );
+                });
 
-            app.onPageBeforeRemove( '*', function( page ) {
-                console.log( page.name + ': onPageBeforeRemove' );
-            });
+                app.onPageAfterAnimation( '*', function( page ) {
+                    console.log( page.name + ': onPageAfterAnimation' );
+                });
 
-            app.onPageBack( '*', function( page ) {
-                console.log( page.name + ': onPageBack' );
-            });
+                app.onPageBeforeRemove( '*', function( page ) {
+                    console.log( page.name + ': onPageBeforeRemove' );
+                });
 
-            app.onPageAfterBack( '*', function( page ) {
-                console.log( page.name + ': onPageAfterBack' );
-            });
+                app.onPageBack( '*', function( page ) {
+                    console.log( page.name + ': onPageBack' );
+                });
 
-            // TODO
+                app.onPageAfterBack( '*', function( page ) {
+                    console.log( page.name + ': onPageAfterBack' );
+                });
+            }
+
             try {
                 Stripe.setPublishableKey( TempStars.Config.stripe.pubKey );
                 TempStars.Analytics.init();
@@ -84,10 +88,12 @@ TempStars.App = (function() {
                         photoUrl: photoUrl
                     });
                     $('#panel-menu').html(menuContent);
+                    userInterface = 'dentist';
                     TempStars.Dentist.Router.goForwardPage( 'home' );
                 }
                 else {
                     // Go back to signup
+                    userInterface = 'landing';
                     mainView.router.loadPage( { url: 'landing/dentist-signup1.html', animatePages: false } );
                 }
             }
@@ -108,10 +114,11 @@ TempStars.App = (function() {
                         photoUrl: photoUrl
                     });
                     $('#panel-menu').html(menuContent);
-
+                    userInterface = 'hygienist';
                     TempStars.Hygienist.Router.goForwardPage('home');
                 }
                 else {
+                    userInterface = 'landing';
                     mainView.router.loadPage( { url: 'landing/hygienist-signup.html', animatePages: false } );
                 }
             }

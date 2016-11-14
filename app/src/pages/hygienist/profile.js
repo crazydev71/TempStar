@@ -96,7 +96,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
     }
 
     function formChangeHandler(e) {
-        app.alert( 'Remember to Save changes' );
+        app.alert( 'Remember to Save changes!' );
     }
 
     function submitHandler(e) {
@@ -232,14 +232,17 @@ TempStars.Pages.Hygienist.Profile = (function() {
         e.preventDefault();
 
         if ( window.cordova ) {
+            window.cameraOpen = true;
             navigator.camera.getPicture (
               function(result) {
+                  window.cameraOpen = false;
                   $$('#hygienist-profile-photo').attr('src', result );
                   $$('#hygienist-profile-photo-remove').show();
                   $$('#hygienist-profile-photo-add').hide();
-                  app.alert( 'Remember to Save changes' );
+                  //app.alert( 'Remember to Save changes' );
               },
               function(errmsg) {
+                  window.cameraOpen = false;
                   app.alert( errmsg );
               },
               {

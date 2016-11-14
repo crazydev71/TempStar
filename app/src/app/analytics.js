@@ -6,23 +6,33 @@ TempStars.Analytics = (function() {
     var _LTracker;
 
     function init() {
-        mixpanel.init( TempStars.Config.mixpanel.token, {persistence: 'localStorage'} );
+        if ( TempStars.Config.mixpanel.enabled ) {
+            mixpanel.init( TempStars.Config.mixpanel.token, {persistence: 'localStorage'} );
+        }
     }
 
     function identify( id ) {
-        mixpanel.identify( id );
+        if ( TempStars.Config.mixpanel.enabled ) {
+            mixpanel.identify( id );
+        }
     }
 
     function track( eventName, props ) {
-        mixpanel.track( eventName, props );
+        if ( TempStars.Config.mixpanel.enabled ) {
+            mixpanel.track( eventName, props );
+        }
     }
 
     function alias( alias, original ) {
-        mixpanel.alias( alias, original );
+        if ( TempStars.Config.mixpanel.enabled ) {
+            mixpanel.alias( alias, original );
+        }
     }
 
     function setProfileProperties( props ) {
-        mixpanel.people.set( props );
+        if ( TempStars.Config.mixpanel.enabled ) {
+            mixpanel.people.set( props );
+        }
     }
 
     return {

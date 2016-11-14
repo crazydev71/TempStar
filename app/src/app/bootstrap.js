@@ -80,6 +80,7 @@ TempStars.bootstrap = {
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
         document.addEventListener("resume", this.onResume, false);
+        document.addEventListener("pause", this.onPause, false);
     },
 
     onDeviceReady: function() {
@@ -131,11 +132,18 @@ TempStars.bootstrap = {
         });
     },
 
-    onResume: function() {
-        console.log( 'on resume' );
+    onResume: function(e) {
+        var cameraOpen = window.localStorage.getItem( 'cameraOpen' );
+        window.cameraOpen = (cameraOpen == 'true');
+
+        if ( window.cameraOpen ) {
+            console.log( 'in camera app' );
+            return;
+        }
+
         TempStars.Push.init();
         TempStars.Analytics.track( 'Opened App' );
-        
+
         TempStars.User.autoLogin()
         .then( function() {
             TempStars.App.gotoStartingPage();
@@ -144,6 +152,13 @@ TempStars.bootstrap = {
             console.log( 'autoLogin failed' );
             mainView.router.loadPage( 'index.html' );
         });
+    },
+
+    onPause: function(e) {
+        if ( window.cameraOpen == undefined ) {
+            window.cameraOpen = false;
+        }
+        window.localStorage.setItem( 'cameraOpen', window.cameraOpen );
     }
 };
 
