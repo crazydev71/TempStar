@@ -61,14 +61,6 @@ TempStars.Pages.Hygienist.Profile = (function() {
             }
 
             $$('#hygienist-profile-form select[name="province"]').val(data.province).prop('selected', true);
-
-            if ( data.placements != null ) {
-                $$('#hygienist-profile-form select[name="placements"]').val(data.placements).prop('selected', true);
-            }
-            else {
-                $$('#hygienist-profile-form select[name="placements"]').val('').prop('selected', true);
-            }
-
             TempStars.Analytics.track( 'Viewed Profile' );
         });
 
@@ -140,9 +132,6 @@ TempStars.Pages.Hygienist.Profile = (function() {
                 length: {
                     is: 6
                 }
-            },
-            placements: {
-                presence: {message: "is required"}
             }
         };
 
@@ -181,10 +170,6 @@ TempStars.Pages.Hygienist.Profile = (function() {
                 var msg = errors.CDHONumber[0].replace( /CDHONumber/i, 'CDHO num');
                 $$('#hygienist-profile-form input[name="CDHONumber"]').addClass('error').next().html( msg );
             }
-            if ( errors.placements ) {
-                $$('#hygienist-profile-form select[name="placements"]').addClass('error').next().html( errors.placements[0] );
-            }
-
             return;
         }
 
