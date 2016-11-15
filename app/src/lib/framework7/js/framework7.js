@@ -10725,6 +10725,27 @@
                 var translate = (p.monthsTranslate * 100) * inverter;
                 p.wrapper.transition(transition).transform('translate3d(' + (p.isH ? translate : 0) + '%, ' + (p.isH ? 0 : translate) + '%, 0)');
             };
+            p.updateEvents = function( events ) {
+                p.params.events = events;
+                $$('.picker-calendar-day').removeClass('picker-calendar-day-has-events');
+                events.map( function( event ) {
+                    var dateStr = moment( event ).subtract(1, 'month').format('YYYY-M-D');
+                    $$('.picker-calendar-day[data-date="' + dateStr + '"]').addClass('picker-calendar-day-has-events');
+                });
+            }
+            p.updateMarkers = function( rangeData ) {
+                for ( var i = 0; i < rangeData.length; i++ ) {
+                    p.params.rangesClasses[i].range = rangeData[i];
+                    $$('.picker-calendar-day').removeClass( p.params.rangesClasses[i].cssClass );
+                    if ( ! p.params.rangesClasses[i].range ) {
+                        continue;
+                    }
+                    p.params.rangesClasses[i].range.map( function( marker ) {
+                        var dateStr = moment( marker ).subtract(1, 'month').format('YYYY-M-D');
+                        $$('.picker-calendar-day[data-date="' + dateStr + '"]').addClass( p.params.rangesClasses[i].cssClass );
+                    });
+                }
+            }
             p.setYearMonth = function (year, month, transition) {
                 if (typeof year === 'undefined') year = p.currentYear;
                 if (typeof month === 'undefined') month = p.currentMonth;

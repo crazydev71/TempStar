@@ -136,11 +136,34 @@ TempStars.Api = (function() {
         },
 
         getDentistInvoices: function getDentistInvoices( dentistId ) {
-            return TempStars.Ajax.get( 'dentists/' + dentistId + '/jobs?filter={"where":{"status":4}}' );
+            return new Promise( function( resolve, reject ) {
+                TempStars.Ajax.get( 'dentists/' + dentistId + '/jobs?filter={"where":{"status":4}}' )
+                .then( function( data ) {
+                    data = _.filter(data, function(o) {
+                        return ( 'invoice' in o );
+                    });
+                    resolve( data );
+                })
+                .catch( function( err ) {
+                    reject( err );
+                })
+            });
         },
 
         getHygienistInvoices: function getHygienistInvoices( hygienistId ) {
-            return TempStars.Ajax.get( 'hygienists/' + hygienistId + '/jobs?filter={"where":{"status":4}}' );
+            return new Promise( function( resolve, reject ) {
+                TempStars.Ajax.get( 'hygienists/' + hygienistId + '/jobs?filter={"where":{"status":4}}' )
+                .then( function( data ) {
+                    data = _.filter(data, function(o) {
+                        return ( 'invoice' in o );
+                    });
+                    resolve( data );
+                })
+                .catch( function( err ) {
+                    reject( err );
+                })
+            });
+
         },
 
         updateInvoice: function updateInvoice( invoiceId, data ) {
