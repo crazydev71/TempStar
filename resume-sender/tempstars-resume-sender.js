@@ -157,6 +157,7 @@ function getBestCandidateResumes( request, hygienists ) {
 
     // Extract the resume URLs
     var resumeUrls = _.map( hygienists, 'resumeUrl' );
+    resumeUrls = _.compact( resumeUrls );
     return resumeUrls;
 }
 
