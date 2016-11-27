@@ -22,7 +22,7 @@
                 <div class="login-screen-title" style="margin-bottom:20px;">{{date_format_day job.startDate}}</div>
                 <hr>
                 <div class="center-box" style="font-size:125%;font-weight:bold;padding:8px;">
-                {{job.dentist.practiceName}} &nbsp; <a title="show map" href="#" class="open-popover" data-popover=".popover-map" ><span class="ti-map"></span></a>
+                {{job.dentist.practiceName}}
                 </div>
                 <div class="center-box" style="padding:2px;">
                 {{job.dentist.address}}
@@ -32,6 +32,9 @@
                 </div>
                 <div class="center-box" style="padding:2px;">
                 {{job.dentist.postalCode}}
+                </div>
+                <div class="center-box" style="padding:2px;">
+                    <a title="view map" href="#" class="open-popover" data-popover=".popover-map">view map</a>
                 </div>
 
                 {{#each job.shifts}}

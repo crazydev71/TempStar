@@ -12,8 +12,6 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
             $$('#hygienist-available-job-partial-button').on( 'click', partialButtonHandler );
             TempStars.Analytics.track( 'Viewed Available Job Detail' );
             $$('.popover-map').on('open', displayMap );
-
-
         });
 
         app.onPageBeforeRemove( 'hygienist-available-job', function( page ) {

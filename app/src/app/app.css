@@ -531,11 +531,11 @@ input[type=number]::-webkit-outer-spin-button {
 
 .popover-map {
     width: 304px;
-    height: 404px;
+    height: 304px;
 }
 
 #popover-map {
     width: 292px;
-    height: 392px;
+    height: 292px;
     padding: 4px;
 }
