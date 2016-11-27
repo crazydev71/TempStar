@@ -43,6 +43,11 @@ TempStars.bootstrap = {
             return moneyString.toFixed(2);
         });
 
+        Template7.registerHelper('phone_format', function( phoneString ) {
+            var justNumbers = phoneString.replace( /\D/g, '' );
+            return justNumbers.substr(0, 3) + '-' + justNumbers.substr(3, 3) + '-' + justNumbers.substr(6,4);
+        });
+
 
         // Setup app
         window.app = new Framework7({
@@ -73,7 +78,7 @@ TempStars.bootstrap = {
             window.device.version = platform.version;
             window.device.manufacturer = platform.os;
             window.device.model = '';
-            this.onDeviceReady();
+            setTimeout( this.onDeviceReady, 500);
         }
     },
 
@@ -87,6 +92,7 @@ TempStars.bootstrap = {
         var isAndroid,
             isIos;
 
+    console.log( 'DEVICE READY');
         // Get device for setting theme
         isAndroid = Framework7.prototype.device.android === true;
         isIos = Framework7.prototype.device.ios === true;
@@ -107,6 +113,8 @@ TempStars.bootstrap = {
         if ( isAndroid ) {
             TempStars.bootstrap.initAndroidKeyboardFix();
         }
+
+        TempStars.App.init();
     },
 
     initAndroidKeyboardFix: function initAndroidKeyboardFix() {
@@ -133,6 +141,8 @@ TempStars.bootstrap = {
     },
 
     onResume: function(e) {
+        console.log('ON RESUME');
+
         var cameraOpen = window.localStorage.getItem( 'cameraOpen' );
         window.cameraOpen = (cameraOpen == 'true');
 

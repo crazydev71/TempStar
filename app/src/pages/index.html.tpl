@@ -133,6 +133,8 @@
         </div>
     </div>
 
+    @@include( 'hygienist/popover-map.html' )
+
     <script src="cordova.js"></script>
     <script src="lib/loggly.tracker-2.1.min.js"></script>
     <script src="lib/framework7/js/framework7.js"></script>
@@ -147,8 +149,6 @@
     <script src="js/tempstars.version.js"></script>
     <script src="js/tempstars.dentist.js"></script>
     <script src="js/tempstars.hygienist.js"></script>
-    <script>
-        TempStars.App.init();
-    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJMD7G1zt5F7KT3QkyqMeTKssPBz5o_UI&callback=TempStars.Map.init"></script>
   </body>
 </html>

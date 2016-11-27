@@ -7,6 +7,8 @@ TempStars.App = (function() {
 
     return {
         init: function init() {
+            console.log( 'APP INIT' );
+            
             if ( TempStars.Config.debug ) {
 
                 app.onPageBeforeInit( '*', function( page ) {

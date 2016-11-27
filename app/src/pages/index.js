@@ -1,7 +1,7 @@
 TempStars.Pages.Index = (function() {
 
     function init() {
-
+        console.log( 'ON INDEX PAGE INIT');
         app.onPageInit( 'index', function( page ) {
             $$('#login-button').on( 'click', loginButtonHandler );
             $$('#login-form input').on( 'keypress', keyHandler );
