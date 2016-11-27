@@ -528,3 +528,14 @@ input[type=number]::-webkit-outer-spin-button {
     line-height: 24px;
     width: 130px;
 }
+
+.popover-map {
+    width: 304px;
+    height: 404px;
+}
+
+#popover-map {
+    width: 292px;
+    height: 392px;
+    padding: 4px;
+}

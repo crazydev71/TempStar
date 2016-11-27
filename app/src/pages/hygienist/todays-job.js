@@ -12,6 +12,7 @@ TempStars.Pages.Hygienist.TodaysJob = (function() {
             $$('#hygienist-todays-job-invoice-button').on( 'click', invoiceButtonHandler );
             $$('#hygienist-todays-job-survey-button').on( 'click', surveyButtonHandler );
             TempStars.Analytics.track( 'Viewed Today\'s Job' );
+            $$('.popover-map').on('open', displayMap );
         });
 
         app.onPageBeforeRemove( 'hygienist-todays-job', function( page ) {
@@ -19,7 +20,12 @@ TempStars.Pages.Hygienist.TodaysJob = (function() {
             $$('#hygienist-todays-job-cancel-button').off( 'click', cancelButtonHandler );
             $$('#hygienist-todays-job-invoice-button').off( 'click', invoiceButtonHandler );
             $$('#hygienist-todays-job-survey-button').off( 'click', surveyButtonHandler );
+            $$('.popover-map').off('open', displayMap );
         });
+    }
+
+    function displayMap( e ) {
+        TempStars.Map.displayLocation( job.dentist.lat, job.dentist.lon, job.dentist.practiceName );
     }
 
     function completeButtonHandler( e ) {

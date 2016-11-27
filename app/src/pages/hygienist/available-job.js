@@ -11,12 +11,20 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
             $$('#hygienist-available-job-accept-button').on( 'click', acceptButtonHandler );
             $$('#hygienist-available-job-partial-button').on( 'click', partialButtonHandler );
             TempStars.Analytics.track( 'Viewed Available Job Detail' );
+            $$('.popover-map').on('open', displayMap );
+
+
         });
 
         app.onPageBeforeRemove( 'hygienist-available-job', function( page ) {
             $$('#hygienist-available-job-accept-button').off( 'click', acceptButtonHandler );
             $$('#hygienist-available-job-partial-button').off( 'click', partialButtonHandler );
+            $$('.popover-map').off('open', displayMap );
         });
+    }
+
+    function displayMap( e ) {
+        TempStars.Map.displayLocation( job.dentist.lat, job.dentist.lon, job.dentist.practiceName );
     }
 
     function acceptButtonHandler( e ) {
