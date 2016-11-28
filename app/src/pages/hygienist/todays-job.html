@@ -18,9 +18,14 @@
     <div class="page-content">
         <div class="content-block">
             {{#if job.id}}
-            <div class="job-box">
-                <div class="login-screen-title" style="margin-bottom:20px;">{{date_format_day job.startDate}}</div>
+                <div class="login-screen-title" style="margin-bottom:0px;">{{date_format_day job.startDate}}</div>
+                {{#each job.shifts}}
+                <div class="center-box" style="font-size:125%;margin-bottom:10px;">
+                    {{time_format postedStart}} - {{time_format postedEnd}}
+                </div>
+                {{/each}}
                 <hr>
+                <div class="job-box">
                 <div class="center-box" style="font-size:125%;font-weight:bold;padding:8px;">
                 {{job.dentist.practiceName}}
                 </div>
@@ -33,15 +38,10 @@
                 <div class="center-box" style="padding:2px;">
                 {{job.dentist.postalCode}}
                 </div>
-                <div class="center-box" style="padding:2px;">
+                <div class="center-box" style="padding-bottom:4px;">
                     <a title="view map" href="#" class="open-popover" data-popover=".popover-map">view map</a>
                 </div>
 
-                {{#each job.shifts}}
-                <div class="center-box" style="font-size:125%;margin-top:10px;">
-                    {{time_format postedStart}} - {{time_format postedEnd}}
-                </div>
-                {{/each}}
 
                 <div class="center-box" style="padding-top:10px;">
                 phone: &nbsp; <a href="tel:{{phone_format job.dentist.phone}}" class="external">{{phone_format job.dentist.phone}}</a>
