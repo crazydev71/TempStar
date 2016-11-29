@@ -47,7 +47,10 @@ updateJobStatus( today )
 })
 .catch( function( err ) {
     console.log( err.message );
-});
+})
+.finally( function() {
+    process.exit();
+})
 
 // Update jobs that were booked before today to completed
 function updateJobStatus( today ) {

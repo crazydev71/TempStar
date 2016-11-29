@@ -33,6 +33,7 @@ getSendResumeRequests()
 })
 .finally( function() {
     console.log( 'Resume Sender Service ended:   ' + moment().toString() + '.');
+    process.exit();
 })
 
 

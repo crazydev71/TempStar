@@ -40,6 +40,7 @@ getNotifications()
 })
 .finally( function() {
     console.log( 'Notification Service ended:   ' + moment().toString() + '.');
+    process.exit();
 })
 
 function getNotifications() {
