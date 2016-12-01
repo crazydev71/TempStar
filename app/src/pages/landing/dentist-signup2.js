@@ -10,7 +10,7 @@ TempStars.Pages.DentistSignup2 = (function() {
             $$('#dentist-signup2-logout-link').on( 'click', logoutHandler );
             $$('#dentist-signup2-form input').on( 'keypress', keyHandler );
             mainView.showNavbar();
-            TempStars.Analytics.track( 'Viewed Dentist Signup Page 2' );                                    
+            TempStars.Analytics.track( 'Viewed Dentist Signup Page 2' );
         });
 
         app.onPageBeforeRemove( 'dentist-signup2', function( page ) {
@@ -50,6 +50,7 @@ TempStars.Pages.DentistSignup2 = (function() {
     function doneButtonHandler( e ) {
         var expDate;
 
+
         var constraints = {
             cardholderName: {
                 presence: true
@@ -75,7 +76,13 @@ TempStars.Pages.DentistSignup2 = (function() {
         formData = {};
         formData.cardholderName = $$('#dentist-signup2-form input[data-stripe="name"]').val();
         formData.cardNumber = $$('#dentist-signup2-form input[data-stripe="number"]').val();
-        formData.expirationDate = $$('#dentist-signup2-exp-date-field').val();
+        if ( Template7.global.web ) {
+            formData.expirationDate = $$('#dentist-signup2-form select[data-stripe="exp_month"]').val() + '/' +
+                                      $$('#dentist-signup2-form select[data-stripe="exp_year"]').val();
+        }
+        else {
+            formData.expirationDate = $$('#dentist-signup2-exp-date-field').val();
+        }
         formData.securityCode = $$('#dentist-signup2-form input[data-stripe="cvc"]').val();
 
         var errors = validate( formData, constraints );
@@ -88,7 +95,12 @@ TempStars.Pages.DentistSignup2 = (function() {
                 $$('#dentist-signup2-form input[data-stripe="number"]').addClass('error').next().html( errors.cardNumber[0] );
             }
             if ( errors.expirationDate ) {
-                $$('#dentist-signup2-form input[data-stripe="exp"]').addClass('error').next().html( errors.expirationDate[0] );
+                if ( Template7.global.web ) {
+                    $$('#dentist-signup2-exp-error-msg').addClass('error').html( errors.expirationDate[0] );
+                }
+                else {
+                    $$('#dentist-signup2-form input[data-stripe="exp"]').addClass('error').next().html( errors.expirationDate[0] );
+                }
             }
             if ( errors.securityCode ) {
                 $$('#dentist-signup2-form input[data-stripe="cvc"]').addClass('error').next().html( errors.securityCode[0] );
@@ -104,9 +116,6 @@ TempStars.Pages.DentistSignup2 = (function() {
         stripeData.exp = formData.expirationDate;
         stripeData.cvc = formData.securityCode;
         Stripe.card.createToken( stripeData, stripeResponseHandler );
-
-        // Go to the next page
-        //mainView.router.loadPage( 'landing/dentist-signup3.html' );
     }
 
     function logoutHandler( e ) {

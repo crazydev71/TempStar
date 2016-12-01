@@ -1,4 +1,5 @@
 #!/bin/bash
+source ~/.nvm/nvm.sh
 
 export NODE_ENV=production
 

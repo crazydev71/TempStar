@@ -90,17 +90,20 @@ TempStars.bootstrap = {
 
     onDeviceReady: function() {
         var isAndroid,
-            isIos;
+            isIos,
+            isWeb;
 
     console.log( 'DEVICE READY');
         // Get device for setting theme
         isAndroid = Framework7.prototype.device.android === true;
         isIos = Framework7.prototype.device.ios === true;
+        isWeb = ( ! isAndroid && ! isIos ) ? true : false;
 
         // Set Template7 global devices flags
         Template7.global = {
             android: isAndroid,
-            ios: isIos
+            ios: isIos,
+            web: isWeb
         };
 
         // If running on Android, use material theme and change navbar to fixed

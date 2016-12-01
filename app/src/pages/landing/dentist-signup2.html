@@ -50,10 +50,56 @@
                     <div class="item-inner">
                       <div class="item-title label">Expiration</div>
                       <div class="item-input">
-                         <div class="row">
-                            <input type="text" placeholder="expiration date" data-stripe="exp" readonly id="dentist-signup2-exp-date-field">
-                            <div class="field-error-msg"></div>
-                          </div>
+                             {{#js_compare "Template7.global.web == true"}}
+                             <div class="row">
+                             <div class="col-20" style="font-size:13px;line-height:45px;">
+                                 month:
+                             </div>
+                             <div class="col-30">
+                             <select style="display: inline-block" data-stripe="exp_month">
+                               <option value="">select month &dtrif;</option>
+                               <option value="01">01 (Jan)</option>
+                               <option value="02">02 (Feb)</option>
+                               <option value="03">03 (Mar)</option>
+                               <option value="04">04 (April)</option>
+                               <option value="05">05 (May)</option>
+                               <option value="06">06 (June)</option>
+                               <option value="07">07 (July)</option>
+                               <option value="08">08 (Aug)</option>
+                               <option value="09">09 (Sep)</option>
+                               <option value="10">10 (Oct)</option>
+                               <option value="11">11 (Nov)</option>
+                               <option value="12">12 (Dec)</option>
+                             </select>
+                            </div>
+                            <div class="col-20" style="font-size:13px;line-height:45px;">
+                                year:
+                            </div>
+                            <div class="col-30">
+                             <select style="display: inline-block" data-stripe="exp_year">
+                               <option value="">select year &dtrif;</option>
+                               <option value="2016">2016</option>
+                               <option value="2017">2017</option>
+                               <option value="2018">2018</option>
+                               <option value="2019">2019</option>
+                               <option value="2020">2020</option>
+                               <option value="2021">2021</option>
+                               <option value="2022">2022</option>
+                               <option value="2023">2023</option>
+                               <option value="2024">2024</option>
+                               <option value="2025">2025</option>
+                             </select>
+                         </div>
+                         <div id="dentist-signup2-exp-error-msg" class="field-error-msg"></div>
+                     </div>
+
+                             {{else}}
+                             <div class="row">
+
+                             <input type="text" placeholder="expiration date" data-stripe="exp" readonly id="dentist-signup2-exp-date-field">
+                             <div class="field-error-msg"></div>
+                         </div>
+                             {{/js_compare}}
                       </div>
                   </div>
                   </li>
