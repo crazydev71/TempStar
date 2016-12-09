@@ -81,6 +81,7 @@ function createJobNotifications( lb, a, jobId, message ) {
         .then( function( hygienists ) {
 
             var sendTime;
+            var MAX_INTERVAL = 36 * 60; // minutes
             now = moment.utc();
             console.log( 'now: ' + now.toDate() );
 
@@ -89,6 +90,8 @@ function createJobNotifications( lb, a, jobId, message ) {
 
             interval = Math.round( minutesTillStart / 35 );
             interval = (interval < 1) ? 1 : interval;
+            interval = (interval > MAX_INTERVAL) ? MAX_INTERVAL : interval;
+            
             console.log( 'interval: ' + interval );
 
             favSendTime = now.clone();
