@@ -340,6 +340,8 @@ module.exports = function( Dentist ) {
 
         var Job = app.models.Job;
         var Email = app.models.Email;
+        var Notification = app.models.Notification;
+
         var job;
 
         console.log( 'cancel job' );
@@ -443,6 +445,11 @@ module.exports = function( Dentist ) {
             // Delete job and shifts
             console.log( 'delete shifts' );
             return job.shifts.destroyAll();
+        })
+        .then( function() {
+            // Delete notifications
+            console.log( 'delete notifications' );
+            return Notification.destroyAll( { jobId: jobId } );
         })
         .then( function() {
             console.log( 'delete job' );
