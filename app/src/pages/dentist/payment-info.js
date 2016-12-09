@@ -1,28 +1,26 @@
-TempStars.Pages.DentistSignup3 = (function() {
+TempStars.Pages.Dentist.PaymentInfo = (function() {
     var userAccount;
     var formData;
     var expDatePicker;
 
     function init() {
 
-        app.onPageInit( 'dentist-signup3', function( page ) {
-            $$('#dentist-signup3-done-button').on( 'click', doneButtonHandler );
-            $$('#dentist-signup3-logout-link').on( 'click', logoutHandler );
-            $$('#dentist-signup3-form input').on( 'keypress', keyHandler );
+        app.onPageInit( 'dentist-payment-info', function( page ) {
+            $$('#dentist-payment-info-done-button').on( 'click', doneButtonHandler );
+            $$('#dentist-payment-info-form input').on( 'keypress', keyHandler );
             mainView.showNavbar();
-            TempStars.Analytics.track( 'Viewed Dentist Signup Page 2' );
+            TempStars.Analytics.track( 'Viewed Dentist Payment Info' );
         });
 
-        app.onPageBeforeRemove( 'dentist-signup3', function( page ) {
-            $$('#dentist-signup3-done-button').off( 'click', doneButtonHandler );
-            $$('#dentist-signup3-logout-link').off( 'click', logoutHandler );
-            $$('#dentist-signup3-form input').off( 'keypress', keyHandler );
+        app.onPageBeforeRemove( 'dentist-payment-info', function( page ) {
+            $$('#dentist-payment-info-done-button').off( 'click', doneButtonHandler );
+            $$('#dentist-payment-info-form input').off( 'keypress', keyHandler );
         });
 
-        app.onPageBeforeAnimation( 'dentist-signup3', function( page ) {
+        app.onPageBeforeAnimation( 'dentist-payment-info', function( page ) {
 
             expDatePicker = app.picker({
-                input: '#dentist-signup3-exp-date-field',
+                input: '#dentist-payment-info-exp-date-field',
                 rotateEffect: false,
                 formatValue: function (p, values, displayValues) {
                     return values[0] + ' / ' + values[1];
@@ -70,40 +68,40 @@ TempStars.Pages.DentistSignup3 = (function() {
         };
 
         // Clear errors
-        $$('#dentist-signup3-form .form-error-msg').html('');
-        $$('#dentist-signup3-form .field-error-msg').removeClass( 'error' ).html('');
+        $$('#dentist-payment-info-form .form-error-msg').html('');
+        $$('#dentist-payment-info-form .field-error-msg').removeClass( 'error' ).html('');
 
         formData = {};
-        formData.cardholderName = $$('#dentist-signup3-form input[data-stripe="name"]').val();
-        formData.cardNumber = $$('#dentist-signup3-form input[data-stripe="number"]').val();
+        formData.cardholderName = $$('#dentist-payment-info-form input[data-stripe="name"]').val();
+        formData.cardNumber = $$('#dentist-payment-info-form input[data-stripe="number"]').val();
         if ( Template7.global.web ) {
-            formData.expirationDate = $$('#dentist-signup3-form select[data-stripe="exp_month"]').val() + '/' +
-                                      $$('#dentist-signup3-form select[data-stripe="exp_year"]').val();
+            formData.expirationDate = $$('#dentist-payment-info-form select[data-stripe="exp_month"]').val() + '/' +
+                                      $$('#dentist-payment-info-form select[data-stripe="exp_year"]').val();
         }
         else {
-            formData.expirationDate = $$('#dentist-signup3-exp-date-field').val();
+            formData.expirationDate = $$('#dentist-payment-info-exp-date-field').val();
         }
-        formData.securityCode = $$('#dentist-signup3-form input[data-stripe="cvc"]').val();
+        formData.securityCode = $$('#dentist-payment-info-form input[data-stripe="cvc"]').val();
 
         var errors = validate( formData, constraints );
 
         if ( errors ) {
             if ( errors.cardholderName ) {
-                $('#dentist-signup3-form input[data-stripe="name"]').addClass('error').next().html( errors.cardholderName[0] );
+                $('#dentist-payment-info-form input[data-stripe="name"]').addClass('error').next().html( errors.cardholderName[0] );
             }
             if ( errors.cardNumber ) {
-                $$('#dentist-signup3-form input[data-stripe="number"]').addClass('error').next().html( errors.cardNumber[0] );
+                $$('#dentist-payment-info-form input[data-stripe="number"]').addClass('error').next().html( errors.cardNumber[0] );
             }
             if ( errors.expirationDate ) {
                 if ( Template7.global.web ) {
-                    $$('#dentist-signup3-exp-error-msg').addClass('error').html( errors.expirationDate[0] );
+                    $$('#dentist-payment-info-exp-error-msg').addClass('error').html( errors.expirationDate[0] );
                 }
                 else {
-                    $$('#dentist-signup3-form input[data-stripe="exp"]').addClass('error').next().html( errors.expirationDate[0] );
+                    $$('#dentist-payment-info-form input[data-stripe="exp"]').addClass('error').next().html( errors.expirationDate[0] );
                 }
             }
             if ( errors.securityCode ) {
-                $$('#dentist-signup3-form input[data-stripe="cvc"]').addClass('error').next().html( errors.securityCode[0] );
+                $$('#dentist-payment-info-form input[data-stripe="cvc"]').addClass('error').next().html( errors.securityCode[0] );
             }
             return;
         }
@@ -118,15 +116,6 @@ TempStars.Pages.DentistSignup3 = (function() {
         Stripe.card.createToken( stripeData, stripeResponseHandler );
     }
 
-    function logoutHandler( e ) {
-        app.confirm( 'Are you sure you want to log out?', function() {
-            TempStars.User.logout()
-            .then( function() {
-                mainView.router.loadPage( { url: 'index.html', animatePages: false } );
-            });
-        });
-    }
-
     function stripeResponseHandler( status, response ) {
         if ( response.error ) {
             app.hidePreloader();
@@ -135,14 +124,12 @@ TempStars.Pages.DentistSignup3 = (function() {
         else {
             app.hidePreloader();
             var token = response.id;
-            formData.token = token;
-            app.formStoreData( 'dentist-signup3-form', formData );
             TempStars.Dentist.addPaymentInfo( token )
             .then( function() {
                 return TempStars.User.refresh();
             })
             .then( function() {
-                TempStars.App.gotoStartingPage();
+                TempStars.Dentist.Router.goForwardPage( 'post-job', {nohistory: true} );
             })
             .catch( function(err) {
                 app.alert( err );
@@ -154,15 +141,18 @@ TempStars.Pages.DentistSignup3 = (function() {
         var code = (e.keyCode ? e.keyCode : e.which);
         if ( (code == 13) || (code == 10)) {
             cordova.plugins.Keyboard.close();
-            $$('#dentist-signup3-done-button').trigger( 'click' );
+            $$('#dentist-payment-info-done-button').trigger( 'click' );
             return false;
         }
     }
 
     return {
-        init: init
+        init: init,
+        getData: function() {
+            return Promise.resolve( {} );
+        }
     };
 
 })();
 
-TempStars.Pages.DentistSignup3.init();
+TempStars.Pages.Dentist.PaymentInfo.init();

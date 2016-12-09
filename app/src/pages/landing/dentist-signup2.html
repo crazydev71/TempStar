@@ -11,124 +11,156 @@
     <div data-page="dentist-signup2" class="page landing">
 
         <div class="page-content">
-          <div class="login-screen-title">Billing</div>
-          <div class="content-block" style="margin:0px;">
-              <p class="page-subtitle">$25+hst per hygienist, per day. Billed only after completion of a successful placement.</p>
-          </div>
+          <div class="login-screen-title">Practice Details</div>
+          <p class="page-subtitle">Help your temp hygienist get started quickly by providing a few details about your office.</p>
 
           <form id="dentist-signup2-form" class="store-data">
-
-
               <div class="list-block inset" style="margin:20px 0 10px 5px;font-size:12px;">
-                  <div class="row">
-                    <div class="col-50" style="color:#888;padding-left:15px;text-align:left;"> <span class="ti-lock"></span> SECURE FORM</div>
-                    <div class="col-50" style="color:#888;padding-right:15px;text-align:right;">Step 2 of 3</div>
-                  </div>
+                  <div class="right" style="color:#888;padding-right:15px;text-align:right;">Step 2 of 2</div>
                   <div class="form-error-msg"></div>
               <ul>
                   <li class="item-content">
                     <div class="item-inner">
-                      <div class="item-title label">Name On Card</div>
+                      <div class="item-title label">Primary Contact</div>
                       <div class="item-input">
-                          <input type="text" size="20" data-stripe="name" placeholder="cardholder name">
-                          <div class="field-error-msg"></div>
+                        <input type="text" name="primaryContact" maxlength="50" placeholder="contact person's name"/>
+                        <div class="field-error-msg"></div>
                       </div>
                     </div>
                   </li>
 
                   <li class="item-content">
                     <div class="item-inner">
-                      <div class="item-title label">Card Number</div>
+                      <div class="item-title label">Parking</div>
                       <div class="item-input">
-                          <input type="text" size="20" data-stripe="number" placeholder="card number">
+                          <select class="no-fastclick" name="parking">
+                            <option value="">Parking is: &dtrif;</option>
+                            <option value="free-on-site">free on-site</option>
+                            <option value="paid-on-site">paid on-site</option>
+                            <option value="street">street</option>
+                            <option value="public-lot">public lot</option>
+                            <option value="no-parking">no parking available</option>
+                          </select>
                           <div class="field-error-msg"></div>
                       </div>
                     </div>
                   </li>
-
                   <li class="item-content">
                     <div class="item-inner">
-                      <div class="item-title label">Expiration</div>
+                      <div class="item-title label">Payment</div>
                       <div class="item-input">
-                             {{#js_compare "Template7.global.web == true"}}
-                             <div class="row">
-                             <!-- <div class="col-20" style="font-size:13px;line-height:45px;">
-                                 month:
-                             </div> -->
-                             <div class="col-30">
-                             <select style="display: inline-block" data-stripe="exp_month">
-                               <option value="">Select month &dtrif;</option>
-                               <option value="01">01 (Jan)</option>
-                               <option value="02">02 (Feb)</option>
-                               <option value="03">03 (Mar)</option>
-                               <option value="04">04 (April)</option>
-                               <option value="05">05 (May)</option>
-                               <option value="06">06 (June)</option>
-                               <option value="07">07 (July)</option>
-                               <option value="08">08 (Aug)</option>
-                               <option value="09">09 (Sep)</option>
-                               <option value="10">10 (Oct)</option>
-                               <option value="11">11 (Nov)</option>
-                               <option value="12">12 (Dec)</option>
-                             </select>
-                            </div>
-                            <!-- <div class="col-20" style="font-size:13px;line-height:45px;">
-                                year:
-                            </div> -->
-                            <div class="col-70">
-                             <select style="display: inline-block" data-stripe="exp_year">
-                               <option value="">Select year &dtrif;</option>
-                               <option value="2016">2016</option>
-                               <option value="2017">2017</option>
-                               <option value="2018">2018</option>
-                               <option value="2019">2019</option>
-                               <option value="2020">2020</option>
-                               <option value="2021">2021</option>
-                               <option value="2022">2022</option>
-                               <option value="2023">2023</option>
-                               <option value="2024">2024</option>
-                               <option value="2025">2025</option>
-                             </select>
-                         </div>
-                         <div id="dentist-signup2-exp-error-msg" class="field-error-msg"></div>
-                     </div>
-
-                             {{else}}
-                             <div class="row">
-
-                             <input type="text" placeholder="expiration date" data-stripe="exp" readonly id="dentist-signup2-exp-date-field">
-                             <div class="field-error-msg"></div>
-                         </div>
-                             {{/js_compare}}
+                          <select class="no-fastclick" name="payment">
+                            <option value="">Hygienist paid via: &dtrif;</option>
+                            <option value="same-day-cheque">same-day cheque</option>
+                            <option value="submit-invoice">submit invoice</option>
+                            <option value="other">other</option>
+                          </select>
+                          <div class="field-error-msg"></div>
                       </div>
-                  </div>
+                    </div>
                   </li>
 
                     <li class="item-content">
                       <div class="item-inner">
-                        <div class="item-title label">Security Code</div>
+                        <div class="item-title label">Arrival</div>
                         <div class="item-input">
-                            <input type="text" size="4" data-stripe="cvc" placeholder="CVC or CVV code on card">
+                            <select class="no-fastclick" name="hygienistArrival">
+                              <option value="">Hygienist to arrive... &dtrif;</option>
+                              <option>At start time</option>
+                              <option value="10min-before">10min before start time</option>
+                              <option value="15min-before">15min before start time</option>
+                              <option value="30min-before">30min before start time</option>
+                            </select>
                             <div class="field-error-msg"></div>
                         </div>
                       </div>
                   </li>
+                    <li class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title label">Radiography</div>
+                        <div class="item-input">
+                            <select class="no-fastclick" name="radiography">
+                             <option value="">Type of radiographs &dtrif;</option>
+                              <option value="film">film</option>
+                              <option value="digital">digital sensors</option>
+                              <option value="phosphor-plates">phosphor plates</option>
+                            </select>
+                            <div class="field-error-msg"></div>
+                        </div>
+                      </div>
+                  </li>
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">Ultrasonic</div>
+                    <div class="item-input">
+                        <select class="no-fastclick" name="ultrasonic">
+                          <option value="">Piezo or Cavitron? &dtrif;</option>
+                          <option value="cavitron">Cavitron</option>
+                          <option value="piezo">Piezo</option>
+                          <option value="both">Both</option>
+                          <option value="none">None</option>
+                        </select>
+                        <div class="field-error-msg"></div>
+                    </div>
+                  </div>
+              </li>
 
+            <li class="item-content">
+              <div class="item-inner">
+                <div class="item-title label">Avg Recall</div>
+                <div class="item-input">
+                    <select class="no-fastclick" name="avgApptTime">
+                      <option value="">Adult recalls are: &dtrif;</option>
+                      <option>30min</option>
+                      <option>45min</option>
+                      <option>60min</option>
+                    </select>
+                    <div class="field-error-msg"></div>
+                </div>
+              </div>
+          </li>
+
+          <li class="item-content">
+            <div class="item-inner">
+              <div class="item-title label">Charting</div>
+              <div class="item-input">
+                  <select class="no-fastclick" name="charting">
+                    <option value="">Charting system is: &dtrif;</option>
+                    <option>paper charts</option>
+                    <option>digital charts</option>
+                  </select>
+                  <div class="field-error-msg"></div>
+              </div>
+            </div>
+        </li>
+
+        <li class="item-content">
+          <div class="item-inner">
+            <div class="item-title label">Software</div>
+            <div class="item-input">
+                <select class="no-fastclick" name="software">
+                  <option value="">Dental software is: &dtrif;</option>
+                  <option>Dentrix</option>
+                  <option>AbelDent</option>
+                  <option>Tracker</option>
+                  <option>EagleSoft</option>
+                  <option>Other</option>
+                </select>
+                <div class="field-error-msg"></div>
+            </div>
+          </div>
+      </li>
               </ul>
             </div>
 
                     <div class="row">
                         <div class="col-20">&nbsp;</div>
                         <div class="col-60">
-                            <a id="dentist-signup2-done-button" href="#" class="button button-round">Next</a>
+                            <a id="dentist-signup2-done-button" href="#" class="button button-round">Done!</a>
                         </div>
                         <div class="col-20">&nbsp;</div>
                     </div>
           </form>
-          <div class="content-block">
-              <img class="centerimg" src="img/geotrust.jpg" style="width:100px;"><br>
-              <img class="centerimg" src="img/stripe.png" style="width:100px;">
-          </div>
           <br><br>
         </div>
 

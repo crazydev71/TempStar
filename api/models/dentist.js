@@ -48,31 +48,12 @@ module.exports = function( Dentist ) {
     });
 
     Dentist.createAccount = function( id, data, callback ) {
-        var customerId;
         var dentist;
         var geocode;
 
         Dentist.findById( data.user.dentistId )
         .then( function( d ) {
             dentist = d;
-            if ( dentist.stripeCustomerId ) {
-                return Promise.resolve( dentist.stripeCustomerId );
-            }
-            else {
-                return new Promise( function( resolve, reject ) {
-                    stripe.customers.create({
-                        source: data.p2.token,
-                        description: data.p1.businessOwner,
-                        email: data.user.email
-                    })
-                    .then( function( c ) {
-                        resolve( c.id );
-                    });
-                });
-            }
-        })
-        .then( function( cid ) {
-            customerId = cid;
             return dentist.updateAttributes({
                 practiceName: data.p1.practiceName,
                 businessOwner: data.p1.businessOwner,
@@ -82,7 +63,6 @@ module.exports = function( Dentist ) {
                 province: data.p1.province,
                 postalCode: data.p1.postalCode,
                 photoUrl: data.p1.photoUrl,
-                stripeCustomerId: customerId,
                 isComplete: 1
             });
         })
@@ -131,6 +111,50 @@ module.exports = function( Dentist ) {
                 lat: geocode.lat,
                 lon: geocode.lng,
                 regionId: postalCode.regionId
+            });
+        })
+        .then( function() {
+            callback( null, {} );
+        })
+        .catch( function( err ) {
+            callback( err );
+        });
+    };
+
+
+    Dentist.remoteMethod( 'addPaymentInfo', {
+        accepts: [
+            {arg: 'id', type: 'number', required: true},
+            {arg: 'data', type: 'object', http: { source: 'body' } } ],
+        returns: { arg: 'result', type: 'object' },
+        http: { verb: 'post', path: '/:id/account/payment' }
+    });
+
+    Dentist.addPaymentInfo = function( id, data, callback ) {
+        var dentist;
+
+        Dentist.findById( id )
+        .then( function( d ) {
+            dentist = d;
+            if ( dentist.stripeCustomerId ) {
+                return Promise.resolve( dentist.stripeCustomerId );
+            }
+            else {
+                return new Promise( function( resolve, reject ) {
+                    stripe.customers.create({
+                        source: data.token,
+                        description: dentist.businessOwner,
+                        email: dentist.user.email
+                    })
+                    .then( function( c ) {
+                        resolve( c.id );
+                    });
+                });
+            }
+        })
+        .then( function( cid ) {
+            return dentist.updateAttributes({
+                stripeCustomerId: cid
             });
         })
         .then( function() {

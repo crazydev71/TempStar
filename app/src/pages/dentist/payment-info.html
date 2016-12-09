@@ -1,22 +1,28 @@
-<div class="navbar landing">
-
-    <div data-page="dentist-signup3" class="navbar-inner">
-        <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>back</span></a></div>
-        <div class="center sliding">TempStars Dentist</div>
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="left sliding">
+                <a href="#" class="dentist-internal-back">
+                    <span class="ti-angle-left"></span> back
+                </a>
+            </div>
+            <div class="center sliding">Payment Info</div>
+            <div class="right">
+                <a href="#" data-panel="right" class="link icon-only open-panel">
+                    <span class="ti-menu"></span>
+                </a>
+            </div>
+        </div>
     </div>
 
-</div>
-
-<div class="pages navbar-through toolbar-fixed">
-    <div data-page="dentist-signup3" class="page landing">
-
+    <div data-page="dentist-payment-info" class="page">
         <div class="page-content">
-          <div class="login-screen-title">Payment Info</div>
+
+          <div class="login-screen-title">Enter Payment Info</div>
           <div class="content-block" style="margin:0px;">
               <p class="page-subtitle">$25+hst per hygienist, per day. Billed only after completion of a successful placement.</p>
           </div>
 
-          <form id="dentist-signup3-form" class="store-data">
+          <form id="dentist-payment-info-form" class="store-data">
 
 
               <div class="list-block inset" style="margin:20px 0 10px 5px;font-size:12px;">
@@ -91,13 +97,13 @@
                                <option value="2025">2025</option>
                              </select>
                          </div>
-                         <div id="dentist-signup3-exp-error-msg" class="field-error-msg"></div>
+                         <div id="dentist-payment-info-exp-error-msg" class="field-error-msg"></div>
                      </div>
 
                              {{else}}
                              <div class="row">
 
-                             <input type="text" placeholder="expiration date" data-stripe="exp" readonly id="dentist-signup3-exp-date-field">
+                             <input type="text" placeholder="expiration date" data-stripe="exp" readonly id="dentist-payment-info-exp-date-field">
                              <div class="field-error-msg"></div>
                          </div>
                              {{/js_compare}}
@@ -121,7 +127,7 @@
                     <div class="row">
                         <div class="col-20">&nbsp;</div>
                         <div class="col-60">
-                            <a id="dentist-signup3-done-button" href="#" class="button button-round">Done</a>
+                            <a id="dentist-payment-info-done-button" href="#" class="button button-round">Done</a>
                         </div>
                         <div class="col-20">&nbsp;</div>
                     </div>
@@ -130,24 +136,6 @@
               <img class="centerimg" src="img/geotrust.jpg" style="width:100px;"><br>
               <img class="centerimg" src="img/stripe.png" style="width:100px;">
           </div>
-          <br><br>
-        </div>
 
-        <div class="footer toolbar" style="height:70px !important;font-size:.8em;padding-top:20px;background-color:#fff">
-            <div class="row">
-                <div class="col-50" style="text-align:center;">
-                    <a href="#" id="dentist-signup3-logout-link">Log Out</a>
-                </div>
-                <div class="col-50" style="text-align:center;">
-                    <a href="mailto:help@tempstars.ca" class="external">Contact Support</a>
-                </div>
-            </div>
-              <div class="row">
-                  <div class="col-auto" style="text-align:center;padding:10px;ffffont-size:.8em;color:#999">
-                      Copyright &copy; 2016 Sudden Turtle Dental Consulting, Inc.
-                  </div>
-              </div>
         </div>
-
     </div>
-</div>

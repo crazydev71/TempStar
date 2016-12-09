@@ -1,71 +1,56 @@
 TempStars.Pages.DentistSignup2 = (function() {
-    var userAccount;
-    var formData;
-    var expDatePicker;
 
     function init() {
 
         app.onPageInit( 'dentist-signup2', function( page ) {
+            mainView.showNavbar();
             $$('#dentist-signup2-done-button').on( 'click', doneButtonHandler );
             $$('#dentist-signup2-logout-link').on( 'click', logoutHandler );
             $$('#dentist-signup2-form input').on( 'keypress', keyHandler );
-            mainView.showNavbar();
-            TempStars.Analytics.track( 'Viewed Dentist Signup Page 2' );
+            TempStars.Analytics.track( 'Viewed Dentist Signup Page 3' );
         });
 
         app.onPageBeforeRemove( 'dentist-signup2', function( page ) {
             $$('#dentist-signup2-done-button').off( 'click', doneButtonHandler );
             $$('#dentist-signup2-logout-link').off( 'click', logoutHandler );
-            $$('#dentist-signup2-form input').off( 'keypress', keyHandler );
+            $$('#dentist-signup2-form input').on( 'keypress', keyHandler );
         });
 
         app.onPageBeforeAnimation( 'dentist-signup2', function( page ) {
-
-            expDatePicker = app.picker({
-                input: '#dentist-signup2-exp-date-field',
-                rotateEffect: false,
-                formatValue: function (p, values, displayValues) {
-                    return values[0] + ' / ' + values[1];
-                },
-                cols: [ {
-                    values: [ '01', '02', '03', '04', '05', '06',
-                        '07', '08', '09', '10', '11', '12' ],
-                    displayValues: [ '01 (Jan)', '02 (Feb)', '03 (March)', '04 (April)', '05 (May)', '06 (June)',
-                        '07 (July)', '08 (Aug)', '09 (Sep)', '10 (Oct)', '11 (Nov)', '12 (Dec)']
-                    },
-                    {
-                        divider: true,
-                        content: '/'
-                    },
-                    {
-                        values: [ '2016', '2017', '2018', '2019', '2020', '2021',
-                            '2022', '2023', '2024', '2025' ]
-                    }                ]
-            });
-
             mainView.showNavbar();
         });
     }
 
     function doneButtonHandler( e ) {
-        var expDate;
-
+        var allData;
 
         var constraints = {
-            cardholderName: {
+            primaryContact: {
                 presence: true
             },
-            cardNumber: {
-                presence: true,
-                creditCardNumber: true
+            parking: {
+                presence: {message: "is required"}
             },
-            expirationDate: {
-                presence: true,
-                creditCardExpiryDate: true,
+            payment: {
+                presence: {message: "is required"}
             },
-            securityCode: {
-                presence: true,
-                creditCardCVC: true
+            hygienistArrival: {
+                presence: {message: "is required"}
+            },
+            radiography: {
+                presence: {message: "is required"}
+            },
+            ultrasonic: {
+                presence: {message: "is required"}
+            },
+            avgApptTime: {
+                presence: {message: "is required"}
+            },
+            charting: {
+                presence: {message: "is required"}
+            },
+            software: {
+                presence: {message: "is required"}
             }
         };
 
@@ -73,49 +58,92 @@ TempStars.Pages.DentistSignup2 = (function() {
         $$('#dentist-signup2-form .form-error-msg').html('');
         $$('#dentist-signup2-form .field-error-msg').removeClass( 'error' ).html('');
 
-        formData = {};
-        formData.cardholderName = $$('#dentist-signup2-form input[data-stripe="name"]').val();
-        formData.cardNumber = $$('#dentist-signup2-form input[data-stripe="number"]').val();
-        if ( Template7.global.web ) {
-            formData.expirationDate = $$('#dentist-signup2-form select[data-stripe="exp_month"]').val() + '/' +
-                                      $$('#dentist-signup2-form select[data-stripe="exp_year"]').val();
-        }
-        else {
-            formData.expirationDate = $$('#dentist-signup2-exp-date-field').val();
-        }
-        formData.securityCode = $$('#dentist-signup2-form input[data-stripe="cvc"]').val();
-
+        var formData = app.formToJSON('#dentist-signup2-form');
         var errors = validate( formData, constraints );
 
         if ( errors ) {
-            if ( errors.cardholderName ) {
-                $('#dentist-signup2-form input[data-stripe="name"]').addClass('error').next().html( errors.cardholderName[0] );
+            if ( errors.primaryContact ) {
+                $('#dentist-signup2-form input[name="primaryContact"]').addClass('error').next().html( errors.primaryContact[0] );
             }
-            if ( errors.cardNumber ) {
-                $$('#dentist-signup2-form input[data-stripe="number"]').addClass('error').next().html( errors.cardNumber[0] );
+            if ( errors.parking ) {
+                $$('#dentist-signup2-form select[name="parking"]').addClass('error').next().html( errors.parking[0] );
             }
-            if ( errors.expirationDate ) {
-                if ( Template7.global.web ) {
-                    $$('#dentist-signup2-exp-error-msg').addClass('error').html( errors.expirationDate[0] );
-                }
-                else {
-                    $$('#dentist-signup2-form input[data-stripe="exp"]').addClass('error').next().html( errors.expirationDate[0] );
-                }
+            if ( errors.payment ) {
+                $$('#dentist-signup2-form select[name="payment"]').addClass('error').next().html( errors.payment[0] );
             }
-            if ( errors.securityCode ) {
-                $$('#dentist-signup2-form input[data-stripe="cvc"]').addClass('error').next().html( errors.securityCode[0] );
+            if ( errors.hygienistArrival ) {
+                $$('#dentist-signup2-form select[name="hygienistArrival"]').addClass('error').next().html( errors.hygienistArrival[0] );
+            }
+            if ( errors.radiography ) {
+                $$('#dentist-signup2-form select[name="radiography"]').addClass('error').next().html( errors.radiography[0] );
+            }
+            if ( errors.sterilization ) {
+                $$('#dentist-signup2-form select[name="sterilization"]').addClass('error').next().html( errors.sterilization[0] );
+            }
+            if ( errors.ultrasonic ) {
+                $$('#dentist-signup2-form select[name="ultrasonic"]').addClass('error').next().html( errors.ultrasonic[0] );
+            }
+            if ( errors.avgApptTime ) {
+                $$('#dentist-signup2-form select[name="avgApptTime"]').addClass('error').next().html( errors.avgApptTime[0] );
+            }
+            if ( errors.charting ) {
+                $$('#dentist-signup2-form select[name="charting"]').addClass('error').next().html( errors.charting[0] );
+            }
+            if ( errors.software ) {
+                $$('#dentist-signup2-form select[name="software"]').addClass('error').next().html( errors.software[0] );
             }
             return;
         }
 
-        app.showPreloader('Saving Billing Info');
+        // Save form data
+        app.formStoreData('dentist-signup2-form', formData );
 
-        var stripeData = {};
-        stripeData.name = formData.cardholderName;
-        stripeData.number = formData.cardNumber;
-        stripeData.exp = formData.expirationDate;
-        stripeData.cvc = formData.securityCode;
-        Stripe.card.createToken( stripeData, stripeResponseHandler );
+        app.showPreloader('Setting Up Account');
+
+        // Build data to pass to server
+        allData = {};
+        allData.user = TempStars.User.getCurrentUser();
+        allData.p1 = app.formGetData( 'dentist-signup1-form' );
+        //allData.p2 = { token: app.formGetData( 'dentist-signup2-form' ).token };
+        allData.p2 = { token: '' };
+        allData.p3 = formData;
+
+        TempStars.Dentist.setupAccount( allData )
+        .then( function() {
+            return TempStars.User.refresh();
+        })
+        .then(function() {
+            app.hidePreloader();
+            TempStars.Push.init();
+            TempStars.User.updateRegistration();
+            TempStars.Analytics.track( 'Dentist Completed Signup' );
+            app.modal({
+              title:  'Welcome aboard!',
+              text: 'You have successfully completed registration. Would you like to enter your payment information now?',
+              buttons: [
+                {
+                  text: 'Yes',
+                  onClick: function() {
+                        mainView.router.loadPage( 'landing/dentist-signup3.html' );
+                  }
+                },
+                {
+                  text: 'I\'ll do it later',
+                  onClick: function() {
+                        app.alert('You can enter your payment details at any time by opening the app and tapping the "Find a Hygienist" button. You only have to do it once. Your payment details are kept under bank-level encryption and security.', 'When you\'re ready', function () {
+                            TempStars.App.gotoStartingPage();
+                        });
+                  }
+                }
+              ]
+            });
+        })
+        .catch( function( err ) {
+            app.hidePreloader();
+            $$('#dentist-signup2-form .form-error-msg')
+                .html('<span class="ti-alert"></span> Setting up account failed. ' + err.error.message )
+                .show();
+        });
     }
 
     function logoutHandler( e ) {
@@ -125,22 +153,6 @@ TempStars.Pages.DentistSignup2 = (function() {
                 mainView.router.loadPage( { url: 'index.html', animatePages: false } );
             });
         });
-    }
-
-    function stripeResponseHandler( status, response ) {
-        if ( response.error ) {
-            app.hidePreloader();
-            app.alert( response.error.message );
-        }
-        else {
-            var token = response.id;
-            formData.token = token;
-            app.formStoreData( 'dentist-signup2-form', formData );
-            app.hidePreloader();
-
-            // Go to the next page
-            mainView.router.loadPage( 'landing/dentist-signup3.html' );
-        }
     }
 
     function keyHandler( e ) {

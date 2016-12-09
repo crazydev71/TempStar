@@ -9,11 +9,13 @@ TempStars.Pages.Dentist.Home = (function() {
         app.onPageBeforeInit( 'dentist-home', function( page ) {
             mainView.showNavbar();
             displayCalendar( page.context );
+            $$('#dentist-home-post-job-button').on( 'click', postJobHandler );
             TempStars.Analytics.track( 'Viewed Home Page' );
             interval = setInterval( refreshPage, 5000 );
         });
 
         app.onPageBeforeRemove( 'dentist-home', function( page ) {
+            $$('#dentist-home-post-job-button').off( 'click', postJobHandler );
             clearInterval( interval );
         });
     }
@@ -139,6 +141,33 @@ TempStars.Pages.Dentist.Home = (function() {
             }
         }
         return job;
+    }
+
+    function postJobHandler( e ) {
+        e.preventDefault();
+
+        if ( TempStars.User.getCurrentUser().dentist.stripeCustomerId ) {
+            TempStars.Dentist.Router.goForwardPage( 'post-job' );
+        }
+        else {
+            app.modal({
+              title:  'Please Enter Payment Info',
+              text: 'Please complete payment information to use the "Find a Hygienist" feature.',
+              buttons: [
+                {
+                  text: 'Take me there',
+                  onClick: function() {
+                      TempStars.Dentist.Router.goForwardPage( 'payment-info' );
+                  }
+                },
+                {
+                  text: 'I\'ll do it later',
+                  onClick: function() {
+                  }
+                }
+              ]
+            });
+        }
     }
 
     return {

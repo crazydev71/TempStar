@@ -45,6 +45,10 @@ TempStars.Api = (function() {
             return TempStars.Ajax.post( 'dentists/' + dentistId + '/account', data );
         },
 
+        addPaymentInfo: function addPaymentInfo( dentistId, data ) {
+            return TempStars.Ajax.post( 'dentists/' + dentistId + '/account/payment', data, authToken );
+        },
+
         updateDentistAccount: function updateDentistAccount( dentistId, data ) {
             return TempStars.Ajax.put( 'dentists/' + dentistId + '/account', data, authToken );
         },

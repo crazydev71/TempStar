@@ -8,6 +8,11 @@ TempStars.Dentist = (function() {
             return TempStars.Api.setupDentistAccount( dentistId, data );
         },
 
+        addPaymentInfo: function addPaymentInfo( token ) {
+            var data = { token: token };
+            return TempStars.Api.addPaymentInfo( TempStars.User.getCurrentUser().dentistId, data );
+        },
+
         getAllJobs: function getAllJobs() {
             return TempStars.Api.getDentistJobs( TempStars.User.getCurrentUser().dentistId );
         },

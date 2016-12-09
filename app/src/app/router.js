@@ -38,6 +38,9 @@ TempStars.Router = function( a ) {
                 if ( data ) {
                     if ( direction == 'forward' ) {
                         mainView.router.load( options );
+                        if ( params.nohistory ) {
+                            mainView.history.pop();
+                        }
                     }
                     else {
                         mainView.router.back( options );
@@ -52,6 +55,9 @@ TempStars.Router = function( a ) {
                     if ( direction == 'forward' ) {
                         //options.reload = true;
                         mainView.router.load( options );
+                        if ( params.nohistory ) {
+                            mainView.history.pop();
+                        }                        
                     }
                     else {
                         options.force = true;
