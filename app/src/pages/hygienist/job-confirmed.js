@@ -8,12 +8,14 @@ TempStars.Pages.Hygienist.JobConfirmed = (function() {
         app.onPageBeforeInit( 'hygienist-job-confirmed', function( page ) {
             $$('#hygienist-job-confirmed-modify-button').on( 'click', modifyButtonHandler );
             $$('#hygienist-job-confirmed-cancel-button').on( 'click', cancelButtonHandler );
+            $$('.popover-map').on('open', displayMap );
             TempStars.Analytics.track( 'Viewed Confirmed Job' );
         });
 
         app.onPageBeforeRemove( 'hygienist-job-confirmed', function( page ) {
             $$('#hygienist-job-confirmed-modify-button').off( 'click', modifyButtonHandler );
             $$('#hygienist-job-confirmed-cancel-button').off( 'click', cancelButtonHandler );
+            $$('.popover-map').off('open', displayMap );
         });
     }
 
@@ -52,6 +54,10 @@ TempStars.Pages.Hygienist.JobConfirmed = (function() {
             app.hidePreloader();
             app.alert( 'Error cancelling job. Please try again.' );
         });
+    }
+
+    function displayMap( e ) {
+        TempStars.Map.displayLocation( job.dentist.lat, job.dentist.lon, job.dentist.practiceName );
     }
 
     return {

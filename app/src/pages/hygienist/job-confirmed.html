@@ -17,27 +17,73 @@
 <div data-page="hygienist-job-confirmed" class="page">
     <div class="page-content">
         <div class="content-block">
+
+            <div class="login-screen-title" style="margin-bottom:0px;">{{date_format_day startDate}}</div>
+            {{#each shifts}}
+            <div class="center-box" style="font-size:125%;margin-bottom:10px;">
+                {{time_format postedStart}} - {{time_format postedEnd}}
+            </div>
+            {{/each}}
+            <hr>
             <div class="job-box">
+            <div class="center-box" style="font-size:125%;font-weight:bold;padding:8px;">
+            {{dentist.practiceName}}
+            </div>
+            <div class="center-box" style="padding:2px;">
+            {{dentist.address}}
+            </div>
+            <div class="center-box" style="padding:2px;">
+            {{dentist.city}}, {{dentist.province}}
+            </div>
+            <div class="center-box" style="padding:2px;">
+            {{dentist.postalCode}}
+            </div>
+            <div class="center-box" style="padding-bottom:4px;">
+                <a title="view map" href="#" class="open-popover" data-popover=".popover-map">view map</a>
+            </div>
 
-            <div class="login-screen-title" style="margin-bottom:20px;">{{dentist.practiceName}}</div>
 
-            <table cellpadding="0" cellspacing="0">
-                <tr class="heading">
-                    <td>Date</td>
-                    <td style="text-align:left;">Hours</td>
-                </tr>
+            <div class="center-box" style="padding-top:10px;">
+            phone: &nbsp; <a href="tel:{{phone_format dentist.phone}}" class="external">{{phone_format dentist.phone}}</a>
+            </div>
 
-                {{#each shifts}}
-                <tr class="item">
-                    <td>{{date_format shiftDate}}</td>
-                    <td style="text-align:left;">
-                        {{time_format postedStart}} - {{time_format postedEnd}}
-                    </td>
-                </tr>
-                {{/each}}
 
-                <tr colspan="2"><td>&nbsp;</td></tr>
-            </table>
+            <div class="list-block">
+              <ul>
+                <li class="accordion-item"><a href="#" class="item-content item-link">
+                    <div class="item-inner">
+                      <div class="item-title" style="font-size:75%;">Office Information</div>
+                    </div></a>
+                  <div class="accordion-item-content">
+                    <div class="content-block">
+                        Arrival: {{dentist.detail.hygienistArrival}}<br>
+                        Primary Contact: {{dentist.detail.primaryContact}}<br>
+                        Parking: {{dentist.detail.parking}}<br>
+                        Payment: {{dentist.detail.payment}}<br>
+                        Radiography: {{dentist.detail.radiography}}<br>
+                        Ultrasonic: {{dentist.detail.ultrasonic}}<br>
+                        Avg Recall: {{dentist.detail.avgApptTime}}<br>
+                        Charting: {{dentist.detail.charting}}<br>
+                        Software: {{dentist.detail.software}}<br>
+                    </div>
+                  </div>
+                </li>
+                <li class="accordion-item"><a href="#" class="item-content item-link">
+                    <div class="item-inner">
+                      <div class="item-title" style="font-size:75%;">Work History Notes</div>
+                    </div></a>
+                  <div class="accordion-item-content">
+                    <div class="content-block">
+                        {{#each workHistory}}
+                        {{startDate}} - {{hygienistPrivateNotes}}<br>
+                        {{else}}
+                        No work history notes.
+                        {{/each}}
+                    </div>
+                  </div>
+                </li>
+
+              </ul>
             </div>
 
             <form id="hygienist-job-completed-form">
