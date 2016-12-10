@@ -163,6 +163,13 @@ TempStars.Pages.Dentist.Home = (function() {
                 {
                   text: 'I\'ll do it later',
                   onClick: function() {
+                      app.modal({
+                        title: 'Don’t Wait Until It’s Urgent',
+                        text: 'Tap "Find a Hygienist" to enter payment info.  Try to do it soon, so you\'re not stranded when you need a good hygienist fast!',
+                        buttons: [
+                            {    text: 'Got it!' }
+                        ] 
+                      });
                   }
                 }
               ]
