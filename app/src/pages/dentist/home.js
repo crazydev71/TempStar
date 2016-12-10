@@ -3,10 +3,12 @@ TempStars.Pages.Dentist.Home = (function() {
     'use strict';
 
     var interval,
-        calendar;
+        calendar,
+        data;
 
     function init() {
         app.onPageBeforeInit( 'dentist-home', function( page ) {
+            data = page.context;
             mainView.showNavbar();
             displayCalendar( page.context );
             $$('#dentist-home-post-job-button').on( 'click', postJobHandler );
@@ -151,11 +153,14 @@ TempStars.Pages.Dentist.Home = (function() {
         }
         else {
             app.modal({
-              title:  'Please Enter Payment Info',
-              text: '"Find a Hygienist" requires payment information.  You\'re only ever billed after a successful placement.<br>$25+hst per placement.',
+            //    title:  'Please Enter Payment Info',
+            title:  '"Find a Hygienist" Requires Entering Payment Info',
+            //text: '"Find a Hygienist" requires payment information.<br><div style="margin:10px 0;background:lightyellow">We have <b>39</b> hygienists available in the <b>Mudville</b> area.</div>The $25+hst placement fee is billed only after successful placement.',
+            text: '<div style="margin:10px 0;background:lightyellow">We have <b>' + data.numHygienists + '</b> hygienists available in the <b>' + data.user.dentist.city + '</b> area.</div>The $25+hst placement fee is billed only after successful placement.',
               buttons: [
                 {
-                  text: 'Take me there',
+                    //text: 'Take me there',
+                    text: 'I\'m ready',
                   onClick: function() {
                       TempStars.Dentist.Router.goForwardPage( 'payment-info' );
                   }
@@ -220,6 +225,10 @@ TempStars.Pages.Dentist.Home = (function() {
                         .filter( 'actionRequired' )
                         .map( getJobDate )
                         .value();
+
+                    var min = 38;
+                    var max = 56;
+                    data.numHygienists = Math.floor(Math.random() * (max - min)) + min;
 
                     TempStars.Logging.log( 'finished parsing data for dentist home page' );
                     resolve( data );
