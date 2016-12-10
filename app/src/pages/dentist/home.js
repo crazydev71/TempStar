@@ -152,7 +152,7 @@ TempStars.Pages.Dentist.Home = (function() {
         else {
             app.modal({
               title:  'Please Enter Payment Info',
-              text: 'Please complete payment information to use the "Find a Hygienist" feature.',
+              text: '"Find a Hygienist" requires payment information.  You\'re only ever billed after a successful placement.<br>$25+hst per placement.',
               buttons: [
                 {
                   text: 'Take me there',
@@ -168,7 +168,7 @@ TempStars.Pages.Dentist.Home = (function() {
                         text: 'Tap "Find a Hygienist" to enter payment info.  Try to do it soon, so you\'re not stranded when you need a good hygienist fast!',
                         buttons: [
                             {    text: 'Got it!' }
-                        ] 
+                        ]
                       });
                   }
                 }
