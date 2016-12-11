@@ -29,7 +29,10 @@ log( 'Billing run started at ' + moment.utc().format('YYYY-MM-DD hh:ss') + ' UTC
 today = moment.utc().format('YYYY-MM-DD');
 log( '- billing dentists for jobs completed before: ' + today );
 
-updateJobStatus( today )
+updateBookedJobStatus( today )
+.then( function() {
+    return updateUnbookedJobStatus( today );
+})
 .then( function() {
     console.log( '- getting dentists to bill' );
     return getDentistsToBill( today );
@@ -52,8 +55,22 @@ updateJobStatus( today )
     process.exit();
 })
 
+// Update jobs that were unbooked before today to expired
+function updateUnbookedJobStatus( today ) {
+    return new Promise( function( resolve, reject ) {
+        db.queryAsync( "update Job set status = 5 where status in (1,2) and startDate < ?", [today] )
+        .then( function( results ) {
+            log( '- updated ' + results.affectedRows + ' jobs status to EXPIRED' );
+            resolve();
+        })
+        .catch( function(err) {
+            reject( err );
+        });
+    });
+}
+
 // Update jobs that were booked before today to completed
-function updateJobStatus( today ) {
+function updateBookedJobStatus( today ) {
     return new Promise( function( resolve, reject ) {
         db.queryAsync( "update Job set status = 4 where status = 3 and startDate < ?", [today] )
         .then( function( results ) {
