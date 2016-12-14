@@ -143,7 +143,7 @@ module.exports = function( Job ){
                 if ( ! response.success ) {
                     Email.send({
                         to: poJSON.hygienist.user.email,
-                        from: 'no-reply@tempstars.net',
+                        from: app.get('emailFrom'),
                         bcc:  app.get('emailBcc'),
                         subject: 'Partial Offer on ' + moment(jj.startDate).format('ddd MMM D, YYYY') + ' accepted',
                         text: msg
@@ -240,7 +240,7 @@ module.exports = function( Job ){
                 if ( ! response.success ) {
                     Email.send({
                         to: pj.hygienist.user.email,
-                        from: 'no-reply@tempstars.net',
+                        from: app.get('emailFrom'),
                         bcc:  app.get('emailBcc'),
                         subject: 'Partial Offer on ' + moment(jj.startDate).format('ddd MMM D, YYYY') +  ' declined',
                         text: msg
@@ -291,7 +291,7 @@ module.exports = function( Job ){
         .then( function() {
             Email.send({
                 to: jj.dentist.user.email,
-                from: "no-reply@tempstars.net",
+                from: app.get('emailFrom'),
                 subject: 'Invoice from ' + jj.hygienist.firstName + ' ' + jj.hygienist.lastName,
                 html: data.html },
                 function(err) {
@@ -371,7 +371,7 @@ module.exports = function( Job ){
         .then( function() {
             Email.send({
                 to: jj.dentist.user.email,
-                from: "no-reply@tempstars.net",
+                from: app.get('emailFrom'),
                 subject: 'Invoice from ' + jj.hygienist.firstName + ' ' + jj.hygienist.lastName,
                 html: data.html },
                 function(err) {

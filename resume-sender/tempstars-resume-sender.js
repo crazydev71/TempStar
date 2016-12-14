@@ -187,7 +187,7 @@ function email( emailAddress, zipFile ) {
     return new Promise( function( resolve, reject ) {
         Email.send({
             to: emailAddress,
-            from: 'no-reply@tempstars.net',
+            from: app.get('emailFrom'),
             subject: 'TempStars resumes',
             text: 'Here are the matching resumes.',
             attachments: [ { path: zipFile } ]
@@ -205,7 +205,7 @@ function sendSorryEmail( emailAddress ) {
     return new Promise( function( resolve, reject ) {
         Email.send({
             to: emailAddress,
-            from: 'no-reply@tempstars.net',
+            from: app.get('emailFrom'),
             subject: 'TempStars resumes',
             text: 'Sorry there are no matching resumes at this time.'
         }, function( err ) {

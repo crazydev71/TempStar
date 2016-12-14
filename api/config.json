@@ -28,5 +28,6 @@
   "apnKeyId": "4W5923BGDZ",
   "apnTeamId": "UM68DRFZYZ",
   "pushEnv": "prod",
+  "emailFrom": "no-reply@tempstars.ca",
   "emailBcc": "drjyounger@hotmail.com"
 }

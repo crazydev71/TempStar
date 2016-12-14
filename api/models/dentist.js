@@ -374,7 +374,7 @@ module.exports = function( Dentist ) {
                             if ( ! response.success ) {
                                 Email.send({
                                     to: jj.hygienist.user.email,
-                                    from: 'no-reply@tempstars.net',
+                                    from: app.get('emailFrom'),
                                     bcc:  app.get('emailBcc'),
                                     subject: 'Job cancelled on ' + moment(jj.startDate).format('ddd MMM D, YYYY'),
                                     text: msg
@@ -414,7 +414,7 @@ module.exports = function( Dentist ) {
                                 if ( ! response.success ) {
                                     Email.send({
                                         to: po.hygienist.user.email,
-                                        from: 'no-reply@tempstars.net',
+                                        from: app.get('emailFrom'),
                                         bcc:  app.get('emailBcc'),
                                         subject: 'Partial Offer for ' + moment(jj.startDate).format('ddd MMM D, YYYY') + ' removed',
                                         text: msg
@@ -619,7 +619,7 @@ module.exports = function( Dentist ) {
                             if ( ! response.success ) {
                                 Email.send({
                                     to: jj.hygienist.user.email,
-                                    from: 'no-reply@tempstars.net',
+                                    from: app.get('emailFrom'),
                                     bcc:  app.get('emailBcc'),
                                     subject: 'Job on ' + moment(jj.startDate).format('ddd MMM D, YYYY') + ' changed',
                                     text: msg
@@ -660,7 +660,7 @@ module.exports = function( Dentist ) {
                                 if ( ! response.success ) {
                                     Email.send({
                                         to: po.hygienist.user.email,
-                                        from: 'no-reply@tempstars.net',
+                                        from: app.get('emailFrom'),
                                         bcc:  app.get('emailBcc'),
                                         subject: 'Partial Offer for ' + moment(jj.startDate).format('ddd MMM D, YYYY') + ' changed',
                                         text: msg
