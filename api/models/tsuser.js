@@ -82,7 +82,7 @@ module.exports = function( TSUser ) {
                     info.accessToken.id + '">here</a> to reset your password';
         TSUser.app.models.Email.send({
           to: info.email,
-          from: "help@tempstars.net",
+          from: TSUser.app.get('emailFrom'),
           subject: 'Password reset',
           html: html
         }, function(err) {
