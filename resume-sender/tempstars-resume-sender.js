@@ -14,7 +14,6 @@ var rimraf    = require( 'rimraf' );
 
 var SendResumeRequest = app.models.SendResumeRequest;
 var Email = app.models.Email;
-var dentistLocation;
 var tmpFolder;
 var zipFile;
 
@@ -81,7 +80,7 @@ function fillRequest( request ) {
             // Download resumes
             numResumes = resumeUrls.length;
             if ( numResumes == 0 ) {
-                sendSorryEmail( request.email )
+                return sendSorryEmail( request.email );
             }
             else {
                 return downloadResumes( resumeUrls );
@@ -126,24 +125,40 @@ function fillRequest( request ) {
 }
 
 function getHygienistsNearDentist( dentist ) {
-    // Get the hygienists ordered by distance from the dentist
-    var Hygienist = app.models.Hygienist;
-    dentistLocation = new loopback.GeoPoint( { lat: dentist.lat, lng: dentist.lon });
-    return Hygienist.find( {where: {location: {near: dentistLocation}}, limit:100} );
+
+    // Get the hygienists within 110km of dentist
+
+    return new Promise( function( resolve, reject ) {
+        var maxDistance = 110;
+        var Hygienist = app.models.Hygienist;
+        var dentistLocation = new loopback.GeoPoint( { lat: dentist.lat, lng: dentist.lon });
+
+        // Get all the hygienists and filter out those more than the max distance from dentist
+        // The loopback 'near' query does not work reliably
+        // Eventually switch to MySQl 5.7 and use built in st_distance_sphere function
+        Hygienist.find( {where: {isComplete: 1}} )
+        .then( function( hygienists ) {
+            console.log( 'found: ' + hygienists.length );
+            // Filter out hygienist who are more than max distance
+            hygienists = _.map( hygienists, function( hygienist ) {
+                var hygienistLocation = new loopback.GeoPoint({ lat: hygienist.lat, lng: hygienist.lon});
+                var distance = loopback.GeoPoint.distanceBetween( dentistLocation, hygienistLocation, {type: 'kilometers'});
+                if ( distance > maxDistance ) {
+                    return false;
+                }
+                return hygienist;
+            });
+            hygienists = _.compact( hygienists );
+            resolve( hygienists );
+        })
+        .catch( function( err ) {
+            reject( err );
+        });
+    });
+
 }
 
 function getBestCandidateResumes( request, hygienists ) {
-
-    // Filter out hygienist who are more than 110km
-    hygienists = _.map( hygienists, function( hygienist ) {
-        var hygienistLocation = new loopback.GeoPoint({ lat: hygienist.lat, lng: hygienist.lon});
-        var distance = loopback.GeoPoint.distanceBetween( dentistLocation, hygienistLocation, {type: 'kilometers'});
-        if ( distance > 110 ) {
-            return false;
-        }
-        return hygienist;
-    });
-    hygienists = _.compact( hygienists );
 
     // Filter out the hygienists without a resume
     hygienists = _.reject( hygienists, ['resumeUrl', null] );
