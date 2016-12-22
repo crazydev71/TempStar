@@ -32,22 +32,50 @@ function createJobNotifications( lb, a, jobId, message ) {
 
         Job.findById( jobId )
         .then( function( j ) {
-            job = j.toJSON();
+            return new Promise( function( resolve, reject ) {
+                var maxDistance = 110;
 
-            // Get all hygienists and their distance from the dentist office
-            dentistLocation = new loopback.GeoPoint( { lat: job.dentist.lat, lng: job.dentist.lon });
-            return Hygienist.find( {where: {location: {near: dentistLocation}}, limit:100} );
+                job = j.toJSON();
 
+                // Get all hygienists and their distance from the dentist office
+                dentistLocation = new loopback.GeoPoint( { lat: job.dentist.lat, lng: job.dentist.lon });
+
+                Hygienist.find( {where: {isComplete: 1}, include:['user']} )
+                .then( function( hygienists ) {
+console.log( 'found num hygienists: ' + hygienists.length );
+                    // Filter out hygienist who are more than max distance
+                    hygienists = _.map( hygienists, function( hygienist ) {
+                        var hygienistLocation = new loopback.GeoPoint({ lat: hygienist.lat, lng: hygienist.lon});
+                        var distance = loopback.GeoPoint.distanceBetween( dentistLocation, hygienistLocation, {type: 'kilometers'});
+                        if ( distance > maxDistance ) {
+                            return false;
+                        }
+                        hygienist.distance = distance;
+                        var h = hygienist.toJSON();
+                        return h;
+                    });
+                    console.log( 'after filter: ' + hygienists.length );
+
+                    hygienists = _.compact( hygienists );
+                    console.log( 'after compact: ' + hygienists.length );
+                    resolve( hygienists );
+                })
+                .catch( function( err ) {
+                    reject( err );
+                });
+            });
+
+            ///return Hygienist.find( {where: {location: {near: dentistLocation}}, limit:100} );
             // Should be able to do this but is buggy:
             // return Hygienist.find( {where: {location: {near: loc, maxDistance: 110, unit: 'kilometers'}}} )
         })
-        .then( function( hygienists ) {
-            return Promise.map( hygienists, function( hygienist ) {
-                var hygienistLocation = new loopback.GeoPoint({ lat: hygienist.lat, lng: hygienist.lon});
-                hygienist.distance = loopback.GeoPoint.distanceBetween( dentistLocation, hygienistLocation, {type: 'kilometers'});
-                return hygienist;
-            });
-        })
+        // .then( function( hygienists ) {
+        //     return Promise.map( hygienists, function( hygienist ) {
+        //         var hygienistLocation = new loopback.GeoPoint({ lat: hygienist.lat, lng: hygienist.lon});
+        //         hygienist.distance = loopback.GeoPoint.distanceBetween( dentistLocation, hygienistLocation, {type: 'kilometers'});
+        //         return hygienist;
+        //     });
+        // })
         .then( function( hygienists ) {
             return Promise.all( hygienists.map( function( hygienist ) {
                 return isBlockedHygienist( job.dentistId, hygienist.id )
@@ -91,7 +119,7 @@ function createJobNotifications( lb, a, jobId, message ) {
             interval = Math.round( minutesTillStart / 35 );
             interval = (interval < 1) ? 1 : interval;
             interval = (interval > MAX_INTERVAL) ? MAX_INTERVAL : interval;
-            
+
             console.log( 'interval: ' + interval );
 
             favSendTime = now.clone();
