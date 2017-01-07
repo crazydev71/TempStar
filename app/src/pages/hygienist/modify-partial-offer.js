@@ -32,7 +32,7 @@ TempStars.Pages.Hygienist.ModifyPartialOffer = (function() {
                     { values: (function() {
                             var vals = [],
                                 timeStr;
-                            for ( var i = 0; i < 24; i++ ) {
+                            for ( var i = 5; i < 23; i++ ) {
                                 for ( var j = 0; j <  60; j = j + 15 ) {
                                     timeStr = moment().hours(i).minutes(j).format('h:mm a');
                                     vals.push( timeStr );
@@ -58,7 +58,7 @@ TempStars.Pages.Hygienist.ModifyPartialOffer = (function() {
                     { values: (function() {
                             var vals = [],
                                 timeStr;
-                            for ( var i = 0; i < 24; i++ ) {
+                            for ( var i = 5; i < 23; i++ ) {
                                 for ( var j = 0; j <  60; j = j + 15 ) {
                                     timeStr = moment().hours(i).minutes(j).format('h:mm a');
                                     vals.push( timeStr );
