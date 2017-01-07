@@ -9,11 +9,11 @@
   "private": true,
   "license": "UNLICENSED",
   "dependencies": {
-    "apn": "^2.1.1",
+    "apn": "^2.1.2",
     "bluebird": "^3.4.6",
-    "config": "^1.21.0",
-    "lodash": "^4.14.1",
-    "moment": "^2.15.1",
+    "config": "^1.24.0",
+    "lodash": "^4.17.2",
+    "moment": "^2.17.1",
     "node-gcm": "^0.14.4",
     "push": "file:../api/local_modules/push"
   }

@@ -1,0 +1,21 @@
+{
+  "name": "notifier",
+  "version": "0.1.0",
+  "dependencies": {
+    "bluebird": {
+      "version": "3.4.7",
+      "from": "bluebird@3.4.7",
+      "resolved": "https://registry.npmjs.org/bluebird/-/bluebird-3.4.7.tgz"
+    },
+    "lodash": {
+      "version": "4.17.4",
+      "from": "lodash@4.17.4",
+      "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.17.4.tgz"
+    },
+    "moment": {
+      "version": "2.17.1",
+      "from": "moment@2.17.1",
+      "resolved": "https://registry.npmjs.org/moment/-/moment-2.17.1.tgz"
+    }
+  }
+}

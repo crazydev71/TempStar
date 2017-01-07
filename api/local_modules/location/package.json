@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "dependencies": {
-    "@google/maps": "^0.1.0",
+    "@google/maps": "^0.3.1",
     "bluebird": "^3.4.6"
   }
 }
