@@ -68,8 +68,9 @@ TempStars.Pages.Dentist.JobPosted = (function() {
             return new Promise( function( resolve, reject ) {
                 if ( params.id ) {
                     TempStars.Dentist.getJob( params.id )
-                    .then( function( job ) {
-                        resolve( job );
+                    .then( function( j ) {
+                        job = j;
+                        resolve( j );
                     })
                     .catch( function( err ) {
                         reject( err );
