@@ -1,7 +1,7 @@
 
 TempStars.Validators = (function() {
     'use strict';
-    
+
     return {
         validatePostalCode: function validatePostalCode(value, options, key, attributes) {
             if ( value.match( /^([ABCEGHJKLMNPRSTVXY][0-9][A-Z][ ]?[0-9][A-Z][0-9])*$/ ) ) {
@@ -59,6 +59,15 @@ TempStars.Validators = (function() {
             else {
                 return "is not in Ontario";
             }
+        },
+
+        validateTime: function validateTime(value, options, key, attributes) {
+            if ( moment( value, 'hh:mm a').isValid() ) {
+                return null;
+            }
+            else {
+                return "is invalid";
+            }
         }
 
     };
@@ -72,3 +81,4 @@ validate.validators.creditCardNumber = TempStars.Validators.validateCreditCardNu
 validate.validators.creditCardExpiryDate = TempStars.Validators.validateCreditCardExpiryDate;
 validate.validators.creditCardCVC = TempStars.Validators.validateCreditCardCVC;
 validate.validators.postalCodeIsOntario = TempStars.Validators.validatePostalCodeIsOntario;
+validate.validators.time = TempStars.Validators.validateTime;

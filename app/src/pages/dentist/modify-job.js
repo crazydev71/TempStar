@@ -12,6 +12,8 @@ TempStars.Pages.Dentist.ModifyJob = (function() {
             job.postedStart = moment.utc( job.shifts[0].postedStart ).local().format('h:mm a');
             job.postedEnd = moment.utc( job.shifts[0].postedEnd ).local().format('h:mm a');
 
+            if ( ! Template7.global.web ) {
+
             app.picker({
                 input: '#dentist-modify-job-starttime',
                 toolbar: true,
@@ -21,7 +23,6 @@ TempStars.Pages.Dentist.ModifyJob = (function() {
                     '<a href="#" class="link close-picker">{{closeText}}</a>' +
                 '</div>' +
                 '</div>',
-
                 rotateEffect: false,
                 value: [ job.postedStart ],
                 cols: [
@@ -64,6 +65,11 @@ TempStars.Pages.Dentist.ModifyJob = (function() {
                         })()
                 }]
             });
+            }
+            else {
+                $$('#dentist-modify-job-starttime').val( job.postedStart );
+                $$('#dentist-modify-job-endtime').val( job.postedEnd );
+            }
 
             $$('#dentist-modify-job-button').on( 'click', modifyJobHandler );
             TempStars.Analytics.track( 'Viewed Modify Job' );
@@ -78,10 +84,12 @@ TempStars.Pages.Dentist.ModifyJob = (function() {
 
         var constraints = {
             postedStart: {
-                presence: true
+                presence: true,
+                time: true
             },
             postedEnd: {
-                presence: true
+                presence: true,
+                time: true
             }
         };
 
@@ -94,10 +102,10 @@ TempStars.Pages.Dentist.ModifyJob = (function() {
 
         if ( errors ) {
             if ( errors.postedStart ) {
-                $$('#dentist-modify-job-form input[name="postedStart"]').addClass('error').next().html( errors.postedStart[0] );
+                $$('#dentist-modify-job-starttime').addClass('error').next().html( errors.postedStart[0] );
             }
             if ( errors.postedEnd ) {
-                $$('#dentist-modify-job-form input[name="postedEnd"]').addClass('error').next().html( errors.postedEnd[0] );
+                $$('#dentist-modify-job-endtime').addClass('error').next().html( errors.postedEnd[0] );
             }
             return;
         }

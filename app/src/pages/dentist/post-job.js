@@ -21,6 +21,7 @@ TempStars.Pages.Dentist.PostJob = (function() {
                 disabled: page.context
             });
 
+            if ( ! Template7.global.web ) {
             app.picker({
                 input: '#dentist-post-job-starttime',
                 toolbar: true,
@@ -75,6 +76,7 @@ TempStars.Pages.Dentist.PostJob = (function() {
                         })()
                 }]
             });
+            }
 
             $$('#dentist-post-job-button').on( 'click', postJobHandler );
             TempStars.Analytics.track( 'Viewed Post Job' );
@@ -93,10 +95,12 @@ TempStars.Pages.Dentist.PostJob = (function() {
                 presence: true,
             },
             postedStart: {
-                presence: true
+                presence: true,
+                time: true
             },
             postedEnd: {
-                presence: true
+                presence: true,
+                time: true
             }
         };
 
@@ -112,10 +116,10 @@ TempStars.Pages.Dentist.PostJob = (function() {
                 $('#dentist-post-job-form input[name="startDate"]').addClass('error').next().html( errors.startDate[0] );
             }
             if ( errors.postedStart ) {
-                $$('#dentist-post-job-form input[name="postedStart"]').addClass('error').next().html( errors.postedStart[0] );
+                $$('#dentist-post-job-starttime').addClass('error').next().html( errors.postedStart[0] );
             }
             if ( errors.postedEnd ) {
-                $$('#dentist-post-job-form input[name="postedEnd"]').addClass('error').next().html( errors.postedEnd[0] );
+                $$('#dentist-post-job-endtime').addClass('error').next().html( errors.postedEnd[0] );
             }
             return;
         }

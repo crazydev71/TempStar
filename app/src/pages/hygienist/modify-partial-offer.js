@@ -14,6 +14,8 @@ TempStars.Pages.Hygienist.ModifyPartialOffer = (function() {
             startTime = moment.utc( partialOffer.offeredStartTime ).local().format('h:mm a');
             endTime = moment.utc( partialOffer.offeredEndTime ).local().format('h:mm a');
 
+            if ( ! Template7.global.web ) {
+
             app.picker({
                 input: '#hygienist-modify-partial-offer-starttime',
                 toolbar: true,
@@ -66,6 +68,11 @@ TempStars.Pages.Hygienist.ModifyPartialOffer = (function() {
                         })()
                 }]
             });
+            }
+            else {
+                $$('#hygienist-modify-partial-offer-starttime').val( startTime );
+                $$('#hygienist-modify-partial-offer-endtime').val( endTime );
+            }
 
             $$('#hygienist-modify-partial-offer-button').on( 'click', modifyPartialOfferHandler );
             TempStars.Analytics.track( 'Viewed Modify Partial Offer' );
@@ -76,10 +83,12 @@ TempStars.Pages.Hygienist.ModifyPartialOffer = (function() {
 
         var constraints = {
             offeredStartTime: {
-                presence: true
+                presence: true,
+                time: true
             },
             offeredEndTime: {
-                presence: true
+                presence: true,
+                time: true
             }
         };
 
@@ -92,10 +101,10 @@ TempStars.Pages.Hygienist.ModifyPartialOffer = (function() {
 
         if ( errors ) {
             if ( errors.offeredStartTime ) {
-                $$('#hygienist-modify-partial-offer-form input[name="offeredStartTime"]').addClass('error').next().html( errors.offeredStartTime[0] );
+                $$('#hygienist-modify-partial-offer-starttime').addClass('error').next().html( errors.offeredStartTime[0] );
             }
             if ( errors.offeredEndTime ) {
-                $$('#hygienist-modify-partial-offer-form input[name="offeredEndTime"]').addClass('error').next().html( errors.offeredEndTime[0] );
+                $$('#hygienist-modify-partial-offer-endtime').addClass('error').next().html( errors.offeredEndTime[0] );
             }
             return;
         }

@@ -18,6 +18,9 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
 
         app.onPageBeforeInit( 'hygienist-make-partial-offer', function( page ) {
             job = page.context;
+
+            if ( ! Template7.global.web ) {
+
             startTimePicker = app.picker({
                 input: '#hygienist-make-partial-offer-starttime',
                 toolbar: true,
@@ -82,6 +85,7 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
                     }
                 }
             });
+            }
 
             $$('#hygienist-make-partial-offer-submit-button').on( 'click', submitButtonHandler );
             TempStars.Analytics.track( 'Viewed Make Partial Offer' );
@@ -94,10 +98,12 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
 
         var constraints = {
             offeredStart: {
-                presence: true
+                presence: true,
+                time: true
             },
             offeredEnd: {
-                presence: true
+                presence: true,
+                time: true
             }
         };
 
@@ -110,10 +116,10 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
 
         if ( errors ) {
             if ( errors.offeredStart ) {
-                $$('#hygienist-make-partial-offer-form input[name="offeredStart"]').addClass('error').next().html( errors.offeredStart[0] );
+                $$('#hygienist-make-partial-offer-starttime').addClass('error').next().html( errors.offeredStart[0] );
             }
             if ( errors.offeredEnd ) {
-                $$('#hygienist-make-partial-offer-form input[name="offeredEnd"]').addClass('error').next().html( errors.offeredEnd[0] );
+                $$('#hygienist-make-partial-offer-endtime').addClass('error').next().html( errors.offeredEnd[0] );
             }
             return;
         }
