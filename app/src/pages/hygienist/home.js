@@ -7,6 +7,20 @@ TempStars.Pages.Hygienist.Home = (function() {
 
     function init() {
         app.onPageBeforeInit( 'hygienist-home', function( page ) {
+
+            var rating = TempStars.User.getCurrentUser().hygienist.starScore;
+            $('#my-rating').starRating({
+                starSize: 20,
+                activeColor: 'gold',
+                initialRating: rating,
+                readOnly: true,
+                useGradient: false
+            });
+            //     {
+            //     initialRating: 4,
+            //     readOnly: true
+            // });
+
             mainView.showNavbar();
             displayCalendar( page.context );
             if ( page.context.haveNewJobs ) {

@@ -140,14 +140,15 @@ i.tabbar-demo-icon-4 {
 }
 
 .container.menu-right {
-  width: 130px;
-  margin: 30px auto;
+  width: 150px;
+  margin: 20px auto;
   text-align: center;
 }
 
 .item-title.user.profile.menu-right {
   color: white;
   margin-top: 10px;
+  font-size:16px;
 }
 
 .item-subtitle.location.menu-right {
