@@ -10741,7 +10741,7 @@
                         continue;
                     }
                     p.params.rangesClasses[i].range.map( function( marker ) {
-                        var dateStr = moment( marker ).subtract(1, 'month').format('YYYY-M-D');
+                        var dateStr = '' + marker.getFullYear() + '-' + marker.getMonth() + '-' + marker.getDate();
                         $$('.picker-calendar-day[data-date="' + dateStr + '"]').addClass( p.params.rangesClasses[i].cssClass );
                     });
                 }
