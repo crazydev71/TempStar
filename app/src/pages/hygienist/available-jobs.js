@@ -40,10 +40,20 @@ TempStars.Pages.Hygienist.AvailableJobs = (function() {
     function getData() {
 
         return new Promise( function( resolve, reject ) {
-            TempStars.Api.getAvailableJobs( TempStars.User.getCurrentUser().hygienistId )
+            var hygienistId = TempStars.User.getCurrentUser().hygienistId;
+            var rate;
+
+            TempStars.Api.getHygienistRate( hygienistId )
+            .then( function( r ) {
+                rate = r;
+                return TempStars.Api.getAvailableJobs( hygienistId );
+            })
             .then( function( jobs ) {
 
-                data = { jobs: jobs.result };
+                data = {
+                    jobs: jobs.result,
+                    rate: rate.result.rate
+                };
 
                 if ( jobs.result.length == 0 ) {
                     resolve( data );

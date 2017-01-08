@@ -337,23 +337,7 @@ module.exports = function( Hygienist ) {
             return Region.findById( h.regionId );
         })
         .then( function( r ) {
-            hourlyRate = parseInt(r.rate);
-
-            if ( hygienist.starScore == 5 ) {
-                rateAdjustment = 4;
-            }
-            else if ( hygienist.starScore < 5 && hygienist.starScore >= 4) {
-                rateAdjustment = 2;
-            }
-            else if ( hygienist.starScore < 4 && hygienist.starScore >= 3) {
-                rateAdjustment = 0;
-            }
-            else if ( hygienist.starScore < 3 && hygienist.starScore >= 2) {
-                rateAdjustment = -2;
-            }
-            else if ( hygienist.starScore < 2 ) {
-                rateAdjustment = -4;
-            }
+            hourlyRate = getAdjustedRate( r.rate, hygienist.starScore );
             return Job.findById( jobId );
         })
         .then( function( j ) {
@@ -373,10 +357,6 @@ module.exports = function( Hygienist ) {
                 return;
             }
 
-            console.log( 'hr: ' + hourlyRate );
-            console.log( 'ra: ' + rateAdjustment );
-
-            hourlyRate += rateAdjustment;
             return job.updateAttributes({
                 hygienistId: hygienistId,
                 bookedOn: moment.utc().format('YYYY-MM-DD HH:mm:ss'),
@@ -427,6 +407,31 @@ module.exports = function( Hygienist ) {
             callback( err );
         });
     };
+
+    function getAdjustedRate( baseRate, starScore ) {
+
+        var hourlyRate,
+            rateAdjustment;
+
+        if ( starScore == 5 ) {
+            rateAdjustment = 4;
+        }
+        else if ( starScore < 5 && starScore >= 4) {
+            rateAdjustment = 2;
+        }
+        else if ( starScore < 4 && starScore >= 3) {
+            rateAdjustment = 0;
+        }
+        else if ( starScore < 3 && starScore >= 2) {
+            rateAdjustment = -2;
+        }
+        else if ( starScore < 2 ) {
+            rateAdjustment = -4;
+        }
+
+        hourlyRate = parseInt(baseRate) + rateAdjustment;
+        return hourlyRate;
+    }
 
     function notifyPartialOffers( job ) {
         // Get all the partial offers for this job
@@ -795,6 +800,35 @@ module.exports = function( Hygienist ) {
         })
         .then( function() {
             callback( null, {} );
+        })
+        .catch( function( err ) {
+            callback( err );
+        });
+    };
+
+    Hygienist.remoteMethod( 'getCurrentRate', {
+        accepts: [
+            {arg: 'id', type: 'number', required: true}],
+        returns: { arg: 'result', type: 'object' },
+        http: { verb: 'get', path: '/:id/rate' }
+    });
+
+    Hygienist.getCurrentRate = function( id, callback ) {
+
+        var Hygienist = app.models.Hygienist;
+        var Region = app.models.Region;
+        var hygienist;
+
+        // Get the hygienist
+        Hygienist.findById( parseInt(id) )
+        .then( function( h ) {
+            hygienist = h;
+            return Region.findById( h.regionId );
+        })
+        .then( function( r ) {
+            var hourlyRate = getAdjustedRate( r.rate, hygienist.starScore );
+            var resp = { rate: hourlyRate };
+            callback( null, resp );
         })
         .catch( function( err ) {
             callback( err );
