@@ -67,17 +67,17 @@
                         <div class="content-block" style="margin:50px auto 30px auto;width:240px;">
                             <img class="centerimg" src="img/logo.png" style="width:150px;">
                         </div>
-                            <div class="content-block-title" style="margin-top:20px;color:#333;font-size:15px;letter-spacing:0.03em;">Getting Started</div>
+                            <div class="content-block-title" style="margin-top:20px;color:#333;font-size:15px;letter-spacing:0.03em;">Get Started</div>
                         <div class="content-block">
                             <div class="row" style="margin-top:20px;margin-bottom:0px;">
-                                <div class="col-20">&nbsp;</div>
-                                <div class="col-60">
-                                    <a href="landing/signup.html" class="button button-round">Create Free Account</a>
+                                <div class="col-15">&nbsp;</div>
+                                <div class="col-70">
+                                    <a href="landing/signup.html" class="button button-round" style="font-size:16px;height:44px;line-height:40px;">Create Your Free Account</a>
                                 </div>
-                                <div class="col-20">&nbsp;</div>
+                                <div class="col-15">&nbsp;</div>
                             </div>
                         </div>
-                        <div class="content-block-title" style="margin-top:40px;margin-bottom:0;color:#333;font-size:15px;letter-spacing:0.03em;">Already Registered?</div>
+                        <div class="content-block-title" style="margin-top:50px;margin-bottom:0;color:#333;font-size:13px;letter-spacing:0.03em;">Already Registered?</div>
                         <div class="content-block" style="margin-top:0;">
                             <form id="login-form">
                                 <div class="list-block inset" style="margin:4px 0 10px 20px;">
@@ -105,11 +105,14 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-20">&nbsp;</div>
-                                    <div class="col-60">
+                                    <div class="col-30">&nbsp;</div>
+                                    <div class="col-40">
                                         <a id="login-button" href="#" class="button button-round">Log In</a>
+                                        <div style="margin-top:20px;font-size:12px;text-align:center;">
+                                            <a href="landing/forgot-password.html">Forgot Password?</a>
+                                        </div>
                                     </div>
-                                    <div class="col-20">&nbsp;</div>
+                                    <div class="col-30">&nbsp;</div>
                                 </div>
                             </form>
                         </div>
@@ -118,13 +121,10 @@
 
                     <div class="footer toolbar" style="height:70px !important;font-size:.8em;padding-top:20px;background-color:#fff">
                           <div class="row">
-                              <div class="col-33" style="text-align:center;">
-                                  <a href="landing/forgot-password.html">Forgot Password?</a>
-                              </div>
-                              <div class="col-33" style="text-align:center;">
+                              <div class="col-50" style="text-align:center;">
                                   <a href="landing/privacy-policy.html">Privacy Policy</a>
                               </div>
-                              <div class="col-33" style="text-align:center;">
+                              <div class="col-50" style="text-align:center;">
                                   <a href="mailto:help@tempstars.ca" class="external">Contact Support</a>
                               </div>
                           </div>
