@@ -156,7 +156,7 @@ TempStars.Pages.Dentist.Home = (function() {
             //    title:  'Please Enter Payment Info',
             title:  '"Find a Hygienist" Requires Entering Payment Info',
             //text: '"Find a Hygienist" requires payment information.<br><div style="margin:10px 0;background:lightyellow">We have <b>39</b> hygienists available in the <b>Mudville</b> area.</div>The $25+hst placement fee is billed only after successful placement.',
-            text: '<div style="margin:10px 0;background:lightyellow">We have <b>' + data.numHygienists + '</b> hygienists available in the <b>' + data.user.dentist.city + '</b> area.</div>The $25+hst placement fee is billed only after successful placement.',
+            text: '<div style="margin:10px 0;background:lightyellow">We have <b>' + data.numHygienists + '</b> hygienists available in the <b>' + data.user.dentist.city + '</b> area.</div>The $25+hst placement fee is billed only after a successful placement.',
               buttons: [
                 {
                     //text: 'Take me there',
