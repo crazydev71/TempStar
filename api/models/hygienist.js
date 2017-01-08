@@ -320,30 +320,38 @@ module.exports = function( Hygienist ) {
         var Hygienist = app.models.Hygienist;
         var PartialOffer = app.models.PartialOffer;
         var Email = app.models.Email;
+        var Region = app.models.Region;
 
         var rateAdjustment = 0;
         var hourlyRate;
         var job;
         var jj, msg;
+        var hygienist;
 
         console.log( 'book job' );
 
         // Get the hygienist
         Hygienist.findById( hygienistId )
         .then( function( h ) {
-            if ( h.starScore == 5 ) {
+            hygienist = h;
+            return Region.findById( h.regionId );
+        })
+        .then( function( r ) {
+            hourlyRate = parseInt(r.rate);
+
+            if ( hygienist.starScore == 5 ) {
                 rateAdjustment = 4;
             }
-            else if ( h.starScore < 5 && h.starScore >= 4) {
+            else if ( hygienist.starScore < 5 && hygienist.starScore >= 4) {
                 rateAdjustment = 2;
             }
-            else if ( h.starScore < 4 && h.starScore >= 3) {
+            else if ( hygienist.starScore < 4 && hygienist.starScore >= 3) {
                 rateAdjustment = 0;
             }
-            else if ( h.starScore < 3 && h.starScore >= 2) {
+            else if ( hygienist.starScore < 3 && hygienist.starScore >= 2) {
                 rateAdjustment = -2;
             }
-            else if ( h.starScore < 2 ) {
+            else if ( hygienist.starScore < 2 ) {
                 rateAdjustment = -4;
             }
             return Job.findById( jobId );
@@ -365,10 +373,10 @@ module.exports = function( Hygienist ) {
                 return;
             }
 
-            console.log( 'hr: ' + job.hourlyRate );
+            console.log( 'hr: ' + hourlyRate );
             console.log( 'ra: ' + rateAdjustment );
 
-            hourlyRate = job.hourlyRate + rateAdjustment;
+            hourlyRate += rateAdjustment;
             return job.updateAttributes({
                 hygienistId: hygienistId,
                 bookedOn: moment.utc().format('YYYY-MM-DD HH:mm:ss'),

@@ -279,18 +279,11 @@ module.exports = function( Dentist ) {
             }
         })
         .then( function() {
-            return Dentist.findById( parseInt(id) );
-        })
-        .then( function( d ) {
-            return Region.findById( d.regionId );
-        })
-        .then( function( r ) {
             var jobData = data.job;
             jobData.dentistId = parseInt(id);
             jobData.dentistRating = 0;
             jobData.hygienistRating = 0;
             jobData.hygienistId = 0;
-            jobData.hourlyRate = r.rate;
             return Job.create( jobData );
         })
         .then( function( j ) {
