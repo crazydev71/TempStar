@@ -79,7 +79,7 @@
                                 <div class="col-10">&nbsp;</div>
                             </div>
                         </div>
-                        <div class="content-block-title" style="margin-top:50px;margin-bottom:0;color:#333;font-size:13px;letter-spacing:0.03em;">Already Registered?</div>
+                        <div class="content-block-title" style="margin-top:30px;margin-bottom:0;color:#333;font-size:13px;letter-spacing:0.03em;">Already Registered?</div>
                         <div class="content-block" style="margin-top:0;">
                             <form id="login-form">
                                 <div class="list-block inset" style="margin:4px 0 10px 20px;">
