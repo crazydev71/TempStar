@@ -72,11 +72,11 @@
                             <div class="content-block-title" style="margin-top:20px;color:#333;font-size:15px;letter-spacing:0.03em;">Get Started</div>
                         <div class="content-block">
                             <div class="row" style="margin-top:20px;margin-bottom:0px;">
-                                <div class="col-15">&nbsp;</div>
-                                <div class="col-70">
+                                <div class="col-10">&nbsp;</div>
+                                <div class="col-80">
                                     <a href="landing/signup.html" class="button button-round" style="font-size:16px;height:44px;line-height:40px;">Create Your Free Account</a>
                                 </div>
-                                <div class="col-15">&nbsp;</div>
+                                <div class="col-10">&nbsp;</div>
                             </div>
                         </div>
                         <div class="content-block-title" style="margin-top:50px;margin-bottom:0;color:#333;font-size:13px;letter-spacing:0.03em;">Already Registered?</div>
