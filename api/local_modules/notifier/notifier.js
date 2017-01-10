@@ -109,7 +109,7 @@ console.log( 'found num hygienists: ' + hygienists.length );
         .then( function( hygienists ) {
 
             var sendTime;
-            var MAX_INTERVAL = 36 * 60; // minutes
+            var MAX_INTERVAL = 3; //36 * 60; // minutes
             now = moment.utc();
             console.log( 'now: ' + now.toDate() );
 
