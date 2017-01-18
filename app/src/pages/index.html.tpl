@@ -157,10 +157,10 @@
     <script src="lib/validate.min.js"></script>
     <script src="lib/star-rating/star-rating-svg.min.js"></script>
     <script src="lib/platform.js"></script>
-    <script src="js/tempstars.app.js"></script>
+    <script src="js/tempstars.app.min.js"></script>
     <script src="js/tempstars.version.js"></script>
-    <script src="js/tempstars.dentist.js"></script>
-    <script src="js/tempstars.hygienist.js"></script>
+    <script src="js/tempstars.dentist.min.js"></script>
+    <script src="js/tempstars.hygienist.min.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJMD7G1zt5F7KT3QkyqMeTKssPBz5o_UI&callback=TempStars.Map.init"></script>
   </body>
 </html>

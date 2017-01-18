@@ -9,7 +9,9 @@ module.exports = function (grunt) {
 
         // Task configuration
         clean: {
-            all: ['www/*']
+            all: ['www/*'],
+            postuglify: ['www/js/tempstars.app.js','www/js/tempstars.dentist.js','www/js/tempstars.hygienist.js'],
+            prod: [ 'www/js/tempstars.app.min.js','www/js/tempstars.dentist.min.js','www/js/tempstars.hygienist.min.js']
         },
 
         copy: {
@@ -107,7 +109,8 @@ module.exports = function (grunt) {
             options: {
                 banner: '<%= banner %>',
                 mangle: true,
-                sourceMap: true
+                sourceMap: false,
+                report: 'gzip'
             },
             app: {
                 src: 'www/js/tempstars.app.js',
@@ -120,6 +123,15 @@ module.exports = function (grunt) {
             hygienist: {
                 src: 'www/js/tempstars.hygienist.js',
                 dest: 'www/js/tempstars.hygienist.min.js'
+            }
+        },
+
+        cacheBust: {
+            taskName: {
+                options: {
+                    assets: ['www/css/*', 'www/js/*', 'www/lib/**']
+                },
+                src: ['www/index.html']
             }
         },
 
@@ -240,6 +252,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-template');
     grunt.loadNpmTasks('grunt-config');
     grunt.loadNpmTasks('grunt-htmlhint');
+    grunt.loadNpmTasks('grunt-cache-bust');
 
     grunt.registerTask('init', function() {
         var target = grunt.config.get( 'target' );
@@ -247,14 +260,15 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('help', function() {
-        grunt.log.writeln( ' "grunt --target=local|dev"' );
+        grunt.log.writeln( ' "grunt --target=local|dev|production"' );
     });
 
-    grunt.registerTask( 'default',  [ 'init', 'clean', 'exec:create_version', 'copy', 'concat', 'template:browser', 'includereplace', 'uglify' ]);
-    grunt.registerTask( 'ios',      [ 'init', 'clean', 'exec:create_version', 'copy', 'concat', 'template:ios',     'includereplace', 'exec:run_ios']);
-    grunt.registerTask( 'android',  [ 'init', 'clean', 'exec:create_version', 'copy', 'concat', 'template:android', 'includereplace', 'exec:run_android']);
-    grunt.registerTask( 'android-buildsrc',  [ 'init', 'clean', 'exec:create_version', 'copy', 'concat', 'template:android', 'includereplace']);
-    grunt.registerTask( 'browser',  [ 'init', 'clean', 'exec:create_version', 'copy', 'concat', 'template:browser', 'includereplace', 'exec:run_browser']);
+    grunt.registerTask( 'default',  [ 'init', 'clean:all', 'exec:create_version', 'copy', 'concat', 'template:browser', 'includereplace', 'uglify', 'cacheBust']);
+    grunt.registerTask( 'browser',  [ 'init', 'clean:all', 'exec:create_version', 'copy', 'concat', 'template:browser', 'includereplace', 'uglify', 'clean:postuglify', 'cacheBust', 'clean:prod' ]);
+    grunt.registerTask( 'ios',      [ 'init', 'clean:all', 'exec:create_version', 'copy', 'concat', 'template:ios',     'includereplace', 'exec:run_ios']);
+    grunt.registerTask( 'android',  [ 'init', 'clean:all', 'exec:create_version', 'copy', 'concat', 'template:android', 'includereplace', 'exec:run_android']);
+    grunt.registerTask( 'android-buildsrc',  [ 'init', 'clean:all', 'exec:create_version', 'copy', 'concat', 'template:android', 'includereplace']);
+    grunt.registerTask( 'devbrowser',  [ 'init', 'clean:all', 'exec:create_version', 'copy', 'concat', 'template:browser', 'includereplace', 'exec:run_browser']);
     grunt.registerTask( 'serve',    ['connect', 'watch']);
 
 };

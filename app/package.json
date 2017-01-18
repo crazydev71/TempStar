@@ -1,13 +1,14 @@
 {
   "name": "tempstars-app",
   "description": "Tempstars app",
-  "version": "2.0.12",
+  "version": "2.1.17",
   "main": "index.js",
   "author": "Mike Betts",
   "private": true,
   "license": "UNLICENSED",
   "devDependencies": {
     "grunt": "^1.0.1",
+    "grunt-cache-bust": "^1.5.0",
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-connect": "^1.0.2",
