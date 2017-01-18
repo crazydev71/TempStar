@@ -107,7 +107,6 @@ module.exports = function (grunt) {
             options: {
                 banner: '<%= banner %>',
                 mangle: true,
-                mangle: true,
                 sourceMap: true
             },
             app: {

@@ -150,7 +150,7 @@ TempStars.Api = (function() {
                 })
                 .catch( function( err ) {
                     reject( err );
-                })
+                });
             });
         },
 
@@ -165,7 +165,7 @@ TempStars.Api = (function() {
                 })
                 .catch( function( err ) {
                     reject( err );
-                })
+                });
             });
 
         },
