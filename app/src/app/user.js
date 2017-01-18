@@ -53,6 +53,10 @@ TempStars.User = (function() {
                     return TempStars.User.updateRegistration();
                 })
                 .then( function() {
+                    TempStars.Analytics.setProfileProperties({
+                        $email: userAccount.email,
+                        version: TempStars.version
+                    });
                     TempStars.Logging.log('autologged in as: ' + userAccount.email );
                     resolve();
                 })
@@ -107,7 +111,8 @@ TempStars.User = (function() {
                         role: userAccount.roles[0].name,
                         env: TempStars.Config.env.name,
                         $first_name: firstName,
-                        $last_name: lastName
+                        $last_name: lastName,
+                        version: TempStars.version
                     });
                     resolve();
                 })
