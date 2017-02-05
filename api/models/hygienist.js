@@ -666,11 +666,12 @@ module.exports = function( Hygienist ) {
             return notifier.createJobNotifications( loopback, app, jj.id, 'New job posted' );
         })
         .then( function( job ) {
-            msg = 'Your job on ';
-            msg += moment(jj.startDate).format('ddd MMM Do');
-            msg += ' has been cancelled by ';
+            msg = 'Your TempStars hygienist, ';
             msg += jj.hygienist.firstName + ' ' + jj.hygienist.lastName;
-            msg += ' It has been automatically reposted to the system as a open job.';
+            msg += ', has cancelled for your job on ';
+            msg += moment(jj.startDate).format('ddd MMM Do');
+            msg += '. Don\'t worry, it has automatically been re-posted to the system for other hygienists.';
+            msg += 'You\'ll receive a status update when your job is re-filled.';
             return push.send( msg, jj.dentist.user.platform, jj.dentist.user.registrationId );
         })
         .then( function( response ) {
