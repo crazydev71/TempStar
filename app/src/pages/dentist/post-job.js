@@ -3,23 +3,32 @@ TempStars.Pages.Dentist.PostJob = (function() {
 
     'use strict';
 
+    var jobDate;
+
     function init() {
 
-        app.onPageBeforeInit( 'dentist-post-job', function( page ) {
-            app.calendar({
+        app.onPageBeforeAnimation( 'dentist-post-job', function( page ) {
+
+            var defaultDate = (page.context.defaultDate) ? page.context.defaultDate : null;
+
+            var datePicker = app.calendar({
                 input: '#dentist-post-job-date',
                 cssClass: 'open-calendar',
                 toolbar: true,
                 firstDay: 0,
-                dateFormat: 'D, M dd, yyyy',
+                dateFormat: 'D, M d, yyyy',
                 minDate: moment().subtract(1, 'days'),
                 onDayClick: function(picker, dayContainer, dateYear, dateMonth, dateDay) {
                     setTimeout( function() {
                         picker.close();
                     }, 400);
                 },
-                disabled: page.context
+                disabled: page.context.jobs
             });
+
+            if ( defaultDate !== null ) {
+                datePicker.setValue( [defaultDate] );
+            }
 
             if ( ! Template7.global.web ) {
             app.picker({
@@ -201,14 +210,20 @@ TempStars.Pages.Dentist.PostJob = (function() {
     return {
         init: init,
 
-        getData: function() {
+        getData: function( params ) {
             return new Promise( function( resolve, reject ) {
+                var data = {};
+
+                // Default date in form
+                data.defaultDate = (params.date) ? params.date : null;
+
+                // Get all existing jobs so they can be disabled in the calendar
                 TempStars.Dentist.getAllJobs()
-                .then( function( data ) {
-                    var jobs = _(data)
+                .then( function( rawJobs ) {
+                    data.jobs = _(rawJobs)
                         .map( getJobDate )
                         .value();
-                    resolve( jobs );
+                    resolve( data );
                 })
                 .catch( function( err ) {
                     reject( err );

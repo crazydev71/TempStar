@@ -98,6 +98,9 @@ TempStars.Pages.Dentist.Home = (function() {
                 else if ( $(dayContainer).hasClass('calendar-posted') ) {
                     postedDayHandler(picker, dayContainer, dateYear, dateMonth, dateDay);
                 }
+                else {
+                    openDayHandler(picker, dayContainer, dateYear, dateMonth, dateDay);
+                }
             }
         });
     }
@@ -128,6 +131,16 @@ TempStars.Pages.Dentist.Home = (function() {
         var dateStr = moment({ year: dateYear, month: parseInt(dateMonth), day: dateDay}).format('YYYY-MM-DD');
         var params = { date: dateStr };
         TempStars.Dentist.Router.goForwardPage( 'job-posted', params );
+    }
+
+    function openDayHandler(picker, dayContainer, dateYear, dateMonth, dateDay) {
+        console.log( 'open ' + dateYear + ' ' + dateMonth + ' ' + dateDay );
+        var jsDate = moment({ year: dateYear, month: parseInt(dateMonth), day: dateDay}).toDate();
+        var dateStr = moment({ year: dateYear, month: parseInt(dateMonth), day: dateDay}).format('MMM D, YYYY');
+        var params = { date: jsDate };
+        app.confirm( 'Would you like to find a temp hygienist for ' + dateStr + '?', function() {
+            TempStars.Dentist.Router.goForwardPage( 'post-job', params );
+        });
     }
 
     function getJobDate( job ) {
