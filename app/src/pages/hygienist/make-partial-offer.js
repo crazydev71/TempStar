@@ -169,6 +169,8 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
                 moment( job.startDate ).format('ddd MMM D, YYYY') + '<br>' +
                 formData.offeredStart + ' - ' +
                 formData.offeredEnd + '<br><br>' +
+                '<b>There are penalties for<br>cancelling booked shifts.</b><br><br>' +
+
                 '<b>Are you sure?</b>',
             buttons: [
               { text: 'No' },
