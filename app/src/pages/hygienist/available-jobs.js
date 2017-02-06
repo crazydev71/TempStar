@@ -69,7 +69,7 @@ TempStars.Pages.Hygienist.AvailableJobs = (function() {
                     data.jobs = _.orderBy( data.jobs, ['startDate'], ['asc'] );
                 }
                 else if ( sortBy == 'closest' ) {
-                    data.jobs = _.sortBy( data.jobs, 'dentist.practiceName' );
+                    data.jobs = _.sortBy( data.jobs, ['distance'], ['asc'] );
                 }
 
                 resolve( data );
@@ -106,7 +106,7 @@ TempStars.Pages.Hygienist.AvailableJobs = (function() {
         $(this).addClass('active').siblings().removeClass('active');
 
         if ( data && data.jobs ) {
-            data.jobs = _.sortBy( data.jobs, 'dentist.practiceName' );
+            data.jobs = _.sortBy( data.jobs, ['distance'], ['asc'] );
             TempStars.Hygienist.Router.reloadPage( 'available-jobs', {}, data );
         }
     }
