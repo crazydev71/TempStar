@@ -31,7 +31,6 @@ TempStars.Dentist.Menu = (function() {
                         onClick: function() {
                             $$('.modal').hide();
                             TempStars.Dentist.Router.goForwardPage( 'payment-info', { nextPage: page } );
-                            //app.closeModal();
                         }
                     },
                     {
