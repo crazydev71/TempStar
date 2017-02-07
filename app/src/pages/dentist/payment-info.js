@@ -2,6 +2,7 @@ TempStars.Pages.Dentist.PaymentInfo = (function() {
     var userAccount;
     var formData;
     var expDatePicker;
+    var nextPage;
 
     function init() {
 
@@ -129,7 +130,10 @@ TempStars.Pages.Dentist.PaymentInfo = (function() {
                 return TempStars.User.refresh();
             })
             .then( function() {
-                TempStars.Dentist.Router.goForwardPage( 'post-job', {nohistory: true} );
+                if ( ! nextPage ) {
+                    nextPage = 'post-job';
+                }
+                TempStars.Dentist.Router.goForwardPage( nextPage, {nohistory: true} );
             })
             .catch( function(err) {
                 app.alert( err );
@@ -148,7 +152,8 @@ TempStars.Pages.Dentist.PaymentInfo = (function() {
 
     return {
         init: init,
-        getData: function() {
+        getData: function( params ) {
+            nextPage = params.nextPage;
             return Promise.resolve( {} );
         }
     };
