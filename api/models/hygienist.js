@@ -171,7 +171,7 @@ module.exports = function( Hygienist ) {
         // Get the hygienist location
         // Get the available jobs not blocked
         // Filter by location
-        // Filter out jobs already booked on or have partial offers on
+        // Filter out jobs already booked on 
 
         Hygienist.findById( id )
         .then( function( h ) {
@@ -225,6 +225,27 @@ module.exports = function( Hygienist ) {
                     jj.distance = distance.toFixed(1);
                     return jj;
                 }
+            });
+        })
+        .then( function( js ) {
+            // Filter out dates with booked jobs for this hygienist
+            jobs = _.compact( js );
+            return Promise.map( jobs, function( job ) {
+                return new Promise( function( resolve, reject ) {
+
+                    Job.count({ status: 3, hygienistId: id, startDate: job.startDate })
+                    .then( function(otherJob) {
+                        if ( otherJob ) {
+                            resolve(null);
+                        }
+                        else {
+                            resolve(job);
+                        }
+                    })
+                    .catch( function(err) {
+                        resolve( job );
+                    });
+                });
             });
         })
         .then( function( js ) {
