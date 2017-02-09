@@ -8,6 +8,14 @@ TempStars.Pages.Dentist.JobConfirmed = (function() {
         app.onPageBeforeInit( 'dentist-job-confirmed', function( page ) {
             $$('#dentist-job-confirmed-modify-button').on( 'click', modifyButtonHandler );
             $$('#dentist-job-confirmed-cancel-button').on( 'click', cancelButtonHandler );
+            $('#hygienist-rating').starRating({
+                starSize: 20,
+                activeColor: 'gold',
+                initialRating: page.context.hygienist.starScore,
+                readOnly: true,
+                useGradient: false
+            });
+
             TempStars.Analytics.track( 'Viewed Confirmed Job' );
         });
 
@@ -66,7 +74,11 @@ TempStars.Pages.Dentist.JobConfirmed = (function() {
                 if ( params.id ) {
                     TempStars.Dentist.getJob( params.id )
                     .then( function( job ) {
-                        resolve( job );
+                        TempStars.Api.getHygienistRate( job.hygienistId )
+                        .then( function( r ) {
+                            job.hygienistRate = r.result.rate;
+                            resolve( job );
+                        });
                     })
                     .catch( function( err ) {
                         reject( err );
@@ -76,7 +88,11 @@ TempStars.Pages.Dentist.JobConfirmed = (function() {
                     TempStars.Dentist.getJobsByDate( params.date )
                     .then( function( jobs ) {
                         job = jobs[0];
-                        resolve( job );
+                        TempStars.Api.getHygienistRate( job.hygienistId )
+                        .then( function( r ) {
+                            job.hygienistRate = r.result.rate;
+                            resolve( job );
+                        });
                     })
                     .catch( function( err ) {
                         reject( err );

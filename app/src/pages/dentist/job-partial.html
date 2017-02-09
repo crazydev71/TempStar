@@ -50,7 +50,15 @@
 
                 {{#each partialOffers}}
                 <tr>
-                    <td>{{hygienist.firstName}} {{hygienist.lastName}}</td>
+                    <td>{{hygienist.firstName}} {{hygienist.lastName}}
+                        <div id="hygienist-rating-{{id}}"></div>
+                        <div><b>${{hourlyRate}}/hr</b>
+                            {{#if hygienist.gradYear}}
+                            &nbsp;&nbsp;
+                            Graduated: {{hygienist.gradYear}}
+                            {{/if}}
+                        </div>
+                    </td>
                     <td style="text-align:left;">
                         {{time_format offeredStartTime}} - {{time_format offeredEndTime}}
                     </td>

@@ -148,7 +148,22 @@
         "dataScale": null,
         "nullable": "Y"
       }
-    }
+    },
+    "hourlyRate": {
+      "type": "Number",
+      "required": false,
+      "length": null,
+      "precision": 6,
+      "scale": 2,
+      "mysql": {
+        "columnName": "hourlyRate",
+        "dataType": "decimal",
+        "dataLength": null,
+        "dataPrecision": 6,
+        "dataScale": 2,
+        "nullable": "N"
+      }
+    }  
   },
   "validations": [],
   "relations": {

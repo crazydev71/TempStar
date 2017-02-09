@@ -13,6 +13,17 @@ TempStars.Pages.Dentist.JobPartial = (function() {
                 $$('#dentist-job-partial-modify-button').on( 'click', modifyButtonHandler );
                 $$('#dentist-job-partial-cancel-button').on( 'click', cancelButtonHandler );
                 TempStars.Analytics.track( 'Viewed Partial Job' );
+
+                _.map( page.context.partialOffers, function( po ) {
+                    var ratingId = '#hygienist-rating-' +  po.id;
+                    $( ratingId ).starRating({
+                        starSize: 16,
+                        activeColor: 'gold',
+                        initialRating: po.hygienist.starScore,
+                        readOnly: true,
+                        useGradient: false
+                    });
+                });
             });
 
             $$(document).on( 'click', '.dentist-partial-job-accept-button', acceptButtonHandler );
@@ -141,8 +152,6 @@ TempStars.Pages.Dentist.JobPartial = (function() {
                 if ( params.id ) {
                     TempStars.Dentist.getJob( params.id )
                     .then( function( job ) {
-                        // Filter out rejected partial jobs
-                        //job.partialOffers = _(job.partialOffers).filter(['status', 0]).value();
                         resolve( job );
                     })
                     .catch( function( err ) {
@@ -153,6 +162,7 @@ TempStars.Pages.Dentist.JobPartial = (function() {
                     TempStars.Dentist.getJobsByDate( params.date )
                     .then( function( jobs ) {
                         job = jobs[0];
+                        // Filter out rejected partial jobs
                         job.partialOffers = _(job.partialOffers).filter(['status', 0]).value();
                         resolve( job );
                     })
