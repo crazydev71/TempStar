@@ -28,6 +28,9 @@ TempStars.Config = (function() {
             enabled: true,
             token: '399a45b6eea7aea3f7fb578e85cf9db6'
         },
-        debug: false        
+        web: {
+            appUrl: 'http://app2.tempstars.ca'
+        },        
+        debug: false
     };
 })();

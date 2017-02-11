@@ -1,0 +1,66 @@
+<div class="navbar landing">
+
+    <div data-page="download" class="navbar-inner">
+        <div class="center sliding">TempStars</div>
+    </div>
+
+</div>
+<div class="pages navbar-through toolbar-fixed">
+    <div data-page="download" class="page landing">
+
+        <div class="page-content">
+
+            <div class="login-screen-title">App Needs Update</div>
+
+            <div class="content-block">
+
+                <div style="padding:0 20px;margin:0 20px;">
+                    <p>
+                    You are using an older version of the TempStars App.
+                    To continue to use the app, you need to update it.
+                    </p>
+                    <p>
+                    Just click on the button to get the update.
+                    Alternatively you can use the <a href="{{@global.webAppUrl}}" class="external">web version</a>.
+                    </p>
+                    
+                    {{#js_compare "Template7.global.web == true"}}
+                    <br>
+                    Unfortunately there is a problem - please <a href="mailto:help@tempstars.ca" class="external">contact support</a>.
+                    {{/js_compare}}
+
+                    {{#js_compare "Template7.global.ios == true"}}
+                    <br>
+                    <a href="itms-apps://itunes.apple.com/app/1094751710" class="button button-big button-round external">Get Update</a>
+                    {{/js_compare}}
+
+                    {{#js_compare "Template7.global.android == true"}}
+                    <br>
+                    <a href="market://details?id=ca.tempstars.app2" class="button button-round button-big external">Get Update</a>
+                    {{/js_compare}}
+                </div>
+
+            </div>
+        </div>
+
+        <div class="footer toolbar" style="height:70px !important;font-size:.8em;padding-top:20px;background-color:#fff">
+              <div class="row">
+                  <div class="col-33" style="text-align:center;">
+                      <a href="landing/signup.html">Sign Up</a>
+                  </div>
+                  <div class="col-33" style="text-align:center;">
+                      <a href="index.html">Log In</a>
+                  </div>
+                  <div class="col-33" style="text-align:center;">
+                      <a href="mailto:help@tempstars.ca" class="external">Contact Support</a>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-auto" style="text-align:center;padding:10px;ffffont-size:.8em;color:#999">
+                      Copyright &copy; 2017 Sudden Turtle Dental Consulting, Inc.
+                  </div>
+              </div>
+        </div>
+
+    </div>
+</div>

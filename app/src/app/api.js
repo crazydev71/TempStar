@@ -269,6 +269,10 @@ TempStars.Api = (function() {
 
         getHygienistRate: function getHygienistRate( hygienistId ) {
             return TempStars.Ajax.get( 'hygienists/' + hygienistId + '/rate' );
+        },
+
+        getMinVersion: function getMinVersion() {
+            return TempStars.Ajax.get( 'minVersion' );
         }
 
     };

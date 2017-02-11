@@ -5,10 +5,25 @@ TempStars.App = (function() {
 
     var userInterface = 'landing';
 
+    // From substack
+    function compareVersions(a, b) {
+        var pa = a.split('.');
+        var pb = b.split('.');
+        for (var i = 0; i < 3; i++) {
+            var na = Number(pa[i]);
+            var nb = Number(pb[i]);
+            if (na > nb) return 1;
+            if (nb > na) return -1;
+            if (!isNaN(na) && isNaN(nb)) return 1;
+            if (isNaN(na) && !isNaN(nb)) return -1;
+        }
+        return 0;
+    }
+
     return {
         init: function init() {
             console.log( 'APP INIT' );
-            
+
             if ( TempStars.Config.debug ) {
 
                 app.onPageBeforeInit( '*', function( page ) {
@@ -65,6 +80,22 @@ TempStars.App = (function() {
         },
 
         gotoStartingPage: function gotoStartingPage() {
+            TempStars.App.isVersionOk()
+            .then( function( ok ) {
+                if ( ok ) {
+                    TempStars.App.gotoStartingPage1();
+                }
+                else {
+                    mainView.router.loadPage( 'landing/download.html' );
+                }
+                return;
+            })
+            .catch( function( err ) {
+                mainView.router.loadPage( 'index.html' );
+            });
+        },
+
+        gotoStartingPage1: function gotoStartingPage1() {
             var menuContent,
                 template,
                 compiledTemplate,
@@ -140,6 +171,28 @@ TempStars.App = (function() {
             app.formDeleteData('dentist-signup2-form');
             app.formDeleteData('dentist-signup3-form');
             app.formDeleteData('hygienist-signup-form');
+        },
+
+        isVersionOk: function isVersionOk() {
+            return new Promise( function( resolve, reject ) {
+                TempStars.Api.getMinVersion()
+                .then( function( response ) {
+                    var minVersion = response.version;
+                    // If the app version is less than the minimum version, then it's no good
+                    if ( compareVersions( TempStars.version, minVersion ) === -1 ) {
+                        console.log( 'version is NOT ok' );
+                        resolve( false );
+                    }
+                    else {
+                        console.log( 'version is ok' );
+                        resolve( true );
+                    }
+                })
+                .catch( function(err) {
+                    console.log( err.message );
+                    reject( err );
+                });
+            });
         }
     };
 

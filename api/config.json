@@ -27,5 +27,6 @@
   "apnTeamId": "UM68DRFZYZ",
   "pushEnv": "prod",
   "emailFrom": "no-reply@tempstars.ca",
-  "emailBcc": "drjyounger@hotmail.com"
+  "emailBcc": "drjyounger@hotmail.com",
+  "minVersion": "2.2.0"
 }

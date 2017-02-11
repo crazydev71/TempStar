@@ -103,7 +103,8 @@ TempStars.bootstrap = {
         Template7.global = {
             android: isAndroid,
             ios: isIos,
-            web: isWeb
+            web: isWeb,
+            webAppUrl: TempStars.Config.web.appUrl
         };
 
         // If running on Android, use material theme and change navbar to fixed

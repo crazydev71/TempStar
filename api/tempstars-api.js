@@ -10,6 +10,10 @@ app.engine( 'handlebars', exphbs({defaultLayout: 'main'}));
 app.set( 'view engine', 'handlebars');
 app.use( bodyParser.urlencoded({extended: true}));
 
+app.use('/v2/minVersion', function( req, res, next ) {
+    res.json({ version: app.get('minVersion') });
+});
+
 app.start = function() {
   // start the web server
   return app.listen(function() {
