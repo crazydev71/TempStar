@@ -22,6 +22,13 @@ module.exports = function (grunt) {
                     { cwd: 'src/pages/', src: 'home.html', dest: 'www/', expand: true },
                     { cwd: 'src/app/', src: 'android.css', dest: 'www/css/', expand: true }
                 ]
+            },
+            dev: {
+                files: [
+                    { src: 'www/js/tempstars.app.js', dest: 'www/js/tempstars.app.min.js' },
+                    { src: 'www/js/tempstars.dentist.js', dest: 'www/js/tempstars.dentist.min.js' },
+                    { src: 'www/js/tempstars.hygienist.js', dest: 'www/js/tempstars.hygienist.min.js' }
+                ]
             }
         },
 
@@ -109,7 +116,7 @@ module.exports = function (grunt) {
             options: {
                 banner: '<%= banner %>',
                 mangle: true,
-                sourceMap: false,
+                sourceMap: true,
                 report: 'gzip'
             },
             app: {
@@ -127,7 +134,7 @@ module.exports = function (grunt) {
         },
 
         cacheBust: {
-            taskName: {
+            all: {
                 options: {
                     assets: ['www/css/*', 'www/js/*', 'www/lib/**']
                 },
@@ -159,7 +166,8 @@ module.exports = function (grunt) {
                     $$: true, TempStars: true, Promise: true, _: true, app: true,
                     Stripe: true, mainView: true, moment: true, NativeStorage: true,
                     validate: true, Camera: true, FileUploadOptions: true, uuid: true,
-                    FileTransfer: true, device: true, cordova: true, PushNotification: true },
+                    FileTransfer: true, device: true, cordova: true, PushNotification: true, platform: true,
+                    mixpanel: true, google: true },
                 '-W027': true
             },
             gruntfile: {
@@ -214,6 +222,7 @@ module.exports = function (grunt) {
 
         exec: {
             build_android: 'cordova build android --release',
+            build_ios: 'cordova build ios',
             run_ios: 'cordova run ios',
             run_android: 'cordova run android',
             run_browser: 'cordova run browser',
@@ -263,12 +272,13 @@ module.exports = function (grunt) {
         grunt.log.writeln( ' "grunt --target=local|dev|production"' );
     });
 
-    grunt.registerTask( 'default',  [ 'init', 'clean:all', 'exec:create_version', 'copy', 'concat', 'template:browser', 'includereplace', 'uglify', 'cacheBust']);
-    grunt.registerTask( 'browser',  [ 'init', 'clean:all', 'exec:create_version', 'copy', 'concat', 'template:browser', 'includereplace', 'uglify', 'clean:postuglify', 'cacheBust', 'clean:prod' ]);
-    grunt.registerTask( 'ios',      [ 'init', 'clean:all', 'exec:create_version', 'copy', 'concat', 'template:ios',     'includereplace', 'exec:run_ios']);
-    grunt.registerTask( 'android',  [ 'init', 'clean:all', 'exec:create_version', 'copy', 'concat', 'template:android', 'includereplace', 'exec:run_android']);
-    grunt.registerTask( 'android-buildsrc',  [ 'init', 'clean:all', 'exec:create_version', 'copy', 'concat', 'template:android', 'includereplace']);
-    grunt.registerTask( 'devbrowser',  [ 'init', 'clean:all', 'exec:create_version', 'copy', 'concat', 'template:browser', 'includereplace', 'exec:run_browser']);
+    grunt.registerTask( 'default',  [ 'init', 'clean:all', 'exec:create_version', 'copy:all', 'concat', 'template:browser', 'includereplace', 'copy:dev' ]);
+    grunt.registerTask( 'browser',  [ 'init', 'clean:all', 'exec:create_version', 'copy:all', 'concat', 'template:browser', 'includereplace', 'uglify', 'clean:postuglify', 'cacheBust', 'clean:prod' ]);
+    grunt.registerTask( 'iosdev',   [ 'init', 'clean:all', 'exec:create_version', 'copy:all', 'concat', 'template:ios',     'includereplace', 'uglify', 'clean:postuglify', 'exec:build_ios' ]);
+    grunt.registerTask( 'ios',      [ 'init', 'clean:all', 'exec:create_version', 'copy:all', 'concat', 'template:ios',     'includereplace', 'uglify', 'clean:postuglify', 'exec:run_ios']);
+    grunt.registerTask( 'android',  [ 'init', 'clean:all', 'exec:create_version', 'copy:all', 'concat', 'template:android', 'includereplace', 'uglify', 'clean:postuglify', 'exec:run_android']);
+    grunt.registerTask( 'android-buildsrc',  [ 'init', 'clean:all', 'exec:create_version', 'copy:all', 'concat', 'template:android', 'includereplace', 'uglify', 'clean:postuglify']);
+    grunt.registerTask( 'devbrowser',  [ 'init', 'clean:all', 'exec:create_version', 'copy:all', 'concat', 'template:browser', 'includereplace', 'exec:run_browser']);
     grunt.registerTask( 'serve',    ['connect', 'watch']);
 
 };
