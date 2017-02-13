@@ -171,7 +171,7 @@ module.exports = function( Hygienist ) {
         // Get the hygienist location
         // Get the available jobs not blocked
         // Filter by location
-        // Filter out jobs already booked on 
+        // Filter out jobs already booked on
 
         Hygienist.findById( id )
         .then( function( h ) {
@@ -368,6 +368,11 @@ module.exports = function( Hygienist ) {
                 throw new Error( 'Job is no longer available.');
                 return;
             }
+
+            // Add incentives
+            hourlyRate += (job.short) ? 2 : 0;
+            hourlyRate += (job.urgent) ? 2 : 0;
+            hourlyRate += (job.weekend) ? 2 : 0;
 
             return Job.count({ hygienistId: hygienistId, startDate: job.startDate });
         })

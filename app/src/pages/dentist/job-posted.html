@@ -34,15 +34,31 @@
                 </tr>
                 {{/each}}
 
-                <tr colspan="2"><td>&nbsp;</td></tr>
+                <tr colspan="2">
+                    <td>
+                        {{#if hasIncentive}}
+                        +${{incentive}}/hr incentive bonus
+                        {{else}}
+                        &nbsp;
+                        {{/if}}
+                    </td>
+                </tr>
             </table>
-            <div class="login-screen-title" style="font-size:16px;margin:0 50px 35px 50px;background:lightyellow;padding:10px">Your job is not filled yet.</div>
+
+            <div class="login-screen-title" style="font-size:16px;margin:10px 50px 35px 50px;background:lightyellow;padding:10px">Your job is not filled yet.</div>
             </div>
 
             <form id="dentist-job-completed-form">
                 <div class="row" style="margin-top:20px">
                     <div class="col-20">&nbsp;</div>
                     <div class="col-60">
+                        {{#if hasIncentive}}
+                        <a id="dentist-job-posted-remove-incentive-button" href="#" data-id="{{id}}" class="button button-round">Remove Incentive</a>
+                        <br><br>
+                        {{else}}
+                        <a id="dentist-job-posted-offer-incentive-button" href="#" data-id="{{id}}" class="button button-round">Offer Incentive</a>
+                        <br><br>
+                        {{/if}}
                         <a id="dentist-job-posted-modify-button" href="#" data-id="{{id}}" class="button button-round">Modify Job</a>
                         <br><br>
                         <a id="dentist-job-posted-cancel-button" href="#" data-id="{{id}}" class="button button-round">Cancel Job</a>

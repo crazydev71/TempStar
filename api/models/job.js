@@ -103,6 +103,11 @@ module.exports = function( Job ){
             }
             hourlyRate = jj.hourlyRate + rateAdjustment;
 
+            // Add incentives
+            hourlyRate += (jj.short) ? 2 : 0;
+            hourlyRate += (jj.urgent) ? 2 : 0;
+            hourlyRate += (jj.weekend) ? 2 : 0;
+
             return job.updateAttributes({
                 status: jobStatus.CONFIRMED,
                 hygienistId: partialOffer.hygienistId,

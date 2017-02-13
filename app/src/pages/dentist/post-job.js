@@ -141,11 +141,22 @@ TempStars.Pages.Dentist.PostJob = (function() {
             return;
         }
 
-        app.confirm(
+        TempStars.Job.checkIncentives( formData, confirmJob );
+    }
+
+    function confirmJob( formData ) {
+
+        var text =
             formData.startDate + '<br>' +
             formData.postedStart + ' - ' +
-            formData.postedEnd + '<br>',
-            'Post Job?', function() {
+            formData.postedEnd + '<br>';
+
+        var boost = TempStars.Job.getHourlyRateBoost( formData );
+        if ( boost > 0 ) {
+            text += '<br>+$' + boost + '/hr incentive bonus<br>';
+        }
+
+        app.confirm( text, 'Post Job?', function() {
             postJob( formData );
         });
     }
@@ -182,7 +193,10 @@ TempStars.Pages.Dentist.PostJob = (function() {
             job: {
                 postedOn: moment.utc().format('YYYY-MM-DD HH:mm:ss'),
                 startDate: moment( formData.startDate ).format('YYYY-MM-DD'),
-                status: TempStars.Job.status.POSTED
+                status: TempStars.Job.status.POSTED,
+                short: formData.short,
+                urgent: formData.urgent,
+                weekend: formData.weekend
             },
             shifts: [
                 {

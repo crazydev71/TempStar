@@ -253,6 +253,51 @@
         "dataScale": null,
         "nullable": "N"
       }
+    },
+    "short": {
+      "type": "Number",
+      "required": false,
+      "length": null,
+      "precision": 1,
+      "scale": 0,
+      "mysql": {
+        "columnName": "short",
+        "dataType": "tinyint",
+        "dataLength": null,
+        "dataPrecision": 1,
+        "dataScale": 0,
+        "nullable": "Y"
+      }
+    },
+    "urgent": {
+      "type": "Number",
+      "required": false,
+      "length": null,
+      "precision": 1,
+      "scale": 0,
+      "mysql": {
+        "columnName": "urgent",
+        "dataType": "tinyint",
+        "dataLength": null,
+        "dataPrecision": 1,
+        "dataScale": 0,
+        "nullable": "Y"
+      }
+    },
+    "weekend": {
+      "type": "Number",
+      "required": false,
+      "length": null,
+      "precision": 1,
+      "scale": 0,
+      "mysql": {
+        "columnName": "weekend",
+        "dataType": "tinyint",
+        "dataLength": null,
+        "dataPrecision": 1,
+        "dataScale": 0,
+        "nullable": "Y"
+      }
     }
   },
   "validations": [],

@@ -3,6 +3,12 @@ TempStars.Job = (function() {
 
     'use strict';
 
+    var MAX_SHORT_HOURS = 5;
+    var MAX_URGENT_HOURS = 48;
+    var SUNDAY = 0;
+    var SATURDAY = 6;
+    var INCENTIVE_BOOST = 2;
+
     return {
 
         status:  {
@@ -12,25 +18,151 @@ TempStars.Job = (function() {
             'COMPLETED': 4
         },
 
-
-        post: function post() {
-            return new Promise( function( resolve, reject ) {
-            });
+        isShortShift: function isShortShift( startTime, endTime ) {
+            // If shift duration is less than the max short hours, it's short
+            var start = moment( startTime, 'h:mm a' );
+            var end = moment( endTime, 'h:mm a' );
+            var diff = end.diff( start, 'hours', true );
+            if ( diff < MAX_SHORT_HOURS ) {
+                return true;
+            }
+            else {
+                return false;
+            }
         },
 
-        cancel: function cancel() {
-            return new Promise( function( resolve, reject ) {
-            });
+        isUrgent: function isUrgent( startDate, startTime ) {
+            // If shift starts in less than max urgent time, e.g. 48 hours
+            var hours = moment( startTime, 'h:mm a' ).hours();
+            var minutes = moment( startTime, 'h:mm a' ).minutes();
+            var start = moment( startDate )
+                        .add( hours, 'hours' )
+                        .add( minutes, 'minutes' );
+            var now = moment();
+            var diff = start.diff( now, 'hours' );
+            if ( diff < MAX_URGENT_HOURS ) {
+                return true;
+            }
+            else {
+                return false;
+            }
         },
 
-        acceptPartialOffer: function acceptPartialOffer() {
-            return new Promise( function( resolve, reject ) {
-            });
+        isWeekend: function isWeekend( jobDate ) {
+            var dayOfWeek = moment( jobDate ).day();
+            if ( dayOfWeek == SATURDAY || dayOfWeek == SUNDAY ) {
+                return true;
+            }
+            else {
+                return false;
+            }
         },
 
-        modify: function modify() {
-            return new Promise( function( resolve, reject ) {
-            });
+        getHourlyRateBoost: function getHourlyRateBoost( data ) {
+            var boost = 0;
+            boost += ( data.short ) ? INCENTIVE_BOOST : 0;
+            boost += ( data.urgent ) ? INCENTIVE_BOOST : 0;
+            boost += ( data.weekend ) ? INCENTIVE_BOOST : 0;
+            return boost;
+        },
+
+        checkIncentives: function checkIncentives( formData, confirmJob ) {
+
+            var short   = TempStars.Job.isShortShift( formData.postedStart, formData.postedEnd );
+            var urgent  = TempStars.Job.isUrgent( formData.startDate, formData.postedStart );
+            var weekend = TempStars.Job.isWeekend( formData.startDate );
+            var incentivesHTML = '';
+
+            var shortIncentiveHTML =  '<li>' +
+                                        '<label class="label-checkbox item-content">' +
+                                        '<input type="checkbox" id="post-job-short-incentive" value="1">' +
+                                        '<div class="item-media">' +
+                                            '<i class="icon icon-form-checkbox"></i>' +
+                                        '</div>' +
+                                        '<div class="item-inner">' +
+                                        '<div class="item-title" style="text-align:left;font-size:14px;">Shift less than 5 hours<br>' +
+                                        '<span style="font-size:12px;text-align:left;margin-top:-3px;font-weight:normal">Offer +$2/hr incentive</span></div>' +
+                                        '</div>' +
+                                        '</label>' +
+                                    '</li>';
+
+            var weekendIncentiveHTML = '<li>' +
+                                        '<label class="label-checkbox item-content">' +
+                                        '<input type="checkbox" id="post-job-weekend-incentive" value="1">' +
+                                        '<div class="item-media">' +
+                                            '<i class="icon icon-form-checkbox"></i>' +
+                                        '</div>' +
+                                        '<div class="item-inner">' +
+                                            '<div class="item-title" style="text-align:left;font-size:14px;">Weekend shift<br>' +
+                                            '<span style="font-size:12px;text-align:left;margin-top:-3px;font-weight:normal">Offer +$2/hr incentive</span></div>' +
+
+                                        '</div>' +
+                                        '</label>' +
+                                    '</li>';
+
+            var urgentIncentiveHTML = '<li>' +
+                                        '<label class="label-checkbox item-content">' +
+                                        '<input type="checkbox" id="post-job-urgent-incentive" value="1">' +
+                                        '<div class="item-media">' +
+                                            '<i class="icon icon-form-checkbox"></i>' +
+                                        '</div>' +
+                                        '<div class="item-inner">' +
+                                            '<div class="item-title" style="text-align:left;font-size:14px;">Less than 48 hours notice<br>' +
+                                            '<span style="font-size:12px;text-align:left;margin-top:-3px;font-weight:normal">Offer +$2/hr incentive</span></div>' +
+                                        '</div>' +
+                                        '</label>' +
+                                    '</li>';
+
+            if ( short || urgent || weekend ) {
+
+                incentivesHTML = '<div class="list-block" style="margin:10px;"><ul>';
+                if ( short ) {
+                    incentivesHTML += shortIncentiveHTML;
+                }
+                if ( urgent ) {
+                    incentivesHTML += urgentIncentiveHTML;
+                }
+                if ( weekend ) {
+                    incentivesHTML += weekendIncentiveHTML;
+                }
+                incentivesHTML += '</ul></div>';
+
+                app.modal({
+                    title: 'Offer Incentive?',
+                    text: 'This job has the following challenges that lower the likelihood ' +
+                          'of a successful placement. Maximize your chances for a successful ' +
+                          'placement by offering incentive bonuses:',
+                    afterText: incentivesHTML,
+                    buttons: [
+                        {
+                            text: 'Continue',
+                            onClick: function( modal ) {
+                                var shortIncentive = $(modal).find('#post-job-short-incentive').prop('checked');
+                                formData.short = (shortIncentive) ? 1 : 0;
+
+                                var urgentIncentive = $(modal).find('#post-job-urgent-incentive').prop('checked');
+                                formData.urgent = (urgentIncentive) ? 1 : 0;
+
+                                var weekendIncentive = $(modal).find('#post-job-weekend-incentive').prop('checked');
+                                formData.weekend = (weekendIncentive) ? 1 : 0;
+
+                                confirmJob( formData );
+                            }
+                        },
+                        {
+                            text: 'No Thanks',
+                            onClick: function() {
+                                confirmJob( formData );
+                            }
+                        }
+                    ]
+
+                });
+            }
+            else {
+                confirmJob( formData );
+            }
         }
+
     };
 })();
