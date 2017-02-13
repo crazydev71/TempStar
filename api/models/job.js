@@ -56,6 +56,7 @@ module.exports = function( Job ){
             jj,
             msg,
             poJSON,
+            numBooked,
             hygienist;
 
         // Get the partial offer
@@ -72,6 +73,8 @@ module.exports = function( Job ){
         })
         .then( function( h ) {
             hygienist = h;
+            numBooked = h.numBooked || 0;
+            numBooked++;
             return Job.count({ hygienistId: h.id, startDate: jj.startDate });
         })
         .then( function( alreadyBooked ) {
@@ -134,6 +137,10 @@ module.exports = function( Job ){
                 status: 2,
                 hygienistId: partialOffer.hygienistId
             });
+        })
+        .then( function() {
+            // bump the number of booked jobs
+            return hygienist.updateAttributes({ numBooked: numBooked });
         })
         .then( function() {
             // Notify accepted hygienist

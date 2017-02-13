@@ -8,6 +8,8 @@ TempStars.Pages.Hygienist.Home = (function() {
     function init() {
         app.onPageBeforeInit( 'hygienist-home', function( page ) {
 
+            $$('#hygienist-home-available-jobs-button').on( 'click', availableJobsButtonHandler );
+
             var rating = TempStars.User.getCurrentUser().hygienist.starScore;
             $('#my-rating').starRating({
                 starSize: 20,
@@ -35,8 +37,29 @@ TempStars.Pages.Hygienist.Home = (function() {
 
         app.onPageBeforeRemove( 'hygienist-home', function( page ) {
             clearInterval( interval );
+            $$('#hygienist-home-available-jobs-button').off( 'click', availableJobsButtonHandler );
         });
     }
+
+    function availableJobsButtonHandler(e) {
+        e.preventDefault();
+        var blockedUntil = TempStars.User.getCurrentUser().hygienist.blockedUntil;
+        if ( ! blockedUntil ) {
+            TempStars.Hygienist.Router.goForwardPage('available-jobs');
+        }
+        else {
+            var now = moment();
+            var blocked = moment( blockedUntil );
+            var diff = blocked.diff( now, 'days' );
+            if ( diff <= 0 ) {
+                TempStars.Hygienist.Router.goForwardPage('available-jobs');
+            }
+            else {
+                app.alert( 'Due to previously cancelling a job commitment, Available Jobs is blocked.<br><br>Days remaining: ' + diff,
+                    'Cancellation Penalty in Effect' );
+            }
+        }
+    };
 
     function refreshPage() {
         TempStars.Pages.Hygienist.Home.getData()

@@ -29,8 +29,9 @@ TempStars.Pages.Hygienist.JobConfirmed = (function() {
     function cancelButtonHandler( e ) {
         e.preventDefault();
 
-        var cancelMessage = 'This office and patients are counting on you. Cancelling confirmed jobs may negatively impact your status on TempStars. Are you sure you want to cancel this job?<br><br>' +
-            job.dentist.practiceName + ' will be notified.';
+        var cancelMessage = 'Cancelling this commitment will cause significant disruption to this office and its patients.<br>' +
+            '<br><b>If you cancel this job, as a penalty the system will block you from viewing available jobs for <u>2 weeks</u>. ' +
+            '<br><br>Are you sure you want to cancel?</b>';
 
         app.modal({
           title:  'WAIT!',

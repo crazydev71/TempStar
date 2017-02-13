@@ -348,6 +348,7 @@ module.exports = function( Hygienist ) {
         var job;
         var jj, msg;
         var hygienist;
+        var numBooked;
 
         console.log( 'book job' );
 
@@ -355,6 +356,9 @@ module.exports = function( Hygienist ) {
         Hygienist.findById( hygienistId )
         .then( function( h ) {
             hygienist = h;
+            numBooked = h.numBooked || 0;
+            numBooked++;
+
             return Region.findById( h.regionId );
         })
         .then( function( r ) {
@@ -387,6 +391,7 @@ module.exports = function( Hygienist ) {
                 hygienistId: hygienistId,
                 bookedOn: moment.utc().format('YYYY-MM-DD HH:mm:ss'),
                 hourlyRate: hourlyRate,
+                numBooked: numBooked,
                 status: jobStatus.CONFIRMED
             });
         })
@@ -670,6 +675,7 @@ module.exports = function( Hygienist ) {
         var Job = app.models.Job;
         var Region = app.models.Region;
         var Email = app.models.Email;
+        var Hygienist = app.models.Hygienist;
 
         var job, jj, msg;
         var baseRate;
@@ -687,6 +693,38 @@ module.exports = function( Hygienist ) {
                 hourlyRate: baseRate,
                 hygienistId: null
             });
+        })
+        .then( function( job ) {
+            return Hygienist.findById( hygienistId );
+        })
+        .then( function( h ) {
+            var cancelPercent;
+            var numCancelled;
+            var numBooked;
+            var numWeeksBlocked = 0;
+
+            numCancelled = h.numCancelled || 0;
+            numBooked = h.numBooked || 1;
+
+            numCancelled++;
+            if ( numCancelled == 1 ) {
+                // First offense, so always block 2 weeks
+                numWeeksBlocked = 2;
+            }
+            else {
+                cancelPercent = numCancelled / numBooked;
+                if ( cancelPercent > 0.05 ) {
+                    numWeeksBlocked = numCancelled * 2;
+                }
+            }
+
+            if ( numWeeksBlocked > 0 ) {
+                var blockedUntil = moment().add( numWeeksBlocked, 'weeks').utc().format('YYYY-MM-DD HH:mm:ss');
+                return h.updateAttributes({blockedUntil: blockedUntil, numCancelled: numCancelled });
+            }
+            else {
+                return h.updateAttributes({ numCancelled: numCancelled });
+            }
         })
         .then( function( job ) {
             return notifier.createJobNotifications( loopback, app, jj.id, 'New job posted' );

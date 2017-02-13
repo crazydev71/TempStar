@@ -9,6 +9,7 @@ TempStars.Pages.Hygienist.AvailableJobs = (function() {
     function init() {
 
         app.onPageBeforeInit( 'hygienist-available-jobs', function( page ) {
+
             if ( sortBy == 'newest' ) {
                 $('#hygienist-available-jobs-newest-sorting-button').addClass('active').siblings().removeClass('active');
                 data.jobs = _.orderBy( data.jobs, ['postedOn'], ['desc'] );
