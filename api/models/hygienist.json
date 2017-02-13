@@ -371,7 +371,7 @@
     },
     "blockedUntil": {
       "type": "String",
-      "required": true,
+      "required": false,
       "length": null,
       "precision": null,
       "scale": null,
