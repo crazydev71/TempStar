@@ -1,0 +1,27 @@
+{
+    "db": {
+      "name": "tempstarsDB",
+      "host": "localhost",
+      "port": 3306,
+      "database": "tempstars",
+      "user": "tempstars",
+      "password": "tempstars",
+      "dateStrings": true
+    },
+
+    "stripe": {
+        "secretKey": "sk_test_6RfrY1kO3xkVyDrKgvumnnFX",
+        "currency": "usd",
+        "amount": 2500
+    },
+
+    "aws": {
+        "accessKeyId": "AKIAJFUJRZ25B3ASWI4Q",
+        "secretAccessKey": "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"
+    },
+
+    "email": {
+        "from": "billing@tempstars.net",
+        "to": "drjyounger@hotmail.com"
+    }
+}

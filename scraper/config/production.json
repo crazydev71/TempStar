@@ -1,0 +1,19 @@
+{
+    "db": {
+        "name": "tempstarsDB",
+        "connector": "mysql",
+        "host": "tempstars.cj22hu7lczao.us-east-1.rds.amazonaws.com",
+        "port": 3306,
+        "database": "tempstars_prod",
+        "user": "tempstars_prod",
+        "password": "aquarius22molarprod",
+        "dateStrings": true,
+        "ssl": "Amazon RDS"
+    },
+
+    "email": {
+        "from": "billing@tempstars.net",
+        "to": "drjyounger@hotmail.com"
+    }
+
+}

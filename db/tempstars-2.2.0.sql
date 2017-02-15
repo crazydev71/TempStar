@@ -18,3 +18,7 @@ ADD COLUMN `blockedUntil` DATETIME NULL AFTER `languages`;
 ALTER TABLE `Hygienist`
 ADD COLUMN `numBooked` INT(11) NULL AFTER `blockedUntil`,
 ADD COLUMN `numCancelled` INT(11) NULL AFTER `numBooked`;
+
+ALTER TABLE `Hygienist`
+ADD COLUMN `lastCDHOCheck` DATETIME NULL AFTER `numCancelled`,
+ADD COLUMN `enabled` TINYINT(1) NULL DEFAULT 1 AFTER `lastCDHOCheck`;
