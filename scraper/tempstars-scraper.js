@@ -57,7 +57,7 @@ function getHygienistsToCheck() {
             {lastCDHOCheck: null},
             {lastCDHOCheck: {lt: lastMonth}}
         ]},
-        limit: 3
+        limit: 100
     });
 }
 

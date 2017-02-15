@@ -9,5 +9,5 @@ cd $SYS_PATH
 cd ..
 
 # Run billing service
-./tempstars-scraper.js >> /var/log/tempstars-scraper.log 2>&1
+xvfb-run --server-args="-screen 0 1024x768x24" ./tempstars-scraper.js >> /var/log/tempstars-scraper.log 2>&1
 exit 0
