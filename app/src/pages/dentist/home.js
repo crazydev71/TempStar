@@ -239,8 +239,8 @@ TempStars.Pages.Dentist.Home = (function() {
                         .map( getJobDate )
                         .value();
 
-                    var min = 38;
-                    var max = 56;
+                    var min = 61;
+                    var max = 84;
                     data.numHygienists = Math.floor(Math.random() * (max - min)) + min;
 
                     TempStars.Logging.log( 'finished parsing data for dentist home page' );
