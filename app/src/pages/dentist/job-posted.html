@@ -50,20 +50,20 @@
 
             <form id="dentist-job-completed-form">
                 <div class="row" style="margin-top:20px">
-                    <div class="col-20">&nbsp;</div>
-                    <div class="col-60">
+                    <div class="col-10">&nbsp;</div>
+                    <div class="col-80">
                         {{#if hasIncentive}}
                         <a id="dentist-job-posted-remove-incentive-button" href="#" data-id="{{id}}" class="button button-round">Remove Incentive</a>
                         <br><br>
                         {{else}}
-                        <a id="dentist-job-posted-offer-incentive-button" href="#" data-id="{{id}}" class="button button-round">Offer Incentive</a>
+                        <a id="dentist-job-posted-offer-incentive-button" href="#" data-id="{{id}}" class="button button-round" style="border:2px solid;line-height: 24px;">&gt;&gt; Add $/hr Incentive Bonus &lt;&lt;</a>
                         <br><br>
                         {{/if}}
                         <a id="dentist-job-posted-modify-button" href="#" data-id="{{id}}" class="button button-round">Modify Job</a>
                         <br><br>
                         <a id="dentist-job-posted-cancel-button" href="#" data-id="{{id}}" class="button button-round">Cancel Job</a>
                     </div>
-                    <div class="col-20">&nbsp;</div>
+                    <div class="col-10">&nbsp;</div>
                 </div>
 
             </form>
