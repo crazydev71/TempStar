@@ -135,7 +135,14 @@ TempStars.Job = (function() {
                     afterText: incentivesHTML,
                     buttons: [
                         {
-                            text: 'Continue',
+                            text: 'No Thanks',
+                            onClick: function() {
+                                confirmJob( formData );
+                            }
+                        },
+                        {
+                            text: 'Add Incentive',
+                            bold: true,
                             onClick: function( modal ) {
                                 var shortIncentive = $(modal).find('#post-job-short-incentive').prop('checked');
                                 formData.short = (shortIncentive) ? 1 : 0;
@@ -146,12 +153,6 @@ TempStars.Job = (function() {
                                 var weekendIncentive = $(modal).find('#post-job-weekend-incentive').prop('checked');
                                 formData.weekend = (weekendIncentive) ? 1 : 0;
 
-                                confirmJob( formData );
-                            }
-                        },
-                        {
-                            text: 'No Thanks',
-                            onClick: function() {
                                 confirmJob( formData );
                             }
                         }
