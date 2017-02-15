@@ -26,7 +26,7 @@ TempStars.Pages.Dentist.JobPosted = (function() {
         e.preventDefault();
         app.modal({
           title:  'Remove Incentive',
-          text: 'Are you sure?',
+          text: 'Removing your incentive bonus lowers the chance of a successful placement. Are you sure?',
           buttons: [
               { text: 'No' },
               { text: 'Yes', bold: true, onClick: removeIncentive }
