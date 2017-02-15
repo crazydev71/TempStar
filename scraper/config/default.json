@@ -21,7 +21,7 @@
     },
 
     "email": {
-        "from": "billing@tempstars.net",
+        "from": "no-reply@tempstars.ca",
         "to": "drjyounger@hotmail.com"
     }
 }

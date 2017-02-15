@@ -298,6 +298,21 @@
         "dataScale": 0,
         "nullable": "Y"
       }
+    },
+    "bonus": {
+      "type": "Number",
+      "required": false,
+      "length": null,
+      "precision": 6,
+      "scale": 2,
+      "mysql": {
+        "columnName": "bonus",
+        "dataType": "decimal",
+        "dataLength": null,
+        "dataPrecision": 6,
+        "dataScale": 2,
+        "nullable": "N"
+      }
     }
   },
   "validations": [],

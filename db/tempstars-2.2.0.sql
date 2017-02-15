@@ -22,3 +22,6 @@ ADD COLUMN `numCancelled` INT(11) NULL AFTER `numBooked`;
 ALTER TABLE `Hygienist`
 ADD COLUMN `lastCDHOCheck` DATETIME NULL AFTER `numCancelled`,
 ADD COLUMN `enabled` TINYINT(1) NULL DEFAULT 1 AFTER `lastCDHOCheck`;
+
+ALTER TABLE `Job`
+ADD COLUMN `bonus` DECIMAL(4,2) NULL AFTER `weekend`;
