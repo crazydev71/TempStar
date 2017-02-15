@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 var _        = require('lodash');
+var config   = require('config');
 var moment   = require('moment');
 var loopback = require('loopback');
 var app      = require('../api/tempstars-api');
@@ -116,9 +117,8 @@ function emailResults() {
     console.log( '- emailing results' );
     return new Promise( function( resolve, reject ) {
         Email.send({
-            //to: emailAddress,
-            to: 'mbetts@me.com',
-            from: app.get('emailFrom'),
+            to: config.email.to,
+            from: config.email.from,
             subject: 'TempStars Scraping Results',
             text: 'Results\r\n' +
                   '----------\r\n' +

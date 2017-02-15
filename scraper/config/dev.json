@@ -12,8 +12,8 @@
     },
 
     "email": {
-        "from": "billing@tempstars.net",
-        "to": "drjyounger@hotmail.com"
+        "from": "no-reply@tempstars.net",
+        "to": "mbetts@me.com,drjyounger@hotmail.com"
     }
 
 }
