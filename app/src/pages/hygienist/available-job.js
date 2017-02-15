@@ -35,7 +35,7 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
                 moment( job.startDate ).format('ddd MMM D, YYYY') + '<br>' +
                 moment.utc( job.shifts[0].postedStart ).local().format('h:mm a')  + ' - ' +
                 moment.utc( job.shifts[0].postedEnd ).local().format('h:mm a') + '<br><br>' +
-                '<b>There are penalties for<br>cancelling booked shifts.</b><br><br>' +
+                '<b>You are making a commitment.<br>There are penalties for<br>cancelling booked shifts.</b><br><br>' +
                 '<b>Are you sure?</b>',
             buttons: [
               { text: 'No' },
