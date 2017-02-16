@@ -18,10 +18,6 @@ TempStars.Pages.Hygienist.Home = (function() {
                 readOnly: true,
                 useGradient: false
             });
-            //     {
-            //     initialRating: 4,
-            //     readOnly: true
-            // });
 
             mainView.showNavbar();
             displayCalendar( page.context );

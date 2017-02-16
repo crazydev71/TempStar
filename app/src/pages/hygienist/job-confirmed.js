@@ -28,9 +28,26 @@ TempStars.Pages.Hygienist.JobConfirmed = (function() {
 
     function cancelButtonHandler( e ) {
         e.preventDefault();
+        var h = TempStars.User.getCurrentUser().hygienist;
+        var numCancelled = h.numCancelled || 0;
+        var numBooked = h.numBooked || 1;
+        var numWeeksBlocked = 0;
+        var cancelPercent;
+
+        numCancelled++;
+        if ( numCancelled == 1 ) {
+            // First offense, so always block 2 weeks
+            numWeeksBlocked = 2;
+        }
+        else {
+            cancelPercent = numCancelled / numBooked;
+            if ( cancelPercent > 0.05 ) {
+                numWeeksBlocked = numCancelled * 2;
+            }
+        }
 
         var cancelMessage = 'Cancelling this commitment will cause significant disruption to this office and its patients.<br>' +
-            '<br><b>If you cancel this job, as a penalty the system will block you from viewing available jobs for <u>2 weeks</u>. ' +
+            '<br><b>If you cancel this job, as a penalty the system will block you from viewing available jobs for <u>' + numWeeksBlocked + ' weeks</u>. ' +
             '<br><br>Are you sure you want to cancel?</b>';
 
         app.modal({
@@ -48,8 +65,11 @@ TempStars.Pages.Hygienist.JobConfirmed = (function() {
         TempStars.Api.hygienistCancelJob( TempStars.User.getCurrentUser().hygienistId, job.id )
         .then( function() {
             app.hidePreloader();
-            TempStars.Analytics.track( 'Cancelled Job' );
-            TempStars.Hygienist.Router.goBackPage();
+            TempStars.User.refresh()
+            .then( function() {
+                TempStars.Analytics.track( 'Cancelled Job' );
+                TempStars.Hygienist.Router.goBackPage();
+            });
         })
         .catch( function( err ) {
             app.hidePreloader();

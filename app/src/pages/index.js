@@ -53,10 +53,14 @@ TempStars.Pages.Index = (function() {
             TempStars.App.gotoStartingPage();
         })
         .catch( function( err ) {
+            var msg = err.message || 'Please try again.';
             app.hidePreloader();
             $$('#login-form .form-error-msg')
-                .html('<span class="ti-alert"></span> Login failed. Please try again.')
+                .html('<span class="ti-alert"></span> Login failed. ' + msg)
                 .show();
+            if ( err.message ) {
+                TempStars.User.logout();
+            }
         });
     }
 

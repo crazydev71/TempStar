@@ -43,8 +43,14 @@ function createJobNotifications( lb, a, jobId, message ) {
                 Hygienist.find( {where: {isComplete: 1}, include:['user']} )
                 .then( function( hygienists ) {
 console.log( 'found num hygienists: ' + hygienists.length );
-                    // Filter out hygienist who are more than max distance
+
+                    // Filter out hygienist who are more than max distance or are not enabled
                     hygienists = _.map( hygienists, function( hygienist ) {
+
+                        if ( ! hygienist.enabled ) {
+                            return false;
+                        }
+
                         var hygienistLocation = new loopback.GeoPoint({ lat: hygienist.lat, lng: hygienist.lon});
                         var distance = loopback.GeoPoint.distanceBetween( dentistLocation, hygienistLocation, {type: 'kilometers'});
                         if ( distance > maxDistance ) {

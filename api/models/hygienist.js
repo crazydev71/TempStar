@@ -373,10 +373,8 @@ module.exports = function( Hygienist ) {
                 return;
             }
 
-            // Add incentives
-            hourlyRate += (job.short) ? 2 : 0;
-            hourlyRate += (job.urgent) ? 2 : 0;
-            hourlyRate += (job.weekend) ? 2 : 0;
+            // Add incentive bonus
+            hourlyRate += job.bonus;
 
             return Job.count({ hygienistId: hygienistId, startDate: job.startDate });
         })
@@ -391,12 +389,14 @@ module.exports = function( Hygienist ) {
                 hygienistId: hygienistId,
                 bookedOn: moment.utc().format('YYYY-MM-DD HH:mm:ss'),
                 hourlyRate: hourlyRate,
-                numBooked: numBooked,
                 status: jobStatus.CONFIRMED
             });
         })
         .then( function( job ) {
             jj = job.toJSON();
+            return hygienist.updateAttributes( {numBooked: numBooked });
+        })
+        .then( function() {
             msg = 'Your job on ';
             msg += moment(jj.startDate).format('ddd MMM Do');
             msg += ' has been filled.';
