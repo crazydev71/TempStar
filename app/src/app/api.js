@@ -34,15 +34,15 @@ TempStars.Api = (function() {
         // Create user, adds role, and logs user in; returns auth object (like login method)
         createAccount: function createAccount( email, password, role ) {
             return TempStars.Ajax.post( 'tsusers/account',
-                { email: email, password: password, role: role } );
+                { email: email, password: password, role: role }, authToken );
         },
 
         saveHygienist: function saveHygienist( hygienist ) {
-            return TempStars.Ajax.put( 'hygienists/' + hygienist.id + '/account', hygienist );
+            return TempStars.Ajax.put( 'hygienists/' + hygienist.id + '/account', hygienist, null, authToken );
         },
 
         setupDentistAccount: function setupDentistAccount( dentistId, data ) {
-            return TempStars.Ajax.post( 'dentists/' + dentistId + '/account', data );
+            return TempStars.Ajax.post( 'dentists/' + dentistId + '/account', data, authToken );
         },
 
         addPaymentInfo: function addPaymentInfo( dentistId, data ) {
@@ -58,7 +58,7 @@ TempStars.Api = (function() {
         },
 
         resetPassword: function resetPassword( email ) {
-            return TempStars.Ajax.post( 'tsusers/reset', { email: email });
+            return TempStars.Ajax.post( 'tsusers/reset', { email: email }, authToken );
         },
 
         getDentists: function getDentists() {
@@ -66,82 +66,93 @@ TempStars.Api = (function() {
         },
 
         getBlockedHygienists: function getBlockedHygienists( dentistId ) {
-            return TempStars.Ajax.get( 'dentists/' + dentistId + '/blockedhygienists' );
+            return TempStars.Ajax.get( 'dentists/' + dentistId + '/blockedhygienists', null, authToken );
         },
 
         getFavouriteHygienists: function getFavouriteHygienists( dentistId ) {
-            return TempStars.Ajax.get( 'dentists/' + dentistId + '/favouritehygienists' );
+            return TempStars.Ajax.get( 'dentists/' + dentistId + '/favouritehygienists', null, authToken );
         },
 
         addBlockedHygienist: function addBlockedHygienist( dentistId, data ) {
-            return TempStars.Ajax.post( 'dentists/' + dentistId + '/blockedhygienists', data  );
+            return TempStars.Ajax.post( 'dentists/' + dentistId + '/blockedhygienists', data, authToken );
         },
 
         removeBlockedHygienist: function removeBlockedHygienist( dentistId, hygienistId ) {
-            return TempStars.Ajax.del( 'dentists/' + dentistId + '/blockedhygienists/' + hygienistId ).minDelay(1000);
+            return TempStars.Ajax.del( 'dentists/' + dentistId + '/blockedhygienists/' + hygienistId,
+                null, authToken ).minDelay(1000);
         },
 
         addFavouriteHygienist: function addFavouriteHygienist( dentistId, data ) {
-            return TempStars.Ajax.post( 'dentists/' + dentistId + '/favouritehygienists', data );
+            return TempStars.Ajax.post( 'dentists/' + dentistId + '/favouritehygienists', data, authToken );
         },
 
         removeFavouriteHygienist: function removeFavouriteHygienist( dentistId, hygienistId ) {
-            return TempStars.Ajax.del( 'dentists/' + dentistId + '/favouritehygienists/' + hygienistId ).minDelay(1000);
+            return TempStars.Ajax.del( 'dentists/' + dentistId + '/favouritehygienists/' + hygienistId,
+                null, authToken ).minDelay(1000);
         },
 
         getDentistJobHistory: function getDentistJobHistory( dentistId ) {
-            return TempStars.Ajax.get( 'dentists/' + dentistId + '/jobs?filter={"where":{"status":4}}' );
+            return TempStars.Ajax.get( 'dentists/' + dentistId + '/jobs?filter={"where":{"status":4}}',
+                null, authToken );
         },
 
         getHygienistJobHistory: function getHygienistJobHistory( hygienistId ) {
-            return TempStars.Ajax.get( 'hygienists/' + hygienistId + '/jobs?filter={"where":{"status":4}}' );
+            return TempStars.Ajax.get( 'hygienists/' + hygienistId + '/jobs?filter={"where":{"status":4}}',
+                null, authToken );
         },
 
         getDentistJobs: function getDentistJobs( dentistId, filter ) {
             var queryParam = (filter) ? '?filter=' + filter : '';
-            return TempStars.Ajax.get( 'dentists/' + dentistId + '/jobs' + queryParam );
+            return TempStars.Ajax.get( 'dentists/' + dentistId + '/jobs' + queryParam,
+                null, authToken );
         },
 
         getDentistJob: function getDentistJob( dentistId, jobId ) {
-            return TempStars.Ajax.get( 'dentists/' + dentistId + '/jobs/' + jobId );
+            return TempStars.Ajax.get( 'dentists/' + dentistId + '/jobs/' + jobId,
+                null, authToken );
         },
 
         getHygienistJobs: function getHygienistJobs( hygienistId, filter ) {
             var queryParam = (filter) ? '?filter=' + filter : '';
-            return TempStars.Ajax.get( 'hygienists/' + hygienistId + '/jobs' + queryParam );
+            return TempStars.Ajax.get( 'hygienists/' + hygienistId + '/jobs' + queryParam,
+                null, authToken );
         },
 
         getHygienistJob: function getHygienistJob( hygienistId, jobId ) {
-            return TempStars.Ajax.get( 'hygienists/' + hygienistId + '/jobs/' + jobId );
+            return TempStars.Ajax.get( 'hygienists/' + hygienistId + '/jobs/' + jobId,
+                null, authToken );
         },
 
         createJob: function createJob( dentistId, data ) {
-            return TempStars.Ajax.post( 'dentists/' + dentistId + '/jobs', data );
+            return TempStars.Ajax.post( 'dentists/' + dentistId + '/jobs', data, authToken );
         },
 
         updateJob: function updateJob( jobId, data ) {
-            return TempStars.Ajax.put( 'jobs/' + jobId, data ).minDelay(1000);
+            return TempStars.Ajax.put( 'jobs/' + jobId, data, authToken ).minDelay(1000);
         },
 
         modifyJob: function modifyJob( dentistId, jobId, data ) {
-            return TempStars.Ajax.put( 'dentists/' + dentistId + '/jobshifts/' + jobId, data ).minDelay(1000);
+            return TempStars.Ajax.put( 'dentists/' + dentistId + '/jobshifts/' + jobId, data, authToken ).minDelay(1000);
         },
 
         acceptPartialOffer: function acceptPartialOffer( jobId, poId ) {
-            return TempStars.Ajax.put( 'jobs/' + jobId + '/partialoffers/' + poId + '/accept' ).minDelay(1000);
+            return TempStars.Ajax.put( 'jobs/' + jobId + '/partialoffers/' + poId + '/accept',
+                null, authToken ).minDelay(1000);
         },
 
         rejectPartialOffer: function rejectPartialOffer( jobId, poId ) {
-            return TempStars.Ajax.put( 'jobs/' + jobId + '/partialoffers/' + poId + '/reject' ).minDelay(1000);
+            return TempStars.Ajax.put( 'jobs/' + jobId + '/partialoffers/' + poId + '/reject',
+                null, authToken ).minDelay(1000);
         },
 
         getInvoice: function getInvoice( jobId ) {
-            return TempStars.Ajax.get( 'jobs/' + jobId + '/invoice' );
+            return TempStars.Ajax.get( 'jobs/' + jobId + '/invoice', null, authToken );
         },
 
         getDentistInvoices: function getDentistInvoices( dentistId ) {
             return new Promise( function( resolve, reject ) {
-                TempStars.Ajax.get( 'dentists/' + dentistId + '/jobs?filter={"where":{"status":4}}' )
+                TempStars.Ajax.get( 'dentists/' + dentistId + '/jobs?filter={"where":{"status":4}}',
+                    null, authToken )
                 .then( function( data ) {
                     data = _.filter(data, function(o) {
                         return ( 'invoice' in o );
@@ -156,7 +167,8 @@ TempStars.Api = (function() {
 
         getHygienistInvoices: function getHygienistInvoices( hygienistId ) {
             return new Promise( function( resolve, reject ) {
-                TempStars.Ajax.get( 'hygienists/' + hygienistId + '/jobs?filter={"where":{"status":4}}' )
+                TempStars.Ajax.get( 'hygienists/' + hygienistId + '/jobs?filter={"where":{"status":4}}',
+                    null, authToken )
                 .then( function( data ) {
                     data = _.filter(data, function(o) {
                         return ( 'invoice' in o );
@@ -171,15 +183,15 @@ TempStars.Api = (function() {
         },
 
         updateInvoice: function updateInvoice( invoiceId, data ) {
-            return TempStars.Ajax.put( 'invoices/' + invoiceId, data );
+            return TempStars.Ajax.put( 'invoices/' + invoiceId, data, authToken );
         },
 
         sendInvoice: function sendInvoice( jobId, data ) {
-            return TempStars.Ajax.post( 'jobs/' + jobId + '/invoices/send', data ).minDelay(1000);
+            return TempStars.Ajax.post( 'jobs/' + jobId + '/invoices/send', data, authToken ).minDelay(1000);
         },
 
         resendInvoice: function resendInvoice( jobId, data ) {
-            return TempStars.Ajax.put( 'jobs/' + jobId + '/resend', data ).minDelay(1000);
+            return TempStars.Ajax.put( 'jobs/' + jobId + '/resend', data, authToken ).minDelay(1000);
         },
 
         postJob: function postJob( dentistId, data ) {
@@ -187,63 +199,73 @@ TempStars.Api = (function() {
         },
 
         cancelJob: function cancelJob( dentistId, jobId ) {
-            return TempStars.Ajax.del( 'dentists/' + dentistId + '/jobshifts/' + jobId ).minDelay(1000);
+            return TempStars.Ajax.del( 'dentists/' + dentistId + '/jobshifts/' + jobId,
+                null, authToken ).minDelay(1000);
         },
 
         hygienistCancelJob: function hygienistCancelJob( hygienistId, jobId ) {
-            return TempStars.Ajax.del( 'hygienists/' + hygienistId + '/jobshifts/' + jobId ).minDelay(1000);
+            return TempStars.Ajax.del( 'hygienists/' + hygienistId + '/jobshifts/' + jobId,
+                null, authToken ).minDelay(1000);
         },
 
         bookJob: function bookJob( hygienistId, jobId ) {
-            return TempStars.Ajax.put( 'hygienists/' + hygienistId + '/jobs/' + jobId + '/book' ).minDelay(1000);
+            return TempStars.Ajax.put( 'hygienists/' + hygienistId + '/jobs/' + jobId + '/book',
+                null, authToken ).minDelay(1000);
         },
 
         makePartialOffer: function makePartialOffer( hygienistId, jobId, data ) {
-            return TempStars.Ajax.post( 'hygienists/' + hygienistId + '/jobs/' + jobId + '/partialoffer', data ).minDelay(1000);
+            return TempStars.Ajax.post( 'hygienists/' + hygienistId + '/jobs/' + jobId + '/partialoffer',
+                data, authToken ).minDelay(1000);
         },
 
         modifyPartialOffer: function modifyPartialOffer( partialOfferId, data ) {
-            return TempStars.Ajax.put( 'partialoffers/' + partialOfferId, data ).minDelay(1000);
+            return TempStars.Ajax.put( 'partialoffers/' + partialOfferId, data, authToken ).minDelay(1000);
         },
 
         cancelPartialOffer: function cancelPartialOffer( hygienistId, jobId, partialOfferId ) {
-            return TempStars.Ajax.del( 'hygienists/' + hygienistId + '/jobs/' + jobId + '/partialoffers/' + partialOfferId ).minDelay(1000);
+            return TempStars.Ajax.del( 'hygienists/' + hygienistId + '/jobs/' + jobId + '/partialoffers/' + partialOfferId,
+                null, authToken ).minDelay(1000);
         },
 
         getHygienistPartialOffers: function getHygienistPartialOffers( hygienistId ) {
-            return TempStars.Ajax.get( 'partialoffers?filter={"include": "job","where":{"hygienistId":' + hygienistId + ',"status":0}}' ).minDelay(1000);
+            return TempStars.Ajax.get( 'partialoffers?filter={"include": "job","where":{"hygienistId":' + hygienistId + ',"status":0}}',
+                null, authToken ).minDelay(1000);
         },
 
         getBlockedDentists: function getBlockedDentists( hygienistId ) {
-            return TempStars.Ajax.get( 'hygienists/' + hygienistId + '/blockeddentists' );
+            return TempStars.Ajax.get( 'hygienists/' + hygienistId + '/blockeddentists',
+                null, authToken );
         },
 
         getFavouriteDentists: function getFavouriteDentists( hygienistId ) {
-            return TempStars.Ajax.get( 'hygienists/' + hygienistId + '/favouritedentists' );
+            return TempStars.Ajax.get( 'hygienists/' + hygienistId + '/favouritedentists',
+                null, authToken );
         },
 
         removeBlockedDentist: function removeBlockedDentist( hygienistId, blockedDentistId ) {
-            return TempStars.Ajax.del( 'hygienists/' + hygienistId + '/blockeddentists/' + blockedDentistId ).minDelay(1000);
+            return TempStars.Ajax.del( 'hygienists/' + hygienistId + '/blockeddentists/' + blockedDentistId,
+                null, authToken ).minDelay(1000);
         },
 
         removeFavouriteDentist: function removeFavouriteDentist( hygienistId, favDentistId ) {
-            return TempStars.Ajax.del( 'hygienists/' + hygienistId + '/favouritedentists/' + favDentistId ).minDelay(1000);
+            return TempStars.Ajax.del( 'hygienists/' + hygienistId + '/favouritedentists/' + favDentistId,
+                null, authToken ).minDelay(1000);
         },
 
         addBlockedDentist: function addBlockedDentist( hygienistId, data ) {
-            return TempStars.Ajax.post( 'hygienists/' + hygienistId + '/blockeddentists', data  );
+            return TempStars.Ajax.post( 'hygienists/' + hygienistId + '/blockeddentists', data, authToken );
         },
 
         addFavouriteDentist: function addFavouriteDentist( hygienistId, data ) {
-            return TempStars.Ajax.post( 'hygienists/' + hygienistId + '/favouritedentists', data );
+            return TempStars.Ajax.post( 'hygienists/' + hygienistId + '/favouritedentists', data, authToken );
         },
 
         getAvailableJobs: function getAvailableJobs( hygienistId ) {
-            return TempStars.Ajax.get( 'hygienists/' + hygienistId + '/jobs/available' );
+            return TempStars.Ajax.get( 'hygienists/' + hygienistId + '/jobs/available', null, authToken );
         },
 
         getJob: function getJob( jobId ) {
-            return TempStars.Ajax.get( 'jobs/' + jobId );
+            return TempStars.Ajax.get( 'jobs/' + jobId, null, authToken );
         },
 
         updateRegistration: function updateRegistration( userId, platform, registrationId ) {
@@ -251,24 +273,27 @@ TempStars.Api = (function() {
         },
 
         saveHygienistRating: function saveHygienistRating( dentistId, jobId, data ) {
-            return TempStars.Ajax.put( 'dentists/' + dentistId + '/jobs/' + jobId, data ).minDelay(1000);
+            return TempStars.Ajax.put( 'dentists/' + dentistId + '/jobs/' + jobId,
+                data, authToken ).minDelay(1000);
         },
 
         getMaxAvailableJobId: function getMaxAvailableJobId( hygienistId ) {
-            return TempStars.Ajax.get( 'hygienists/' + hygienistId + '/maji' );
+            return TempStars.Ajax.get( 'hygienists/' + hygienistId + '/maji', null, authToken );
         },
 
         saveDentistRating: function saveDentistRating( hygienistId, jobId, rating ) {
             var data = { rating: rating };
-            return TempStars.Ajax.put( 'hygienists/' + hygienistId + '/jobs/' + jobId, data ).minDelay(1000);
+            return TempStars.Ajax.put( 'hygienists/' + hygienistId + '/jobs/' + jobId,
+                data, authToken ).minDelay(1000);
         },
 
         sendResumes: function sendResumes( dentistId, data ) {
-            return TempStars.Ajax.post( 'dentists/' + dentistId + '/resumes', data ).minDelay(1000);
+            return TempStars.Ajax.post( 'dentists/' + dentistId + '/resumes',
+                data, authToken ).minDelay(1000);
         },
 
         getHygienistRate: function getHygienistRate( hygienistId ) {
-            return TempStars.Ajax.get( 'hygienists/' + hygienistId + '/rate' );
+            return TempStars.Ajax.get( 'hygienists/' + hygienistId + '/rate', null, authToken );
         },
 
         getMinVersion: function getMinVersion() {
