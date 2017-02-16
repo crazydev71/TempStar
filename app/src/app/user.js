@@ -60,6 +60,13 @@ TempStars.User = (function() {
                     TempStars.Logging.log('autologged in as: ' + userAccount.email );
                     resolve();
                 })
+                .then( TempStars.User.refresh )
+                .then( function() {
+                    if ( TempStars.User.isHygienist() && (! userAccount.hygienist.enabled)) {
+                        reject( new Error( 'Account is not enabled.'));
+                        return;
+                    }
+                })
                 .catch( function( err ) {
                     TempStars.Logging.log('autologin failed for: ' + userAccount.email );
                     reject();
@@ -105,6 +112,10 @@ TempStars.User = (function() {
                     else {
                         firstName = userAccount.hygienist.firstName;
                         lastName = userAccount.hygienist.lastName;
+                        if ( ! userAccount.hygienist.enabled ) {
+                            reject( new Error( 'Account is not enabled.'));
+                            return;
+                        }
                     }
                     TempStars.Analytics.setProfileProperties({
                         $email: userAccount.email,

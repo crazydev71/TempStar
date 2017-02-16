@@ -67,6 +67,13 @@ TempStars.Ajax = (function() {
 
             // Add error and success handlers
             ajaxSettings.error = function( xhr, status ) {
+                if ( xhr.responseJSON.error && xhr.responseJSON.error.statusCode == 401 ) {
+                    TempStars.User.logout()
+                    .finally( function() {
+                        app.alert( 'Authorization Failure.<br>Please login again.');
+                        mainView.router.loadPage( 'index.html' );
+                    });
+                }
                 reject( xhr.responseJSON );
             };
 
