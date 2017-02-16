@@ -39,7 +39,7 @@ TempStars.Pages.Dentist.JobPosted = (function() {
         job.postedStart = moment.utc( job.shifts[0].postedStart ).local().format('h:mm a');
         job.postedEnd = moment.utc( job.shifts[0].postedEnd ).local().format('h:mm a');
 
-        TempStars.Job.checkIncentives( job, confirmOffer );
+        TempStars.Job.offerIncentives( addManualIncentive );
     }
 
     function confirmOffer( data ) {
@@ -56,6 +56,20 @@ TempStars.Pages.Dentist.JobPosted = (function() {
         else {
             app.alert( 'Sorry no incentives apply to this job.' );
         }
+    }
+
+    function addManualIncentive( bonus ) {
+        app.showPreloader('Adding Incentive');
+        TempStars.Api.updateJob( job.id, {bonus: bonus})
+        .then( function() {
+            app.hidePreloader();
+            TempStars.Analytics.track( 'Added Incentive' );
+            TempStars.Dentist.Router.reloadPage('job-posted', {id: job.id});
+        })
+        .catch( function( err ) {
+            app.hidePreloader();
+            app.alert( 'Error adding incentive. Please try again.' );
+        });
     }
 
     function addIncentive( data ) {
@@ -106,7 +120,7 @@ TempStars.Pages.Dentist.JobPosted = (function() {
 
     function removeIncentive() {
         app.showPreloader('Removing Incentive');
-        TempStars.Api.updateJob( job.id, {short:0, urgent:0, weekend:0})
+        TempStars.Api.updateJob( job.id, {bonus:0, short:0, urgent:0, weekend:0})
         .then( function() {
             app.hidePreloader();
             TempStars.Analytics.track( 'Removed Incentive' );
@@ -138,9 +152,8 @@ TempStars.Pages.Dentist.JobPosted = (function() {
                     TempStars.Dentist.getJob( params.id )
                     .then( function( j ) {
                         job = j;
-                        if ( job.short || job.urgent || job.weekend ) {
-                            job.hasIncentive = true;
-                            job.incentive = TempStars.Job.getHourlyRateBoost( job );
+                        if ( job.bonus ) {
+                            job.hasBonus = true;
                         }
                         resolve( j );
                     })
@@ -152,9 +165,8 @@ TempStars.Pages.Dentist.JobPosted = (function() {
                     TempStars.Dentist.getJobsByDate( params.date )
                     .then( function( jobs ) {
                         job = jobs[0];
-                        if ( job.short || job.urgent || job.weekend ) {
-                            job.hasIncentive = true;
-                            job.incentive = TempStars.Job.getHourlyRateBoost( job );
+                        if ( job.bonus ) {
+                            job.hasBonus = true;
                         }
                         resolve( job );
                     })

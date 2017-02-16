@@ -56,8 +56,8 @@ TempStars.Pages.Dentist.JobPartial = (function() {
     function offerIncentiveButtonHandler( e ) {
         e.preventDefault();
         job.postedStart = moment.utc( job.shifts[0].postedStart ).local().format('h:mm a');
-        job.postedEnd = moment.utc( job.shifts[0].postedEnd ).local().format('h:mm a');        
-        TempStars.Job.checkIncentives( job, confirmOffer );
+        job.postedEnd = moment.utc( job.shifts[0].postedEnd ).local().format('h:mm a');
+        TempStars.Job.offerIncentives( addManualIncentive );
     }
 
     function confirmOffer( data ) {
@@ -71,6 +71,20 @@ TempStars.Pages.Dentist.JobPartial = (function() {
                 addIncentive( data );
             });
         }
+    }
+
+    function addManualIncentive( bonus ) {
+        app.showPreloader('Adding Incentive');
+        TempStars.Api.updateJob( job.id, {bonus: bonus})
+        .then( function() {
+            app.hidePreloader();
+            TempStars.Analytics.track( 'Added Incentive' );
+            TempStars.Dentist.Router.reloadPage('job-partial', {id: job.id});
+        })
+        .catch( function( err ) {
+            app.hidePreloader();
+            app.alert( 'Error adding incentive. Please try again.' );
+        });
     }
 
     function addIncentive( data ) {
@@ -89,7 +103,7 @@ TempStars.Pages.Dentist.JobPartial = (function() {
 
     function removeIncentive() {
         app.showPreloader('Removing Incentive');
-        TempStars.Api.updateJob( job.id, {short:0, urgent:0, weekend:0})
+        TempStars.Api.updateJob( job.id, {bonus:0, short:0, urgent:0, weekend:0})
         .then( function() {
             app.hidePreloader();
             TempStars.Analytics.track( 'Removed Incentive' );
@@ -215,9 +229,8 @@ TempStars.Pages.Dentist.JobPartial = (function() {
                 if ( params.id ) {
                     TempStars.Dentist.getJob( params.id )
                     .then( function( job ) {
-                        if ( job.short || job.urgent || job.weekend ) {
-                            job.hasIncentive = true;
-                            job.incentive = TempStars.Job.getHourlyRateBoost( job );
+                        if ( job.bonus ) {
+                            job.hasBonus = true;
                         }
                         resolve( job );
                     })
@@ -231,9 +244,8 @@ TempStars.Pages.Dentist.JobPartial = (function() {
                         job = jobs[0];
                         // Filter out rejected partial jobs
                         job.partialOffers = _(job.partialOffers).filter(['status', 0]).value();
-                        if ( job.short || job.urgent || job.weekend ) {
-                            job.hasIncentive = true;
-                            job.incentive = TempStars.Job.getHourlyRateBoost( job );
+                        if ( job.bonus ) {
+                            job.hasBonus = true;
                         }
                         resolve( job );
                     })

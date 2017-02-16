@@ -144,14 +144,19 @@ TempStars.Job = (function() {
                             text: 'Add Incentive',
                             bold: true,
                             onClick: function( modal ) {
+                                formData.bonus = 0;
+
                                 var shortIncentive = $(modal).find('#post-job-short-incentive').prop('checked');
                                 formData.short = (shortIncentive) ? 1 : 0;
+                                formData.bonus += (shortIncentive) ? 2 : 0;
 
                                 var urgentIncentive = $(modal).find('#post-job-urgent-incentive').prop('checked');
                                 formData.urgent = (urgentIncentive) ? 1 : 0;
+                                formData.bonus += (urgentIncentive) ? 2 : 0;
 
                                 var weekendIncentive = $(modal).find('#post-job-weekend-incentive').prop('checked');
                                 formData.weekend = (weekendIncentive) ? 1 : 0;
+                                formData.bonus += (weekendIncentive) ? 2 : 0;
 
                                 confirmJob( formData );
                             }
@@ -163,6 +168,69 @@ TempStars.Job = (function() {
             else {
                 confirmJob( formData );
             }
+        },
+
+        offerIncentives: function offerIncentives( callback ) {
+            var incentivesHTML =
+                '<div class="list-block" style="margin:10px;"><ul>' +
+                '<li>' +
+                    '<label class="label-radio item-content">' +
+                    '<input type="radio" name="manual-incentive" value="2">' +
+                    '<div class="item-media">' +
+                        '<i class="icon icon-form-checkbox"></i>' +
+                    '</div>' +
+                    '<div class="item-inner">' +
+                    '<div class="item-title" style="text-align:left;font-size:14px;">+$2/hr' +
+                    '</div>' +
+                    '</label>' +
+                '</li>' +
+                '<li>' +
+                    '<label class="label-radio item-content">' +
+                    '<input type="radio" name="manual-incentive" value="4">' +
+                    '<div class="item-media">' +
+                        '<i class="icon icon-form-checkbox"></i>' +
+                    '</div>' +
+                    '<div class="item-inner">' +
+                    '<div class="item-title" style="text-align:left;font-size:14px;">+$4/hr (recommended)' +
+                    '</div>' +
+                    '</label>' +
+                '</li>' +
+                '<li>' +
+                    '<label class="label-radio item-content">' +
+                    '<input type="radio" name="manual-incentive" value="6">' +
+                    '<div class="item-media">' +
+                        '<i class="icon icon-form-checkbox"></i>' +
+                    '</div>' +
+                    '<div class="item-inner">' +
+                    '<div class="item-title" style="text-align:left;font-size:14px;">+$6/hr' +
+                    '</div>' +
+                    '</label>' +
+                '</li>' +
+                '</ul></div>';
+
+            app.modal({
+                title: 'Choose Incentive Amount',
+                text: incentivesHTML,
+                buttons: [
+                    {
+                        text: 'No Thanks',
+                        onClick: function() {
+                            //confirmJob( formData );
+                        }
+                    },
+                    {
+                        text: 'Add Incentive',
+                        bold: true,
+                        onClick: function( modal ) {
+                            var incentiveAmt = $(modal).find('input[type=radio]:checked').val();
+                            if ( incentiveAmt > 0 ) {
+                                callback( incentiveAmt );
+                            }
+                        }
+                    }
+                ]
+
+            });
         }
 
     };

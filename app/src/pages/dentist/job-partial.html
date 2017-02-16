@@ -35,10 +35,10 @@
                 </tr>
                 {{/each}}
 
-                {{#if hasIncentive}}
+                {{#if hasBonus}}
                 <tr>
                     <td colspan="2">
-                        +${{incentive}}/hr incentive bonus
+                        +${{bonus}}/hr incentive bonus
                     </td>
                 </tr>
                 {{/if}}
@@ -48,7 +48,7 @@
                     <td><a href="#" id="dentist-job-partial-cancel-button" data-id="{{id}}" class="button button-round button-small">Cancel Job</a></td>
                 </tr>
                 <tr>
-                    {{#if hasIncentive}}
+                    {{#if hasBonus}}
                     <td><a href="#" id="dentist-job-partial-remove-incentive-button" data-id="{{id}}" class="button button-round button-small">Remove Incentive</a></td>
                     {{else}}
                     <td><a href="#" id="dentist-job-partial-offer-incentive-button" data-id="{{id}}" class="button button-round button-small">Offer Incentive</a></td>

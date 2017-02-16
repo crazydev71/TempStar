@@ -151,9 +151,9 @@ TempStars.Pages.Dentist.PostJob = (function() {
             formData.postedStart + ' - ' +
             formData.postedEnd + '<br>';
 
-        var boost = TempStars.Job.getHourlyRateBoost( formData );
-        if ( boost > 0 ) {
-            text += '<br>+$' + boost + '/hr incentive bonus<br>';
+        //var boost = TempStars.Job.getHourlyRateBoost( formData );
+        if ( formData.bonus > 0 ) {
+            text += '<br>+$' + formData.bonus + '/hr incentive bonus<br>';
         }
 
         app.confirm( text, 'Post Job?', function() {
@@ -196,7 +196,8 @@ TempStars.Pages.Dentist.PostJob = (function() {
                 status: TempStars.Job.status.POSTED,
                 short: formData.short,
                 urgent: formData.urgent,
-                weekend: formData.weekend
+                weekend: formData.weekend,
+                bonus: formData.bonus
             },
             shifts: [
                 {

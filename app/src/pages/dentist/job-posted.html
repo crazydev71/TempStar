@@ -34,10 +34,10 @@
                 </tr>
                 {{/each}}
 
-                <tr colspan="2">
-                    <td>
-                        {{#if hasIncentive}}
-                        +${{incentive}}/hr incentive bonus
+                <tr>
+                    <td colspan="2">
+                        {{#if hasBonus}}
+                        +${{bonus}}/hr incentive bonus
                         {{else}}
                         &nbsp;
                         {{/if}}
@@ -52,7 +52,7 @@
                 <div class="row" style="margin-top:20px">
                     <div class="col-10">&nbsp;</div>
                     <div class="col-80">
-                        {{#if hasIncentive}}
+                        {{#if hasBonus}}
                         <a id="dentist-job-posted-remove-incentive-button" href="#" data-id="{{id}}" class="button button-round">Remove Incentive</a>
                         <br><br>
                         {{else}}
