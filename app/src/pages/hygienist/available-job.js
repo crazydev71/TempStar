@@ -91,7 +91,6 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
                             workHistory =  {};
                         }
                         else {
-                            // workHistory = dentistJobs;
                             workHistory = _.remove( dentistJobs, function(o) {
                                 return o.hygienistPrivateNotes != null;
                             });
@@ -124,7 +123,6 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
                             workHistory =  {};
                         }
                         else {
-                            // workHistory = dentistJobs;
                             workHistory = _.remove( dentistJobs, function(o) {
                                 return o.hygienistPrivateNotes != null;
                             });
