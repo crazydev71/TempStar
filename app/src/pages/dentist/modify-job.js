@@ -119,7 +119,7 @@ TempStars.Pages.Dentist.ModifyJob = (function() {
         }
 
         var confirmMessage =
-            moment.utc( job.startDate ).local().format('ddd, MMM D, YYYY') + '<br>' +
+            moment( job.startDate ).local().format('ddd, MMM D, YYYY') + '<br>' +
             formData.postedStart + ' - ' +
             formData.postedEnd + '<br>';
 
