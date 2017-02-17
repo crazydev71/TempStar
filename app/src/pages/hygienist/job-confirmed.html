@@ -20,10 +20,16 @@
 
             <div class="login-screen-title" style="margin-bottom:0px;">{{date_format_day startDate}}</div>
             {{#each shifts}}
-            <div class="center-box" style="font-size:125%;margin-bottom:10px;">
+            <div class="center-box" style="font-size:125%;margin-bottom:0px;">
                 {{time_format postedStart}} - {{time_format postedEnd}}
             </div>
             {{/each}}
+            <div class="center-box" style="margin-top:6px;font-size:14px;"><b>${{hygienistRate}}/hr</b>
+                {{#if bonus}}
+                &nbsp;
+                <span style="color:#6cc644;font-weight:bold;font-size:14px;">+${{bonus}}/hr</span>
+                {{/if}}
+            </div>
             <hr>
             <div class="job-box">
             <div class="center-box" style="font-size:125%;font-weight:bold;padding:8px;">

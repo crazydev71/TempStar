@@ -85,9 +85,17 @@ TempStars.Pages.Hygienist.JobConfirmed = (function() {
         init: init,
         getData: function( params ) {
             return new Promise( function( resolve, reject ) {
+                var hygienistId = TempStars.User.getCurrentUser().hygienistId;
+                var rate;
+
                 if ( params.id ) {
-                    TempStars.Hygienist.getJob( params.id )
+                    TempStars.Api.getHygienistRate( hygienistId )
+                    .then( function( r ) {
+                        rate = r;
+                        return TempStars.Hygienist.getJob( params.id );
+                    })
                     .then( function( job ) {
+                        job.hygienistRate = rate.result.rate;
                         resolve( job );
                     })
                     .catch( function( err ) {
@@ -95,9 +103,14 @@ TempStars.Pages.Hygienist.JobConfirmed = (function() {
                     });
                 }
                 else {
-                    TempStars.Hygienist.getJobsByDate( params.date )
+                    TempStars.Api.getHygienistRate( hygienistId )
+                    .then( function( r ) {
+                        rate = r;
+                        return TempStars.Hygienist.getJobsByDate( params.date );
+                    })
                     .then( function( jobs ) {
                         job = jobs[0];
+                        job.hygienistRate = rate.result.rate;                        
                         resolve( job );
                     })
                     .catch( function( err ) {
