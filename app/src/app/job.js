@@ -75,7 +75,7 @@ TempStars.Job = (function() {
 
             var shortIncentiveHTML =  '<li>' +
                                         '<label class="label-checkbox item-content">' +
-                                        '<input type="checkbox" id="post-job-short-incentive" value="1">' +
+                                        '<input type="checkbox" id="post-job-short-incentive" value="1" checked="checked">' +
                                         '<div class="item-media">' +
                                             '<i class="icon icon-form-checkbox"></i>' +
                                         '</div>' +
@@ -88,7 +88,7 @@ TempStars.Job = (function() {
 
             var weekendIncentiveHTML = '<li>' +
                                         '<label class="label-checkbox item-content">' +
-                                        '<input type="checkbox" id="post-job-weekend-incentive" value="1">' +
+                                        '<input type="checkbox" id="post-job-weekend-incentive" value="1" checked="checked">' +
                                         '<div class="item-media">' +
                                             '<i class="icon icon-form-checkbox"></i>' +
                                         '</div>' +
@@ -102,7 +102,7 @@ TempStars.Job = (function() {
 
             var urgentIncentiveHTML = '<li>' +
                                         '<label class="label-checkbox item-content">' +
-                                        '<input type="checkbox" id="post-job-urgent-incentive" value="1">' +
+                                        '<input type="checkbox" id="post-job-urgent-incentive" value="1" checked="checked">' +
                                         '<div class="item-media">' +
                                             '<i class="icon icon-form-checkbox"></i>' +
                                         '</div>' +
@@ -160,7 +160,7 @@ TempStars.Job = (function() {
                             onClick: function() {
                                 confirmJob( formData );
                             }
-                        }                        
+                        }
                     ]
 
                 });
