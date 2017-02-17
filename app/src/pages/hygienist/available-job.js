@@ -38,8 +38,8 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
                 '<b>You are making a commitment.<br>There are penalties for<br>cancelling booked shifts.</b><br><br>' +
                 '<b>Are you sure?</b>',
             buttons: [
-              { text: 'No' },
-              { text: 'Yes', bold: true, onClick: bookJob }
+              { text: 'Book This Shift', bold: true, onClick: bookJob },
+              { text: 'Cancel' }
             ]
         });
     }
