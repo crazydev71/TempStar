@@ -524,12 +524,23 @@ module.exports = function( Hygienist ) {
         var Job = app.models.Job;
         var PartialOffer = app.models.PartialOffer;
         var Email = app.models.Email;
+        var Region = app.models.Region;
 
         var job;
         var jj;
         var msg;
+        var hygienist;
+        var hourlyRate;
 
-        Job.findById( jobId )
+        Hygienist.findById( hygienistId )
+        .then( function( h ) {
+            hygienist = h;
+            return Region.findById( h.regionId );
+        })
+        .then( function( r ) {
+            hourlyRate = getAdjustedRate( r.rate, hygienist.starScore );
+            return Job.findById( jobId );
+        })
         .then( function( j ) {
             job = j;
 
@@ -562,6 +573,7 @@ module.exports = function( Hygienist ) {
                 jobId: job.id,
                 hygienistId: hygienistId,
                 status: 0,
+                hourlyRate: hourlyRate,
                 offeredStartTime: data.offeredStartTime,
                 offeredEndTime: data.offeredEndTime,
                 createdOn: data.createdOn
