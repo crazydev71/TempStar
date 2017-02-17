@@ -23,6 +23,10 @@
             <div style="margin-top:10px;margin-bottom:20px;">
                 <div id="hygienist-rating"></div>
                 <div style="margin-top:6px;font-size:14px;"><b>${{hygienistRate}}/hr</b>
+                    {{#if bonus}}
+                    <span style="color:#6cc644;font-weight:bold;font-size:14px;">+${{bonus}}/hr</span>
+                    {{/if}}
+
                     {{#if hygienist.graduationYear}}
                     &nbsp;&nbsp;
                     Graduated: {{hygienist.graduationYear}}
