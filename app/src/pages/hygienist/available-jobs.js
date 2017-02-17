@@ -115,7 +115,7 @@ TempStars.Pages.Hygienist.AvailableJobs = (function() {
     function jobPageHandler( e ) {
         var id = parseInt( $$(this).attr('data-id') );
         var jobData = _.find( data.jobs, { 'id': id });
-        TempStars.Hygienist.Router.goForwardPage('available-job', {}, {job: jobData, workHistory: {}} );
+        TempStars.Hygienist.Router.goForwardPage('available-job', {}, {job: jobData, workHistory: {}, rate: data.rate} );
     }
 
     return {
