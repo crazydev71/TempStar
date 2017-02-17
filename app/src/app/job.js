@@ -135,12 +135,6 @@ TempStars.Job = (function() {
                     afterText: incentivesHTML,
                     buttons: [
                         {
-                            text: 'No Thanks',
-                            onClick: function() {
-                                confirmJob( formData );
-                            }
-                        },
-                        {
                             text: 'Add Incentive',
                             bold: true,
                             onClick: function( modal ) {
@@ -160,7 +154,13 @@ TempStars.Job = (function() {
 
                                 confirmJob( formData );
                             }
-                        }
+                        },
+                        {
+                            text: 'No Thanks',
+                            onClick: function() {
+                                confirmJob( formData );
+                            }
+                        }                        
                     ]
 
                 });
