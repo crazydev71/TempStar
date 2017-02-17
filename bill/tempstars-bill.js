@@ -87,7 +87,6 @@ function getDentistsToBill( today ) {
     return new Promise( function( resolve, reject ) {
         var sql = 'select * from Job j ' +
                   'inner join Dentist d on d.id = j.dentistId ' +
-                  'inner join Invoice i on i.jobId = j.id ' +
                   'where j.startDate < ? ' +
                   'and j.status = 4 ' +
                   'and j.dentistBilled is null';
