@@ -51,7 +51,7 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
 
     function bookJob() {
         app.showPreloader('Booking Job');
-        TempStars.Api.bookJob( TempStars.User.getCurrentUser().hygienistId, job.id )
+        TempStars.Api.bookJob( TempStars.User.getCurrentUser().hygienistId, job.id, job.modifiedOn )
         .then( function() {
             app.hidePreloader();
             app.alert( 'You\'re confirmed!', function() {
@@ -62,8 +62,10 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
         .catch( function( err ) {
             app.hidePreloader();
             app.alert( 'Error booking job: ' + err.error.message, function() {
-                if ( err.error.message == 'Job is no longer available.' ) {
-                    TempStars.Hygienist.Router.goBackPage('available-jobs');
+                if ( err.error.message == 'Job is no longer available.' ||
+                     err.error.message == 'Job was changed since you viewed it.' ) {
+                    app.closeModal();
+                    setTimeout( TempStars.Hygienist.Router.goBackPage('available-jobs'), 0 );
                 }
             });
         });

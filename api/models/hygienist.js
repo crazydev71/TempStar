@@ -330,12 +330,13 @@ module.exports = function( Hygienist ) {
     Hygienist.remoteMethod( 'bookJob', {
         accepts: [
             {arg: 'hygienistId', type: 'number', required: true},
-            {arg: 'jobId', type: 'number', required: true}],
+            {arg: 'jobId', type: 'number', required: true},
+            {arg: 'data', type: 'object', http: { source: 'body' } } ],
         returns: { arg: 'result', type: 'object' },
         http: { verb: 'put', path: '/:hygienistId/jobs/:jobId/book' }
     });
 
-    Hygienist.bookJob = function( hygienistId, jobId, callback ) {
+    Hygienist.bookJob = function( hygienistId, jobId, data, callback ) {
 
         var Job = app.models.Job;
         var Hygienist = app.models.Hygienist;
@@ -367,10 +368,18 @@ module.exports = function( Hygienist ) {
         })
         .then( function( j ) {
             job = j;
+            jj = job.toJSON();
 
             if ( job == null || job.status == jobStatus.CONFIRMED || job.status == jobStatus.COMPLETED ) {
                 throw new Error( 'Job is no longer available.');
                 return;
+            }
+
+            if ( data && data.lastModifiedOn ) {
+                if ( job.modifiedOn != data.lastModifiedOn ) {
+                    throw new Error( 'Job was changed since you viewed it.');
+                    return;
+                }
             }
 
             // Add incentive bonus

@@ -208,9 +208,9 @@ TempStars.Api = (function() {
                 null, authToken ).minDelay(1000);
         },
 
-        bookJob: function bookJob( hygienistId, jobId ) {
+        bookJob: function bookJob( hygienistId, jobId, lastModifiedOn ) {
             return TempStars.Ajax.put( 'hygienists/' + hygienistId + '/jobs/' + jobId + '/book',
-                null, authToken ).minDelay(1000);
+           {lastModifiedOn: lastModifiedOn}, authToken ).minDelay(1000);
         },
 
         makePartialOffer: function makePartialOffer( hygienistId, jobId, data ) {
