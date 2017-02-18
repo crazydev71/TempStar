@@ -82,7 +82,7 @@ TempStars.Pages.Hygienist.JobConfirmed = (function() {
                         return TempStars.Hygienist.getJob( params.id );
                     })
                     .then( function( job ) {
-                        job.hygienistRate = rate.result.rate;
+                        job.hygienistRate = job.hourlyRate - job.bonus;
                         job.numDaysBlocked = rate.result.numDaysBlocked;
                         resolve( job );
                     })
@@ -98,7 +98,7 @@ TempStars.Pages.Hygienist.JobConfirmed = (function() {
                     })
                     .then( function( jobs ) {
                         job = jobs[0];
-                        job.hygienistRate = rate.result.rate;
+                        job.hygienistRate = job.hourlyRate - job.bonus;
                         job.numDaysBlocked = rate.result.numDaysBlocked;
                         resolve( job );
                     })

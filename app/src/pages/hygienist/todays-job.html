@@ -24,11 +24,12 @@
                     {{time_format postedStart}} - {{time_format postedEnd}}
                 </div>
                 {{/each}}
-                <div class="center-box" style="font-size:16px;"><b>${{job.hourlyRate}}/hr</b>
+                <div class="center-box" style="margin-top:6px;font-size:14px;"><b>${{../job.hygienistRate}}/hr</b>
                     {{#if ../job.bonus}}
-                     <span style="font-size:12px;padding-top:4px;">&nbsp;(includes ${{../job.bonus}}/hr bonus)</span>
+                    &nbsp;
+                    <span style="color:#6cc644;font-weight:bold;font-size:14px;">+${{../job.bonus}}/hr</span>
                     {{/if}}
-                </div>
+                </div>                
                 <hr>
                 <div class="job-box">
                 <div class="center-box" style="font-size:125%;font-weight:bold;padding:8px;">

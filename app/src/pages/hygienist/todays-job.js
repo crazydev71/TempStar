@@ -107,6 +107,7 @@ TempStars.Pages.Hygienist.TodaysJob = (function() {
                     job = jobs[0];
                     job.isComplete = (job.status == TempStars.Job.status.COMPLETED ) ? true : false;
                     job.hasInvoice = (job.invoice) ? true : false;
+                    job.hygienistRate = job.hourlyRate - job.bonus;
                     return TempStars.Hygienist.getJobsByDentist( job.dentistId );
                 })
                 .then( function( dentistJobs ) {
