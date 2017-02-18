@@ -473,6 +473,24 @@ module.exports = function( Hygienist ) {
         return hourlyRate;
     }
 
+    function calculateCancellationPenalty( hygienist ) {
+        var cancelPercent;
+        var numCancelled;
+        var numDaysBlocked = 0;
+
+        if ( hygienist.numBooked == 0 ) {
+            return 0;
+        }
+
+        numCancelled = hygienist.numCancelled + 1;
+        cancelPercent = numCancelled / hygienist.numBooked;
+        if ( cancelPercent > 0.05 ) {
+            numDaysBlocked = numCancelled * 14;
+        }
+
+        return numDaysBlocked;
+    }
+
     function notifyPartialOffers( job ) {
         // Get all the partial offers for this job
         // Notify all the hygienists except the booked one
@@ -719,28 +737,9 @@ module.exports = function( Hygienist ) {
             return Hygienist.findById( hygienistId );
         })
         .then( function( h ) {
-            var cancelPercent;
-            var numCancelled;
-            var numBooked;
-            var numWeeksBlocked = 0;
-
-            numCancelled = h.numCancelled || 0;
-            numBooked = h.numBooked || 1;
-
-            numCancelled++;
-            if ( numCancelled == 1 ) {
-                // First offense, so always block 2 weeks
-                numWeeksBlocked = 2;
-            }
-            else {
-                cancelPercent = numCancelled / numBooked;
-                if ( cancelPercent > 0.05 ) {
-                    numWeeksBlocked = numCancelled * 2;
-                }
-            }
-
-            if ( numWeeksBlocked > 0 ) {
-                var blockedUntil = moment().add( numWeeksBlocked, 'weeks').utc().format('YYYY-MM-DD HH:mm:ss');
+            var numDaysBlocked = calculateCancellationPenalty( h );
+            if ( numDaysBlocked > 0 ) {
+                var blockedUntil = moment().add( numDaysBlocked, 'days').utc().format('YYYY-MM-DD HH:mm:ss');
                 return h.updateAttributes({blockedUntil: blockedUntil, numCancelled: numCancelled });
             }
             else {
@@ -913,7 +912,8 @@ module.exports = function( Hygienist ) {
         })
         .then( function( r ) {
             var hourlyRate = getAdjustedRate( r.rate, hygienist.starScore );
-            var resp = { rate: hourlyRate };
+            var numDaysBlocked = calculateCancellationPenalty( hygienist );
+            var resp = { rate: hourlyRate, numDaysBlocked: numDaysBlocked };
             callback( null, resp );
         })
         .catch( function( err ) {

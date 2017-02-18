@@ -28,27 +28,14 @@ TempStars.Pages.Hygienist.JobConfirmed = (function() {
 
     function cancelButtonHandler( e ) {
         e.preventDefault();
-        var h = TempStars.User.getCurrentUser().hygienist;
-        var numCancelled = h.numCancelled || 0;
-        var numBooked = h.numBooked || 1;
-        var numWeeksBlocked = 0;
-        var cancelPercent;
 
-        numCancelled++;
-        if ( numCancelled == 1 ) {
-            // First offense, so always block 2 weeks
-            numWeeksBlocked = 2;
-        }
-        else {
-            cancelPercent = numCancelled / numBooked;
-            if ( cancelPercent > 0.05 ) {
-                numWeeksBlocked = numCancelled * 2;
-            }
+        var cancelMessage = 'Cancelling this commitment will cause significant disruption to this office and its patients.<br>';
+
+        if ( job.numDaysBlocked > 0 ) {
+            cancelMessage += '<br><b>If you cancel this job, as a penalty the system will block you from viewing available jobs for <u>' + job.numDaysBlocked + ' days</u>.</b><br>';
         }
 
-        var cancelMessage = 'Cancelling this commitment will cause significant disruption to this office and its patients.<br>' +
-            '<br><b>If you cancel this job, as a penalty the system will block you from viewing available jobs for <u>' + numWeeksBlocked + ' weeks</u>. ' +
-            '<br><br>Are you sure you want to cancel?</b>';
+        cancelMessage += '<br><b>Are you sure you want to cancel?</b>';
 
         app.modal({
           title:  'WAIT!',
@@ -96,6 +83,7 @@ TempStars.Pages.Hygienist.JobConfirmed = (function() {
                     })
                     .then( function( job ) {
                         job.hygienistRate = rate.result.rate;
+                        job.numDaysBlocked = rate.result.numDaysBlocked;
                         resolve( job );
                     })
                     .catch( function( err ) {
@@ -110,7 +98,8 @@ TempStars.Pages.Hygienist.JobConfirmed = (function() {
                     })
                     .then( function( jobs ) {
                         job = jobs[0];
-                        job.hygienistRate = rate.result.rate;                        
+                        job.hygienistRate = rate.result.rate;
+                        job.numDaysBlocked = rate.result.numDaysBlocked;
                         resolve( job );
                     })
                     .catch( function( err ) {
