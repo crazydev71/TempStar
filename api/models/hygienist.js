@@ -384,7 +384,8 @@ module.exports = function( Hygienist ) {
 
             // Add incentive bonus
             hourlyRate += job.bonus;
-
+console.log( 'bonus: ' + job.bonus );
+console.log( 'final rate: ' + hourlyRate );
             return Job.count({ hygienistId: hygienistId, startDate: job.startDate });
         })
         .then( function( alreadyBooked ) {
@@ -453,6 +454,9 @@ module.exports = function( Hygienist ) {
         var hourlyRate,
             rateAdjustment;
 
+console.log( 'base rate: ' + baseRate );
+console.log( 'star score: ' + starScore );
+
         if ( starScore == 5 ) {
             rateAdjustment = 4;
         }
@@ -469,7 +473,9 @@ module.exports = function( Hygienist ) {
             rateAdjustment = -4;
         }
 
+console.log( 'rate adj: ' + rateAdjustment );
         hourlyRate = parseInt(baseRate) + rateAdjustment;
+console.log( 'hourlyRate: ' + hourlyRate );
         return hourlyRate;
     }
 
