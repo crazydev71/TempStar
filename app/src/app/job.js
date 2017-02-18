@@ -186,7 +186,7 @@ TempStars.Job = (function() {
                 '</li>' +
                 '<li>' +
                     '<label class="label-radio item-content">' +
-                    '<input type="radio" name="manual-incentive" value="4">' +
+                    '<input type="radio" name="manual-incentive" value="4" checked="checked">' +
                     '<div class="item-media">' +
                         '<i class="icon icon-form-checkbox"></i>' +
                     '</div>' +
@@ -213,12 +213,6 @@ TempStars.Job = (function() {
                 text: incentivesHTML,
                 buttons: [
                     {
-                        text: 'No Thanks',
-                        onClick: function() {
-                            //confirmJob( formData );
-                        }
-                    },
-                    {
                         text: 'Add Incentive',
                         bold: true,
                         onClick: function( modal ) {
@@ -227,6 +221,10 @@ TempStars.Job = (function() {
                                 callback( incentiveAmt );
                             }
                         }
+                    },
+                    {
+                        text: 'Cancel',
+                        bold: false
                     }
                 ]
 
