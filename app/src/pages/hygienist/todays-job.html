@@ -20,10 +20,15 @@
             {{#if job.id}}
                 <div class="login-screen-title" style="margin-bottom:0px;">{{date_format_day job.startDate}}</div>
                 {{#each job.shifts}}
-                <div class="center-box" style="font-size:125%;margin-bottom:10px;">
+                <div class="center-box" style="font-size:125%;margin-bottom:0px;">
                     {{time_format postedStart}} - {{time_format postedEnd}}
                 </div>
                 {{/each}}
+                <div class="center-box" style="font-size:16px;"><b>${{job.hourlyRate}}/hr</b>
+                    {{#if ../job.bonus}}
+                     <span style="font-size:12px;padding-top:4px;">&nbsp;(includes ${{../job.bonus}}/hr bonus)</span>
+                    {{/if}}
+                </div>
                 <hr>
                 <div class="job-box">
                 <div class="center-box" style="font-size:125%;font-weight:bold;padding:8px;">
