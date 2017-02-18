@@ -136,7 +136,7 @@ function getHygienistsNearDentist( dentist ) {
         // Get all the hygienists and filter out those more than the max distance from dentist
         // The loopback 'near' query does not work reliably
         // Eventually switch to MySQl 5.7 and use built in st_distance_sphere function
-        Hygienist.find( {where: {isComplete: 1}} )
+        Hygienist.find( {where: {isComplete: 1, enabled: 1}} )
         .then( function( hygienists ) {
             console.log( 'found: ' + hygienists.length );
             // Filter out hygienist who are more than max distance
