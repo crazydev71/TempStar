@@ -541,3 +541,7 @@ input[type=number]::-webkit-outer-spin-button {
     height: 292px;
     padding: 4px;
 }
+
+.modal-button.modal-button-bold {
+    font-weight: 700;
+}
