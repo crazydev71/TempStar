@@ -506,7 +506,7 @@
       "permission": "ALLOW"
     },
     {
-      "accessType": "EXECUTE",
+      "accessType": "*",
       "principalType": "ROLE",
       "principalId": "hygienist",
       "permission": "ALLOW",

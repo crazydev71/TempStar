@@ -38,7 +38,7 @@ TempStars.Api = (function() {
         },
 
         saveHygienist: function saveHygienist( hygienist ) {
-            return TempStars.Ajax.put( 'hygienists/' + hygienist.id + '/account', hygienist, null, authToken );
+            return TempStars.Ajax.put( 'hygienists/' + hygienist.id + '/account', hygienist, authToken );
         },
 
         setupDentistAccount: function setupDentistAccount( dentistId, data ) {
