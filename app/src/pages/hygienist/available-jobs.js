@@ -7,7 +7,6 @@ TempStars.Pages.Hygienist.AvailableJobs = (function() {
     var sortBy = 'newest';
 
     function init() {
-
         app.onPageBeforeInit( 'hygienist-available-jobs', function( page ) {
 
             if ( sortBy == 'newest' ) {
@@ -26,7 +25,12 @@ TempStars.Pages.Hygienist.AvailableJobs = (function() {
             $('#hygienist-available-jobs-newest-sorting-button').on( 'click', sortByNewestHandler );
             $('#hygienist-available-jobs-soonest-sorting-button').on( 'click', sortBySoonestHandler );
             $('#hygienist-available-jobs-closest-sorting-button').on( 'click', sortByClosestHandler );
+
             $(document).on( 'click', '.job', jobPageHandler );
+
+            $(document).on( 'opened', '.popover-rate', openRatePopoverHandler );
+            $(document).on( 'closed', '.popover-rate', closeRatePopoverHandler );
+
             TempStars.Analytics.track( 'Viewed Available Jobs' );
         });
 
@@ -34,8 +38,22 @@ TempStars.Pages.Hygienist.AvailableJobs = (function() {
             $('#hygienist-available-jobs-newest-sorting-button').off( 'click', sortByNewestHandler );
             $('#hygienist-available-jobs-soonest-sorting-button').off( 'click', sortBySoonestHandler );
             $('#hygienist-available-jobs-closest-sorting-button').off( 'click', sortByClosestHandler );
+
             $(document).off( 'click', '.job', jobPageHandler );
+
+            $(document).off( 'opened', '.popover-rate', openRatePopoverHandler );
+            $(document).off( 'closed', '.popover-rate', closeRatePopoverHandler );
         });
+    }
+
+    function openRatePopoverHandler( e ) {
+        // Forces resuming app to stay on page
+        window.cameraOpen = true;
+    }
+
+    function closeRatePopoverHandler(e) {
+        // Forces resuming app to go to main page
+        window.cameraOpen = false;
     }
 
     function getData() {
