@@ -737,6 +737,7 @@ module.exports = function( Hygienist ) {
             return Hygienist.findById( hygienistId );
         })
         .then( function( h ) {
+            var numCancelled = h.numCancelled + 1;
             var numDaysBlocked = calculateCancellationPenalty( h );
             if ( numDaysBlocked > 0 ) {
                 var blockedUntil = moment().add( numDaysBlocked, 'days').utc().format('YYYY-MM-DD HH:mm:ss');
