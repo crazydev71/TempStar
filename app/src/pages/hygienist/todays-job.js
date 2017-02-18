@@ -42,14 +42,24 @@ TempStars.Pages.Hygienist.TodaysJob = (function() {
 
     function cancelButtonHandler( e ) {
         e.preventDefault();
+
+        var cancelMessage = 'Cancelling this commitment will cause significant disruption to this office and its patients.<br>';
+
+        if ( job.numDaysBlocked > 0 ) {
+            cancelMessage += '<br><b>If you cancel this job, as a penalty the system will block you from viewing available jobs for <u>' + job.numDaysBlocked + ' days</u>.</b><br>';
+        }
+
+        cancelMessage += '<br><b>Are you sure you want to cancel?</b>';
+
         app.modal({
-          title:  'Cancel Job',
-          text: 'Are you sure? Cancelling a booked/confirmed job may cause disruption at this office and may negatively impact your status on TempStars.',
+          title:  'WAIT!',
+          text: cancelMessage,
           buttons: [
               { text: 'No' },
               { text: 'Yes', bold: true, onClick: cancelJob }
           ]
         });
+
     }
 
     function invoiceButtonHandler( e ) {
@@ -98,7 +108,14 @@ TempStars.Pages.Hygienist.TodaysJob = (function() {
         init: init,
         getData: function( params ) {
             return new Promise( function( resolve, reject ) {
-                TempStars.Hygienist.getJobsByDate( moment().format('YYYY-MM-DD') )
+                var hygienistId = TempStars.User.getCurrentUser().hygienistId;
+                var rate;
+
+                TempStars.Api.getHygienistRate( hygienistId )
+                .then( function( r ) {
+                    rate = r;
+                    return TempStars.Hygienist.getJobsByDate( moment().format('YYYY-MM-DD') );
+                })
                 .then( function( jobs ) {
                     if ( jobs.length == 0 ) {
                         resolve( { job: {}, workHistory:{} } );
@@ -108,6 +125,7 @@ TempStars.Pages.Hygienist.TodaysJob = (function() {
                     job.isComplete = (job.status == TempStars.Job.status.COMPLETED ) ? true : false;
                     job.hasInvoice = (job.invoice) ? true : false;
                     job.hygienistRate = job.hourlyRate - job.bonus;
+                    job.numDaysBlocked = rate.result.numDaysBlocked;
                     return TempStars.Hygienist.getJobsByDentist( job.dentistId );
                 })
                 .then( function( dentistJobs ) {
