@@ -38,7 +38,7 @@
                 {{#if hasBonus}}
                 <tr>
                     <td colspan="2">
-                        +${{bonus}}/hr incentive bonus
+                        <span style="color:#6cc644;font-weight:bold;font-size:14px;">+${{bonus}}/hr</span> incentive bonus
                     </td>
                 </tr>
                 {{/if}}
@@ -67,17 +67,25 @@
 
                 {{#each partialOffers}}
                 <tr>
-                    <td>{{hygienist.firstName}} {{hygienist.lastName}}
+                    <td>
+                        {{hygienist.firstName}} {{hygienist.lastName}}
+                    </td>
+                    <td style="text-align:left;">
+                        {{time_format offeredStartTime}} - {{time_format offeredEndTime}}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="padding-top:0;">
                         <div id="hygienist-rating-{{id}}"></div>
-                        <div><b>${{hourlyRate}}/hr</b>
+                        <div style="padding-top:4px;"><b>${{hourlyRate}}/hr</b>
+                            {{#if ../hasBonus}}
+                            <span style="color:#6cc644;font-weight:bold;font-size:14px;">+${{../bonus}}/hr</span>
+                            {{/if}}
                             {{#if hygienist.graduationYear}}
                             &nbsp;&nbsp;
                             Graduated: {{hygienist.graduationYear}}
                             {{/if}}
                         </div>
-                    </td>
-                    <td style="text-align:left;">
-                        {{time_format offeredStartTime}} - {{time_format offeredEndTime}}
                     </td>
                 </tr>
                 {{#js_compare "this.status !== 0"}}
