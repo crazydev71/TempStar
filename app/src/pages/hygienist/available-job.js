@@ -74,9 +74,17 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
     return {
         init: init,
         getData: function( params ) {
+            var hygienistId = TempStars.User.getCurrentUser().hygienistId;
+            var rate;
+            
             return new Promise( function( resolve, reject ) {
                 if ( params.id ) {
-                    TempStars.Api.getHygienistJob( TempStars.User.getCurrentUser().hygienistId, params.id )
+
+                    TempStars.Api.getHygienistRate( hygienistId )
+                    .then( function( r ) {
+                        rate = r;
+                        return TempStars.Api.getJob( params.id );
+                    })
                     .then( function( j ) {
                         job = j;
                         job.isComplete = (job.status == TempStars.Job.status.COMPLETED ) ? true : false;
@@ -85,7 +93,7 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
                         // var hygienistLocation = new loopback.GeoPoint({ lat: job.hygienist.lat, lng: job.hygienist.lon});
                         // var dentistLocation = new loopback.GeoPoint({ lat: job.dentist.lat, lng: job.dentist.lon});
                         // job.distance = loopback.GeoPoint.distanceBetween( dentistLocation, hygienistLocation, {type: 'kilometers'});
-                        job.distance = 0;
+                        // job.distance = 0;
                         return TempStars.Hygienist.getJobsByDentist( job.dentistId );
                     })
                     .then( function( dentistJobs ) {
@@ -97,17 +105,21 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
                                 return o.hygienistPrivateNotes != null;
                             });
                         }
-                        resolve( {job: job, workHistory: workHistory} );
+                        resolve( {job: job, workHistory: workHistory, rate: rate.result.rate} );
                     })
                     .catch( function( err ) {
                         reject( err );
                     });
                 }
                 else {
-                    TempStars.Hygienist.getJobsByDate( moment().format('YYYY-MM-DD') )
+                    TempStars.Api.getHygienistRate( hygienistId )
+                    .then( function( r ) {
+                        rate = r;
+                        return TempStars.Hygienist.getJobsByDate( moment().format('YYYY-MM-DD') );
+                    })
                     .then( function( jobs ) {
                         if ( jobs.length == 0 ) {
-                            resolve( { job: {}, workHistory:{} } );
+                            resolve( { job: {}, workHistory:{}, rate: rate.result.rate } );
                             return;
                         }
                         job = jobs[0];
@@ -116,7 +128,7 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
                         // var hygienistLocation = new loopback.GeoPoint({ lat: job.hygienist.lat, lng: job.hygienist.lon});
                         // var dentistLocation = new loopback.GeoPoint({ lat: job.dentist.lat, lng: job.dentist.lon});
                         // job.distance = loopback.GeoPoint.distanceBetween( dentistLocation, hygienistLocation, {type: 'kilometers'});
-                        job.distance = 0;
+                        //job.distance = 0;
 
                         return TempStars.Hygienist.getJobsByDentist( job.dentistId );
                     })
@@ -129,7 +141,7 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
                                 return o.hygienistPrivateNotes != null;
                             });
                         }
-                        resolve( {job: job, workHistory: workHistory} );
+                        resolve( {job: job, workHistory: workHistory, rate: rate.result.rate} );
                     })
                     .catch( function( err ) {
                         reject( err );
