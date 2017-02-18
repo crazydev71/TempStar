@@ -78,8 +78,8 @@
                     <td colspan="2" style="padding-top:0;">
                         <div id="hygienist-rating-{{id}}"></div>
                         <div style="padding-top:4px;"><b>${{hourlyRate}}/hr</b>
-                            {{#if ../hasBonus}}
-                            <span style="color:#6cc644;font-weight:bold;font-size:14px;">+${{../bonus}}/hr</span>
+                            {{#if @root.hasBonus}}
+                            <span style="color:#6cc644;font-weight:bold;font-size:14px;">+${{@root.bonus}}/hr</span>
                             {{/if}}
                             {{#if hygienist.graduationYear}}
                             &nbsp;&nbsp;
