@@ -73,7 +73,8 @@ TempStars.Pages.Dentist.JobConfirmed = (function() {
             return new Promise( function( resolve, reject ) {
                 if ( params.id ) {
                     TempStars.Dentist.getJob( params.id )
-                    .then( function( job ) {
+                    .then( function( j ) {
+                        job = j;
                         TempStars.Api.getHygienistRate( job.hygienistId )
                         .then( function( r ) {
                             job.hygienistRate = r.result.rate;
