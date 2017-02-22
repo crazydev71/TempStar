@@ -11,6 +11,10 @@ TempStars.Api = (function() {
             authToken = at;
         },
 
+        getAuthToken: function getAuthToken() {
+            return authToken;
+        },
+
         login: function login( email, password ) {
             return TempStars.Ajax.post( 'tsusers/login', { email: email, password: password, ttl: 31556926 });
         },

@@ -325,6 +325,7 @@ TempStars.Pages.Dentist.Profile = (function() {
                 // Otherwise new photo so upload
                 var options = new FileUploadOptions();
                 options.fileName = uuid.v4() + '.jpg';
+                options.headers = { 'Authorization': TempStars.Api.getAuthToken() };
                 var ft = new FileTransfer();
                 var uploadURL = TempStars.Config.server.baseUrl + 'containers/tempstars.ca/upload';
                 ft.upload( photoURI,
@@ -371,7 +372,7 @@ TempStars.Pages.Dentist.Profile = (function() {
                 var uploadURL = 'containers/tempstars.ca/upload';
                 var formData = new FormData();
                 formData.append( 'photo', blob, fileName );
-                TempStars.Ajax.upload( uploadURL, formData )
+                TempStars.Ajax.upload( uploadURL, formData, TempStars.Api.getAuthToken() )                
                 .then( function( result ) {
                     resolve( TempStars.Config.bucket.baseUrl + fileName );
                 })

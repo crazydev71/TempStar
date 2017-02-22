@@ -22,6 +22,13 @@
       "permission": "ALLOW"
     },
     {
+      "accessType": "EXECUTE",
+      "property": "upload",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
+    },
+    {
       "accessType": "*",
       "principalType": "ROLE",
       "principalId": "$authenticated",

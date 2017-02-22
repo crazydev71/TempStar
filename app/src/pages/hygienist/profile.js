@@ -277,6 +277,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
                 // Mobile
                 var options = new FileUploadOptions();
                 options.fileName = uuid.v4() + '.jpg';
+                options.headers = { 'Authorization': TempStars.Api.getAuthToken() };
                 var ft = new FileTransfer();
                 var uploadURL = TempStars.Config.server.baseUrl + 'containers/tempstars.ca/upload';
                 ft.upload( photoURI,
@@ -323,7 +324,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
                 var uploadURL = 'containers/tempstars.ca/upload';
                 var formData = new FormData();
                 formData.append( 'photo', blob, fileName );
-                TempStars.Ajax.upload( uploadURL, formData )
+                TempStars.Ajax.upload( uploadURL, formData, TempStars.Api.getAuthToken() )
                 .then( function( result ) {
                     resolve( TempStars.Config.bucket.baseUrl + fileName );
                 })
@@ -440,7 +441,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
                 var uploadURL = 'containers/tempstars.ca/upload';
                 var formData = new FormData();
                 formData.append( 'resume', blob, fileName );
-                TempStars.Ajax.upload( uploadURL, formData )
+                TempStars.Ajax.upload( uploadURL, formData, TempStars.Api.getAuthToken() )
                 .then( function( result ) {
                     resolve( TempStars.Config.bucket.baseUrl + fileName );
                 })
