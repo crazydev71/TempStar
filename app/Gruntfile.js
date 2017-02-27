@@ -115,7 +115,7 @@ module.exports = function (grunt) {
         uglify: {
             options: {
                 banner: '<%= banner %>',
-                mangle: true,
+                mangle: false,
                 sourceMap: true,
                 report: 'gzip'
             },
@@ -221,9 +221,22 @@ module.exports = function (grunt) {
         },
 
         exec: {
+            options: {
+                maxBuffer: Infinity
+            },
             build_android: 'cordova build android --release',
-            build_ios: 'cordova build ios',
-            run_ios: 'cordova run ios',
+            build_ios: {
+                options: {
+                    maxBuffer: Infinity
+                },
+                command: 'cordova build ios'
+            },
+            run_ios: {
+                options: {
+                    maxBuffer: Infinity
+                },
+                command: 'cordova run ios'
+            },
             run_android: 'cordova run android',
             run_browser: 'cordova run browser',
             prepare: {
@@ -274,8 +287,9 @@ module.exports = function (grunt) {
 
     grunt.registerTask( 'default',  [ 'init', 'clean:all', 'exec:create_version', 'copy:all', 'concat', 'template:browser', 'includereplace', 'copy:dev' ]);
     grunt.registerTask( 'browser',  [ 'init', 'clean:all', 'exec:create_version', 'copy:all', 'concat', 'template:browser', 'includereplace', 'uglify', 'clean:postuglify', 'cacheBust', 'clean:prod' ]);
-    grunt.registerTask( 'iosdev',   [ 'init', 'clean:all', 'exec:create_version', 'copy:all', 'concat', 'template:ios',     'includereplace', 'uglify', 'clean:postuglify', 'exec:build_ios' ]);
     grunt.registerTask( 'ios',      [ 'init', 'clean:all', 'exec:create_version', 'copy:all', 'concat', 'template:ios',     'includereplace', 'uglify', 'clean:postuglify', 'exec:run_ios']);
+    grunt.registerTask( 'iosdev',   [ 'init', 'clean:all', 'exec:create_version', 'copy:all', 'concat', 'template:ios',     'includereplace', 'copy:dev', 'exec:run_ios']);
+    grunt.registerTask( 'ios-buildsrc',   [ 'init', 'clean:all', 'exec:create_version', 'copy:all', 'concat', 'template:ios',     'includereplace', 'uglify', 'clean:postuglify', 'exec:build_ios' ]);
     grunt.registerTask( 'android',  [ 'init', 'clean:all', 'exec:create_version', 'copy:all', 'concat', 'template:android', 'includereplace', 'uglify', 'clean:postuglify', 'exec:run_android']);
     grunt.registerTask( 'android-buildsrc',  [ 'init', 'clean:all', 'exec:create_version', 'copy:all', 'concat', 'template:android', 'includereplace', 'uglify', 'clean:postuglify']);
     grunt.registerTask( 'devbrowser',  [ 'init', 'clean:all', 'exec:create_version', 'copy:all', 'concat', 'template:browser', 'includereplace', 'exec:run_browser']);

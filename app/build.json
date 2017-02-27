@@ -1,0 +1,13 @@
+{
+    "ios": {
+        "debug": {
+            "developmentTeam": "UM68DRFZYZ",
+            "packageType": "development"
+        },
+        "release": {
+            "codeSignIdentity": "iPhone Developer",
+            "developmentTeam": "UM68DRFZYZ",
+            "packageType": "app-store"
+        }
+    }
+}
