@@ -7,6 +7,7 @@
   "license": "UNLICENSED",
   "dependencies": {
     "bluebird": "^3.4.6",
-    "node-gcm": "^0.14.4"
+    "node-gcm": "^0.14.4",
+    "apn": "^2.1.2"
   }
 }
