@@ -9,7 +9,7 @@ TempStars.Config = (function() {
         server: {
             authUserName: '',
             authPassword: '',
-            baseUrl: "https://api.tempstars.ca/v2/"
+            baseUrl: "https://api.tempstars.ca/v2.2/"
         },
         bucket: {
             baseUrl: 'https://s3.amazonaws.com/tempstars.ca/'
@@ -30,7 +30,7 @@ TempStars.Config = (function() {
         },
         web: {
             appUrl: 'http://app2.tempstars.ca'
-        },        
+        },
         debug: false
     };
 })();
