@@ -84,8 +84,9 @@ TempStars.bootstrap = {
 
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
-        document.addEventListener("resume", this.onResume, false);
-        document.addEventListener("pause", this.onPause, false);
+        document.addEventListener('resume', this.onResume, false);
+        document.addEventListener('pause', this.onPause, false);
+        window.addEventListener('unhandledrejection', this.onUnhandledRejection, false );
     },
 
     onDeviceReady: function() {
@@ -169,10 +170,20 @@ TempStars.bootstrap = {
     },
 
     onPause: function(e) {
+        if ( window.dentistInterval ) {
+            clearInterval( window.dentistInterval );
+        }
+        delete window.dentistInterval;
+
         if ( window.cameraOpen == undefined ) {
             window.cameraOpen = false;
         }
         window.localStorage.setItem( 'cameraOpen', window.cameraOpen );
+    },
+
+    onUnhandledRejection: function(e) {
+        e.preventDefault();
+        console.log( 'unhandledrejection: ' + e.detail.reason );
     }
 };
 

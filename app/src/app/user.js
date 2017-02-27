@@ -68,7 +68,7 @@ TempStars.User = (function() {
                     }
                 })
                 .catch( function( err ) {
-                    TempStars.Logging.log('autologin failed for: ' + userAccount.email );
+                    TempStars.Logging.log( 'autologin failed' );
                     reject();
                 });
             });
@@ -212,6 +212,10 @@ TempStars.User = (function() {
                     TempStars.Storage.remove( 'userAuth' );
                     TempStars.Storage.remove( 'userAccount' );
                     delete window.registrationId;
+                    if ( window.dentistInterval ) {
+                        clearInterval( window.dentistInterval );
+                    }
+                    delete window.dentistInterval;
                     resolve();
                 });
 

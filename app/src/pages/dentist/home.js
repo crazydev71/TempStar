@@ -4,21 +4,24 @@ TempStars.Pages.Dentist.Home = (function() {
 
     var interval,
         calendar,
-        data;
+        data,
+        pageInit;
 
     function init() {
-        app.onPageBeforeInit( 'dentist-home', function( page ) {
+        pageInit = app.onPageBeforeInit( 'dentist-home', function( page ) {
             data = page.context;
             mainView.showNavbar();
             displayCalendar( page.context );
             $$('#dentist-home-post-job-button').on( 'click', postJobHandler );
             TempStars.Analytics.track( 'Viewed Home Page' );
             interval = setInterval( refreshPage, 5000 );
+            window.dentistInterval = interval;
         });
 
         app.onPageBeforeRemove( 'dentist-home', function( page ) {
             $$('#dentist-home-post-job-button').off( 'click', postJobHandler );
             clearInterval( interval );
+            delete window.dentistInterval;
         });
     }
 
@@ -197,6 +200,11 @@ TempStars.Pages.Dentist.Home = (function() {
 
     return {
         init: init,
+
+        triggerPageInit: function triggerPageInit() {
+            pageInit.trigger();
+        },
+
         getData: function( params ) {
             TempStars.Logging.log( 'getting data for dentist home page' );
             return new Promise( function( resolve, reject ) {
