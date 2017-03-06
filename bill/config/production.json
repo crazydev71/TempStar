@@ -11,6 +11,12 @@
         "ssl": "Amazon RDS"
     },
 
+    "stripe": {
+        "secretKey": "sk_live_cjRvWqrIhEQaL5Yo1pG1wMWN",
+        "currency": "usd",
+        "amount": 2500
+    },
+
     "email": {
         "from": "billing@tempstars.net",
         "to": "drjyounger@hotmail.com"
