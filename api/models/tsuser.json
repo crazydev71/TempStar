@@ -151,6 +151,12 @@
           "principalType": "ROLE",
           "principalId": "$everyone",
           "permission": "ALLOW",
+          "property": "account"
+      },
+      {
+          "principalType": "ROLE",
+          "principalId": "$everyone",
+          "permission": "ALLOW",
           "property": "logout"
       },
       {
@@ -177,7 +183,7 @@
           "permission": "ALLOW",
           "property": "resetPassword",
           "accessType": "EXECUTE"
-      }    
+      }
   ],
   "methods": {}
 }
