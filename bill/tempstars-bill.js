@@ -41,17 +41,15 @@ updateBookedJobStatus( today )
     log( '- dentists to bill: ' + dentists.length );
     return billDentists( dentists );
 })
-.then( function() {
-    log( 'Billing run ended at ' + moment.utc().format('YYYY-MM-DD hh:ss') + ' UTC.');
+.catch( function( err ) {
+    log( err.message );
 })
 .then( function() {
     console.log( '- sending email' );
     return sendEmail();
 })
-.catch( function( err ) {
-    console.log( err.message );
-})
 .finally( function() {
+    log( 'Billing run ended at ' + moment.utc().format('YYYY-MM-DD hh:ss') + ' UTC.');
     process.exit();
 })
 
@@ -85,7 +83,7 @@ function updateBookedJobStatus( today ) {
 
 function getDentistsToBill( today ) {
     return new Promise( function( resolve, reject ) {
-        var sql = 'select * from Job j ' +
+        var sql = 'select *, j.id as jobId from Job j ' +
                   'inner join Dentist d on d.id = j.dentistId ' +
                   'where j.startDate < ? ' +
                   'and j.status = 4 ' +
@@ -121,7 +119,7 @@ function billDentist( billingInfo ) {
         })
         .catch( function(err) {
             log( '- error billing dentist: ' + billingInfo.practiceName + ' for job ' +  billingInfo.jobId + ' ' + err.message );
-            reject( err );
+            resolve();
             return;
         })
         .then( function( result ) {
@@ -131,10 +129,12 @@ function billDentist( billingInfo ) {
         .then( function( results ) {
             log( '- billed dentist: ' + billingInfo.practiceName + ' for job ' +  billingInfo.jobId );
             resolve();
+            return;
         })
         .catch( function(err) {
             log( '- error updating billing status dentist: ' + billingInfo.practiceName + ' for job ' +  billingInfo.jobId );
-            reject( err );
+            resolve();
+            return;
         });
     });
 }
