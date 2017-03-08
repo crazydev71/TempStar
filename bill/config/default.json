@@ -12,7 +12,7 @@
     "stripe": {
         "secretKey": "sk_test_6RfrY1kO3xkVyDrKgvumnnFX",
         "currency": "cad",
-        "amount": 2500
+        "amount": 2825
     },
 
     "aws": {
