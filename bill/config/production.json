@@ -13,7 +13,7 @@
 
     "stripe": {
         "secretKey": "sk_live_cjRvWqrIhEQaL5Yo1pG1wMWN",
-        "currency": "usd",
+        "currency": "cad",
         "amount": 2500
     },
 
