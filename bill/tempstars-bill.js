@@ -100,27 +100,28 @@ function getDentistsToBill( today ) {
 }
 
 function billDentists( dentists ) {
-    // return Promise.map( dentists, function( dentist ) {
-    //     return billDentist( dentist );
-    // });
     return Promise.map( dentists, billDentist, { concurrency: 1 } );
 }
 
 function billDentist( billingInfo ) {
     return new Promise( function( resolve, reject ) {
-
-        console.log( '- billing dentist: ' + billingInfo.practiceName );
+        console.log( '- billing dentist: ' + billingInfo.practiceName + ' (' +
+                    billingInfo.id + ') for job ' + billingInfo.jobId + ' on ' + billingInfo.startDate );
 
         // Charge dentist credit card
         stripe.charges.create({
-              amount: config.stripe.amount,
-              currency: config.stripe.currency,
-              customer: billingInfo.stripeCustomerId
+            amount: config.stripe.amount,
+            currency: config.stripe.currency,
+            customer: billingInfo.stripeCustomerId,
+            metadata: {
+                dentistId: billingInfo.id,
+                jobId: billingInfo.jobId
+            }
         })
         .catch( function(err) {
-            log( '- error billing dentist: ' + billingInfo.practiceName + ' for job ' +  billingInfo.jobId + ' ' + err.message );
+            log( '- error billing dentist: ' + billingInfo.practiceName + ' for job ' +  billingInfo.jobId + ': ' + err.message );
             resolve();
-            return;
+            throw(err);
         })
         .then( function( result ) {
             // Update billed flag
@@ -132,7 +133,9 @@ function billDentist( billingInfo ) {
             return;
         })
         .catch( function(err) {
-            log( '- error updating billing status dentist: ' + billingInfo.practiceName + ' for job ' +  billingInfo.jobId );
+            if ( ! _.startsWith( err.type, 'Stripe' )) {
+                log( '- error updating billing status dentist: ' + billingInfo.practiceName + ' for job ' +  billingInfo.jobId );
+            }
             resolve();
             return;
         });
