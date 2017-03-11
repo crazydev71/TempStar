@@ -19,6 +19,7 @@ var getCDHOInfo = function( regNum ) {
         .click('form[action*="./Default.aspx"] [type=submit]')
         .wait('#ctl00_BodyContent_rgMain_ctl00')
         .click('#ctl00_BodyContent_rgMain_ctl00_ctl04_HyperLink2')
+        .wait('#BodyContent_lblMemberName')
         .evaluate(function() {
             var nameElem = document.querySelector('#BodyContent_lblMemberName');
             var regStatusElem = document.querySelector('#BodyContent_MemberSummary_lblRegistrationStatus');
