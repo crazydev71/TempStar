@@ -53,11 +53,15 @@ var notActive = [];
 var lastMonth = moment().subtract(1,'month').format('YYYY-MM-DD');
 
 // Get Hygienists who haven't had their CDHO registration checked or who have had it checked over a month ago
+// isComplete = 1 and (lastCDHOCheck == null or lastCDHOCheck < lastMonth)
 function getHygienistsToCheck() {
     return Hygienist.find({
-        where: {or: [
-            {lastCDHOCheck: null},
-            {lastCDHOCheck: {lt: lastMonth}}
+        where: {and: [
+            {isComplete: 1},
+            {or: [
+                {lastCDHOCheck: null},
+                {lastCDHOCheck: {lt: lastMonth}}
+            ]}
         ]},
         limit: 100
     });
@@ -74,6 +78,8 @@ function checkHygienist( hygienist ) {
         // Get the CDHO info
         console.log( '- checking hygienist id: ' + hygienist.id );
         results.numChecked++;
+        // scraper = null;
+        // var scaper = Nightmare({show:false});
         scaper.use( getCDHOInfo(hygienist.CDHONumber) )
         .then( function( info ) {
             console.log( '- CDHO record found' );
@@ -92,6 +98,7 @@ function checkHygienist( hygienist ) {
             return hygienist.updateAttributes( data );
         })
         .catch( function( err ) {
+            console.log( err.message );
             console.log( '- CDHO record NOT found' );
             results.numNotFound++;
             notFound.push( hygienist.id );
