@@ -84,9 +84,12 @@ function checkHygienist( hygienist ) {
         .then( function( info ) {
             console.log( '- CDHO record found' );
             results.numFound++;
-            if ( info.status != 'Active' ) {
+            if ( ! _.startsWith( info.status, 'Active' ) ) {
                 notActive.push( hygienist.id );
                 results.numNotActive++;
+            }
+            else {
+                info.status = 'Active';
             }
             var data = {
                     cdhoStatus: info.status,
