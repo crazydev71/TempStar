@@ -272,7 +272,7 @@ module.exports = function( Dentist ) {
         .then( function( d ) {
             dentist = d;
             if ( d.stripeCustomerId == null ) {
-                throw new Error( 'Payment Info needs to be entered before booking job.' );
+                throw new Error( 'Payment information is required to post a job.  Please tap on “Get a Temp Hygienist” to complete your payment information.' );
                 return;
             }
 
