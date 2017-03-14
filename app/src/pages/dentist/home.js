@@ -141,9 +141,14 @@ TempStars.Pages.Dentist.Home = (function() {
         var jsDate = moment({ year: dateYear, month: parseInt(dateMonth), day: dateDay}).toDate();
         var dateStr = moment({ year: dateYear, month: parseInt(dateMonth), day: dateDay}).format('MMM D, YYYY');
         var params = { date: jsDate };
-        app.confirm( 'Would you like to find a temp hygienist for ' + dateStr + '?', function() {
-            TempStars.Dentist.Router.goForwardPage( 'post-job', params );
-        });
+        if ( TempStars.User.getCurrentUser().dentist.stripeCustomerId ) {
+            app.confirm( 'Would you like to find a temp hygienist for ' + dateStr + '?', function() {
+                TempStars.Dentist.Router.goForwardPage( 'post-job', params );
+            });
+        }
+        else {
+            postJobHandler();           
+        }
     }
 
     function getJobDate( job ) {
@@ -162,7 +167,9 @@ TempStars.Pages.Dentist.Home = (function() {
     }
 
     function postJobHandler( e ) {
-        e.preventDefault();
+        if ( e ) {
+            e.preventDefault();
+        }
 
         if ( TempStars.User.getCurrentUser().dentist.stripeCustomerId ) {
             TempStars.Dentist.Router.goForwardPage( 'post-job' );
@@ -171,11 +178,9 @@ TempStars.Pages.Dentist.Home = (function() {
             app.modal({
             //    title:  'Please Enter Payment Info',
             title:  '"Find a Hygienist" Requires Entering Payment Info',
-            //text: '"Find a Hygienist" requires payment information.<br><div style="margin:10px 0;background:lightyellow">We have <b>39</b> hygienists available in the <b>Mudville</b> area.</div>The $25+hst placement fee is billed only after successful placement.',
             text: '<div style="margin:10px 0;background:lightyellow">We have <b>' + data.numHygienists + '</b> hygienists available in the <b>' + data.user.dentist.city + '</b> area.</div>The $25+hst placement fee is billed only after a successful placement.',
               buttons: [
                 {
-                    //text: 'Take me there',
                     text: 'I\'m ready',
                   onClick: function() {
                       TempStars.Dentist.Router.goForwardPage( 'payment-info' );

@@ -264,14 +264,23 @@ module.exports = function( Dentist ) {
         var Shift = app.models.Shift;
         var Dentist = app.models.Dentist;
         var Region = app.models.Region;
-        var region, job;
+        var region, job, dentist;
 
         // Create a new job and the shifts for that job
         // Then create notifications for each potential hygienist
-        Job.findOne({ where: {
-            dentistId: parseInt(id),
-            startDate: data.job.startDate
-        }})
+        Dentist.findById( parseInt(id) )
+        .then( function( d ) {
+            dentist = d;
+            if ( d.stripeCustomerId == null ) {
+                throw new Error( 'Payment Info needs to be entered before booking job.' );
+                return;
+            }
+
+            return Job.findOne({ where: {
+                dentistId: parseInt(id),
+                startDate: data.job.startDate
+            }});
+        })
         .then( function( existingJob ) {
             if ( existingJob ) {
                 throw new Error( 'You already have a job posted for this day.' );
