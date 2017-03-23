@@ -142,12 +142,12 @@ TempStars.Pages.Dentist.Home = (function() {
         var dateStr = moment({ year: dateYear, month: parseInt(dateMonth), day: dateDay}).format('MMM D, YYYY');
         var params = { date: jsDate };
         if ( TempStars.User.getCurrentUser().dentist.stripeCustomerId ) {
-            app.confirm( 'Would you like to find a temp hygienist for ' + dateStr + '?', function() {
+            app.confirm( 'Would you like to get a temp hygienist for ' + dateStr + '?', function() {
                 TempStars.Dentist.Router.goForwardPage( 'post-job', params );
             });
         }
         else {
-            postJobHandler();           
+            postJobHandler();
         }
     }
 
@@ -177,7 +177,7 @@ TempStars.Pages.Dentist.Home = (function() {
         else {
             app.modal({
             //    title:  'Please Enter Payment Info',
-            title:  '"Find a Hygienist" Requires Entering Payment Info',
+            title:  '"Get a Temp Hygienist" Requires Entering Payment Info',
             text: '<div style="margin:10px 0;background:lightyellow">We have <b>' + data.numHygienists + '</b> hygienists available in the <b>' + data.user.dentist.city + '</b> area.</div>The $25+hst placement fee is billed only after a successful placement.',
               buttons: [
                 {
@@ -191,7 +191,7 @@ TempStars.Pages.Dentist.Home = (function() {
                   onClick: function() {
                       app.modal({
                         title: 'Don’t Wait Until It’s Urgent',
-                        text: 'Tap "Find a Hygienist" to enter payment info.  Try to do it soon, so you\'re not stranded when you need a good hygienist fast!',
+                        text: 'Tap "Get a Temp Hygienist" to enter payment info.  Try to do it soon, so you\'re not stranded when you need a good hygienist fast!',
                         buttons: [
                             {    text: 'Got it!' }
                         ]
