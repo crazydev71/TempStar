@@ -31,8 +31,8 @@ var  jobStatus =  {
 
 var rating = {
     'VERY_HAPPY': 5,
-    'PLEASED': 3.5,
-    'NO_THANK_YOU': 2
+    'PLEASED': 4.2,
+    'NO_THANK_YOU': 3
 };
 
 module.exports = function( Dentist ) {
