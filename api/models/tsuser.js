@@ -24,8 +24,10 @@ module.exports = function( TSUser ) {
         var Dentist = TSUser.app.models.Dentist;
         var Hygienist = TSUser.app.models.Hygienist;
 
+        var invoteCode = Date.now() / 1000 | 0;
+
         // Create the user, role, account, and then log the user in
-        TSUser.create( { email: data.email, password: data.password } )
+        TSUser.create( { email: data.email, password: data.password, inviteCode: invoteCode } )
         .then( function( u ) {
             user = u;
             // Give them the appropriate role
