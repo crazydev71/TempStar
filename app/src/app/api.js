@@ -41,6 +41,11 @@ TempStars.Api = (function() {
                 { email: email, password: password, role: role }, authToken );
         },
 
+        addInvite: function addInvite(userId,inviteCode){
+            return TempStars.Ajax.post( 'invites',
+                { invitedUserId: userId, inviteCode: inviteCode, status: 0 }, authToken );
+        },
+
         saveHygienist: function saveHygienist( hygienist ) {
             return TempStars.Ajax.put( 'hygienists/' + hygienist.id + '/account', hygienist, authToken );
         },

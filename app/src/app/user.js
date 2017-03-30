@@ -222,9 +222,9 @@ TempStars.User = (function() {
             });
         },
 
-        create: function create( email, password, role ) {
+        create: function create( email, password, role, inviteCode ) {
             return new Promise( function( resolve, reject ) {
-                TempStars.Api.createAccount( email, password, role )
+                TempStars.Api.createAccount( email, password, role, inviteCode )
                 .then( function( authResult ) {
                     userAuth = authResult.result;
                     TempStars.Api.setAuthToken( userAuth.id );
@@ -238,6 +238,11 @@ TempStars.User = (function() {
                     TempStars.Logging.log('created account for: ' + userAccount.email );
                     var identity = TempStars.Config.env.name + '-' + userAccount.id;
                     TempStars.Analytics.alias( identity );
+                    
+                    /*** ADD INVITE CODE TO INVITES TABLE ***/
+                    console.log('adding invite');
+                    TempStars.Api.addInvite(userAccount.id, inviteCode);
+
                     resolve();
                 })
                 .catch( function( err ) {

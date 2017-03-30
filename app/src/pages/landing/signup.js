@@ -72,7 +72,7 @@ TempStars.Pages.Signup = (function() {
         }
 
         app.showPreloader('Creating Account');
-        TempStars.User.create( formData.email, formData.password, role )
+        TempStars.User.create( formData.email, formData.password, role, formData.inviteCode )
         .then(function() {
             app.hidePreloader();
             TempStars.Analytics.track( 'Created Account' );

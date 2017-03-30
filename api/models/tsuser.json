@@ -75,17 +75,17 @@
       }
     },
     "inviteCode": {
-      "type": "String",
+      "type": "Number",
       "required": false,
-      "length": 10,
+      "length": 250,
       "precision": null,
       "scale": null,
       "mysql": {
         "columnName": "inviteCode",
-        "dataType": "varchar",
-        "dataLength": 10,
-        "dataPrecision": null,
-        "dataScale": null,
+        "dataType": "int",
+        "dataLength": null,
+        "dataPrecision": 10,
+        "dataScale": 0,
         "nullable": "Y"
       }
     }

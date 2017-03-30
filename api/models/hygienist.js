@@ -905,11 +905,50 @@ console.log( 'hourlyRate: ' + hourlyRate );
         http: { verb: 'get', path: '/:id/rate' }
     });
 
+
+    function inviteAdjustments(invites){
+        var inviteRateAdjustment = 0;
+        
+        if(invites.length == 0){
+            return inviteRateAdjustment;
+        }
+
+        for(var i=0; i < invites.length; i++){
+            // ADD $0.25
+            if(invites[i].status == 0){
+                inviteRateAdjustment = inviteRateAdjustment + 0.25;
+            }
+            // ADD $1.75
+            if(invites[i].status == 1){
+                inviteRateAdjustment = inviteRateAdjustment + 1.75;
+            }
+            // ADD $2.00
+            if(invites[i].status == 2){
+                inviteRateAdjustment = inviteRateAdjustment + 2;
+            }
+            // ADD $0
+            if(invites[i].status == 3){
+                //inviteRateAdjustment = inviteRateAdjustment + 0;
+            }
+        }
+
+        return inviteRateAdjustment;
+
+    }
+
     Hygienist.getCurrentRate = function( id, callback ) {
 
         var Hygienist = app.models.Hygienist;
         var Region = app.models.Region;
+        var Invite = app.models.Invite;
+        var User = app.models.TSUser;
+        
+        var user;
+        var userInviteCode;
         var hygienist;
+        var rate;
+        var invites;
+
 
         // Get the hygienist
         Hygienist.findById( parseInt(id) )
@@ -918,9 +957,25 @@ console.log( 'hourlyRate: ' + hourlyRate );
             return Region.findById( h.regionId );
         })
         .then( function( r ) {
-            var hourlyRate = getAdjustedRate( r.rate, hygienist.starScore );
+            rate = r;
+            return User.find( { where: { hygienistId: id}} );
+        })
+        .then( function( u ) {
+            user = u;
+            userInviteCode = user[0].inviteCode;
+
+            return Invite.find( { where: { inviteCode: userInviteCode}} );
+        })
+        .then( function( i ) {
+            invites = i;
+            /// GET ADJUSTMENTS 
+            var inviteAdjustment = inviteAdjustments(invites);
+            var baseRate = getAdjustedRate( rate.rate, hygienist.starScore );
+            var hourlyRate = baseRate + inviteAdjustment;
             var numDaysBlocked = calculateCancellationPenalty( hygienist );
-            var resp = { rate: hourlyRate, numDaysBlocked: numDaysBlocked };
+
+
+            var resp = { rate: hourlyRate,baseRate:baseRate,inviteAdjustment:inviteAdjustment, numDaysBlocked: numDaysBlocked, invites: invites };
             callback( null, resp );
         })
         .catch( function( err ) {

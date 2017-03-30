@@ -60,7 +60,9 @@ TempStars.Pages.Hygienist.AvailableJobs = (function() {
 
         return new Promise( function( resolve, reject ) {
             var hygienistId = TempStars.User.getCurrentUser().hygienistId;
+            var inviteCode = TempStars.User.getCurrentUser().inviteCode;
             var rate;
+            var inviteRate;
 
             TempStars.Api.getHygienistRate( hygienistId )
             .then( function( r ) {
@@ -71,7 +73,9 @@ TempStars.Pages.Hygienist.AvailableJobs = (function() {
 
                 data = {
                     jobs: jobs.result,
-                    rate: rate.result.rate
+                    rate: rate.result.hourlyRate,
+                    baseRate: rate.result.baseRate,
+                    inviteAdjustment: rate.result.inviteAdjustment
                 };
 
                 if ( jobs.result.length == 0 ) {
