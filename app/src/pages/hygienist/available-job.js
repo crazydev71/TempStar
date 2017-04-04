@@ -55,8 +55,21 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
         .then( function() {
             app.hidePreloader();
             app.alert( 'You\'re confirmed!', function() {
-                TempStars.Analytics.track( 'Booked Job' );
-                TempStars.Hygienist.Router.goForwardPage('home');
+                var officeInfo = "";
+                officeInfo = "Arrival: " + job.dentist.detail.hygienistArrival + "<br>" +
+                             "Primary Contact: " + job.dentist.detail.primaryContact + "<br>" +
+                             "Parking: " + job.dentist.detail.parking + "<br>" +
+                             "Payment: " + job.dentist.detail.payment + "<br>" +
+                             "Radiography: " + job.dentist.detail.radiography + "<br>" +
+                             "Ultrasonic: " + job.dentist.detail.ultrasonic + "<br>" +
+                             "Avg Recall: " + job.dentist.detail.avgApptTime + "<br>" +
+                             "Charting: " + job.dentist.detail.charting + "<br>" +
+                             "Software: " + job.dentist.detail.software + "<br>";
+                             
+                app.alert( officeInfo, "Office Information", function() {
+                    TempStars.Analytics.track( 'Booked Job' );
+                    TempStars.Hygienist.Router.goForwardPage('home');
+                });
             });
         })
         .catch( function( err ) {
