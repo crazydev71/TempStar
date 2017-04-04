@@ -157,7 +157,19 @@ TempStars.Pages.Dentist.PostJob = (function() {
         }
 
         app.confirm( text, 'Post Job?', function() {
-            postJob( formData );
+            app.modal({
+                text: 'Our system is alerting our best available hygienists for this job. You’ll receive confirmation when this shift is filled. To add/modify an incentive bonus, tap the job date on the calendar.',
+                title: '',
+                buttons: [
+                    {
+                        text: 'Got it!',
+                        bold: true,
+                        onClick: function() {
+                            postJob( formData );
+                        }
+                    }
+                ]
+            });
         });
     }
 
