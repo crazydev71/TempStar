@@ -767,23 +767,18 @@ console.log( 'hourlyRate: ' + hourlyRate );
         })
         .then( function( response ) {
             return new Promise( function( resolve, reject ) {
-                if ( ! response.success ) {
-                    Email.send({
-                        to: jj.dentist.user.email,
-                        from: app.get('emailFrom'),
-                        bcc:  app.get('emailBcc'),
-                        subject: 'Job cancelled on ' + moment(jj.startDate).format('ddd MMM D, YYYY'),
-                        text: msg
-                    }, function( err ) {
-                        if ( err ) {
-                            console.log( err.message );
-                        }
-                        resolve();
-                    });
-                }
-                else {
+                Email.send({
+                    from: app.get('emailFrom'),
+                    to: jj.dentist.user.email,
+                    bcc:  app.get('emailBcc'),
+                    subject: 'Job cancelled on ' + moment(jj.startDate).format('ddd MMM D, YYYY'),
+                    text: msg
+                }, function( err ) {
+                    if ( err ) {
+                        console.log( err.message );
+                    }
                     resolve();
-                }
+                });
             });
         })
         .then( function() {
