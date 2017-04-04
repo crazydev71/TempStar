@@ -249,23 +249,18 @@ module.exports = function( Job ){
         })
         .then( function( response ) {
             return new Promise( function( resolve, reject ) {
-                if ( ! response.success ) {
-                    Email.send({
-                        to: pj.hygienist.user.email,
-                        from: app.get('emailFrom'),
-                        bcc:  app.get('emailBcc'),
-                        subject: 'Partial Offer on ' + moment(jj.startDate).format('ddd MMM D, YYYY') +  ' declined',
-                        text: msg
-                    }, function( err ) {
-                        if ( err ) {
-                            console.log( err.message );
-                        }
-                        resolve();
-                    });
-                }
-                else {
+                Email.send({
+                    from: app.get('emailFrom'),
+                    to: pj.hygienist.user.email,
+                    bcc:  app.get('emailBcc'),
+                    subject: 'Partial Offer on ' + moment(jj.startDate).format('ddd MMM D, YYYY') +  ' declined',
+                    text: msg
+                }, function( err ) {
+                    if ( err ) {
+                        console.log( err.message );
+                    }
                     resolve();
-                }
+                });
             });
         })
         .then( function() {
