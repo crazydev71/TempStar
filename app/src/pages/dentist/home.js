@@ -141,14 +141,15 @@ TempStars.Pages.Dentist.Home = (function() {
         var jsDate = moment({ year: dateYear, month: parseInt(dateMonth), day: dateDay}).toDate();
         var dateStr = moment({ year: dateYear, month: parseInt(dateMonth), day: dateDay}).format('MMM D, YYYY');
         var params = { date: jsDate };
-        if ( TempStars.User.getCurrentUser().dentist.stripeCustomerId ) {
-            app.confirm( 'Would you like to get a temp hygienist for ' + dateStr + '?', function() {
+        
+        app.confirm( 'Would you like to get a temp hygienist for ' + dateStr + '?', function() {
+            if ( TempStars.User.getCurrentUser().dentist.stripeCustomerId ) {
                 TempStars.Dentist.Router.goForwardPage( 'post-job', params );
-            });
-        }
-        else {
-            postJobHandler();
-        }
+            }
+            else {
+                postJobHandler();
+            }
+        });
     }
 
     function getJobDate( job ) {
