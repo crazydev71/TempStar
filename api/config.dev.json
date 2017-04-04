@@ -23,5 +23,6 @@
   "stripeSecretKey": "sk_test_6RfrY1kO3xkVyDrKgvumnnFX",
   "resetPasswordLink": "https://api.tempstars.net/reset-password",
   "pushEnv": "dev",
-  "emailFrom": "no-reply@tempstars.net"
+  "emailFrom": "no-reply@tempstars.net",
+  "emailBcc": "drjyounger@hotmail.com"
 }

@@ -382,8 +382,10 @@ module.exports = function( Job ){
         })
         .then( function() {
             Email.send({
-                to: jj.dentist.user.email,
                 from: app.get('emailFrom'),
+                to: jj.dentist.user.email,
+                cc: jj.hygienist.user.email,
+                bcc: app.get('emailBcc'),
                 subject: 'Invoice from ' + jj.hygienist.firstName + ' ' + jj.hygienist.lastName,
                 html: data.html },
                 function(err) {
