@@ -164,6 +164,11 @@ TempStars.Pages.HygienistSignup = (function() {
 
         app.showPreloader('Setting Up Account');
 
+        // Concatenate the Suite into the Address field
+        if (formData.suite !== '' && formData.suite !== null)
+            formData.address = '#' + formData.suite + '-' + formData.address;
+        delete formData['suite'];
+
         // If have a photo, upload it
         uploadPhoto()
         .then( function( photoFileName ) {

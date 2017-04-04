@@ -108,6 +108,11 @@ TempStars.Pages.DentistSignup2 = (function() {
         allData.p2 = { token: '' };
         allData.p3 = formData;
 
+        // Concatenate the Suite into the Address field
+        if (allData.p1.suite !== '' && allData.p1.suite !== null)
+            allData.p1.address = '#' + allData.p1.suite + '-' + allData.p1.address;
+        delete allData.p1['suite'];
+
         TempStars.Dentist.setupAccount( allData )
         .then( function() {
             return TempStars.User.refresh();
