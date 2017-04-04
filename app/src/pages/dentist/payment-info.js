@@ -131,7 +131,7 @@ TempStars.Pages.Dentist.PaymentInfo = (function() {
             })
             .then( function() {
                 if ( ! nextPage ) {
-                    nextPage = 'post-job';
+                    nextPage = 'home';
                 }
                 TempStars.Dentist.Router.goForwardPage( nextPage, {nohistory: true} );
             })
