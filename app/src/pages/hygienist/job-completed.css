@@ -1,3 +1,7 @@
 #hygienist-job-completed-table tr {
     margin-bottom: 20px;
 }
+
+#hygienist-job-completed-form .button-small {
+	width: 170px;
+}

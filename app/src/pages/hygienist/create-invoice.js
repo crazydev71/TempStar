@@ -284,7 +284,7 @@ TempStars.Pages.Hygienist.CreateInvoice = (function() {
                 app.hidePreloader();
                 app.alert( 'Invoice Sent', function() {
                     TempStars.Analytics.track( 'Sent Invoice' );
-                    TempStars.Hygienist.Router.goBackPage('', {id: job.id} );
+                    TempStars.Hygienist.Router.goBackPage('', {id: job.id, invoiceSubmitted: true} );
                 });
             })
             .catch( function( err ) {

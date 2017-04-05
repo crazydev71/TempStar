@@ -3,6 +3,7 @@ TempStars.Pages.Hygienist.JobCompleted = (function() {
     'use strict';
 
     var job;
+    var invoiceSubmitted = false;
 
     function init() {
         app.onPageBeforeInit( 'hygienist-job-completed', function( page ) {
@@ -11,6 +12,11 @@ TempStars.Pages.Hygienist.JobCompleted = (function() {
             $$('#hygienist-job-completed-view-survey-button').on( 'click', surveyButtonHandler );
             $$('#hygienist-job-completed-invoice-button').on( 'click', invoiceButtonHandler );
             TempStars.Analytics.track( 'Viewed Completed Job' );
+
+            if (invoiceSubmitted) {
+                invoiceSubmitted = false;
+                TempStars.Hygienist.surveyButtonHandler( e, job.id );
+            }
         });
 
         app.onPageBeforeRemove( 'hygienist-job-completed', function( page ) {
@@ -85,6 +91,8 @@ TempStars.Pages.Hygienist.JobCompleted = (function() {
                     });
                 }
 
+                if (params.invoiceSubmitted)
+                    invoiceSubmitted = params.invoiceSubmitted;
             });
         }
     };
