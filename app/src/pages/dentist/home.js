@@ -5,7 +5,8 @@ TempStars.Pages.Dentist.Home = (function() {
     var interval,
         calendar,
         data,
-        pageInit;
+        pageInit,
+        surveyJobs;
 
     function init() {
         pageInit = app.onPageBeforeInit( 'dentist-home', function( page ) {
@@ -14,14 +15,93 @@ TempStars.Pages.Dentist.Home = (function() {
             displayCalendar( page.context );
             $$('#dentist-home-post-job-button').on( 'click', postJobHandler );
             TempStars.Analytics.track( 'Viewed Home Page' );
-            interval = setInterval( refreshPage, 5000 );
-            window.dentistInterval = interval;
+
+            console.log(data);
+            surveyJobs = [];
+            if (data.jobs) {
+                data.jobs = _.orderBy( data.jobs, ['shifts[0].shiftDate'], ['desc'] );
+                for (var i = 0; i < data.jobs.length; i++) {
+                    var job = data.jobs[i];
+                    if (job.hygienist && !job.hygienistRating) {
+                        if (job.status === TempStars.Job.status.COMPLETED)
+                            surveyJobs.push(i);
+                        else if (job.shifts && job.shifts.length > 0) {
+                            var curDate = new Date();
+                            var postedEnd = job.shifts[0].postedEnd;
+                            if (moment.utc(postedEnd).valueOf() <= moment.utc(curDate).valueOf())
+                                surveyJobs.push(i);
+                        }
+                    }
+                }
+                console.log(surveyJobs);
+                popupSurvey(0);
+            }
+            else
+                initTimer();
         });
 
         app.onPageBeforeRemove( 'dentist-home', function( page ) {
             $$('#dentist-home-post-job-button').off( 'click', postJobHandler );
             clearInterval( interval );
             delete window.dentistInterval;
+        });
+    }
+
+    function initTimer() {
+        interval = setInterval( refreshPage, 5000 );
+        window.dentistInterval = interval;
+    }
+
+    function popupSurvey( idx ) {
+        if (idx >= surveyJobs.length) {
+            initTimer();
+            return;
+        }
+
+        var text =
+            (data.jobs[surveyJobs[idx]].hygienist ? data.jobs[surveyJobs[idx]].hygienist.firstName + ' ' + data.jobs[surveyJobs[idx]].hygienist.lastName + '<br>' : '') +
+            moment( data.jobs[surveyJobs[idx]].shifts[0].shiftDate ).local().format('ddd, MMM D, YYYY') + '<br>' +
+            moment.utc( data.jobs[surveyJobs[idx]].shifts[0].postedStart ).local().format('h:mm a') + ' - ' +
+            moment.utc( data.jobs[surveyJobs[idx]].shifts[0].postedEnd ).local().format('h:mm a') + '<br>' +
+            'How happy would you be to have this hygienist work at your office again?';
+
+        app.modal({
+            title:  'Rate your Hygienist',
+            text: text,
+            verticalButtons: true,
+            buttons: [
+                {
+                    text: 'Very Happy',
+                    onClick: function() {
+                        app.alert('Great, they will be added to your favourites.', function() {
+                            saveSurvey( idx, TempStars.Rating.VERY_HAPPY );
+                        });
+                    }
+                },
+                {
+                    text: 'Pleased',
+                    onClick: function() {
+                        app.alert('Thanks, all set.', function() {
+                            saveSurvey( idx, TempStars.Rating.PLEASED );
+                        });
+                    }
+                },
+                {
+                    text: 'No Thank You!',
+                    onClick: function() {
+                        app.alert('Sorry, they will be added to your blocked list.', function() {
+                            saveSurvey( idx, TempStars.Rating.NO_THANK_YOU );
+                        });
+                    }
+                }
+            ]
+        });
+    }
+
+    function saveSurvey( idx, result ) {
+        TempStars.Api.saveHygienistRating( TempStars.User.getCurrentUser().dentistId, data.jobs[surveyJobs[idx]].id, {hygienistRating: result} )
+        .then( function() {
+            popupSurvey(idx + 1);
         });
     }
 
@@ -106,6 +186,7 @@ TempStars.Pages.Dentist.Home = (function() {
                 }
             }
         });
+        calendar.updateEvents( data.actionRequired );
     }
 
     function completedDayHandler(picker, dayContainer, dateYear, dateMonth, dateDay) {
