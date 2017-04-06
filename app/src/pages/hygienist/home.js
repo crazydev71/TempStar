@@ -3,11 +3,15 @@ TempStars.Pages.Hygienist.Home = (function() {
     'use strict';
 
     var interval,
-        calendar;
+        calendar,
+        data,
+        invoiceJobs,
+        invoiceSubmitted;
 
     function init() {
         app.onPageBeforeInit( 'hygienist-home', function( page ) {
-
+            data = page.context;
+            console.log(data);
             $$('#hygienist-home-available-jobs-button').on( 'click', availableJobsButtonHandler );
 
             var rating = TempStars.User.getCurrentUser().hygienist.starScore;
@@ -28,12 +32,140 @@ TempStars.Pages.Hygienist.Home = (function() {
                 $$('#hygienist-new-jobs-badge').hide();
             }
             TempStars.Analytics.track( 'Viewed Home Page' );
-            interval = setInterval( refreshPage, 5000 );
+
+            if (invoiceSubmitted) {
+                invoiceSubmitted = false;
+                surveyButtonHandler( TempStars.Hygienist.invoiceJobId );
+                return;
+            }
+            
+            if (typeof TempStars.Hygienist.invoiceStatus === 'undefined')
+                TempStars.Hygienist.invoiceStatus = [];
+            console.log( TempStars.Hygienist.invoiceStatus );
+
+            invoiceJobs = [];
+            if (data.jobs) {
+                data.jobs = _.orderBy( data.jobs, ['shifts[0].shiftDate'], ['asc'] );
+                for (var i = 0; i < data.jobs.length; i++) {
+                    var job = data.jobs[i];
+                    if (!job.invoice && !job.invoiceLater && !TempStars.Hygienist.invoiceStatus[job.id]) {
+                        if (job.status === TempStars.Job.status.COMPLETED) {
+                            invoiceJobs.push(i);
+                        }
+                        else if (job.shifts && job.shifts.length > 0) {
+                            var curDate = new Date();
+                            var postedEnd = job.shifts[0].postedEnd;
+                            if (moment.utc(postedEnd).valueOf() <= moment.utc(curDate).valueOf())
+                                invoiceJobs.push(i);
+                        }
+                    }
+                }
+
+                console.log(invoiceJobs);
+                popupInvoice(0);
+            }
+            else
+                initTimer();
         });
 
         app.onPageBeforeRemove( 'hygienist-home', function( page ) {
             clearInterval( interval );
             $$('#hygienist-home-available-jobs-button').off( 'click', availableJobsButtonHandler );
+        });
+    }
+
+    function initTimer() {
+        interval = setInterval( refreshPage, 5000 );
+    }
+
+    function popupInvoice( idx ) {
+        if (idx >= invoiceJobs.length) {
+            initTimer();
+            return;
+        }
+
+        var text = 
+            data.jobs[invoiceJobs[idx]].dentist.practiceName + '<br>' +
+            moment( data.jobs[invoiceJobs[idx]].shifts[0].shiftDate ).local().format('MMM D, ') + 
+            moment.utc( data.jobs[invoiceJobs[idx]].shifts[0].postedStart ).local().format('h:mm a') + ' - ' +
+            moment.utc( data.jobs[invoiceJobs[idx]].shifts[0].postedEnd ).local().format('h:mm a');
+
+        app.modal({
+            text: text,
+            title: 'Mark as complete and create/send invoice?',
+            buttons: [
+                {text: 'Yes', bold: true, onClick: function() {
+                    TempStars.Hygienist.invoiceJobId = data.jobs[invoiceJobs[idx]].id;
+                    TempStars.Hygienist.invoiceStatus[data.jobs[invoiceJobs[idx]].id] = true;
+                    TempStars.Hygienist.Router.goForwardPage( 'create-invoice', {}, data.jobs[invoiceJobs[idx]] );
+                }},
+                {text: 'I\'ll do It Later', onClick: function() {
+                    app.showPreloader('Saving Invoice Confirmation');
+                    TempStars.Api.updateJob( data.jobs[invoiceJobs[idx]].id, {invoiceLater: true})
+                    .then( function() {
+                        app.hidePreloader();
+                        popupInvoice(idx + 1);
+                    })
+                    .catch( function( err ) {
+                        app.hidePreloader();
+                        console.log( 'Error setting invoice later. Please try again.' );
+                    });
+                }}
+            ]
+        });
+    }
+
+    function surveyButtonHandler( jobId ) {
+        var idx = -1;
+        for (var i = 0; i < data.jobs.length; i++) {
+            if (data.jobs[i].id === jobId) {
+                idx = i;
+                break;
+            }
+        }
+        if (idx < 0)
+            return;
+
+        var title = 
+            "Survey Pops Up Here" + "<br><br>" +
+            "The survey would be the survey that evaluates that dentistId for the same shiftId that the Invoice was sent to.";
+        var text = 
+            data.jobs[idx].dentist.practiceName + '<br>' +
+            moment( data.jobs[idx].shifts[0].shiftDate ).local().format('MMM D, ') + 
+            moment.utc( data.jobs[idx].shifts[0].postedStart ).local().format('h:mm a') + ' - ' +
+            moment.utc( data.jobs[idx].shifts[0].postedEnd ).local().format('h:mm a') + '<br><br>' +
+            'How happy would you be to work at this office again?';
+
+        app.modal({
+          title: title,
+          text: text,
+          verticalButtons: true,
+          buttons: [
+            {
+                text: 'Very Happy',
+                onClick: function() {
+                    app.alert('Great, they will be added to your favourites.', function() {
+                        TempStars.Hygienist.saveDentistRating( jobId, TempStars.Rating.VERY_HAPPY );
+                    });
+                }
+            },
+            {
+                text: 'Pleased',
+                onClick: function() {
+                    app.alert('Thanks, all set.', function() {
+                        TempStars.Hygienist.saveDentistRating( jobId, TempStars.Rating.PLEASED );
+                    });
+                }
+            },
+            {
+                text: 'No Thank You!',
+                onClick: function() {
+                    app.alert('Sorry, they will be added to your blocked list.', function() {
+                        TempStars.Hygienist.saveDentistRating( jobId, TempStars.Rating.NO_THANK_YOU );
+                    });
+                }
+            }
+          ]
         });
     }
 
@@ -140,6 +272,7 @@ TempStars.Pages.Hygienist.Home = (function() {
                 }
             }
         });
+        calendar.updateEvents( data.actionRequired );
     }
 
     function completedDayHandler(picker, dayContainer, dateYear, dateMonth, dateDay) {
@@ -248,6 +381,9 @@ TempStars.Pages.Hygienist.Home = (function() {
                 .catch( function( err ) {
                     reject( err );
                 });
+
+                if (params.invoiceSubmitted)
+                    invoiceSubmitted = params.invoiceSubmitted;
             });
         }
     };

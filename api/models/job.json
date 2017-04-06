@@ -319,6 +319,21 @@
         "dataScale": 2,
         "nullable": "N"
       }
+    },
+    "invoiceLater": {
+      "type": "Number",
+      "required": false,
+      "length": null,
+      "precision": 3,
+      "scale": 0,
+      "mysql": {
+        "columnName": "invoiceLater",
+        "dataType": "tinyint",
+        "dataLength": null,
+        "dataPrecision": 3,
+        "dataScale": 0,
+        "nullable": "Y"
+      }
     }
   },
   "validations": [],
