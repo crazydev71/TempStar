@@ -156,7 +156,7 @@ TempStars.Pages.Dentist.PostJob = (function() {
             text += '<br>+$' + formData.bonus + '/hr incentive bonus<br>';
         }
 
-        app.confirm( text, 'Post Job?', function() {
+        app.confirm( text, 'Post Job?<br>We\'re on it.', function() {
             app.modal({
                 text: 'Our system is alerting our best available hygienists for this job. You’ll receive confirmation when this shift is filled. To add/modify an incentive bonus, tap the job date on the calendar.',
                 title: '',
