@@ -91,7 +91,7 @@ TempStars.Pages.Hygienist.JobCompleted = (function() {
                     });
                 }
 
-                if (params.invoiceSubmitted)
+                if (params && params.invoiceSubmitted)
                     invoiceSubmitted = params.invoiceSubmitted;
             });
         }

@@ -275,7 +275,10 @@ TempStars.Pages.Dentist.Home = (function() {
                         title: 'Don’t Wait Until It’s Urgent',
                         text: 'Tap "Get a Temp Hygienist" to enter payment info.  Try to do it soon, so you\'re not stranded when you need a good hygienist fast!',
                         buttons: [
-                            {    text: 'Got it!' }
+                            {    
+                                text: 'Got it!',
+                                bold: true
+                            }
                         ]
                       });
                   }

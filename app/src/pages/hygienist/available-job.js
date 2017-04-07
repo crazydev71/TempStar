@@ -65,10 +65,20 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
                              "Avg Recall: " + job.dentist.detail.avgApptTime + "<br>" +
                              "Charting: " + job.dentist.detail.charting + "<br>" +
                              "Software: " + job.dentist.detail.software + "<br>";
-                             
-                app.alert( officeInfo, "Office Information", function() {
-                    TempStars.Analytics.track( 'Booked Job' );
-                    TempStars.Hygienist.Router.goForwardPage('home');
+
+                app.modal({
+                    text: officeInfo,
+                    title: 'Office Information',
+                    buttons: [
+                        {
+                            text: 'Got it!',
+                            bold: true,
+                            onClick: function() {
+                                TempStars.Analytics.track( 'Booked Job' );
+                                TempStars.Hygienist.Router.goForwardPage('home');
+                            }
+                        }
+                    ]
                 });
             });
         })

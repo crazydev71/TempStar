@@ -382,7 +382,7 @@ TempStars.Pages.Hygienist.Home = (function() {
                     reject( err );
                 });
 
-                if (params.invoiceSubmitted)
+                if (params && params.invoiceSubmitted)
                     invoiceSubmitted = params.invoiceSubmitted;
             });
         }
