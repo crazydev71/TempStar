@@ -131,9 +131,7 @@ TempStars.Pages.Hygienist.Home = (function() {
         if (idx < 0)
             return;
 
-        var title = 
-            "Survey Pops Up Here" + "<br><br>" +
-            "The survey would be the survey that evaluates that dentistId for the same shiftId that the Invoice was sent to.";
+        var title = "Rate Dental Office";
         var text = 
             data.jobs[idx].dentist.practiceName + '<br>' +
             moment( data.jobs[idx].shifts[0].shiftDate ).local().format('MMM D, ') + 
