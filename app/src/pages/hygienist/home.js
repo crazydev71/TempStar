@@ -101,6 +101,9 @@ TempStars.Pages.Hygienist.Home = (function() {
                 }},
                 {text: 'I\'ll do It Later', onClick: function() {
                     app.showPreloader('Saving Invoice Confirmation');
+                    TempStars.Hygienist.invoiceJobId = data.jobs[invoiceJobs[idx]].id;
+                    TempStars.Hygienist.invoiceStatus[data.jobs[invoiceJobs[idx]].id] = true;
+
                     TempStars.Api.updateJob( data.jobs[invoiceJobs[idx]].id, {invoiceLater: true})
                     .then( function() {
                         app.hidePreloader();
@@ -108,7 +111,9 @@ TempStars.Pages.Hygienist.Home = (function() {
                     })
                     .catch( function( err ) {
                         app.hidePreloader();
-                        console.log( 'Error setting invoice later. Please try again.' );
+                        app.alert('Error saving invoice information. Please try again later.', function() {
+                            popupInvoice(idx + 1);
+                        });
                     });
                 }}
             ]
