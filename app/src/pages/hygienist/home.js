@@ -92,7 +92,7 @@ TempStars.Pages.Hygienist.Home = (function() {
 
         app.modal({
             text: text,
-            title: 'Mark as complete and create/send invoice?',
+            title: 'Create and Send Invoice for this job?',
             buttons: [
                 {text: 'Yes', bold: true, onClick: function() {
                     TempStars.Hygienist.invoiceJobId = data.jobs[invoiceJobs[idx]].id;

@@ -135,7 +135,7 @@ TempStars.Pages.DentistSignup2 = (function() {
                 {
                   text: 'I\'ll do it later',
                   onClick: function() {
-                        app.alert('You can enter your payment details at any time by opening the app and tapping the "Find a Hygienist" button. You only have to do it once. Your payment details are kept under bank-level encryption and security.', 'When you\'re ready', function () {
+                        app.alert('You can enter your payment details at any time by opening the app and tapping the "Get a Temp Hygienist" button. You only have to do it once. Your payment details are kept under bank-level encryption and security.', 'When you\'re ready', function () {
                             TempStars.App.gotoStartingPage();
                         });
                   }
