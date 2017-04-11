@@ -68,6 +68,25 @@ TempStars.Validators = (function() {
             else {
                 return "is invalid";
             }
+        },
+
+        validatePostalCodeFromProvince: function validatePostalCodeFromProvince(province, postalCode) {
+            if (postalCode === "")
+                return false;
+
+            var firstLetter = postalCode.substr(0,1);
+            if ( province === "ON" ) {
+                if ( firstLetter.match(/[KLMNP]/) )
+                    return true;
+            }
+            else if ( province === "BC" ) {
+                if ( firstLetter.match(/[V]/) )
+                    return true;
+            }
+            else
+                return true;
+
+            return false;
         }
 
     };
@@ -81,4 +100,5 @@ validate.validators.creditCardNumber = TempStars.Validators.validateCreditCardNu
 validate.validators.creditCardExpiryDate = TempStars.Validators.validateCreditCardExpiryDate;
 validate.validators.creditCardCVC = TempStars.Validators.validateCreditCardCVC;
 validate.validators.postalCodeIsOntario = TempStars.Validators.validatePostalCodeIsOntario;
+validate.validators.validatePostalCodeFromProvince = TempStars.Validators.validatePostalCodeFromProvince;
 validate.validators.time = TempStars.Validators.validateTime;

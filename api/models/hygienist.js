@@ -128,6 +128,8 @@ module.exports = function( Hygienist ) {
             //geocode = { lat: -1.0, lon: 1.0};
             var PostalCode = app.models.PostalCode;
             var prefix = hygienist.postalCode.substr(0,2);
+            if (hygienist.province === 'BC')
+                prefix = hygienist.postalCode.substr(0,1);
             return PostalCode.findOne( {where: {prefix: prefix} } );
         })
         .then( function( postalCode ) {

@@ -78,8 +78,7 @@ TempStars.Pages.DentistSignup1 = (function() {
             },
             postalCode: {
                 presence: true,
-                postalCode: true,
-                postalCodeIsOntario: true
+                postalCode: true
             },
             phone: {
                 presence: true,
@@ -128,6 +127,11 @@ TempStars.Pages.DentistSignup1 = (function() {
             if ( errors.phone ) {
                 $$('#dentist-signup1-form input[name="phone"]').addClass('error').next().html( errors.phone[0] );
             }
+            return;
+        }
+
+        if (!validate.validators.validatePostalCodeFromProvince(formData.province, formData.postalCode)) {
+            $$('#dentist-signup1-form input[name="postalCode"]').addClass('error').next().html( 'Postal code is not in selected province.' );
             return;
         }
 

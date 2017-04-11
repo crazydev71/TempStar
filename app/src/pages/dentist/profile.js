@@ -107,7 +107,6 @@ TempStars.Pages.Dentist.Profile = (function() {
             postalCode: {
                 presence: true,
                 postalCode: true,
-                postalCodeIsOntario: true
             },
             phone: {
                 presence: true,
@@ -226,6 +225,10 @@ TempStars.Pages.Dentist.Profile = (function() {
     }
 
     function saveProfile( formData ) {
+        if (!validate.validators.validatePostalCodeFromProvince(formData.province, formData.postalCode)) {
+            $$('#dentist-profile-form input[name="postalCode"]').addClass('error').next().html( 'Postal code is not in selected province.' );
+            return;
+        }
 
         app.showPreloader('Saving Profile');
         uploadPhoto()

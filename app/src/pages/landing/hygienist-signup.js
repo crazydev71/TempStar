@@ -84,8 +84,7 @@ TempStars.Pages.HygienistSignup = (function() {
             },
             postalCode: {
                 presence: true,
-                postalCode: true,
-                postalCodeIsOntario: true
+                postalCode: true
             },
             phone: {
                 presence: true,
@@ -159,6 +158,11 @@ TempStars.Pages.HygienistSignup = (function() {
                 $$('#hygienist-signup-form select[name="placements"]').addClass('error').next().html( errors.placements[0] );
             }
 
+            return;
+        }
+
+        if (!validate.validators.validatePostalCodeFromProvince(formData.province, formData.postalCode)) {
+            $$('#hygienist-signup-form input[name="postalCode"]').addClass('error').next().html( 'Postal code is not in selected province.' );
             return;
         }
 
