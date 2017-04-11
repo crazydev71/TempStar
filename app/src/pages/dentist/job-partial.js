@@ -42,7 +42,8 @@ TempStars.Pages.Dentist.JobPartial = (function() {
     }
 
     function removeIncentiveButtonHandler( e ) {
-        e.preventDefault();
+        if (e)
+            e.preventDefault();
         app.modal({
           title:  'Remove Incentive',
           text: 'Are you sure?',
@@ -74,17 +75,22 @@ TempStars.Pages.Dentist.JobPartial = (function() {
     }
 
     function addManualIncentive( bonus ) {
-        app.showPreloader('Adding Incentive');
-        TempStars.Api.updateJob( job.id, {bonus: bonus})
-        .then( function() {
-            app.hidePreloader();
-            TempStars.Analytics.track( 'Added Incentive' );
-            TempStars.Dentist.Router.reloadPage('job-partial', {id: job.id});
-        })
-        .catch( function( err ) {
-            app.hidePreloader();
-            app.alert( 'Error adding incentive. Please try again.' );
-        });
+        if (bonus === '0') {
+            removeIncentiveButtonHandler(null);
+        }
+        else {
+            app.showPreloader('Adding Incentive');
+            TempStars.Api.updateJob( job.id, {bonus: bonus})
+            .then( function() {
+                app.hidePreloader();
+                TempStars.Analytics.track( 'Added Incentive' );
+                TempStars.Dentist.Router.reloadPage('job-partial', {id: job.id});
+            })
+            .catch( function( err ) {
+                app.hidePreloader();
+                app.alert( 'Error adding incentive. Please try again.' );
+            });
+        }
     }
 
     function addIncentive( data ) {

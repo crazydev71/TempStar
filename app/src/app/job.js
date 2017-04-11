@@ -176,6 +176,17 @@ TempStars.Job = (function() {
                 '<div class="list-block" style="margin:10px;"><ul>' +
                 '<li>' +
                     '<label class="label-radio item-content">' +
+                    '<input type="radio" name="manual-incentive" value="0">' +
+                    '<div class="item-media">' +
+                        '<i class="icon icon-form-checkbox"></i>' +
+                    '</div>' +
+                    '<div class="item-inner">' +
+                    '<div class="item-title" style="text-align:left;font-size:14px;">+$0/hr' +
+                    '</div>' +
+                    '</label>' +
+                '</li>' +
+                '<li>' +
+                    '<label class="label-radio item-content">' +
                     '<input type="radio" name="manual-incentive" value="2">' +
                     '<div class="item-media">' +
                         '<i class="icon icon-form-checkbox"></i>' +
@@ -214,11 +225,11 @@ TempStars.Job = (function() {
                 text: incentivesHTML,
                 buttons: [
                     {
-                        text: 'Add Incentive',
+                        text: 'Confirm',
                         bold: true,
                         onClick: function( modal ) {
                             var incentiveAmt = $(modal).find('input[type=radio]:checked').val();
-                            if ( incentiveAmt > 0 ) {
+                            if ( incentiveAmt >= 0 ) {
                                 callback( incentiveAmt );
                             }
                         }
