@@ -925,13 +925,6 @@ console.log( 'hourlyRate: ' + hourlyRate );
         });
     };
 
-    Hygienist.remoteMethod( 'getCurrentRate', {
-        accepts: [
-            {arg: 'id', type: 'number', required: true}],
-        returns: { arg: 'result', type: 'object' },
-        http: { verb: 'get', path: '/:id/rate' }
-    });
-
 
     function inviteAdjustments(invites){
         var inviteRateAdjustment = 0;
@@ -987,6 +980,13 @@ console.log( 'hourlyRate: ' + hourlyRate );
         }
     }
 
+
+    Hygienist.remoteMethod( 'getCurrentRate', {
+        accepts: [
+            {arg: 'id', type: 'number', required: true}],
+        returns: { arg: 'result', type: 'object' },
+        http: { verb: 'get', path: '/:id/rate' }
+    });
     Hygienist.getCurrentRate = function( id, callback ) {
 
         var Hygienist = app.models.Hygienist;
@@ -1033,5 +1033,118 @@ console.log( 'hourlyRate: ' + hourlyRate );
             callback( err );
         });
     };
+
+
+
+
+    Hygienist.send = function( jobId, data, callback ) {
+
+        var Shift = app.models.Shift;
+        var Invoice = app.models.Invoice;
+        var Job = app.models.Job;
+        var Email = app.models.Email;
+        var jj;
+
+        // TODO send notification
+        console.log( 'send invoice for job: ' + jobId );
+
+        Shift.findOne( {where: {jobId: jobId}} )
+        .then( function( shift ) {
+            console.log( 'got shift');
+            // Update shift
+            return shift.updateAttributes({
+                actualStart: data.actualStart,
+                actualEnd: data.actualEnd,
+                totalHours: data.totalHours,
+                unpaidHours: data.unpaidHours,
+                billableHours: data.billableHours
+            });
+        })
+        .then( function() {
+            console.log( 'create invoice' );
+            // Create invoice
+            return Invoice.create({
+                jobId: jobId,
+                totalHours: data.totalHours,
+                totalUnpaidHours: data.unpaidHours,
+                totalBillableHours: data.billableHours,
+                hourlyRate: data.hourlyRate,
+                totalInvoiceAmt: data.totalAmt,
+                hygienistMarkedPaid: 0,
+                dentistMarkedPaid: 0,
+                sent: 1,
+                createdOn: data.createdOn,
+                sentOn: data.sentOn
+            });
+        })
+        .then( function( invoice ) {
+            return Job.findById( jobId );
+        })
+        .then( function( job ) {
+            jj = job.toJSON();
+            msg = 'You have a new invoice from  ';
+            msg += jj.hygienist.firstName + ' ' + jj.hygienist.lastName;
+            return push.send( msg, jj.dentist.user.platform, jj.dentist.user.registrationId );
+        })
+        .then( function() {
+            Email.send({
+                to: jj.dentist.user.email,
+                from: app.get('emailFrom'),
+                subject: 'Invoice from ' + jj.hygienist.firstName + ' ' + jj.hygienist.lastName,
+                html: data.html },
+                function(err) {
+                    if (err) {
+                        return console.log('error sending invoice email');
+                    }
+                    return;
+            });
+        })
+        .then( function() {
+            console.log( 'create invoice worked!' );
+            callback( null, {} );
+        })
+        .catch( function( err ) {
+            console.log( 'create invoice error: ' + err.message );
+            callback( err );
+        });
+    };
+
+
+
+
+
+    Hygienist.remoteMethod( 'sendInvite', {
+        accepts: [
+            {arg: 'userId', type: 'number', required: true},
+            {arg: 'data', type: 'object', http: { source: 'body' } } ],
+        returns: { arg: 'result', type: 'object' },
+        http: { verb: 'put', path: '/:userId/sendInvite' }
+    });
+
+    Hygienist.sendInvite = function(userId,data,callback){
+        var Email = app.models.Email;
+        var User = app.models.TSUser;
+        var theUser;
+
+        User.find( { where: { id: userId}} )
+        .then( function( u ) {
+            theUser = u;
+            Email.send({
+                to: data.email,
+                from: app.get('emailFrom'),
+                subject: 'Temp Stars - Invite Request',
+                text: 'Hello '+ data.firstName +'. Your colleauge has sent you an invite request for Temp Stars. When signing up at http://www.tempstars.ca enter the invite code: '+theUser[0].inviteCode +' to receive an extra $2 / hour on your first placement.'
+            }, function( err ) {
+                if ( err ) {
+                    console.log( err.message );
+                }
+                console.log( 'create invoice worked!' );
+                callback( null, {} );
+            });
+
+        });
+
+
+    }
 
 };

@@ -9,6 +9,7 @@ TempStars.Pages.Hygienist.Home = (function() {
         app.onPageBeforeInit( 'hygienist-home', function( page ) {
 
             $$('#hygienist-home-available-jobs-button').on( 'click', availableJobsButtonHandler );
+            //$$('#hygienist-home-invite-colleague').on( 'click', inviteColleagueHandler );
 
             var rating = TempStars.User.getCurrentUser().hygienist.starScore;
             $('#my-rating').starRating({
@@ -29,14 +30,39 @@ TempStars.Pages.Hygienist.Home = (function() {
             }
             TempStars.Analytics.track( 'Viewed Home Page' );
             interval = setInterval( refreshPage, 5000 );
+
+            $(document).on( 'opened', '.popover-raise-rate', openRaiseRatePopoverHandler );
+            $(document).on( 'closed', '.popover-raise-rate', closeRaiseRatePopoverHandler );
+
         });
 
         app.onPageBeforeRemove( 'hygienist-home', function( page ) {
             clearInterval( interval );
             $$('#hygienist-home-available-jobs-button').off( 'click', availableJobsButtonHandler );
+
+
+            $(document).off( 'opened', '.popover-raise-rate', openRaiseRatePopoverHandler );
+            $(document).off( 'closed', '.popover-raise-rate', closeRaiseRatePopoverHandler );
+
         });
     }
 
+
+    function openRaiseRatePopoverHandler( e ) {
+        // Forces resuming app to stay on page
+        window.cameraOpen = true;
+    }
+
+    function closeRaiseRatePopoverHandler(e) {
+        // Forces resuming app to go to main page
+        window.cameraOpen = false;
+    }
+
+/**
+    function inviteColleagueHandler(e){
+        TempStars.Hygienist.Router.goForwardPage('invite-colleague');
+    }
+**/
     function availableJobsButtonHandler(e) {
         e.preventDefault();
         var blockedUntil = TempStars.User.getCurrentUser().hygienist.blockedUntil;
@@ -188,12 +214,29 @@ TempStars.Pages.Hygienist.Home = (function() {
         getData: function( params ) {
             //TempStars.Logging.log( 'getting data for hygienist home page ' );
             return new Promise( function( resolve, reject ) {
+
+                
+                var data;
+                var rate;
+                var inviteRate;
+
                 Promise.props({
                     user: TempStars.User.getCurrentUser(),
                     all: TempStars.Hygienist.getAllJobs(),
-                    maxJob: TempStars.Hygienist.getMaxAvailableJobId()
+                    maxJob: TempStars.Hygienist.getMaxAvailableJobId(),
+                    hygienistId: TempStars.User.getCurrentUser().hygienistId
                 })
-                .then( function( data ) {
+                .then( function( d ) {
+                    data = d;
+                    return TempStars.Api.getHygienistRate( data.hygienistId );
+                })
+                .then( function( r ) {
+                    rate = r;
+
+                    data.rate = rate.result.rate;
+                    data.baseRate = rate.result.baseRate;
+                    data.inviteAdjustment = rate.result.inviteAdjustment;
+
                     TempStars.Logging.log( 'got data for hygienist home page ' );
                     data.jobs = data.all.jobs;
                     data.pos = data.all.pos;

@@ -307,6 +307,10 @@ TempStars.Api = (function() {
 
         getMinVersion: function getMinVersion() {
             return TempStars.Ajax.get( 'minVersion' );
+        },
+
+        sendInvite: function sendInvite(userId, data) {
+            return TempStars.Ajax.put( 'hygienists/' + userId + '/sendInvite', data, authToken );
         }
 
     };
