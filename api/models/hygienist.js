@@ -223,7 +223,7 @@ module.exports = function( Hygienist ) {
                 var jj = job.toJSON();
                 var jobLocation = new loopback.GeoPoint( { lng: jj.dentist.lon, lat: jj.dentist.lat} );
                 distance = loopback.GeoPoint.distanceBetween( jobLocation, hygienistLocation, {type: 'kilometers'});
-                if ( distance <= 110 && hygienist.provicne === jj.dentist.province ) {
+                if ( distance <= 110 && hygienist.province === jj.dentist.province ) {
                     jj.distance = distance.toFixed(1);
                     return jj;
                 }
