@@ -8,6 +8,10 @@ TempStars.Pages.Signup = (function() {
             $$('#signup-account-type-hygienist').on( 'change', toggleHygienist );
             $$('#signup-account-type-dentist').on( 'change', toggleDentist );
             $$('#signup-form input').on( 'keypress', keyHandler );
+
+            $(document).on( 'opened', '.popover-invite', openInvitePopoverHandler );
+            $(document).on( 'closed', '.popover-invite', closeInvitePopoverHandler );
+
             TempStars.Analytics.track( 'Viewed Create Account Page' );
         });
 
@@ -16,7 +20,21 @@ TempStars.Pages.Signup = (function() {
             $$('#signup-account-type-hygienist').off( 'change', toggleHygienist );
             $$('#signup-account-type-dentist').off( 'change', toggleDentist );
             $$('#signup-form input').off( 'keypress', keyHandler );
+
+            $(document).off( 'opened', '.popover-invite', openInvitePopoverHandler );
+            $(document).off( 'closed', '.popover-invite', closeInvitePopoverHandler );
+            
         });
+    }
+
+    function openInvitePopoverHandler( e ) {
+        // Forces resuming app to stay on page
+        window.cameraOpen = true;
+    }
+
+    function closeInvitePopoverHandler(e) {
+        // Forces resuming app to go to main page
+        window.cameraOpen = false;
     }
 
     function signupButtonHandler(e) {
