@@ -129,7 +129,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
                   strict: false
                 },
                 length: {
-                    is: 6
+                    is: 4
                 }
             }
         };
@@ -166,7 +166,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
             }
             if ( errors.CDHONumber ) {
                 // Make field name more readable
-                var msg = errors.CDHONumber[0].replace( /CDHONumber/i, 'CDHO num');
+                var msg = errors.CDHONumber[0].replace( /CDHONumber/i, 'Hyg License');
                 $$('#hygienist-profile-form input[name="CDHONumber"]').addClass('error').next().html( msg );
             }
             return;
