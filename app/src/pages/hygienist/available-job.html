@@ -23,7 +23,14 @@
                     {{time_format postedStart}} - {{time_format postedEnd}}
                 </div>
                 <div class="center-box" style="margin-bottom:10px;">
-                    <span style="font-weight:bold">${{../../rate}}/hr</span>
+
+                    <span style="font-weight:bold">${{../../baseRate}}/hr</span>
+                    
+                    {{#if ../../inviteAdjustment}}
+                    &nbsp;&nbsp;
+                    <span style="color:#6cc644;font-weight:bold;font-size:14px;">+ ${{../../inviteAdjustment}}/hr</span>
+                    {{/#if}}
+
                     {{#if ../../job.bonus}}
                     &nbsp;&nbsp;
                     <span style="color:#6cc644;font-weight:bold;font-size:14px;">+${{../../job.bonus}}/hr</span>

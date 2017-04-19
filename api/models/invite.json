@@ -70,6 +70,21 @@
         "dataScale": null,
         "nullable": "N"
       }
+    },
+    "userOnPlacement": {
+      "type": "Number",
+      "required": true,
+      "length": 1,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "userOnPlacement",
+        "dataType": "int",
+        "dataLength": 1,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "N"
+      }
     }
   },
   "validations": [],

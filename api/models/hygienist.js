@@ -338,11 +338,13 @@ module.exports = function( Hygienist ) {
 
     Hygienist.bookJob = function( hygienistId, jobId, data, callback ) {
 
+        var User = app.models.TSUser;
         var Job = app.models.Job;
         var Hygienist = app.models.Hygienist;
         var PartialOffer = app.models.PartialOffer;
         var Email = app.models.Email;
         var Region = app.models.Region;
+        var Invite = app.models.Invite;
 
         var rateAdjustment = 0;
         var hourlyRate;
@@ -351,7 +353,10 @@ module.exports = function( Hygienist ) {
         var hygienist;
         var numBooked;
 
-        console.log( 'book job' );
+        var rate; 
+        var user;
+        var userInviteCode;
+        var invites;
 
         // Get the hygienist
         Hygienist.findById( hygienistId )
@@ -363,7 +368,29 @@ module.exports = function( Hygienist ) {
             return Region.findById( h.regionId );
         })
         .then( function( r ) {
-            hourlyRate = getAdjustedRate( r.rate, hygienist.starScore );
+            rate = r;
+            console.log( 'hygienistId: ' + hygienistId );
+
+            return User.find( { where: { hygienistId: parseInt(hygienistId)}} );
+        })
+        .then( function( u ) {
+            user = u;
+            userInviteCode = user[0].inviteCode;
+
+            return Invite.find( { where: { inviteCode: userInviteCode}} );
+        })
+        .then( function( i ) {
+            invites = i;
+            /// GET ADJUSTMENTS 
+            var inviteAdjustment = inviteAdjustments(invites);
+
+            // UPDATE INVITE STATUS 
+            inviteStatusUpdate(user[0].id,invites);
+
+            var baseRate = getAdjustedRate( rate.rate, hygienist.starScore );
+            hourlyRate = baseRate + inviteAdjustment;
+
+            //hourlyRate = getAdjustedRate( r.rate, hygienist.starScore );
             return Job.findById( jobId );
         })
         .then( function( j ) {
@@ -919,7 +946,7 @@ console.log( 'hourlyRate: ' + hourlyRate );
                 inviteRateAdjustment = inviteRateAdjustment + 0.25;
             }
             // ADD $1.75
-            if(invites[i].status == 1){
+            if(invites[i].status == 1 && invites[i].userOnPlacement == 1){
                 inviteRateAdjustment = inviteRateAdjustment + 1.75;
             }
             // ADD $2.00
@@ -933,6 +960,32 @@ console.log( 'hourlyRate: ' + hourlyRate );
         }
 
         return inviteRateAdjustment;
+
+    }
+
+    function inviteStatusUpdate(userId,invites){
+        var Invite = app.models.Invite;
+
+        // UPDATE INVITE TABLE AS USER HAS NOW BOOKED A PAID PLACEMENT
+        Invite.updateAll({inviteUserId: userId}, {userOnPlacement: 1});
+
+        if(invites.length == 0){
+            return;
+        }
+
+        // UPDATE INVITE STATUS CODES
+        for(var i=0; i < invites.length; i++){
+            if(invites[i].status == 0){
+                Invite.updateAll({id: invites[i].id}, {status: 1});
+            }
+            if(invites[i].status == 1 && invites[i].userOnPlacement == 1){
+                Invite.updateAll({id: invites[i].id}, {status: 3});
+            }
+            if(invites[i].status == 2){
+                Invite.updateAll({id: invites[i].id}, {status: 3});
+            }
+            
+        }
 
     }
 

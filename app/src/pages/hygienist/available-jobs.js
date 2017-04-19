@@ -57,7 +57,6 @@ TempStars.Pages.Hygienist.AvailableJobs = (function() {
     }
 
     function getData() {
-
         return new Promise( function( resolve, reject ) {
             var hygienistId = TempStars.User.getCurrentUser().hygienistId;
             var inviteCode = TempStars.User.getCurrentUser().inviteCode;
@@ -73,7 +72,7 @@ TempStars.Pages.Hygienist.AvailableJobs = (function() {
 
                 data = {
                     jobs: jobs.result,
-                    rate: rate.result.hourlyRate,
+                    rate: rate.result.rate,
                     baseRate: rate.result.baseRate,
                     inviteAdjustment: rate.result.inviteAdjustment
                 };
@@ -137,7 +136,7 @@ TempStars.Pages.Hygienist.AvailableJobs = (function() {
     function jobPageHandler( e ) {
         var id = parseInt( $$(this).attr('data-id') );
         var jobData = _.find( data.jobs, { 'id': id });
-        TempStars.Hygienist.Router.goForwardPage('available-job', {}, {job: jobData, workHistory: {}, rate: data.rate} );
+        TempStars.Hygienist.Router.goForwardPage('available-job', {}, {job: jobData, workHistory: {}, rate: data.rate, baseRate: data.baseRate, inviteAdjustment: data.inviteAdjustment} );
     }
 
     return {
