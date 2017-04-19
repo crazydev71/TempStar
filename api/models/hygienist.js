@@ -967,7 +967,7 @@ console.log( 'hourlyRate: ' + hourlyRate );
         var Invite = app.models.Invite;
 
         // UPDATE INVITE TABLE AS USER HAS NOW BOOKED A PAID PLACEMENT
-        Invite.updateAll({inviteUserId: userId}, {userOnPlacement: 1});
+        Invite.updateAll({invitedUserId: userId}, {userOnPlacement: 1});
 
         if(invites.length == 0){
             return;
@@ -983,10 +983,8 @@ console.log( 'hourlyRate: ' + hourlyRate );
             }
             if(invites[i].status == 2){
                 Invite.updateAll({id: invites[i].id}, {status: 3});
-            }
-            
+            }   
         }
-
     }
 
     Hygienist.getCurrentRate = function( id, callback ) {
