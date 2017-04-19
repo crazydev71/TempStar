@@ -104,6 +104,8 @@ module.exports = function( Dentist ) {
             console.log( 'geocode: ', gc );
             var PostalCode = app.models.PostalCode;
             var prefix = dentist.postalCode.substr(0,2);
+            if (dentist.province === 'BC')
+                prefix = dentist.postalCode.substr(0,1);
             return PostalCode.findOne( {where: {prefix: prefix} } );
         })
         .then( function( postalCode ) {
@@ -230,6 +232,8 @@ module.exports = function( Dentist ) {
             //geocode = { lat: -1.0, lon: 1.0};
             var PostalCode = app.models.PostalCode;
             var prefix = dentist.postalCode.substr(0,2);
+            if (dentist.province === 'BC')
+                prefix = dentist.postalCode.substr(0,1);
             return PostalCode.findOne( {where: {prefix: prefix} } );
         })
         .then( function( postalCode ) {
