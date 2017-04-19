@@ -97,7 +97,7 @@ TempStars.Pages.HygienistSignup = (function() {
                   strict: false
                 },
                 length: {
-                    is: 6
+                    is: 4
                 }
             },
             placements: {
@@ -151,7 +151,7 @@ TempStars.Pages.HygienistSignup = (function() {
             }
             if ( errors.CDHONumber ) {
                 // Make field name more readable
-                var msg = errors.CDHONumber[0].replace( /CDHONumber/i, 'CDHO num');
+                var msg = errors.CDHONumber[0].replace( /CDHONumber/i, 'Hyg License');
                 $$('#hygienist-signup-form input[name="CDHONumber"]').addClass('error').next().html( msg );
             }
             if ( errors.placements ) {
