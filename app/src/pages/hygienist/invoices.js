@@ -85,7 +85,7 @@ TempStars.Pages.Hygienist.Invoices = (function() {
             TempStars.Hygienist.Router.goForwardPage( 'invoice', {}, invoiceData );
         }
         else {
-            TempStars.Hygienist.Router.goForwardPage( 'create-invoice', {}, invoiceData );
+            TempStars.Hygienist.gotoInvoicePage(invoiceData);
         }
     }
 

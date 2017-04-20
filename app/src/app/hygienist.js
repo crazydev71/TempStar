@@ -88,6 +88,22 @@ TempStars.Hygienist = (function() {
                 }
               ]
             });
+        },
+
+        gotoInvoicePage: function gotoInvoicePage(invoiceData) {
+            app.modal({
+                text: 'When creating your invoice, bill only for the hours you worked. To prevent misunderstandings, confirm your invoice details with the office manager before submitting your invoice.',
+                title: 'Important:',
+                buttons: [
+                    {
+                        text: 'Got it!',
+                        bold: true,
+                        onClick: function() {
+                            TempStars.Hygienist.Router.goForwardPage( 'create-invoice', {}, invoiceData );
+                        }
+                    }
+                ]
+            });
         }
 
     };

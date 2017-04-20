@@ -67,7 +67,7 @@ TempStars.Pages.Hygienist.TodaysJob = (function() {
             TempStars.Hygienist.Router.goForwardPage( 'invoice', {}, job );
         }
         else {
-            TempStars.Hygienist.Router.goForwardPage( 'create-invoice', {}, job );
+            TempStars.Hygienist.gotoInvoicePage(job);
         }
     }
 

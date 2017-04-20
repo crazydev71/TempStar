@@ -97,7 +97,8 @@ TempStars.Pages.Hygienist.Home = (function() {
                 {text: 'Yes', bold: true, onClick: function() {
                     TempStars.Hygienist.invoiceJobId = data.jobs[invoiceJobs[idx]].id;
                     TempStars.Hygienist.invoiceStatus[data.jobs[invoiceJobs[idx]].id] = true;
-                    TempStars.Hygienist.Router.goForwardPage( 'create-invoice', {}, data.jobs[invoiceJobs[idx]] );
+
+                    TempStars.Hygienist.gotoInvoicePage(data.jobs[invoiceJobs[idx]]);
                 }},
                 {text: 'I\'ll do It Later', onClick: function() {
                     app.showPreloader('Saving Invoice Confirmation');
