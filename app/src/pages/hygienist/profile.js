@@ -5,6 +5,8 @@ TempStars.Pages.Hygienist.Profile = (function() {
 
     var data;
     var initialized = false;
+    var maxCDHOLength = 6;
+    var CDHOLabel = 'CDHO Reg';
 
     function init() {
 
@@ -30,7 +32,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
             $$('#hygienist-profile-web-resume').on( 'change', webResumeHandler );
 
             $$('#hygienist-profile-form input').on( 'change', formChangeHandler );
-            $$('#hygienist-profile-form select').on( 'change', formChangeHandler );
+            $$('#hygienist-profile-province').on( 'change', formChangeHandler );
         });
 
         app.onPageBeforeInit( 'hygienist-profile', function( page ) {
@@ -60,7 +62,9 @@ TempStars.Pages.Hygienist.Profile = (function() {
                 $$('#hygienist-profile-resume-add').hide();
             }
 
-            $$('#hygienist-profile-form select[name="province"]').val(data.province).prop('selected', true);
+            $$('#hygienist-profile-province').val(data.province).prop('selected', true);
+            updateCDHOField(data.province);
+
             TempStars.Analytics.track( 'Viewed Profile' );
         });
 
@@ -89,6 +93,24 @@ TempStars.Pages.Hygienist.Profile = (function() {
 
     function formChangeHandler(e) {
         app.alert( 'Remember to Save changes!' );
+        if (e.target.name === 'province') {
+            updateCDHOField($$('#hygienist-profile-province').val());
+        }
+    }
+
+    function updateCDHOField(value) {
+        if (value === 'ON') {
+            maxCDHOLength = 6;
+            CDHOLabel = 'CDHO Reg';
+            $$('#hygienist-profile-cdho-label').html('CDHO Reg. #');
+            $$('#hygienist-profile-cdho-value').attr('placeholder', 'CDHO Reg');
+        }
+        else {
+            maxCDHOLength = 4;
+            CDHOLabel = 'CDHBC Reg';
+            $$('#hygienist-profile-cdho-label').html('CDHBC Reg. #');
+            $$('#hygienist-profile-cdho-value').attr('placeholder', 'CDHBC Reg');
+        }
     }
 
     function submitHandler(e) {
@@ -129,7 +151,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
                   strict: false
                 },
                 length: {
-                    is: 4
+                    is: maxCDHOLength
                 }
             }
         };
@@ -166,7 +188,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
             }
             if ( errors.CDHONumber ) {
                 // Make field name more readable
-                var msg = errors.CDHONumber[0].replace( /CDHONumber/i, 'Hyg License');
+                var msg = errors.CDHONumber[0].replace( /CDHONumber/i, CDHOLabel);
                 $$('#hygienist-profile-form input[name="CDHONumber"]').addClass('error').next().html( msg );
             }
             return;

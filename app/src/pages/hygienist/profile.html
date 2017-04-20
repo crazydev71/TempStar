@@ -79,7 +79,7 @@
                         <div class="item-inner">
                           <div class="item-title label">Province</div>
                           <div class="item-input">
-                            <select class="no-fastclick" name="province">
+                            <select class="no-fastclick" name="province" id="hygienist-profile-province">
                               <option value="">select province &dtrif; </option>
                               <option value="ON">Ontario</option>
                               <option value="BC">British Columbia</option>
@@ -122,9 +122,9 @@
 
                       <li class="item-content">
                         <div class="item-inner">
-                          <div class="item-title label">Hyg License #</div>
+                          <div class="item-title label" id="hygienist-profile-cdho-label">CDHO Reg. #</div>
                           <div class="item-input">
-                            <input type="number" pattern="[0-9]*" inputmode="numeric" name="CDHONumber" maxlength="6" placeholder="Hyg License" value="{{CDHONumber}}">
+                            <input type="number" pattern="[0-9]*" inputmode="numeric" id="hygienist-profile-cdho-value" name="CDHONumber" maxlength="6" placeholder="CDHO Reg" value="{{CDHONumber}}">
                             <div class="field-error-msg"></div>
                           </div>
                         </div>

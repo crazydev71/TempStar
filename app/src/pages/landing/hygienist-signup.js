@@ -1,5 +1,8 @@
 TempStars.Pages.HygienistSignup = (function() {
+
     var userAccount;
+    var maxCDHOLength = 6;
+    var CDHOLabel = 'CDHO Reg';
 
     function init() {
 
@@ -14,6 +17,7 @@ TempStars.Pages.HygienistSignup = (function() {
             $$('#hygienist-signup-form input').on( 'keypress', keyHandler );
             $$('#hygienist-signup-web-photo').on( 'change', webPhotoHandler );
             $$('#hygienist-signup-web-resume').on( 'change', webResumeHandler );
+            $$('#hygienist-signup-province').on( 'change', provinceChangeHandler );
             mainView.showNavbar();
 
             userAccount = TempStars.User.getCurrentUser();
@@ -32,6 +36,7 @@ TempStars.Pages.HygienistSignup = (function() {
             $$('#hygienist-signup-web-resume').off( 'change', webResumeHandler );
             $$('#hygienist-signup-form input[name="postalCode"]').off( 'focusout', upcasePostalCode );
             $$('#hygienist-signup-form input').off( 'keypress', keyHandler );
+            $$('#hygienist-signup-province').off( 'change', provinceChangeHandler );
         });
 
         // app.onPageAfterAnimation( 'hygienist-signup', function( page ) {
@@ -67,6 +72,22 @@ TempStars.Pages.HygienistSignup = (function() {
         }, 3000 );
     }
 
+    function provinceChangeHandler( e ) {
+        var value = e.target.value;
+        if (value === 'ON') {
+            maxCDHOLength = 6;
+            CDHOLabel = 'CDHO Reg';
+            $$('#hygienist-signup-cdho-label').html('CDHO Reg. #');
+            $$('#hygienist-signup-cdho-value').attr('placeholder', 'CDHO Reg');
+        }
+        else {
+            maxCDHOLength = 4;
+            CDHOLabel = 'CDHBC Reg';
+            $$('#hygienist-signup-cdho-label').html('CDHBC Reg. #');
+            $$('#hygienist-signup-cdho-value').attr('placeholder', 'CDHBC Reg');
+        }
+    }
+
     function doneButtonHandler( e ) {
 
         var constraints = {
@@ -97,7 +118,7 @@ TempStars.Pages.HygienistSignup = (function() {
                   strict: false
                 },
                 length: {
-                    is: 4
+                    is: maxCDHOLength
                 }
             },
             placements: {
@@ -151,7 +172,7 @@ TempStars.Pages.HygienistSignup = (function() {
             }
             if ( errors.CDHONumber ) {
                 // Make field name more readable
-                var msg = errors.CDHONumber[0].replace( /CDHONumber/i, 'Hyg License');
+                var msg = errors.CDHONumber[0].replace( /CDHONumber/i, CDHOLabel);
                 $$('#hygienist-signup-form input[name="CDHONumber"]').addClass('error').next().html( msg );
             }
             if ( errors.placements ) {
