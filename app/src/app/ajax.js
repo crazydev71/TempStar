@@ -13,7 +13,7 @@ TempStars.Ajax = (function() {
         cache: false,
         contentType: 'application/json',
         dataType: 'json',
-        timeout: 10 * 1000
+        timeout: 60 * 1000
     };
 
     function init() {

@@ -22,6 +22,10 @@ TempStars.Pages.HygienistSignup = (function() {
 
             userAccount = TempStars.User.getCurrentUser();
             $$( '#hygienist-signup-email').html( userAccount.email );
+            var formData = app.formToJSON('#hygienist-signup-form');
+            if (formData.province !== "" && formData.province !== null)
+                updateCDHOField(formData.province);
+
             TempStars.Analytics.track( 'Viewed Hygienist Signup Page' );
         });
 
@@ -73,7 +77,10 @@ TempStars.Pages.HygienistSignup = (function() {
     }
 
     function provinceChangeHandler( e ) {
-        var value = e.target.value;
+        updateCDHOField(e.target.value);
+    }
+
+    function updateCDHOField(value) {
         if (value === 'ON') {
             maxCDHOLength = 6;
             CDHOLabel = 'CDHO Reg';
@@ -339,12 +346,13 @@ TempStars.Pages.HygienistSignup = (function() {
 
                 var options = new FileUploadOptions();
                 options.fileName = uuid.v4() + '.jpg';
+                options.headers = { 'Authorization': TempStars.Api.getAuthToken() };
                 var ft = new FileTransfer();
                 var uploadURL = TempStars.Config.server.baseUrl + 'containers/tempstars.ca/upload';
                 ft.upload( photoURI,
                    encodeURI( uploadURL ),
                    function( result ) {
-                      resolve( options.fileName );
+                      resolve( TempStars.Config.bucket.baseUrl + options.fileName );
                    },
                    function( error ) {
                       reject( error );
@@ -385,7 +393,7 @@ TempStars.Pages.HygienistSignup = (function() {
                 var uploadURL = 'containers/tempstars.ca/upload';
                 var formData = new FormData();
                 formData.append( 'photo', blob, fileName );
-                TempStars.Ajax.upload( uploadURL, formData )
+                TempStars.Ajax.upload( uploadURL, formData, TempStars.Api.getAuthToken() )
                 .then( function( result ) {
                     resolve( TempStars.Config.bucket.baseUrl + fileName );
                 })
@@ -406,7 +414,10 @@ TempStars.Pages.HygienistSignup = (function() {
                 return;
             }
 
-            if ( ! window.cordova ) {
+            if (  window.cordova ) {
+                app.alert( 'Resum&eacute;s can\'t be uploaded from your phone/tablet. Sign in to your account from your computer to upload your resum&eacute;.' );
+            }
+            else {
 
                 // Browser
                 var ext, f, dotIndex;
@@ -453,7 +464,7 @@ TempStars.Pages.HygienistSignup = (function() {
                 var uploadURL = 'containers/tempstars.ca/upload';
                 var formData = new FormData();
                 formData.append( 'resume', blob, fileName );
-                TempStars.Ajax.upload( uploadURL, formData )
+                TempStars.Ajax.upload( uploadURL, formData, TempStars.Api.getAuthToken() )
                 .then( function( result ) {
                     resolve( TempStars.Config.bucket.baseUrl + fileName );
                 })
