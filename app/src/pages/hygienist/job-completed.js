@@ -15,7 +15,7 @@ TempStars.Pages.Hygienist.JobCompleted = (function() {
 
             if (invoiceSubmitted) {
                 invoiceSubmitted = false;
-                TempStars.Hygienist.surveyButtonHandler( null, job.id );
+                TempStars.Hygienist.surveyButtonHandler( null, job );
             }
         });
 
@@ -61,7 +61,7 @@ TempStars.Pages.Hygienist.JobCompleted = (function() {
 
     function surveyButtonHandler( e ) {
         e.preventDefault();
-        TempStars.Hygienist.surveyButtonHandler( e, job.id );
+        TempStars.Hygienist.surveyButtonHandler( e, job );
     }
 
     return {

@@ -101,7 +101,7 @@ TempStars.Pages.Hygienist.TodaysJob = (function() {
 
     function surveyButtonHandler( e ) {
         e.preventDefault();
-        TempStars.Hygienist.surveyButtonHandler( e, job.id );
+        TempStars.Hygienist.surveyButtonHandler( e, job );
     }
 
     return {

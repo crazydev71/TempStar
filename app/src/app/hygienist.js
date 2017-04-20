@@ -56,37 +56,45 @@ TempStars.Hygienist = (function() {
             });
         },
 
-        surveyButtonHandler: function surveyButtonHandler( e, jobId ) {
+        surveyButtonHandler: function surveyButtonHandler( e, job ) {
+            var title = "Rate Dental Office";
+            var text = 
+                job.dentist.practiceName + '<br>' +
+                moment( job.shifts[0].shiftDate ).local().format('MMM D, ') + 
+                moment.utc( job.shifts[0].postedStart ).local().format('h:mm a') + ' - ' +
+                moment.utc( job.shifts[0].postedEnd ).local().format('h:mm a') + '<br><br>' +
+                'How happy would you be to work at this office again?';
+
             app.modal({
-              title:  'Rate Dental Office',
-              text: 'How happy would you be to work at this office again?',
-              verticalButtons: true,
-              buttons: [
-                {
-                    text: 'Very Happy',
-                    onClick: function() {
-                        app.alert('Great, they will be added to your favourites.', function() {
-                            TempStars.Hygienist.saveDentistRating( jobId, TempStars.Rating.VERY_HAPPY );
-                        });
+                title: title,
+                text: text,
+                verticalButtons: true,
+                buttons: [
+                    {
+                        text: 'Very Happy',
+                        onClick: function() {
+                            app.alert('Great, they will be added to your favourites.', function() {
+                                TempStars.Hygienist.saveDentistRating( job.id, TempStars.Rating.VERY_HAPPY );
+                            });
+                        }
+                    },
+                    {
+                        text: 'Pleased',
+                        onClick: function() {
+                            app.alert('Thanks, all set.', function() {
+                                TempStars.Hygienist.saveDentistRating( job.id, TempStars.Rating.PLEASED );
+                            });
+                        }
+                    },
+                    {
+                        text: 'No Thank You!',
+                        onClick: function() {
+                            app.alert('Sorry, they will be added to your blocked list.', function() {
+                                TempStars.Hygienist.saveDentistRating( job.id, TempStars.Rating.NO_THANK_YOU );
+                            });
+                        }
                     }
-                },
-                {
-                    text: 'Pleased',
-                    onClick: function() {
-                        app.alert('Thanks, all set.', function() {
-                            TempStars.Hygienist.saveDentistRating( jobId, TempStars.Rating.PLEASED );
-                        });
-                    }
-                },
-                {
-                    text: 'No Thank You!',
-                    onClick: function() {
-                        app.alert('Sorry, they will be added to your blocked list.', function() {
-                            TempStars.Hygienist.saveDentistRating( jobId, TempStars.Rating.NO_THANK_YOU );
-                        });
-                    }
-                }
-              ]
+                ]
             });
         },
 
