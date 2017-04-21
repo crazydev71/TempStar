@@ -387,8 +387,10 @@ module.exports = function( Hygienist ) {
         })
         .then( function( usedInvite ) {
 
-            if(usedInvite.length != 0){
-                invitedAdjustment = 2;
+            for(var i=0; i < usedInvite.length; i++){
+                if(usedInvite[i].inviteCode != 0){
+                    invitedAdjustment = 2;
+                }
             }
 
             /// GET ADJUSTMENTS 
@@ -1042,8 +1044,10 @@ console.log( 'hourlyRate: ' + hourlyRate );
         .then( function( usedInvite ) {
             /// GET ADJUSTMENTS
 
-            if(usedInvite.length != 0){
-                invitedAdjustment = 2;
+            for(var i=0; i < usedInvite.length; i++){
+                if(usedInvite[i].inviteCode != 0){
+                    invitedAdjustment = 2;
+                }
             }
 
             var inviteAdjustment = inviteAdjustments(invites) + invitedAdjustment;
