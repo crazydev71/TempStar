@@ -43,7 +43,7 @@ TempStars.Api = (function() {
 
         addInvite: function addInvite(userId,inviteCode){
             return TempStars.Ajax.post( 'invites',
-                { invitedUserId: userId, inviteCode: inviteCode, status: 0 }, authToken );
+                { invitedUserId: userId, inviteCode: inviteCode, status: 0, userOnPlacement:0 }, authToken );
         },
 
         saveHygienist: function saveHygienist( hygienist ) {
