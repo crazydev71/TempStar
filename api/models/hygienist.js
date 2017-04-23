@@ -947,9 +947,14 @@ console.log( 'hourlyRate: ' + hourlyRate );
 
         for(var i=0; i < invites.length; i++){
             // ADD $0.25
-            if(invites[i].status == 0){
+            if(invites[i].status == 0 && invites[i].userOnPlacement == 0){
                 inviteRateAdjustment = inviteRateAdjustment + 0.25;
             }
+            // ADD $2.00
+            if(invites[i].status == 0 && invites[i].userOnPlacement == 1){
+                inviteRateAdjustment = inviteRateAdjustment + 2.00;
+            }
+            
             // ADD $1.75
             if(invites[i].status == 1 && invites[i].userOnPlacement == 1){
                 inviteRateAdjustment = inviteRateAdjustment + 1.75;
@@ -958,10 +963,7 @@ console.log( 'hourlyRate: ' + hourlyRate );
             if(invites[i].status == 2){
                 inviteRateAdjustment = inviteRateAdjustment + 2;
             }
-            // ADD $2.00
-            if(invites[i].status == 0 && invites[i].userOnPlacement == 1){
-                inviteRateAdjustment = inviteRateAdjustment + 2.00;
-            }
+            
             // ADD $0
             if(invites[i].status == 3){
                 //inviteRateAdjustment = inviteRateAdjustment + 0;

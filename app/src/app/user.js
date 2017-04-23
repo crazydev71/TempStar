@@ -222,6 +222,22 @@ TempStars.User = (function() {
             });
         },
 
+        checkUserInviteCode: function checkUserInviteCode(inviteCode){
+            return new Promise( function( resolve, reject ) {
+                TempStars.Api.getUserByInvite( inviteCode )
+                .then( function( user ) {
+                    if(user.length== 0){
+                        return false;
+                    }else{
+                        return true;
+                    }
+                })
+                .catch( function( err ) {
+                    reject( err );
+                });
+            });
+        },
+
         create: function create( email, password, role, inviteCode ) {
             return new Promise( function( resolve, reject ) {
                 TempStars.Api.createAccount( email, password, role, inviteCode )

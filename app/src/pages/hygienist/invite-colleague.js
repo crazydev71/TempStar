@@ -55,11 +55,23 @@ TempStars.Pages.Hygienist.InviteColleague = (function() {
         TempStars.Api.sendInvite( user.id, formData )
             .then( function() {
                 app.hidePreloader();
-                app.alert( 'We just send an invitation e-mail to your colleague. When she signs up, she\'ll earn an extra $2 an hour on her first placement, and you will earn an extra $0.25 on your next placement. Once she goes on her first placement, you\'ll earn an extra $1.75 on your next placement!','Thank You');
+                //app.alert( 'We just sent an invitation e-mail to '+formData.firstName+'. When she signs up, '+formData.firstName+' will earn an extra $2/hr on her first placement. And you\'ll earn an extra $.25/hr on your next placement. When '+formData.firstName+' completes her first placement, you\'ll earn an extra $1.75/hr on your next placement! For details see <a href="http://www.tempstars.ca/invite">www.tempstars.ca/invite</a>','Thank You');
+
+                 app.confirm('We just sent an invitation e-mail to '+formData.firstName+'. When she signs up, '+formData.firstName+' will earn an extra $2/hr on her first placement. And you\'ll earn an extra $.25/hr on your next placement. When '+formData.firstName+' completes her first placement, you\'ll earn an extra $1.75/hr on your next placement! For details see <a href="http://www.tempstars.ca/invite">www.tempstars.ca/invite</a><br/><br/> Invite Another Colleague?', 'Thank You!', 
+                  function () {
+                    //app.alert('You clicked Ok button');
+                  },
+                  function () {
+                    TempStars.Hygienist.Router.goForwardPage('home');
+                  }
+                );
+
+                document.getElementById("invite-colleague-form").reset();
+
             })
             .catch( function( err ) {
                 app.hidePreloader();
-                app.alert( 'Error sending invoice. Please try again' );
+                app.alert( 'Error sending invite. Please try again' );
             });
 
     }

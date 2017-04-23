@@ -41,6 +41,10 @@ TempStars.Api = (function() {
                 { email: email, password: password, role: role }, authToken );
         },
 
+        getUserByInvite: function getUserByInvite( inviteCode ) {
+            return TempStars.Ajax.get( 'tsusers?filter=[where][inviteCode]='+inviteCode, null, authToken );
+        },
+
         addInvite: function addInvite(userId,inviteCode){
             return TempStars.Ajax.post( 'invites',
                 { invitedUserId: userId, inviteCode: inviteCode, status: 0, userOnPlacement:0 }, authToken );
