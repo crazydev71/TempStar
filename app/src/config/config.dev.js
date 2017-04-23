@@ -9,7 +9,7 @@ TempStars.Config = (function() {
         server: {
             authUserName: 'riff',
             authPassword: 'raff',
-            baseUrl: "https://api.tempstars.info/v2/"
+            baseUrl: "https://api.tempstars.net/v2/"
         },
         bucket: {
             baseUrl: 'https://s3.amazonaws.com/tempstars.ca/'
@@ -29,7 +29,7 @@ TempStars.Config = (function() {
             token: '399a45b6eea7aea3f7fb578e85cf9db6'
         },
         web: {
-            appUrl: 'https://app.tempstars.info'
+            appUrl: 'https://app.tempstars.net'
         },
         debug: true
     };
