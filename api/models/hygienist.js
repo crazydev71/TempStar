@@ -1226,6 +1226,7 @@ console.log( 'hourlyRate: ' + hourlyRate );
             emailMsg += '<p>Over 180 hygienists trust TempStars to connect them with dental offices for their temping placements.  When you join, be sure to use '+hygienist.firstName +'’s Invite Code to earn your bonus +$2/hr on your first job.</p>';
             emailMsg += '<p><a href="https://app2.tempstars.ca">Join TempStars</a> using '+hygienist.firstName +'’s Invite Code <strong>'+theUser[0].inviteCode +'</strong> </p>';
             emailMsg += '<p>Thanks '+data.firstName +', we look forward to having you as a member of TempStars Nation!</p>';
+            emailMsg += '<p>Kindest regards,<br/>James Younger, DDS<br/>Founder/CEO, TempStars</p>';
 
             Email.send({
                 to: data.email,
