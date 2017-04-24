@@ -87,6 +87,10 @@ TempStars.Pages.Hygienist.TodaysJob = (function() {
 
     function completeJob() {
         app.showPreloader('Updating Job');
+
+        //UPDATE INVITE STATUS
+        TempStars.Api.updateInviteStatus(TempStars.User.getCurrentUser().hygienistId);
+
         TempStars.Api.updateJob( job.id, {status: TempStars.Job.status.COMPLETED} )
         .then( function() {
             app.hidePreloader();

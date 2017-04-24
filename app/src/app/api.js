@@ -226,6 +226,11 @@ TempStars.Api = (function() {
            {lastModifiedOn: lastModifiedOn}, authToken ).minDelay(1000);
         },
 
+        updateInviteStatus: function updateInviteStatus( hygienistId ) {
+            return TempStars.Ajax.put( 'hygienists/' + hygienistId + '/updateInviteStatus',
+           {}, authToken ).minDelay(1000);
+        },
+
         makePartialOffer: function makePartialOffer( hygienistId, jobId, data ) {
             return TempStars.Ajax.post( 'hygienists/' + hygienistId + '/jobs/' + jobId + '/partialoffer',
                 data, authToken ).minDelay(1000);

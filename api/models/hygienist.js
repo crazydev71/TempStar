@@ -327,6 +327,51 @@ module.exports = function( Hygienist ) {
         });
     };
 
+
+    Hygienist.remoteMethod( 'updateInviteStatus', {
+        accepts: [
+            {arg: 'hygienistId', type: 'number', required: true},
+            {arg: 'data', type: 'object', http: { source: 'body' } } ],
+        returns: { arg: 'result', type: 'object' },
+        http: { verb: 'put', path: '/:hygienistId/updateInviteStatus' }
+    });
+
+    Hygienist.updateInviteStatus = function( hygienistId, data, callback ) {
+
+        var User = app.models.TSUser;
+        var Hygienist = app.models.Hygienist;
+        var Invite = app.models.Invite;
+        var hygienist;
+        var user;
+        var userInviteCode;
+        var invites;
+
+        // Get the hygienist
+        Hygienist.findById( hygienistId )
+        .then( function( h ) {
+            hygienist = h;
+
+            return User.find( { where: { hygienistId: parseInt(hygienistId)}} );
+        })
+        .then( function( u ) {
+            user = u;
+            userInviteCode = user[0].inviteCode;
+
+            return Invite.find( { where: { inviteCode: userInviteCode}} );
+        })
+        .then( function( i ) {
+            invites = i;
+            inviteStatusUpdate(user[0].id,invites);
+            console.log( 'invite status update complete!' );
+            callback( null, {} );
+        })
+        .catch( function( err ) {
+            console.log( 'invite status update error!' );
+            callback( err );
+        });
+    };
+
+
     Hygienist.remoteMethod( 'bookJob', {
         accepts: [
             {arg: 'hygienistId', type: 'number', required: true},
@@ -398,7 +443,7 @@ module.exports = function( Hygienist ) {
             inviteBonus = inviteAdjustments(invites) + invitedAdjustment;
 
             // UPDATE INVITE STATUS 
-            inviteStatusUpdate(user[0].id,invites);
+            //inviteStatusUpdate(user[0].id,invites);
 
             var baseRate = getAdjustedRate( rate.rate, hygienist.starScore );
             hourlyRate = baseRate;
