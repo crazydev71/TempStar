@@ -358,6 +358,7 @@ module.exports = function( Hygienist ) {
         var userInviteCode;
         var invites;
         var invitedAdjustment = 0;
+        var inviteBonus; 
 
         // Get the hygienist
         Hygienist.findById( hygienistId )
@@ -394,13 +395,13 @@ module.exports = function( Hygienist ) {
             }
 
             /// GET ADJUSTMENTS 
-            var inviteAdjustment = inviteAdjustments(invites) + invitedAdjustment;
+            inviteBonus = inviteAdjustments(invites) + invitedAdjustment;
 
             // UPDATE INVITE STATUS 
             inviteStatusUpdate(user[0].id,invites);
 
             var baseRate = getAdjustedRate( rate.rate, hygienist.starScore );
-            hourlyRate = baseRate + inviteAdjustment;
+            hourlyRate = baseRate;
 
             //hourlyRate = getAdjustedRate( r.rate, hygienist.starScore );
             return Job.findById( jobId );
@@ -423,8 +424,8 @@ module.exports = function( Hygienist ) {
 
             // Add incentive bonus
             hourlyRate += job.bonus;
-console.log( 'bonus: ' + job.bonus );
-console.log( 'final rate: ' + hourlyRate );
+            console.log( 'bonus: ' + job.bonus );
+            console.log( 'final rate: ' + hourlyRate );
             return Job.count({ hygienistId: hygienistId, startDate: job.startDate });
         })
         .then( function( alreadyBooked ) {
@@ -438,6 +439,7 @@ console.log( 'final rate: ' + hourlyRate );
                 hygienistId: hygienistId,
                 bookedOn: moment.utc().format('YYYY-MM-DD HH:mm:ss'),
                 hourlyRate: hourlyRate,
+                inviteBonus: inviteBonus,
                 status: jobStatus.CONFIRMED
             });
         })
