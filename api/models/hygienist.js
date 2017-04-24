@@ -1211,7 +1211,7 @@ console.log( 'hourlyRate: ' + hourlyRate );
         User.find( { where: { id: userId}} )
         .then( function( u ) {
             theUser = u;
-            return Hygienist.findById( theUser[0].id );
+            return Hygienist.findById( theUser[0].hygienistId );
         })
         .then( function( h ) {
             hygienist = h;
@@ -1223,6 +1223,9 @@ console.log( 'hourlyRate: ' + hourlyRate );
             emailMsg += '<p>Earn a bonus +$2/hr on your first placement when you join using '+hygienist.firstName +'’s Invite Code: <strong>'+theUser[0].inviteCode +'</strong> </p>';
             emailMsg += '<p><a href="https://app2.tempstars.ca">Join TempStars</a> using '+hygienist.firstName +'’s Invite Code <strong>'+theUser[0].inviteCode +'</strong> </p>';
             emailMsg += '<p>Find out more about TempStars and how it give you a busy, flexible professional lifestyle. <a href="http://www.tempstars.ca/hygienists2/">Learn More</a> </p>';
+            emailMsg += '<p>Over 180 hygienists trust TempStars to connect them with dental offices for their temping placements.  When you join, be sure to use '+hygienist.firstName +'’s Invite Code to earn your bonus +$2/hr on your first job.</p>';
+            emailMsg += '<p><a href="https://app2.tempstars.ca">Join TempStars</a> using '+hygienist.firstName +'’s Invite Code <strong>'+theUser[0].inviteCode +'</strong> </p>';
+            emailMsg += '<p>Thanks '+data.firstName +', we look forward to having you as a member of TempStars Nation!</p>';
 
             Email.send({
                 to: data.email,
