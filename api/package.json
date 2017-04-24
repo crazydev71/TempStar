@@ -32,7 +32,8 @@
     "push": "file:local_modules/push",
     "serve-favicon": "^2.0.1",
     "stripe": "^4.10.0",
-    "strong-error-handler": "^1.0.1"
+    "strong-error-handler": "^1.0.1",
+    "voucher-code-generator": "^1.1.1"
   },
   "devDependencies": {
     "eslint": "^3.12.2",

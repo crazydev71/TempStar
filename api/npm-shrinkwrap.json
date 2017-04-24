@@ -3773,6 +3773,11 @@
       "from": "verror@>=1.8.1 <2.0.0",
       "resolved": "https://registry.npmjs.org/verror/-/verror-1.9.0.tgz"
     },
+    "voucher-code-generator": {
+      "version": "1.1.1",
+      "from": "voucher-code-generator@latest",
+      "resolved": "https://registry.npmjs.org/voucher-code-generator/-/voucher-code-generator-1.1.1.tgz"
+    },
     "window-size": {
       "version": "0.1.0",
       "from": "window-size@0.1.0",
