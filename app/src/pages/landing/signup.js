@@ -92,38 +92,35 @@ TempStars.Pages.Signup = (function() {
         app.showPreloader('Creating Account');
 
         if(formData.inviteCode != ''){
-            console.log('testin 321');
-            var inviteCode = true;
-            //var inviteCode = TempStars.User.checkUserInviteCode( formData.inviteCode );
+            
+            TempStars.User.checkUserInviteCode( formData.inviteCode )
+            .then(function(){
+                return TempStars.User.create( formData.email, formData.password, role, formData.inviteCode )
+            })
+            .then(function() {
+                console.log('user created');
+                app.hidePreloader();
+                TempStars.Analytics.track( 'Created Account' );
 
-
-            if(inviteCode){
-                TempStars.User.create( formData.email, formData.password, role, formData.inviteCode )
-                .then(function() {
-                    app.hidePreloader();
-                    TempStars.Analytics.track( 'Created Account' );
-
-                    TempStars.App.clearSignupData();
-                    TempStars.App.gotoStartingPage();
-                })
-                .catch( function( err ) {
+                TempStars.App.clearSignupData();
+                TempStars.App.gotoStartingPage();
+            })
+            .catch( function( err ) {
+                console.log(err);
                 var msg;
                 if ( err && err.error && err.error.details && err.error.details.messages && err.error.details.messages.email ) {
                     msg = err.error.details.messages.email[0] + '.';
+                }else if(err == 'Invalid invite code'){
+                    msg = 'Invalid invite code.'
                 }
                 else {
                     msg = 'Please try again.'
                 }
                 app.hidePreloader();
                 $$('#signup-form .form-error-msg')
-                    .html('<span class="ti-alert"></span> Create account failed. ' + msg )
-                    .show();
-                });
-            }else{
-                alert('error');
-            }
-
-
+                .html('<span class="ti-alert"></span> Create account failed. ' + msg )
+                .show();
+            });
             
         }else{
             TempStars.User.create( formData.email, formData.password, role, formData.inviteCode )

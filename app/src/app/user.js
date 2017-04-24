@@ -226,10 +226,14 @@ TempStars.User = (function() {
             return new Promise( function( resolve, reject ) {
                 TempStars.Api.getUserByInvite( inviteCode )
                 .then( function( user ) {
-                    if(user.length== 0){
-                        return false;
+                    console.log('user');
+                    console.log(user);
+                    if(user.length == 0){
+                        //return false;
+                        reject( 'Invalid invite code' );
                     }else{
-                        return true;
+                        //return true;
+                        resolve();
                     }
                 })
                 .catch( function( err ) {

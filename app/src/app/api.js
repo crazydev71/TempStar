@@ -42,7 +42,7 @@ TempStars.Api = (function() {
         },
 
         getUserByInvite: function getUserByInvite( inviteCode ) {
-            return TempStars.Ajax.get( 'tsusers?filter=[where][inviteCode]='+inviteCode, null, authToken );
+            return TempStars.Ajax.get( 'tsusers?filter[where][inviteCode]='+inviteCode, null, authToken );
         },
 
         addInvite: function addInvite(userId,inviteCode){
