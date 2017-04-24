@@ -1170,7 +1170,7 @@ console.log( 'hourlyRate: ' + hourlyRate );
                 to: jj.dentist.user.email,
                 from: app.get('emailFrom'),
                 subject: 'Invoice from ' + jj.hygienist.firstName + ' ' + jj.hygienist.lastName,
-                html: data.html },
+                html: çΩ.html },
                 function(err) {
                     if (err) {
                         return console.log('error sending invoice email');
@@ -1203,16 +1203,32 @@ console.log( 'hourlyRate: ' + hourlyRate );
     Hygienist.sendInvite = function(userId,data,callback){
         var Email = app.models.Email;
         var User = app.models.TSUser;
+        var Hygienist = app.models.Hygienist;
+
         var theUser;
+        var hygienist;
 
         User.find( { where: { id: userId}} )
         .then( function( u ) {
             theUser = u;
+            return Hygienist.findById( theUser[0].id );
+        })
+        .then( function( h ) {
+            hygienist = h;
+
+            var emailMsg = '<p>Hi '+data.firstName +',</p>';
+            emailMsg += '<p>Someone really likes you!  '+hygienist.firstName +' is a member of TempStars and invited you to join as well. </p>';
+            emailMsg += '<p>TempStars is Canada’s premium dental hygiene temping service.  We use cutting-edge mobile technology to make fast and easy connections between hygienists and dental offices.  </p>';
+            emailMsg += '<p>It’s totally free for hygienists to join and use.</p>';
+            emailMsg += '<p>Earn a bonus +$2/hr on your first placement when you join using '+hygienist.firstName +'’s Invite Code: <strong>'+theUser[0].inviteCode +'</strong> </p>';
+            emailMsg += '<p><a href="https://app2.tempstars.ca">Join TempStars</a> using '+hygienist.firstName +'’s Invite Code <strong>'+theUser[0].inviteCode +'</strong> </p>';
+            emailMsg += '<p>Find out more about TempStars and how it give you a busy, flexible professional lifestyle. <a href="http://www.tempstars.ca/hygienists2/">Learn More</a> </p>';
+
             Email.send({
                 to: data.email,
-                from: app.get('emailFrom'),
-                subject: 'Temp Stars - Invite Request',
-                text: 'Hello '+ data.firstName +'. Your colleauge has sent you an invite request for Temp Stars. When signing up at http://www.tempstars.ca enter the invite code: '+theUser[0].inviteCode +' to receive an extra $2 / hour on your first placement.'
+                from: 'help@tempstars.ca',
+                subject: ''+ data.firstName +', '+hygienist.firstName +' '+hygienist.lastName +' invited you to join TempStars!',
+                html: emailMsg
             }, function( err ) {
                 if ( err ) {
                     console.log( err.message );
