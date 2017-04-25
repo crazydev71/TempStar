@@ -85,6 +85,21 @@
         "dataScale": null,
         "nullable": "N"
       }
+    },
+    "signupComplete": {
+      "type": "Number",
+      "required": true,
+      "length": 1,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "signupComplete",
+        "dataType": "int",
+        "dataLength": 1,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
     }
   },
   "validations": [],
@@ -93,7 +108,7 @@
       "accessType": "*",
       "principalType": "ROLE",
       "principalId": "$everyone",
-      "permission": "DENY"
+      "permission": "ALLOW"
     },
     {
       "accessType": "*",

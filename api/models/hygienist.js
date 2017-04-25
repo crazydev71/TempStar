@@ -424,7 +424,7 @@ module.exports = function( Hygienist ) {
             user = u;
             userInviteCode = user[0].inviteCode;
 
-            return Invite.find( { where: { inviteCode: userInviteCode}} );
+            return Invite.find( { where: { inviteCode: userInviteCode, signupComplete: 1}} );
         })
         .then( function( i ) {
             invites = i;
@@ -1081,7 +1081,7 @@ console.log( 'hourlyRate: ' + hourlyRate );
             user = u;
             userInviteCode = user[0].inviteCode;
 
-            return Invite.find( { where: { inviteCode: userInviteCode}} );
+            return Invite.find( { where: { inviteCode: userInviteCode, signupComplete: 1}} );
         })
         .then( function( i ) {
             invites = i;
@@ -1243,6 +1243,23 @@ console.log( 'hourlyRate: ' + hourlyRate );
 
         });
 
+    }
+
+
+
+
+    Hygienist.remoteMethod( 'updateInviteSignupComplete', {
+        accepts: [
+            {arg: 'userId', type: 'number', required: true} ],
+        returns: { arg: 'result', type: 'object' },
+        http: { verb: 'put', path: '/:userId/updateInviteSignupComplete' }
+    });
+
+    Hygienist.updateInviteSignupComplete = function(userId,callback){
+        var Invite = app.models.Invite;
+
+        Invite.updateAll({invitedUserId: userId}, {signupComplete: 1});
+        callback( null, {} );
 
     }
 

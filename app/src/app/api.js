@@ -47,7 +47,7 @@ TempStars.Api = (function() {
 
         addInvite: function addInvite(userId,inviteCode){
             return TempStars.Ajax.post( 'invites',
-                { invitedUserId: userId, inviteCode: inviteCode, status: 0, userOnPlacement:0 }, authToken );
+                { invitedUserId: userId, inviteCode: inviteCode, status: 0, userOnPlacement:0, signupComplete:0 }, authToken );
         },
 
         saveHygienist: function saveHygienist( hygienist ) {
@@ -320,6 +320,9 @@ TempStars.Api = (function() {
 
         sendInvite: function sendInvite(userId, data) {
             return TempStars.Ajax.put( 'hygienists/' + userId + '/sendInvite', data, authToken );
+        },
+        setUserInviteSignupComplete: function setUserInviteSignupComplete(userId){
+            return TempStars.Ajax.put( 'hygienists/' + userId + '/updateInviteSignupComplete', null, authToken );
         }
 
     };

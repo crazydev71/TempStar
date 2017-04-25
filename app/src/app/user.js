@@ -222,6 +222,19 @@ TempStars.User = (function() {
             });
         },
 
+        setUserInviteSignupComplete: function setUserInviteSignupComplete(id){
+            return new Promise( function( resolve, reject ) {
+                TempStars.Api.setUserInviteSignupComplete( id )
+                .then( function( ) {
+                    //return true;
+                    resolve();
+                })
+                .catch( function( err ) {
+                    reject( err );
+                });
+            });
+        },
+
         checkUserInviteCode: function checkUserInviteCode(inviteCode){
             return new Promise( function( resolve, reject ) {
                 TempStars.Api.getUserByInvite( inviteCode )
