@@ -24,10 +24,22 @@
         },
         "cordova-plugin-console": {
             "PACKAGE_NAME": "ca.tempstars.app"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "ca.tempstars.app"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "ca.tempstars.app"
+        },
+        "cordova-plugin-nativestorage": {
+            "PACKAGE_NAME": "ca.tempstars.app2"
         }
     },
     "dependent_plugins": {
         "cordova-plugin-compat": {
+            "PACKAGE_NAME": "ca.tempstars.app"
+        },
+        "cordova-plugin-file": {
             "PACKAGE_NAME": "ca.tempstars.app"
         }
     }

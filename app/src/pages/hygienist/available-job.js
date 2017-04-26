@@ -6,7 +6,9 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
         workHistory;
 
     function init() {
+
         app.onPageBeforeInit( 'hygienist-available-job', function( page ) {
+            console.log(page);
             job = page.context.job;
             $$('#hygienist-available-job-accept-button').on( 'click', acceptButtonHandler );
             $$('#hygienist-available-job-partial-button').on( 'click', partialButtonHandler );
@@ -98,9 +100,11 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
         init: init,
         getData: function( params ) {
             var hygienistId = TempStars.User.getCurrentUser().hygienistId;
-            var rate;
+            
             
             return new Promise( function( resolve, reject ) {
+                var rate;
+                
                 if ( params.id ) {
 
                     TempStars.Api.getHygienistRate( hygienistId )
@@ -128,7 +132,7 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
                                 return o.hygienistPrivateNotes != null;
                             });
                         }
-                        resolve( {job: job, workHistory: workHistory, rate: rate.result.rate} );
+                        resolve( {job: job, workHistory: workHistory, rate: rate.result.hourlyRate, baseRate: rate.result.baseRate, inviteAdjustment: rate.result.inviteAdjustment} );
                     })
                     .catch( function( err ) {
                         reject( err );
@@ -142,7 +146,7 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
                     })
                     .then( function( jobs ) {
                         if ( jobs.length == 0 ) {
-                            resolve( { job: {}, workHistory:{}, rate: rate.result.rate } );
+                            resolve( { job: {}, workHistory:{}, rate: rate.result.hourlyRate, baseRate: rate.result.baseRate, inviteAdjustment: rate.result.inviteAdjustment } );
                             return;
                         }
                         job = jobs[0];
@@ -164,7 +168,7 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
                                 return o.hygienistPrivateNotes != null;
                             });
                         }
-                        resolve( {job: job, workHistory: workHistory, rate: rate.result.rate} );
+                        resolve( {job: job, workHistory: workHistory, rate: rate.result.hourlyRate, baseRate: rate.result.baseRate, inviteAdjustment: rate.result.inviteAdjustment} );
                     })
                     .catch( function( err ) {
                         reject( err );

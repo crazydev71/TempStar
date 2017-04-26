@@ -58,6 +58,7 @@ function updateUnbookedJobStatus( today ) {
     return new Promise( function( resolve, reject ) {
         db.queryAsync( "update Job set status = 5 where status in (1,2) and startDate < ?", [today] )
         .then( function( results ) {
+            log(results);
             log( '- updated ' + results.affectedRows + ' jobs status to EXPIRED' );
             resolve();
         })

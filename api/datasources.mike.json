@@ -3,10 +3,10 @@
     "name": "tempstarsDB",
     "connector": "mysql",
     "host": "localhost",
-    "port": 3306,
+    "port": 8889,
     "database": "tempstars",
-    "user": "tempstars",
-    "password": "tempstars",
+    "user": "root",
+    "password": "",
     "dateStrings": true
   }
 }

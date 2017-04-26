@@ -125,6 +125,21 @@
         "nullable": "N"
       }
     },
+    "inviteBonus": {
+      "type": "Number",
+      "required": false,
+      "length": null,
+      "precision": 6,
+      "scale": 2,
+      "mysql": {
+        "columnName": "inviteBonus",
+        "dataType": "decimal",
+        "dataLength": null,
+        "dataPrecision": 6,
+        "dataScale": 2,
+        "nullable": "N"
+      }
+    },
     "status": {
       "type": "Number",
       "required": false,

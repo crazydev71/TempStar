@@ -329,6 +329,51 @@ module.exports = function( Hygienist ) {
         });
     };
 
+
+    Hygienist.remoteMethod( 'updateInviteStatus', {
+        accepts: [
+            {arg: 'hygienistId', type: 'number', required: true},
+            {arg: 'data', type: 'object', http: { source: 'body' } } ],
+        returns: { arg: 'result', type: 'object' },
+        http: { verb: 'put', path: '/:hygienistId/updateInviteStatus' }
+    });
+
+    Hygienist.updateInviteStatus = function( hygienistId, data, callback ) {
+
+        var User = app.models.TSUser;
+        var Hygienist = app.models.Hygienist;
+        var Invite = app.models.Invite;
+        var hygienist;
+        var user;
+        var userInviteCode;
+        var invites;
+
+        // Get the hygienist
+        Hygienist.findById( hygienistId )
+        .then( function( h ) {
+            hygienist = h;
+
+            return User.find( { where: { hygienistId: parseInt(hygienistId)}} );
+        })
+        .then( function( u ) {
+            user = u;
+            userInviteCode = user[0].inviteCode;
+
+            return Invite.find( { where: { inviteCode: userInviteCode}} );
+        })
+        .then( function( i ) {
+            invites = i;
+            inviteStatusUpdate(user[0].id,invites);
+            console.log( 'invite status update complete!' );
+            callback( null, {} );
+        })
+        .catch( function( err ) {
+            console.log( 'invite status update error!' );
+            callback( err );
+        });
+    };
+
+
     Hygienist.remoteMethod( 'bookJob', {
         accepts: [
             {arg: 'hygienistId', type: 'number', required: true},
@@ -340,11 +385,13 @@ module.exports = function( Hygienist ) {
 
     Hygienist.bookJob = function( hygienistId, jobId, data, callback ) {
 
+        var User = app.models.TSUser;
         var Job = app.models.Job;
         var Hygienist = app.models.Hygienist;
         var PartialOffer = app.models.PartialOffer;
         var Email = app.models.Email;
         var Region = app.models.Region;
+        var Invite = app.models.Invite;
 
         var rateAdjustment = 0;
         var hourlyRate;
@@ -353,7 +400,12 @@ module.exports = function( Hygienist ) {
         var hygienist;
         var numBooked;
 
-        console.log( 'book job' );
+        var rate; 
+        var user;
+        var userInviteCode;
+        var invites;
+        var invitedAdjustment = 0;
+        var inviteBonus; 
 
         // Get the hygienist
         Hygienist.findById( hygienistId )
@@ -365,7 +417,40 @@ module.exports = function( Hygienist ) {
             return Region.findById( h.regionId );
         })
         .then( function( r ) {
-            hourlyRate = getAdjustedRate( r.rate, hygienist.starScore );
+            rate = r;
+            console.log( 'hygienistId: ' + hygienistId );
+
+            return User.find( { where: { hygienistId: parseInt(hygienistId)}} );
+        })
+        .then( function( u ) {
+            user = u;
+            userInviteCode = user[0].inviteCode;
+
+            return Invite.find( { where: { inviteCode: userInviteCode, signupComplete: 1}} );
+        })
+        .then( function( i ) {
+            invites = i;
+
+            return Invite.find( { where: { invitedUserId: user[0].id, userOnPlacement: 0}} );
+        })
+        .then( function( usedInvite ) {
+
+            for(var i=0; i < usedInvite.length; i++){
+                if(usedInvite[i].inviteCode != 0){
+                    invitedAdjustment = 2;
+                }
+            }
+
+            /// GET ADJUSTMENTS 
+            inviteBonus = inviteAdjustments(invites) + invitedAdjustment;
+
+            // UPDATE INVITE STATUS 
+            //inviteStatusUpdate(user[0].id,invites);
+
+            var baseRate = getAdjustedRate( rate.rate, hygienist.starScore );
+            hourlyRate = baseRate;
+
+            //hourlyRate = getAdjustedRate( r.rate, hygienist.starScore );
             return Job.findById( jobId );
         })
         .then( function( j ) {
@@ -386,8 +471,8 @@ module.exports = function( Hygienist ) {
 
             // Add incentive bonus
             hourlyRate += job.bonus;
-console.log( 'bonus: ' + job.bonus );
-console.log( 'final rate: ' + hourlyRate );
+            console.log( 'bonus: ' + job.bonus );
+            console.log( 'final rate: ' + hourlyRate );
             return Job.count({ hygienistId: hygienistId, startDate: job.startDate });
         })
         .then( function( alreadyBooked ) {
@@ -401,6 +486,7 @@ console.log( 'final rate: ' + hourlyRate );
                 hygienistId: hygienistId,
                 bookedOn: moment.utc().format('YYYY-MM-DD HH:mm:ss'),
                 hourlyRate: hourlyRate,
+                inviteBonus: inviteBonus,
                 status: jobStatus.CONFIRMED
             });
         })
@@ -895,18 +981,88 @@ console.log( 'hourlyRate: ' + hourlyRate );
         });
     };
 
+
+    function inviteAdjustments(invites){
+        var inviteRateAdjustment = 0;
+        
+        if(invites.length == 0){
+            return inviteRateAdjustment;
+        }
+
+        for(var i=0; i < invites.length; i++){
+            // ADD $0.25
+            if(invites[i].status == 0 && invites[i].userOnPlacement == 0){
+                inviteRateAdjustment = inviteRateAdjustment + 0.25;
+            }
+            // ADD $2.00
+            if(invites[i].status == 0 && invites[i].userOnPlacement == 1){
+                inviteRateAdjustment = inviteRateAdjustment + 2.00;
+            }
+            
+            // ADD $1.75
+            if(invites[i].status == 1 && invites[i].userOnPlacement == 1){
+                inviteRateAdjustment = inviteRateAdjustment + 1.75;
+            }
+            // ADD $2.00
+            if(invites[i].status == 2){
+                inviteRateAdjustment = inviteRateAdjustment + 2;
+            }
+            
+            // ADD $0
+            if(invites[i].status == 3){
+                //inviteRateAdjustment = inviteRateAdjustment + 0;
+            }
+        }
+
+        return inviteRateAdjustment;
+
+    }
+
+    function inviteStatusUpdate(userId,invites){
+        var Invite = app.models.Invite;
+
+        // UPDATE INVITE TABLE AS USER HAS NOW BOOKED A PAID PLACEMENT
+        Invite.updateAll({invitedUserId: userId}, {userOnPlacement: 1});
+
+        if(invites.length == 0){
+            return;
+        }
+
+        // UPDATE INVITE STATUS CODES
+        for(var i=0; i < invites.length; i++){
+            if(invites[i].status == 0){
+                Invite.updateAll({id: invites[i].id}, {status: 1});
+            }
+            if(invites[i].status == 1 && invites[i].userOnPlacement == 1){
+                Invite.updateAll({id: invites[i].id}, {status: 3});
+            }
+            if(invites[i].status == 2){
+                Invite.updateAll({id: invites[i].id}, {status: 3});
+            }   
+        }
+    }
+
+
     Hygienist.remoteMethod( 'getCurrentRate', {
         accepts: [
             {arg: 'id', type: 'number', required: true}],
         returns: { arg: 'result', type: 'object' },
         http: { verb: 'get', path: '/:id/rate' }
     });
-
     Hygienist.getCurrentRate = function( id, callback ) {
 
         var Hygienist = app.models.Hygienist;
         var Region = app.models.Region;
+        var Invite = app.models.Invite;
+        var User = app.models.TSUser;
+        
+        var user;
+        var userInviteCode;
         var hygienist;
+        var rate;
+        var invites;
+        var invitedAdjustment = 0;
+
 
         // Get the hygienist
         Hygienist.findById( parseInt(id) )
@@ -915,14 +1071,193 @@ console.log( 'hourlyRate: ' + hourlyRate );
             return Region.findById( h.regionId );
         })
         .then( function( r ) {
-            var hourlyRate = getAdjustedRate( r.rate, hygienist.starScore );
+            rate = r;
+            return User.find( { where: { hygienistId: id}} );
+        })
+        .then( function( u ) {
+            user = u;
+            userInviteCode = user[0].inviteCode;
+
+            return Invite.find( { where: { inviteCode: userInviteCode, signupComplete: 1}} );
+        })
+        .then( function( i ) {
+            invites = i;
+            //user = u;
+            //userInviteCode = user[0].inviteCode;
+
+            return Invite.find( { where: { invitedUserId: user[0].id, userOnPlacement: 0}} );
+        })
+        .then( function( usedInvite ) {
+            /// GET ADJUSTMENTS
+
+            for(var i=0; i < usedInvite.length; i++){
+                if(usedInvite[i].inviteCode != 0){
+                    invitedAdjustment = 2;
+                }
+            }
+
+            var inviteAdjustment = inviteAdjustments(invites) + invitedAdjustment;
+            var baseRate = getAdjustedRate( rate.rate, hygienist.starScore );
+            var hourlyRate = baseRate + inviteAdjustment;
             var numDaysBlocked = calculateCancellationPenalty( hygienist );
-            var resp = { rate: hourlyRate, numDaysBlocked: numDaysBlocked };
+
+
+            var resp = { rate: hourlyRate,baseRate:baseRate,inviteAdjustment:inviteAdjustment, numDaysBlocked: numDaysBlocked, invites: invites };
             callback( null, resp );
         })
         .catch( function( err ) {
             callback( err );
         });
     };
+
+
+
+
+    Hygienist.send = function( jobId, data, callback ) {
+
+        var Shift = app.models.Shift;
+        var Invoice = app.models.Invoice;
+        var Job = app.models.Job;
+        var Email = app.models.Email;
+        var jj;
+
+        // TODO send notification
+        console.log( 'send invoice for job: ' + jobId );
+
+        Shift.findOne( {where: {jobId: jobId}} )
+        .then( function( shift ) {
+            console.log( 'got shift');
+            // Update shift
+            return shift.updateAttributes({
+                actualStart: data.actualStart,
+                actualEnd: data.actualEnd,
+                totalHours: data.totalHours,
+                unpaidHours: data.unpaidHours,
+                billableHours: data.billableHours
+            });
+        })
+        .then( function() {
+            console.log( 'create invoice' );
+            // Create invoice
+            return Invoice.create({
+                jobId: jobId,
+                totalHours: data.totalHours,
+                totalUnpaidHours: data.unpaidHours,
+                totalBillableHours: data.billableHours,
+                hourlyRate: data.hourlyRate,
+                totalInvoiceAmt: data.totalAmt,
+                hygienistMarkedPaid: 0,
+                dentistMarkedPaid: 0,
+                sent: 1,
+                createdOn: data.createdOn,
+                sentOn: data.sentOn
+            });
+        })
+        .then( function( invoice ) {
+            return Job.findById( jobId );
+        })
+        .then( function( job ) {
+            jj = job.toJSON();
+            msg = 'You have a new invoice from  ';
+            msg += jj.hygienist.firstName + ' ' + jj.hygienist.lastName;
+            return push.send( msg, jj.dentist.user.platform, jj.dentist.user.registrationId );
+        })
+        .then( function() {
+            Email.send({
+                to: jj.dentist.user.email,
+                from: app.get('emailFrom'),
+                subject: 'Invoice from ' + jj.hygienist.firstName + ' ' + jj.hygienist.lastName,
+                html: çΩ.html },
+                function(err) {
+                    if (err) {
+                        return console.log('error sending invoice email');
+                    }
+                    return;
+            });
+        })
+        .then( function() {
+            console.log( 'create invoice worked!' );
+            callback( null, {} );
+        })
+        .catch( function( err ) {
+            console.log( 'create invoice error: ' + err.message );
+            callback( err );
+        });
+    };
+
+
+
+
+
+    Hygienist.remoteMethod( 'sendInvite', {
+        accepts: [
+            {arg: 'userId', type: 'number', required: true},
+            {arg: 'data', type: 'object', http: { source: 'body' } } ],
+        returns: { arg: 'result', type: 'object' },
+        http: { verb: 'put', path: '/:userId/sendInvite' }
+    });
+
+    Hygienist.sendInvite = function(userId,data,callback){
+        var Email = app.models.Email;
+        var User = app.models.TSUser;
+        var Hygienist = app.models.Hygienist;
+
+        var theUser;
+        var hygienist;
+
+        User.find( { where: { id: userId}} )
+        .then( function( u ) {
+            theUser = u;
+            return Hygienist.findById( theUser[0].hygienistId );
+        })
+        .then( function( h ) {
+            hygienist = h;
+
+            var emailMsg = '<p>Hi '+data.firstName +',</p>';
+            emailMsg += '<p>Someone really likes you!  '+hygienist.firstName +' is a member of TempStars and invited you to join as well. </p>';
+            emailMsg += '<p>TempStars is Canada’s premium dental hygiene temping service.  We use cutting-edge mobile technology to make fast and easy connections between hygienists and dental offices.  </p>';
+            emailMsg += '<p>It’s totally free for hygienists to join and use.</p>';
+            emailMsg += '<p>Earn a bonus +$2/hr on your first placement when you join using '+hygienist.firstName +'’s Invite Code: <strong>'+theUser[0].inviteCode +'</strong> </p>';
+            emailMsg += '<p><a href="https://app2.tempstars.ca">Join TempStars</a> using '+hygienist.firstName +'’s Invite Code <strong>'+theUser[0].inviteCode +'</strong> </p>';
+            emailMsg += '<p>Find out more about TempStars and how it give you a busy, flexible professional lifestyle. <a href="http://www.tempstars.ca/hygienists2/">Learn More</a> </p>';
+            emailMsg += '<p>Over 180 hygienists trust TempStars to connect them with dental offices for their temping placements.  When you join, be sure to use '+hygienist.firstName +'’s Invite Code to earn your bonus +$2/hr on your first job.</p>';
+            emailMsg += '<p><a href="https://app2.tempstars.ca">Join TempStars</a> using '+hygienist.firstName +'’s Invite Code <strong>'+theUser[0].inviteCode +'</strong> </p>';
+            emailMsg += '<p>Thanks '+data.firstName +', we look forward to having you as a member of TempStars Nation!</p>';
+            emailMsg += '<p>Kindest regards,<br/>James Younger, DDS<br/>Founder/CEO, TempStars</p>';
+
+            Email.send({
+                to: data.email,
+                from: 'help@tempstars.ca',
+                subject: ''+ data.firstName +', '+hygienist.firstName +' '+hygienist.lastName +' invited you to join TempStars!',
+                html: emailMsg
+            }, function( err ) {
+                if ( err ) {
+                    console.log( err.message );
+                }
+                console.log( 'create invoice worked!' );
+                callback( null, {} );
+            });
+
+        });
+
+    }
+
+
+
+
+    Hygienist.remoteMethod( 'updateInviteSignupComplete', {
+        accepts: [
+            {arg: 'userId', type: 'number', required: true} ],
+        returns: { arg: 'result', type: 'object' },
+        http: { verb: 'put', path: '/:userId/updateInviteSignupComplete' }
+    });
+
+    Hygienist.updateInviteSignupComplete = function(userId,callback){
+        var Invite = app.models.Invite;
+
+        Invite.updateAll({invitedUserId: userId}, {signupComplete: 1});
+        callback( null, {} );
+
+    }
 
 };

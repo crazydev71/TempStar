@@ -23,10 +23,10 @@
     },
     {
       "accessType": "EXECUTE",
-      "property": "upload",
       "principalType": "ROLE",
       "principalId": "$authenticated",
-      "permission": "ALLOW"
+      "permission": "ALLOW",
+      "property": "upload"
     },
     {
       "accessType": "*",

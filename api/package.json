@@ -23,7 +23,7 @@
     "loopback-boot": "2.23.0",
     "loopback-component-explorer": "2.5.0",
     "loopback-component-storage": "1.9.1",
-    "loopback-connector-mysql": "2.3.0",
+    "loopback-connector-mysql": "https://registry.npmjs.org/loopback-connector-mysql/-/loopback-connector-mysql-2.3.0.tgz",
     "loopback-datasource-juggler": "2.53.1",
     "loopback-jwt": "^1.0.1",
     "moment": "^2.15.1",
@@ -32,7 +32,8 @@
     "push": "file:local_modules/push",
     "serve-favicon": "^2.0.1",
     "stripe": "^4.10.0",
-    "strong-error-handler": "^1.0.1"
+    "strong-error-handler": "^1.0.1",
+    "voucher-code-generator": "^1.1.1"
   },
   "devDependencies": {
     "eslint": "^3.12.2",

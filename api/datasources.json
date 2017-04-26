@@ -13,11 +13,13 @@
   "email": {
     "name": "email",
     "connector": "mail",
-    "transports": [{
+    "transports": [
+      {
         "type": "ses",
         "accessKeyId": "AKIAJFUJRZ25B3ASWI4Q",
         "secretAccessKey": "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",
         "rateLimit": 10
-    }]
+      }
+    ]
   }
 }

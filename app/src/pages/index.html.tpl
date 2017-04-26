@@ -145,6 +145,8 @@
 
     @@include( 'hygienist/popover-map.html' )
     @@include( 'hygienist/popover-rate.html' )
+    @@include( 'hygienist/popover-invite.html' )
+    @@include( 'hygienist/popover-raise-rate.html' )
 
     <script src="cordova.js"></script>
     <script src="lib/loggly.tracker-2.1.min.js"></script>

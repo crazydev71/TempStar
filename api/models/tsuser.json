@@ -73,6 +73,21 @@
         "dataScale": null,
         "nullable": "Y"
       }
+    },
+    "inviteCode": {
+      "type": "String",
+      "required": false,
+      "length": 250,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "inviteCode",
+        "dataType": "varchar",
+        "dataLength": 50,
+        "dataPrecision": 10,
+        "dataScale": 0,
+        "nullable": "Y"
+      }
     }
   },
   "validations": [],
@@ -100,90 +115,96 @@
     }
   },
   "acls": [
-      {
-          "principalType": "ROLE",
-          "principalId": "$everyone",
-          "permission": "DENY"
-      },
-      {
-          "principalType": "ROLE",
-          "principalId": "$everyone",
-          "permission": "ALLOW",
-          "property": "create"
-      },
-      {
-          "principalType": "ROLE",
-          "principalId": "$owner",
-          "permission": "ALLOW",
-          "property": "deleteById"
-      },
-      {
-          "principalType": "ROLE",
-          "principalId": "$owner",
-          "permission": "ALLOW",
-          "property": "findById"
-      },
-      {
-          "principalType": "ROLE",
-          "principalId": "$owner",
-          "permission": "ALLOW",
-          "property": "__get__dentist"
-      },
-      {
-          "principalType": "ROLE",
-          "principalId": "$owner",
-          "permission": "ALLOW",
-          "property": "__get__hygienist"
-      },
-      {
-          "principalType": "ROLE",
-          "principalId": "$owner",
-          "permission": "ALLOW",
-          "property": "me"
-      },
-      {
-          "principalType": "ROLE",
-          "principalId": "$everyone",
-          "permission": "ALLOW",
-          "property": "login"
-      },
-      {
-          "principalType": "ROLE",
-          "principalId": "$everyone",
-          "permission": "ALLOW",
-          "property": "account"
-      },
-      {
-          "principalType": "ROLE",
-          "principalId": "$everyone",
-          "permission": "ALLOW",
-          "property": "logout"
-      },
-      {
-          "principalType": "ROLE",
-          "principalId": "$owner",
-          "permission": "ALLOW",
-          "property": "findById"
-      },
-      {
-          "principalType": "ROLE",
-          "principalId": "$owner",
-          "permission": "ALLOW",
-          "property": "updateAttributes"
-      },
-      {
-          "principalType": "ROLE",
-          "principalId": "$everyone",
-          "permission": "ALLOW",
-          "property": "confirm"
-      },
-      {
-          "principalType": "ROLE",
-          "principalId": "$everyone",
-          "permission": "ALLOW",
-          "property": "resetPassword",
-          "accessType": "EXECUTE"
-      }
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "find"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "create"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "deleteById"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "findById"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__get__dentist"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__get__hygienist"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "me"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "login"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "account"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "logout"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "findById"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "updateAttributes"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "confirm"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "resetPassword"
+    }
   ],
   "methods": {}
 }

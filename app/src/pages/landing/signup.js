@@ -8,6 +8,10 @@ TempStars.Pages.Signup = (function() {
             $$('#signup-account-type-hygienist').on( 'change', toggleHygienist );
             $$('#signup-account-type-dentist').on( 'change', toggleDentist );
             $$('#signup-form input').on( 'keypress', keyHandler );
+
+            $(document).on( 'opened', '.popover-invite', openInvitePopoverHandler );
+            $(document).on( 'closed', '.popover-invite', closeInvitePopoverHandler );
+
             TempStars.Analytics.track( 'Viewed Create Account Page' );
         });
 
@@ -16,7 +20,21 @@ TempStars.Pages.Signup = (function() {
             $$('#signup-account-type-hygienist').off( 'change', toggleHygienist );
             $$('#signup-account-type-dentist').off( 'change', toggleDentist );
             $$('#signup-form input').off( 'keypress', keyHandler );
+
+            $(document).off( 'opened', '.popover-invite', openInvitePopoverHandler );
+            $(document).off( 'closed', '.popover-invite', closeInvitePopoverHandler );
+            
         });
+    }
+
+    function openInvitePopoverHandler( e ) {
+        // Forces resuming app to stay on page
+        window.cameraOpen = true;
+    }
+
+    function closeInvitePopoverHandler(e) {
+        // Forces resuming app to go to main page
+        window.cameraOpen = false;
     }
 
     function signupButtonHandler(e) {
@@ -72,27 +90,63 @@ TempStars.Pages.Signup = (function() {
         }
 
         app.showPreloader('Creating Account');
-        TempStars.User.create( formData.email, formData.password, role )
-        .then(function() {
-            app.hidePreloader();
-            TempStars.Analytics.track( 'Created Account' );
 
-            TempStars.App.clearSignupData();
-            TempStars.App.gotoStartingPage();
-        })
-        .catch( function( err ) {
-            var msg;
-            if ( err && err.error && err.error.details && err.error.details.messages && err.error.details.messages.email ) {
-                msg = err.error.details.messages.email[0] + '.';
-            }
-            else {
-                msg = 'Please try again.'
-            }
-            app.hidePreloader();
-            $$('#signup-form .form-error-msg')
+        if(formData.inviteCode != ''){
+            
+            TempStars.User.checkUserInviteCode( formData.inviteCode )
+            .then(function(){
+                return TempStars.User.create( formData.email, formData.password, role, formData.inviteCode )
+            })
+            .then(function() {
+                console.log('user created');
+                app.hidePreloader();
+                TempStars.Analytics.track( 'Created Account' );
+
+                TempStars.App.clearSignupData();
+                TempStars.App.gotoStartingPage();
+            })
+            .catch( function( err ) {
+                console.log(err);
+                var msg;
+                if ( err && err.error && err.error.details && err.error.details.messages && err.error.details.messages.email ) {
+                    msg = err.error.details.messages.email[0] + '.';
+                }else if(err == 'Invalid invite code'){
+                    msg = 'Invalid invite code.'
+                }
+                else {
+                    msg = 'Please try again.'
+                }
+                app.hidePreloader();
+                $$('#signup-form .form-error-msg')
                 .html('<span class="ti-alert"></span> Create account failed. ' + msg )
                 .show();
-        });
+            });
+            
+        }else{
+            TempStars.User.create( formData.email, formData.password, role, formData.inviteCode )
+            .then(function() {
+                app.hidePreloader();
+                TempStars.Analytics.track( 'Created Account' );
+
+                TempStars.App.clearSignupData();
+                TempStars.App.gotoStartingPage();
+            })
+            .catch( function( err ) {
+                var msg;
+                if ( err && err.error && err.error.details && err.error.details.messages && err.error.details.messages.email ) {
+                    msg = err.error.details.messages.email[0] + '.';
+                }
+                else {
+                    msg = 'Please try again.'
+                }
+                app.hidePreloader();
+                $$('#signup-form .form-error-msg')
+                    .html('<span class="ti-alert"></span> Create account failed. ' + msg )
+                    .show();
+            });
+        }
+
+        
     }
 
     function toggleHygienist(e) {

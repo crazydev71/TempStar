@@ -66,12 +66,28 @@ TempStars.Pages.Hygienist.Home = (function() {
             }
             else
                 initTimer();
+
+            $(document).on( 'opened', '.popover-raise-rate', openRaiseRatePopoverHandler );
+            $(document).on( 'closed', '.popover-raise-rate', closeRaiseRatePopoverHandler );
         });
 
         app.onPageBeforeRemove( 'hygienist-home', function( page ) {
             clearInterval( interval );
             $$('#hygienist-home-available-jobs-button').off( 'click', availableJobsButtonHandler );
+
+            $(document).off( 'opened', '.popover-raise-rate', openRaiseRatePopoverHandler );
+            $(document).off( 'closed', '.popover-raise-rate', closeRaiseRatePopoverHandler );
         });
+    }
+
+    function openRaiseRatePopoverHandler( e ) {
+        // Forces resuming app to stay on page
+        window.cameraOpen = true;
+    }
+
+    function closeRaiseRatePopoverHandler(e) {
+        // Forces resuming app to go to main page
+        window.cameraOpen = false;
     }
 
     function initTimer() {
