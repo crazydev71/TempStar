@@ -28,18 +28,18 @@
     <string>2.2.4</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+      <key>NSAllowsArbitraryLoads</key>
+      <true/>
+    </dict>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string/>
     <key>NSMainNibFile</key>
     <string/>
     <key>NSMainNibFile~ipad</key>
     <string/>
     <key>UIRequiresFullScreen</key>
     <true/>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string/>
-    <key>NSAppTransportSecurity</key>
-    <dict>
-      <key>NSAllowsArbitraryLoads</key>
-      <true/>
-    </dict>
   </dict>
 </plist>

@@ -42,15 +42,15 @@
       }
     },
     "inviteCode": {
-      "type": "Number",
+      "type": "String",
       "required": true,
       "length": null,
       "precision": null,
       "scale": null,
       "mysql": {
         "columnName": "inviteCode",
-        "dataType": "int",
-        "dataLength": null,
+        "dataType": "varchar",
+        "dataLength": 50,
         "dataPrecision": 10,
         "dataScale": 0,
         "nullable": "Y"
