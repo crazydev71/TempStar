@@ -47,6 +47,9 @@
     <feature name="NativeStorage">
         <param name="ios-package" value="NativeStorage" />
     </feature>
+    <feature name="InAppBrowser">
+        <param name="ios-package" value="CDVInAppBrowser" />
+    </feature>
     <name>TempStars</name>
     <description>
         Hygienist Temping done right

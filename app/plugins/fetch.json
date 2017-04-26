@@ -112,5 +112,13 @@
         "variables": {
             "SENDER_ID": "210360814619"
         }
+    },
+    "cordova-plugin-inappbrowser": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-inappbrowser@1.7.0"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

@@ -361,10 +361,9 @@ TempStars.Pages.Hygienist.Home = (function() {
 
                     rate = r;
 
-                    data.rate = rate.result.rate;
-                    data.baseRate = rate.result.baseRate;
-                    data.inviteAdjustment = rate.result.inviteAdjustment;
-
+                    data.rate = rate.result.rate.toFixed(2);
+                    data.baseRate = rate.result.baseRate.toFixed(2);
+                    data.inviteAdjustment = rate.result.inviteAdjustment.toFixed(2);
 
                     TempStars.Logging.log( 'got data for hygienist home page ' );
                     data.jobs = data.all.jobs;

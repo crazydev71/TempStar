@@ -60,7 +60,7 @@ TempStars.Pages.Hygienist.InviteColleague = (function() {
 
                 app.modal({
                   title:  'Thank You!',
-                  text: 'We just sent an invitation e-mail to '+formData.firstName+'. When they signs up, '+formData.firstName+' will earn an extra $2/hr on their first placement. And you\'ll earn an extra $.25/hr on your next placement. When '+formData.firstName+' completes their first placement, you\'ll earn an extra $1.75/hr on your next placement! For details see <a class="external" target="_system" href="http://www.tempstars.ca/invite">www.tempstars.ca/invite</a>',
+                  text: 'We just sent an invitation e-mail to '+formData.firstName+'. When they sign up, '+formData.firstName+' will earn an extra $2/hr on their first placement. And you\'ll earn an extra $.25/hr on your next placement. When '+formData.firstName+' completes their first placement, you\'ll earn an extra $1.75/hr on your next placement! For details see <a class="external" target="_system" href="http://www.tempstars.ca/invite">www.tempstars.ca/invite</a>',
                   buttons: [
                       { text: 'Invite Another Colleague', onClick: inviteColleagueAnother },
                       { text: 'Done', onClick: inviteColleagueClose }

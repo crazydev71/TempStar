@@ -51,6 +51,10 @@
                         {
                             "xml": "<feature name=\"NativeStorage\"><param name=\"ios-package\" value=\"NativeStorage\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"InAppBrowser\"><param name=\"ios-package\" value=\"CDVInAppBrowser\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -105,6 +109,9 @@
             "PACKAGE_NAME": "ca.tempstars.app2"
         },
         "cordova-plugin-nativestorage": {
+            "PACKAGE_NAME": "ca.tempstars.app2"
+        },
+        "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "ca.tempstars.app2"
         }
     },
@@ -438,6 +445,15 @@
             "file": "plugins/cordova-plugin-nativestorage/www/NativeStorageError.js",
             "id": "cordova-plugin-nativestorage.NativeStorageError",
             "pluginId": "cordova-plugin-nativestorage"
+        },
+        {
+            "id": "cordova-plugin-inappbrowser.inappbrowser",
+            "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+            "pluginId": "cordova-plugin-inappbrowser",
+            "clobbers": [
+                "cordova.InAppBrowser.open",
+                "window.open"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -453,6 +469,7 @@
         "cordova-plugin-file-transfer": "1.6.2",
         "ionic-plugin-keyboard": "2.2.1",
         "cordova-plugin-crosswalk-webview": "2.3.0",
-        "cordova-plugin-nativestorage": "2.2.1"
+        "cordova-plugin-nativestorage": "2.2.1",
+        "cordova-plugin-inappbrowser": "1.7.0"
     }
 }

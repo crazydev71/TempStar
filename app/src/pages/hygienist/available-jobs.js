@@ -72,9 +72,9 @@ TempStars.Pages.Hygienist.AvailableJobs = (function() {
 
                 data = {
                     jobs: jobs.result,
-                    rate: rate.result.rate,
-                    baseRate: rate.result.baseRate,
-                    inviteAdjustment: rate.result.inviteAdjustment
+                    rate: rate.result.rate.toFixed(2),
+                    baseRate: rate.result.baseRate.toFixed(2),
+                    inviteAdjustment: rate.result.inviteAdjustment.toFixed(2)
                 };
 
                 if ( jobs.result.length == 0 ) {

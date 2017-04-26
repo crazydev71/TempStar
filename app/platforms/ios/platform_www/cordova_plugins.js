@@ -328,6 +328,15 @@ module.exports = [
         "file": "plugins/cordova-plugin-nativestorage/www/NativeStorageError.js",
         "id": "cordova-plugin-nativestorage.NativeStorageError",
         "pluginId": "cordova-plugin-nativestorage"
+    },
+    {
+        "id": "cordova-plugin-inappbrowser.inappbrowser",
+        "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+        "pluginId": "cordova-plugin-inappbrowser",
+        "clobbers": [
+            "cordova.InAppBrowser.open",
+            "window.open"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -345,7 +354,8 @@ module.exports.metadata =
     "cordova-plugin-file-transfer": "1.6.2",
     "ionic-plugin-keyboard": "2.2.1",
     "cordova-plugin-crosswalk-webview": "2.3.0",
-    "cordova-plugin-nativestorage": "2.2.1"
-}
+    "cordova-plugin-nativestorage": "2.2.1",
+    "cordova-plugin-inappbrowser": "1.7.0"
+};
 // BOTTOM OF METADATA
 });
