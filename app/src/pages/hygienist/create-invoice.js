@@ -281,10 +281,20 @@ TempStars.Pages.Hygienist.CreateInvoice = (function() {
             data.html = html;
             TempStars.Api.sendInvoice( job.id, data )
             .then( function() {
-                app.hidePreloader();
-                app.alert( 'Invoice Sent', function() {
-                    TempStars.Analytics.track( 'Sent Invoice' );
-                    TempStars.Hygienist.Router.goBackPage('', {id: job.id, invoiceSubmitted: true} );
+
+                TempStars.Api.updateJob( job.id, {status: TempStars.Job.status.COMPLETED} )
+                .then( function() {
+                    app.hidePreloader();
+                    TempStars.Analytics.track( 'Marked Job as Complete' );
+
+                    app.alert( 'Invoice Sent', function() {
+                        TempStars.Analytics.track( 'Sent Invoice' );
+                        TempStars.Hygienist.Router.goBackPage('', {id: job.id, invoiceSubmitted: true} );
+                    });
+                })
+                .catch( function( err ) {
+                    app.hidePreloader();
+                    app.alert( 'Error marking job as complete. Please try again.' );
                 });
             })
             .catch( function( err ) {
