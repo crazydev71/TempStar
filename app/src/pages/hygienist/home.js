@@ -341,12 +341,31 @@ TempStars.Pages.Hygienist.Home = (function() {
         getData: function( params ) {
             //TempStars.Logging.log( 'getting data for hygienist home page ' );
             return new Promise( function( resolve, reject ) {
+
+                var data;
+                var rate;
+                var inviteRate;
+
                 Promise.props({
                     user: TempStars.User.getCurrentUser(),
                     all: TempStars.Hygienist.getAllJobs(),
-                    maxJob: TempStars.Hygienist.getMaxAvailableJobId()
+                    maxJob: TempStars.Hygienist.getMaxAvailableJobId(),
+                    hygienistId: TempStars.User.getCurrentUser().hygienistId
+
                 })
-                .then( function( data ) {
+                .then( function( d ) {
+                    data = d;
+                    return TempStars.Api.getHygienistRate( data.hygienistId );
+                })
+                .then( function( r ) {
+
+                    rate = r;
+
+                    data.rate = rate.result.rate;
+                    data.baseRate = rate.result.baseRate;
+                    data.inviteAdjustment = rate.result.inviteAdjustment;
+
+
                     TempStars.Logging.log( 'got data for hygienist home page ' );
                     data.jobs = data.all.jobs;
                     data.pos = data.all.pos;
