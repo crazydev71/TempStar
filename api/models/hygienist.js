@@ -1218,10 +1218,13 @@ console.log( 'hourlyRate: ' + hourlyRate );
             emailMsg += '<p>TempStars is Canada’s premium dental hygiene temping service.  We use cutting-edge mobile technology to make fast and easy connections between hygienists and dental offices.  </p>';
             emailMsg += '<p>It’s totally free for hygienists to join and use.</p>';
             emailMsg += '<p>Earn a bonus +$2/hr on your first placement when you join using '+hygienist.firstName +'’s Invite Code: <strong>'+theUser[0].inviteCode +'</strong> </p>';
-            emailMsg += '<p><a href="https://app2.tempstars.ca">Join TempStars</a> using '+hygienist.firstName +'’s Invite Code <strong>'+theUser[0].inviteCode +'</strong> </p>';
-            emailMsg += '<p>Find out more about TempStars and how it give you a busy, flexible professional lifestyle. <a href="http://www.tempstars.ca/hygienists2/">Learn More</a> </p>';
+            emailMsg += '<p><a href="https://app2.tempstars.ca">Join TempStars using '+hygienist.firstName +'’s Invite Code <strong>'+theUser[0].inviteCode +'</strong></a></p>';
+            emailMsg += '<p>Find out more about TempStars and how it give you a busy, flexible professional lifestyle.</p>';
+            emailMsg += '<br/>';
+            emailMsg += '<p><a href="http://www.tempstars.ca/hygienists2/">Learn More</a></p>'
+            emailMsg += '<br/>';
             emailMsg += '<p>Over 180 hygienists trust TempStars to connect them with dental offices for their temping placements.  When you join, be sure to use '+hygienist.firstName +'’s Invite Code to earn your bonus +$2/hr on your first job.</p>';
-            emailMsg += '<p><a href="https://app2.tempstars.ca">Join TempStars</a> using '+hygienist.firstName +'’s Invite Code <strong>'+theUser[0].inviteCode +'</strong> </p>';
+            emailMsg += '<p><a href="https://app2.tempstars.ca">Join TempStars using '+hygienist.firstName +'’s Invite Code <strong>'+theUser[0].inviteCode +'</strong></a></p>';
             emailMsg += '<p>Thanks '+data.firstName +', we look forward to having you as a member of TempStars Nation!</p>';
             emailMsg += '<p>Kindest regards,<br/>James Younger, DDS<br/>Founder/CEO, TempStars</p>';
 
