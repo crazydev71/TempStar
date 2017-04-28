@@ -1,3 +1,13 @@
 #hygienist-job-confirmed-table tr {
     margin-bottom: 20px;
 }
+
+#hygienist-job-confirmed-cancel-button {
+	color: #ba322c;
+    font-size: 0.9rem;
+}
+
+#hygienist-job-confirmed-break-button {
+	color: #ba322c;
+    font-size: 1.0rem;
+}
