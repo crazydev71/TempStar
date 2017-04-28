@@ -27,8 +27,7 @@
 #define GMP_NO_MODULES true
 
 #import "PushPlugin.h"
-#import "GoogleCloudMessaging.h"
-#import "GGLInstanceIDHeaders.h"
+#import "CloudMessaging.h"
 
 @implementation PushPlugin : CDVPlugin
 

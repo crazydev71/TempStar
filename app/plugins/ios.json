@@ -18,9 +18,6 @@
         "cordova-plugin-crosswalk-webview": {
             "PACKAGE_NAME": "ca.tempstars.app2"
         },
-        "cordova-plugin-device": {
-            "PACKAGE_NAME": "ca.tempstars.app2"
-        },
         "cordova-plugin-file-transfer": {
             "PACKAGE_NAME": "ca.tempstars.app2"
         },
@@ -33,9 +30,6 @@
         "cordova-plugin-nativestorage": {
             "PACKAGE_NAME": "ca.tempstars.app2"
         },
-        "cordova-plugin-network-information": {
-            "PACKAGE_NAME": "ca.tempstars.app2"
-        },
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "ca.tempstars.app2"
         },
@@ -43,6 +37,16 @@
             "PACKAGE_NAME": "ca.tempstars.app2"
         },
         "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "ca.tempstars.app2"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "ca.tempstars.app2"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "ca.tempstars.app2"
+        },
+        "phonegap-plugin-push": {
+            "SENDER_ID": "210360814619",
             "PACKAGE_NAME": "ca.tempstars.app2"
         }
     },

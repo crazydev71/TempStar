@@ -13,15 +13,7 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"SplashScreen\"><param name=\"android-package\" value=\"org.apache.cordova.splashscreen.SplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"NetworkStatus\"><param name=\"android-package\" value=\"org.apache.cordova.networkinformation.NetworkManager\" /></feature>",
                             "count": 1
                         },
                         {
@@ -57,6 +49,14 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"NetworkStatus\"><param name=\"android-package\" value=\"org.apache.cordova.networkinformation.NetworkManager\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"PushNotification\"><param name=\"android-package\" value=\"com.adobe.phonegap.push.PushPlugin\" /></feature>",
                             "count": 1
                         }
@@ -66,10 +66,6 @@
             "AndroidManifest.xml": {
                 "parents": {
                     "/*": [
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
-                            "count": 1
-                        },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
                             "count": 1
@@ -81,11 +77,15 @@
                         {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
                             "count": 3
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
+                            "count": 1
                         }
                     ],
                     "/manifest/application": [
                         {
-                            "xml": "<activity android:exported=\"true\" android:name=\"com.adobe.phonegap.push.PushHandlerActivity\" android:permission=\"${applicationId}.permission.PushHandlerActivity\" />",
+                            "xml": "<activity android:exported=\"true\" android:name=\"com.adobe.phonegap.push.PushHandlerActivity\" />",
                             "count": 1
                         },
                         {
@@ -135,15 +135,7 @@
                             "count": 1
                         },
                         {
-                            "xml": "<uses-permission android:name=\"${applicationId}.permission.PushHandlerActivity\" />",
-                            "count": 1
-                        },
-                        {
                             "xml": "<permission android:name=\"${applicationId}.permission.C2D_MESSAGE\" android:protectionLevel=\"signature\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<permission android:name=\"${applicationId}.permission.PushHandlerActivity\" android:protectionLevel=\"signature\" />",
                             "count": 1
                         }
                     ]
@@ -153,7 +145,7 @@
                 "parents": {
                     "/resources": [
                         {
-                            "xml": "<string name=\"google_app_id\" translatable=\"false\">210360814619</string>",
+                            "xml": "<string name=\"google_app_id\">210360814619</string>",
                             "count": 1
                         }
                     ]
@@ -165,13 +157,7 @@
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "ca.tempstars.app"
         },
-        "cordova-plugin-device": {
-            "PACKAGE_NAME": "ca.tempstars.app"
-        },
         "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "ca.tempstars.app"
-        },
-        "cordova-plugin-network-information": {
             "PACKAGE_NAME": "ca.tempstars.app"
         },
         "cordova-plugin-compat": {
@@ -201,6 +187,12 @@
         "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "ca.tempstars.app2"
         },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "ca.tempstars.app2"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "ca.tempstars.app2"
+        },
         "phonegap-plugin-push": {
             "SENDER_ID": "210360814619",
             "PACKAGE_NAME": "ca.tempstars.app2"
@@ -209,36 +201,11 @@
     "dependent_plugins": {},
     "modules": [
         {
-            "id": "cordova-plugin-device.device",
-            "file": "plugins/cordova-plugin-device/www/device.js",
-            "pluginId": "cordova-plugin-device",
-            "clobbers": [
-                "device"
-            ]
-        },
-        {
             "id": "cordova-plugin-splashscreen.SplashScreen",
             "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
             "pluginId": "cordova-plugin-splashscreen",
             "clobbers": [
                 "navigator.splashscreen"
-            ]
-        },
-        {
-            "id": "cordova-plugin-network-information.network",
-            "file": "plugins/cordova-plugin-network-information/www/network.js",
-            "pluginId": "cordova-plugin-network-information",
-            "clobbers": [
-                "navigator.connection",
-                "navigator.network.connection"
-            ]
-        },
-        {
-            "id": "cordova-plugin-network-information.Connection",
-            "file": "plugins/cordova-plugin-network-information/www/Connection.js",
-            "pluginId": "cordova-plugin-network-information",
-            "clobbers": [
-                "Connection"
             ]
         },
         {
@@ -513,6 +480,31 @@
             ]
         },
         {
+            "id": "cordova-plugin-device.device",
+            "file": "plugins/cordova-plugin-device/www/device.js",
+            "pluginId": "cordova-plugin-device",
+            "clobbers": [
+                "device"
+            ]
+        },
+        {
+            "id": "cordova-plugin-network-information.network",
+            "file": "plugins/cordova-plugin-network-information/www/network.js",
+            "pluginId": "cordova-plugin-network-information",
+            "clobbers": [
+                "navigator.connection",
+                "navigator.network.connection"
+            ]
+        },
+        {
+            "id": "cordova-plugin-network-information.Connection",
+            "file": "plugins/cordova-plugin-network-information/www/Connection.js",
+            "pluginId": "cordova-plugin-network-information",
+            "clobbers": [
+                "Connection"
+            ]
+        },
+        {
             "id": "phonegap-plugin-push.PushNotification",
             "file": "plugins/phonegap-plugin-push/www/push.js",
             "pluginId": "phonegap-plugin-push",
@@ -523,9 +515,7 @@
     ],
     "plugin_metadata": {
         "cordova-plugin-whitelist": "1.2.2",
-        "cordova-plugin-device": "1.1.2",
         "cordova-plugin-splashscreen": "3.2.2",
-        "cordova-plugin-network-information": "1.2.1",
         "cordova-plugin-compat": "1.0.0",
         "cordova-plugin-geolocation": "2.2.0",
         "cordova-plugin-console": "1.0.3",
@@ -535,6 +525,8 @@
         "ionic-plugin-keyboard": "2.2.1",
         "cordova-plugin-nativestorage": "2.2.1",
         "cordova-plugin-inappbrowser": "1.7.0",
-        "phonegap-plugin-push": "1.10.2"
+        "cordova-plugin-device": "1.1.5",
+        "cordova-plugin-network-information": "1.3.2",
+        "phonegap-plugin-push": "1.8.4"
     }
 }

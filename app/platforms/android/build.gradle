@@ -252,7 +252,8 @@ dependencies {
     releaseCompile(project(path: "CordovaLib", configuration: "release"))
     compile "me.leolin:ShortcutBadger:1.1.14@aar"
     compile "com.android.support:support-v13:23+"
-    compile "com.google.android.gms:play-services-gcm:10.2+"
+    compile "com.google.android.gms:play-services-gcm:9.8+"
+    compile "me.leolin:ShortcutBadger:1.1.4@aar"
     // SUB-PROJECT DEPENDENCIES END
 }
 
