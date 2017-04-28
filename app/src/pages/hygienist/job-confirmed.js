@@ -6,8 +6,12 @@ TempStars.Pages.Hygienist.JobConfirmed = (function() {
 
     function init() {
         app.onPageBeforeInit( 'hygienist-job-confirmed', function( page ) {
+            $$('#hygienist-job-confirmed-cancel-button').show();
+            $$('#hygienist-job-confirmed-break-button').hide();
+
             $$('#hygienist-job-confirmed-modify-button').on( 'click', modifyButtonHandler );
             $$('#hygienist-job-confirmed-cancel-button').on( 'click', cancelButtonHandler );
+            $$('#hygienist-job-confirmed-break-button').on( 'click', breakButtonHandler );
             $$('.popover-map').on('open', displayMap );
             TempStars.Analytics.track( 'Viewed Confirmed Job' );
         });
@@ -15,6 +19,7 @@ TempStars.Pages.Hygienist.JobConfirmed = (function() {
         app.onPageBeforeRemove( 'hygienist-job-confirmed', function( page ) {
             $$('#hygienist-job-confirmed-modify-button').off( 'click', modifyButtonHandler );
             $$('#hygienist-job-confirmed-cancel-button').off( 'click', cancelButtonHandler );
+            $$('#hygienist-job-confirmed-break-button').off( 'click', breakButtonHandler );
             $$('.popover-map').off('open', displayMap );
         });
     }
@@ -25,8 +30,13 @@ TempStars.Pages.Hygienist.JobConfirmed = (function() {
         TempStars.Hygienist.Router.goForwardPage('modify-job', {}, job );
     }
 
-
     function cancelButtonHandler( e ) {
+        e.preventDefault();
+        $$('#hygienist-job-confirmed-cancel-button').hide();
+        $$('#hygienist-job-confirmed-break-button').show();
+    }
+
+    function breakButtonHandler( e ) {
         e.preventDefault();
 
         var cancelMessage = 'Cancelling this commitment will cause significant disruption to this office and its patients.<br>';
@@ -35,7 +45,8 @@ TempStars.Pages.Hygienist.JobConfirmed = (function() {
             cancelMessage += '<br><b>If you cancel this job, as a penalty the system will block you from viewing available jobs for <u>' + job.numDaysBlocked + ' days</u>.</b><br>';
         }
 
-        cancelMessage += '<br><b>Are you sure you want to cancel?</b>';
+        cancelMessage += '<br><b>A temporary hourly rate penalty may also be applied.</b>';
+        cancelMessage += '<br><br><b>Are you sure?</b><br><br>';
 
         app.modal({
           title:  'WAIT!',
@@ -52,10 +63,18 @@ TempStars.Pages.Hygienist.JobConfirmed = (function() {
         TempStars.Api.hygienistCancelJob( TempStars.User.getCurrentUser().hygienistId, job.id )
         .then( function() {
             app.hidePreloader();
-            TempStars.User.refresh()
-            .then( function() {
-                TempStars.Analytics.track( 'Cancelled Job' );
-                TempStars.Hygienist.Router.goBackPage();
+            app.modal({
+                title:  'Job Cancelled',
+                text: '',
+                buttons: [{
+                    text: 'OK', bold: true, onClick: function() {
+                        TempStars.User.refresh()
+                        .then( function() {
+                            TempStars.Analytics.track( 'Cancelled Job' );
+                            TempStars.Hygienist.Router.goBackPage();
+                        });
+                    }}
+                ]
             });
         })
         .catch( function( err ) {
