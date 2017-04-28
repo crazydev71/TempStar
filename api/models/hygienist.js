@@ -1213,25 +1213,31 @@ console.log( 'hourlyRate: ' + hourlyRate );
         .then( function( h ) {
             hygienist = h;
 
-            var emailMsg = '<p>Hi '+data.firstName +',</p>';
-            emailMsg += '<p>Someone really likes you!  '+hygienist.firstName +' is a member of TempStars and invited you to join as well. </p>';
+            var firstName = data.firstName;
+            var capitcalFirstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
+
+            var hygienistFirstName = hygienist.firstName;
+            var capitcalhygienistFirstName = hygienistFirstName.charAt(0).toUpperCase() + hygienistFirstName.slice(1);
+
+            var emailMsg = '<p>Hi '+capitcalFirstName +',</p>';
+            emailMsg += '<p>Someone really likes you!  '+capitcalhygienistFirstName +' is a member of TempStars and invited you to join as well. </p>';
             emailMsg += '<p>TempStars is Canada’s premium dental hygiene temping service.  We use cutting-edge mobile technology to make fast and easy connections between hygienists and dental offices.  </p>';
             emailMsg += '<p>It’s totally free for hygienists to join and use.</p>';
-            emailMsg += '<p>Earn a bonus +$2/hr on your first placement when you join using '+hygienist.firstName +'’s Invite Code: <strong>'+theUser[0].inviteCode +'</strong> </p>';
-            emailMsg += '<p><a href="https://app2.tempstars.ca">Join TempStars using '+hygienist.firstName +'’s Invite Code <strong>'+theUser[0].inviteCode +'</strong></a></p>';
+            emailMsg += '<p>Earn a bonus +$2/hr on your first placement when you join using '+capitcalhygienistFirstName +'’s Invite Code: <strong>'+theUser[0].inviteCode +'</strong> </p>';
+            emailMsg += '<p><a href="https://app2.tempstars.ca">Join TempStars using '+capitcalhygienistFirstName +'’s Invite Code <strong>'+theUser[0].inviteCode +'</strong></a></p>';
             emailMsg += '<p>Find out more about TempStars and how it give you a busy, flexible professional lifestyle.</p>';
             emailMsg += '<br/>';
             emailMsg += '<p><a href="http://www.tempstars.ca/hygienists2/">Learn More</a></p>'
             emailMsg += '<br/>';
-            emailMsg += '<p>Over 180 hygienists trust TempStars to connect them with dental offices for their temping placements.  When you join, be sure to use '+hygienist.firstName +'’s Invite Code to earn your bonus +$2/hr on your first job.</p>';
-            emailMsg += '<p><a href="https://app2.tempstars.ca">Join TempStars using '+hygienist.firstName +'’s Invite Code <strong>'+theUser[0].inviteCode +'</strong></a></p>';
-            emailMsg += '<p>Thanks '+data.firstName +', we look forward to having you as a member of TempStars Nation!</p>';
+            emailMsg += '<p>Over 180 hygienists trust TempStars to connect them with dental offices for their temping placements.  When you join, be sure to use '+capitcalhygienistFirstName +'’s Invite Code to earn your bonus +$2/hr on your first job.</p>';
+            emailMsg += '<p><a href="https://app2.tempstars.ca">Join TempStars using '+capitcalhygienistFirstName +'’s Invite Code <strong>'+theUser[0].inviteCode +'</strong></a></p>';
+            emailMsg += '<p>Thanks '+capitcalFirstName +', we look forward to having you as a member of TempStars Nation!</p>';
             emailMsg += '<p>Kindest regards,<br/>James Younger, DDS<br/>Founder/CEO, TempStars</p>';
 
             Email.send({
                 to: data.email,
                 from: 'help@tempstars.ca',
-                subject: ''+ data.firstName +', '+hygienist.firstName +' '+hygienist.lastName +' invited you to join TempStars!',
+                subject: ''+ capitcalFirstName +', '+capitcalhygienistFirstName +' '+hygienist.lastName +' invited you to join TempStars!',
                 html: emailMsg
             }, function( err ) {
                 if ( err ) {
