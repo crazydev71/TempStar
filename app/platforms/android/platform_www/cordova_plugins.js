@@ -303,6 +303,14 @@ module.exports = [
             "cordova.InAppBrowser.open",
             "window.open"
         ]
+    },
+    {
+        "id": "phonegap-plugin-push.PushNotification",
+        "file": "plugins/phonegap-plugin-push/www/push.js",
+        "pluginId": "phonegap-plugin-push",
+        "clobbers": [
+            "PushNotification"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -320,7 +328,8 @@ module.exports.metadata =
     "cordova-plugin-file-transfer": "1.6.2",
     "ionic-plugin-keyboard": "2.2.1",
     "cordova-plugin-nativestorage": "2.2.1",
-    "cordova-plugin-inappbrowser": "1.7.0"
+    "cordova-plugin-inappbrowser": "1.7.0",
+    "phonegap-plugin-push": "1.10.2"
 };
 // BOTTOM OF METADATA
 });

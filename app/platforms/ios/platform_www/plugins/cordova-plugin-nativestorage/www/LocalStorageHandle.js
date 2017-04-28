@@ -1,4 +1,5 @@
-cordova.define("cordova-plugin-nativestorage.LocalStorageHandle", function(require, exports, module) { var NativeStorageError = require('./NativeStorageError');
+cordova.define("cordova-plugin-nativestorage.LocalStorageHandle", function(require, exports, module) {
+var NativeStorageError = require('./NativeStorageError');
 
 // args = [reference, variable]
 function LocalStorageHandle(success, error, intent, operation, args) {

@@ -36,6 +36,10 @@
         },
         "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "ca.tempstars.app2"
+        },
+        "phonegap-plugin-push": {
+            "SENDER_ID": "210360814619",
+            "PACKAGE_NAME": "ca.tempstars.app2"
         }
     },
     "dependent_plugins": {

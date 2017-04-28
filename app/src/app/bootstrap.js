@@ -9,6 +9,7 @@ window.TempStars.Pages.Hygienist = {};
 TempStars.bootstrap = {
 
     initialize: function() {
+        console.log('bootstrap init');  
 
         // Define Dom7 as global
         window.$$ = Dom7;
@@ -70,9 +71,11 @@ TempStars.bootstrap = {
 
         // Handle device events
         if ( window.cordova ) {
+            console.log('checking stuff cordova style');
             this.bindEvents();
         }
         else {
+            console.log('checking stuff');
             window.device = {};
             window.device.platform = platform.name;
             window.device.version = platform.version;
@@ -83,6 +86,8 @@ TempStars.bootstrap = {
     },
 
     bindEvents: function() {
+        console.log('bind event');
+        //setTimeout( this.onDeviceReady, 500);
         document.addEventListener('deviceready', this.onDeviceReady, false);
         document.addEventListener('resume', this.onResume, false);
         document.addEventListener('pause', this.onPause, false);
@@ -94,7 +99,7 @@ TempStars.bootstrap = {
             isIos,
             isWeb;
 
-    console.log( 'DEVICE READY');
+        console.log( 'DEVICE READY');
         // Get device for setting theme
         isAndroid = Framework7.prototype.device.android === true;
         isIos = Framework7.prototype.device.ios === true;

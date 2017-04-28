@@ -1,4 +1,5 @@
-cordova.define("cordova-plugin-nativestorage.NativeStorageError", function(require, exports, module) { /**
+cordova.define("cordova-plugin-nativestorage.NativeStorageError", function(require, exports, module) {
+/**
  * NativeStorageError
  * @constructor
  */
