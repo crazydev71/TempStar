@@ -27,7 +27,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>2.4.0</string>
+	<string>2.4.1</string>
 	<key>GCM_SENDER_ID</key>
 	<string>210360814619</string>
 	<key>IS_GCM_ENABLED</key>
@@ -46,8 +46,6 @@
 	<key>NSCameraUsageDescription</key>
 	<string></string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
-	<key>NSMainNibFile</key>
 	<string></string>
 	<key>NSMainNibFile~ipad</key>
 	<string></string>

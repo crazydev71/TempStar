@@ -21,5 +21,13 @@
   },
   "legacyExplorer": false,
   "stripeSecretKey": "sk_live_cjRvWqrIhEQaL5Yo1pG1wMWN",
-  "resetPasswordLink": "https://api.tempstars.ca/reset-password"
+  "resetPasswordLink": "https://api.tempstars.ca/reset-password",
+  "gcmApiKey": "AIzaSyBpqJVshqasod9SEdJoCSIHX5aqRkY-zg8",
+  "apnKey": "sys/APNSAuthKey_4W5923BGDZ.p8",
+  "apnKeyId": "4W5923BGDZ",
+  "apnTeamId": "UM68DRFZYZ",
+  "pushEnv": "prod",
+  "emailFrom": "no-reply@tempstars.ca",
+  "emailBcc": "drjyounger@hotmail.com",
+  "minVersion": "2.2.2"
 }

@@ -468,7 +468,7 @@
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = UM68DRFZYZ;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -591,7 +591,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = TempStars/TempStars.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = UM68DRFZYZ;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -634,8 +634,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ca.version1.TempStars;
 				PRODUCT_NAME = TempStars;
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "1ca286fb-d667-4e6c-8e88-a8cbecf7d698";
+				PROVISIONING_PROFILE_SPECIFIER = "XC iOS: ca.version1.TempStars";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -650,7 +650,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = TempStars/TempStars.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEVELOPMENT_TEAM = UM68DRFZYZ;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -691,8 +691,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ca.version1.TempStars;
 				PRODUCT_NAME = TempStars;
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "1ca286fb-d667-4e6c-8e88-a8cbecf7d698";
+				PROVISIONING_PROFILE_SPECIFIER = "XC iOS: ca.version1.TempStars";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
