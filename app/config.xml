@@ -24,6 +24,7 @@
         <preference name="SplashMaintainAspectRatio" value="true" />
         <preference name="SplashScreenDelay" value="3500" />
         <preference name="FadeSplashScreenDuration" value="500" />
+        <preference name="android-targetSdkVersion" value="25"/>
         <icon density="ldpi" src="resources/android/icon/icon-36.png" />
         <icon density="mdpi" src="resources/android/icon/icon-48.png" />
         <icon density="hdpi" src="resources/android/icon/icon-72.png" />
@@ -42,6 +43,9 @@
         <splash density="port-xhdpi" src="resources/android/splash/drawable-port-xhdpi-screen.png" />
         <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
+        <feature name="Device">
+            <param name="android.hardware.wifi" value="true" />
+        </feature>
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
