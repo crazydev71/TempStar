@@ -41,6 +41,15 @@ TempStars.Api = (function() {
                 { email: email, password: password, role: role }, authToken );
         },
 
+        getUserByInvite: function getUserByInvite( inviteCode ) {
+            return TempStars.Ajax.get( 'tsusers?filter[where][inviteCode]='+inviteCode, null, authToken );
+        },
+
+        addInvite: function addInvite(userId,inviteCode){
+            return TempStars.Ajax.post( 'invites',
+                { invitedUserId: userId, inviteCode: inviteCode, status: 0, userOnPlacement:0, signupComplete:0 }, authToken );
+        },
+
         saveHygienist: function saveHygienist( hygienist ) {
             return TempStars.Ajax.put( 'hygienists/' + hygienist.id + '/account', hygienist, authToken );
         },
@@ -217,6 +226,11 @@ TempStars.Api = (function() {
            {lastModifiedOn: lastModifiedOn}, authToken ).minDelay(1000);
         },
 
+        updateInviteStatus: function updateInviteStatus( hygienistId ) {
+            return TempStars.Ajax.put( 'hygienists/' + hygienistId + '/updateInviteStatus',
+           {}, authToken ).minDelay(1000);
+        },
+
         makePartialOffer: function makePartialOffer( hygienistId, jobId, data ) {
             return TempStars.Ajax.post( 'hygienists/' + hygienistId + '/jobs/' + jobId + '/partialoffer',
                 data, authToken ).minDelay(1000);
@@ -302,6 +316,13 @@ TempStars.Api = (function() {
 
         getMinVersion: function getMinVersion() {
             return TempStars.Ajax.get( 'minVersion' );
+        },
+
+        sendInvite: function sendInvite(userId, data) {
+            return TempStars.Ajax.put( 'hygienists/' + userId + '/sendInvite', data, authToken );
+        },
+        setUserInviteSignupComplete: function setUserInviteSignupComplete(userId){
+            return TempStars.Ajax.put( 'hygienists/' + userId + '/updateInviteSignupComplete', null, authToken );
         }
 
     };

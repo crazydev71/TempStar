@@ -112,5 +112,9 @@
   "Email": {
     "dataSource": "email",
     "public": false
+  },
+  "Invite": {
+    "dataSource": "tempstarsDB",
+    "public": true
   }
 }

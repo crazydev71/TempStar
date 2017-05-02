@@ -12,12 +12,21 @@
         <div class="page-content">
             <div class="content-block" >
                 <div class="row" style="margin-top:10px;margin-bottom:10px;">
-                    <div class="col-40">
-                        <a href="#" data-page="todays-job" class="hygienist-internal-forward button button-round">Today's Job</a>
-                    </div>
-                    <div class="col-60">
+                    <div class="col-100">
                         <div id="hygienist-new-jobs-badge" class="badge"></div>
-                        <a href="#" id="hygienist-home-available-jobs-button" class="button button-round" style="border:2px solid;line-height: 24px;">View Available Jobs &raquo;</a>
+                        <a href="#" id="hygienist-home-available-jobs-button" class="button button-round" style="border:2px solid;line-height: 24px; max-width: 200px; margin: 0 auto">View Available Jobs &raquo;</a>
+                        <br/>
+
+                        <div class="login-screen-title" style="font-size:14px">
+                            <a href="#" class="open-popover" data-popover=".popover-rate">
+                                <span style="color:#6d6d72;">Your current rate: <strong>${{baseRate}}/hr</strong> </span>
+                                <span style="color:#ff7f00;font-weight:bold;font-size:14px;">+ ${{inviteAdjustment}}/hr</span>
+                                &nbsp;<img src="img/info-icon.png" />
+                            </a>
+                        </div>
+
+                        <a href="#" data-popover=".popover-raise-rate" id="hygienist-home-available-raise-rate" class="open-popover button button-round" style="max-width: 200px; margin: 5px auto;">Raise Your Rate</a>
+
                     </div>
                 </div>
             </div>
@@ -26,6 +35,7 @@
                 <div id="hygienist-calendar-inline-container" class="closed-calendar"></div>
               </div>
             </div>
+            
 
             <div class="content-block">
                 <div class="row" style="border-bottom:1px solid #ccc;padding-bottom:10px;">

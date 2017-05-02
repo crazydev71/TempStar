@@ -218,9 +218,9 @@
       "resolved": "https://registry.npmjs.org/bcryptjs/-/bcryptjs-2.4.0.tgz"
     },
     "bignumber.js": {
-      "version": "2.4.0",
-      "from": "bignumber.js@2.4.0",
-      "resolved": "https://registry.npmjs.org/bignumber.js/-/bignumber.js-2.4.0.tgz"
+      "version": "3.1.2",
+      "from": "bignumber.js@3.1.2",
+      "resolved": "https://registry.npmjs.org/bignumber.js/-/bignumber.js-3.1.2.tgz"
     },
     "bl": {
       "version": "1.1.2",
@@ -1746,7 +1746,7 @@
     },
     "loopback-connector-mysql": {
       "version": "2.3.0",
-      "from": "loopback-connector-mysql@2.3.0",
+      "from": "https://registry.npmjs.org/loopback-connector-mysql/-/loopback-connector-mysql-2.3.0.tgz",
       "resolved": "https://registry.npmjs.org/loopback-connector-mysql/-/loopback-connector-mysql-2.3.0.tgz",
       "dependencies": {
         "async": {
@@ -2037,9 +2037,9 @@
       }
     },
     "mysql": {
-      "version": "2.12.0",
+      "version": "2.13.0",
       "from": "mysql@>=2.5.4 <3.0.0",
-      "resolved": "https://registry.npmjs.org/mysql/-/mysql-2.12.0.tgz",
+      "resolved": "https://registry.npmjs.org/mysql/-/mysql-2.13.0.tgz",
       "dependencies": {
         "isarray": {
           "version": "0.0.1",
@@ -3772,6 +3772,11 @@
       "version": "1.9.0",
       "from": "verror@>=1.8.1 <2.0.0",
       "resolved": "https://registry.npmjs.org/verror/-/verror-1.9.0.tgz"
+    },
+    "voucher-code-generator": {
+      "version": "1.1.1",
+      "from": "voucher-code-generator@latest",
+      "resolved": "https://registry.npmjs.org/voucher-code-generator/-/voucher-code-generator-1.1.1.tgz"
     },
     "window-size": {
       "version": "0.1.0",

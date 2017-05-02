@@ -2,10 +2,10 @@
     "db": {
       "name": "tempstarsDB",
       "host": "localhost",
-      "port": 3306,
+      "port": 8889,
       "database": "tempstars",
-      "user": "tempstars",
-      "password": "tempstars",
+      "user": "root",
+      "password": "root",
       "dateStrings": true
     },
 
@@ -22,6 +22,6 @@
 
     "email": {
         "from": "billing@tempstars.net",
-        "to": "drjyounger@hotmail.com"
+        "to": "andrewm@netgainseo.com"
     }
 }

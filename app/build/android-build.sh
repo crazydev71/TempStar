@@ -33,4 +33,4 @@ jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore android-release
 
 # optimize it
 rm TempStars-$VERSION.apk
-~/Library/Android/sdk/build-tools/24.0.1/zipalign -v 4 android-armv7-release-unsigned.apk TempStars-$VERSION.apk
+~/Library/Android/sdk/build-tools/25.0.2/zipalign -v 4 android-armv7-release-unsigned.apk TempStars-$VERSION.apk

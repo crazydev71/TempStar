@@ -545,3 +545,8 @@ input[type=number]::-webkit-outer-spin-button {
 .modal-button.modal-button-bold {
     font-weight: 700;
 }
+
+#hygienist-new-jobs-badge{
+    right: 50% !important;
+    margin-right: -100px !important;
+}

@@ -1,3 +1,13 @@
 #hygienist-todays-job-table tr {
     margin-bottom: 20px;
 }
+
+#hygienist-todays-job-cancel-button {
+	color: #ba322c;
+    font-size: 0.9rem;
+}
+
+#hygienist-todays-job-break-button {
+	color: #ba322c;
+    font-size: 1.0rem;
+}

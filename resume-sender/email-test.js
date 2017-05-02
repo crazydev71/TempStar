@@ -33,7 +33,7 @@ function sendSorryEmail( emailAddress ) {
     });
 }
 
-sendSorryEmail( 'mbetts@me.com' )
+sendSorryEmail( 'drjyounger@hotmail.com' )
 .then( function() {
     console.log( 'sent');
 })

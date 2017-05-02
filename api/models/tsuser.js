@@ -1,6 +1,8 @@
 'use strict';
 
 var Promise = require( 'bluebird' );
+var voucher_codes = require('voucher-code-generator');
+
 
 module.exports = function( TSUser ) {
 
@@ -24,8 +26,17 @@ module.exports = function( TSUser ) {
         var Dentist = TSUser.app.models.Dentist;
         var Hygienist = TSUser.app.models.Hygienist;
 
+        //var inviteCode = Date.now() / 1000 | 0;
+        var inviteCode = voucher_codes.generate({
+            length: 8,
+            count: 1
+        });
+
+        console.log(inviteCode);
+
+
         // Create the user, role, account, and then log the user in
-        TSUser.create( { email: data.email, password: data.password } )
+        TSUser.create( { email: data.email, password: data.password, inviteCode: inviteCode } )
         .then( function( u ) {
             user = u;
             // Give them the appropriate role

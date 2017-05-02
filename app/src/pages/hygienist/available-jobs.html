@@ -17,22 +17,30 @@
 
     <div data-page="hygienist-available-jobs" class="page">
         <div class="page-content">
-            <div class="login-screen-title" style="font-size:16px">Your current rate: <strong>${{rate}}/hr</strong> &nbsp;<a href="#" class="open-popover" data-popover=".popover-rate">(more...)</a></div>
-            <div class="content-block" style="margin-top:10px;">
+            <div class="content-block" >
+                <div class="login-screen-title" style="font-size:14px">
+                    <a href="#" class="open-popover" data-popover=".popover-rate">
+                        <span style="color:#6d6d72;">Your current rate: <strong>${{baseRate}}/hr</strong></span>
+                        <span style="color:#ff7f00; font-weight:bold; font-size:14px;">+ ${{inviteAdjustment}}/hr</span>
+                        &nbsp;<img src="img/info-icon.png" />
+                    </a>
+                </div>
 
-                    <div class="row">
-                        <div class="col-80">
-                            <div style="padding-bottom:6px">Sort by</div>
-                                <div class="buttons-row">
-                                    <a id="hygienist-available-jobs-newest-sorting-button" href="#" class="button active">Newest</a>
-                                    <a id="hygienist-available-jobs-soonest-sorting-button" href="#" class="button">Soonest</a>
-                                    <a id="hygienist-available-jobs-closest-sorting-button" href="#" class="button">Closest</a>
-                                </div>
+                <div class="content-block" style="margin-top:10px;">
+                        <div class="row">
+                            <div class="col-80">
+                                <div style="padding-bottom:6px">Sort by</div>
+                                    <div class="buttons-row">
+                                        <a id="hygienist-available-jobs-newest-sorting-button" href="#" class="button active">Newest</a>
+                                        <a id="hygienist-available-jobs-soonest-sorting-button" href="#" class="button">Soonest</a>
+                                        <a id="hygienist-available-jobs-closest-sorting-button" href="#" class="button">Closest</a>
+                                    </div>
+                            </div>
+                            <div class="col-20">
+                                &nbsp;
+                            </div>
                         </div>
-                        <div class="col-20">
-                            &nbsp;
-                        </div>
-                    </div>
+                </div>
             </div>
             <div class="list-block media-list">
                   <ul>

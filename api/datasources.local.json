@@ -1,0 +1,12 @@
+{
+  "tempstarsDB": {
+    "name": "tempstarsDB",
+    "connector": "mysql",
+    "host": "localhost",
+    "port": 8889,
+    "database": "tempstars",
+    "user": "root",
+    "password": "root",
+    "dateStrings": true
+  }
+}

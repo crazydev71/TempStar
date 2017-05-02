@@ -225,6 +225,10 @@ TempStars.Pages.HygienistSignup = (function() {
             }
             return TempStars.Hygienist.save( formData );
         })
+        .then(function(){
+            var userId = TempStars.User.getCurrentUser().id;
+            return TempStars.User.setUserInviteSignupComplete(userId);
+        })
         .then( function() {
             delete window.webresume;
             return TempStars.User.refresh();
@@ -238,6 +242,7 @@ TempStars.Pages.HygienistSignup = (function() {
             TempStars.App.gotoStartingPage();
         })
         .catch( function( err ) {
+            console.log(err);
             app.hidePreloader();
             $$('#hygienist-signup-form .form-error-msg')
                 .html('<span class="ti-alert"></span> Setting up account failed. Please try again.')

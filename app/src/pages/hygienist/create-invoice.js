@@ -282,6 +282,9 @@ TempStars.Pages.Hygienist.CreateInvoice = (function() {
             TempStars.Api.sendInvoice( job.id, data )
             .then( function() {
 
+                //UPDATE INVITE STATUS
+                TempStars.Api.updateInviteStatus(hygienistId);
+
                 TempStars.Api.updateJob( job.id, {status: TempStars.Job.status.COMPLETED} )
                 .then( function() {
                     app.hidePreloader();

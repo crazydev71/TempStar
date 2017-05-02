@@ -7,8 +7,13 @@ TempStars.Pages.Hygienist.TodaysJob = (function() {
 
     function init() {
         app.onPageBeforeInit( 'hygienist-todays-job', function( page ) {
+
+            $$('#hygienist-todays-job-cancel-button').show();
+            $$('#hygienist-todays-job-break-button').hide();
+
             $$('#hygienist-todays-job-complete-button').on( 'click', completeButtonHandler );
             $$('#hygienist-todays-job-cancel-button').on( 'click', cancelButtonHandler );
+            $$('#hygienist-todays-job-break-button').on( 'click', breakButtonHandler );
             $$('#hygienist-todays-job-invoice-button').on( 'click', invoiceButtonHandler );
             $$('#hygienist-todays-job-survey-button').on( 'click', surveyButtonHandler );
             TempStars.Analytics.track( 'Viewed Today\'s Job' );
@@ -18,6 +23,7 @@ TempStars.Pages.Hygienist.TodaysJob = (function() {
         app.onPageBeforeRemove( 'hygienist-todays-job', function( page ) {
             $$('#hygienist-todays-job-complete-button').off( 'click', completeButtonHandler );
             $$('#hygienist-todays-job-cancel-button').off( 'click', cancelButtonHandler );
+            $$('#hygienist-todays-job-break-button').off( 'click', breakButtonHandler );
             $$('#hygienist-todays-job-invoice-button').off( 'click', invoiceButtonHandler );
             $$('#hygienist-todays-job-survey-button').off( 'click', surveyButtonHandler );
             $$('.popover-map').off('open', displayMap );
@@ -41,6 +47,12 @@ TempStars.Pages.Hygienist.TodaysJob = (function() {
     }
 
     function cancelButtonHandler( e ) {
+        e.preventDefault();
+        $$('#hygienist-todays-job-cancel-button').hide();
+        $$('#hygienist-todays-job-break-button').show();
+    }
+
+    function breakButtonHandler( e ) {
         e.preventDefault();
 
         var cancelMessage = 'Cancelling this commitment will cause significant disruption to this office and its patients.<br>';
@@ -87,6 +99,10 @@ TempStars.Pages.Hygienist.TodaysJob = (function() {
 
     function completeJob() {
         app.showPreloader('Updating Job');
+
+        //UPDATE INVITE STATUS
+        TempStars.Api.updateInviteStatus(TempStars.User.getCurrentUser().hygienistId);
+
         TempStars.Api.updateJob( job.id, {status: TempStars.Job.status.COMPLETED} )
         .then( function() {
             app.hidePreloader();
