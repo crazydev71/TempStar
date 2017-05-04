@@ -299,8 +299,7 @@ module.exports = function( Job ){
             Email.send({
                 from: app.get('emailFrom'),
                 to: jj.dentist.user.email,
-                cc: jj.hygienist.user.email,
-                bcc: app.get('emailBcc'),
+                bcc: jj.hygienist.user.email + ', ' + app.get('emailBcc'),
                 subject: 'Invoice from ' + jj.hygienist.firstName + ' ' + jj.hygienist.lastName,
                 html: data.html },
                 function(err) {
@@ -381,8 +380,7 @@ module.exports = function( Job ){
             Email.send({
                 from: app.get('emailFrom'),
                 to: jj.dentist.user.email,
-                cc: jj.hygienist.user.email,
-                bcc: app.get('emailBcc'),
+                bcc: jj.hygienist.user.email + ', ' + app.get('emailBcc'),
                 subject: 'Invoice from ' + jj.hygienist.firstName + ' ' + jj.hygienist.lastName,
                 html: data.html },
                 function(err) {
