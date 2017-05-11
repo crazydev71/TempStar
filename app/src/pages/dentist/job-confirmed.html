@@ -19,40 +19,51 @@
         <div class="content-block">
             <div class="job-box">
 
-            <div class="login-screen-title">{{hygienist.firstName}} {{hygienist.lastName}}
-            <div style="margin-top:10px;margin-bottom:20px;">
-                <div id="hygienist-rating"></div>
-                <div style="margin-top:6px;font-size:14px;"><b>${{hygienistRate}}/hr</b>
-                    {{#if bonus}}
-                    <span style="color:#6cc644;font-weight:bold;font-size:14px;">+${{bonus}}/hr</span>
-                    {{/if}}
+                <div class="hygienist-name">{{hygienist.firstName}} {{hygienist.lastName}}, RDH</div>
+                <div class="hygienist-details-wrapper">
+                    <div class="hygienist-details">
+                        {{#if hygienist.graduationYear}}
+                        Graduated: {{hygienist.graduationYear}}
+                        {{/if}}
 
-                    {{#if hygienist.graduationYear}}
-                    &nbsp;&nbsp;
-                    Graduated: {{hygienist.graduationYear}}
-                    {{/if}}
+                        {{#if hygienist.school}}
+                        <br>
+                        {{hygienist.school}}
+                        {{/if}}
+                        <div style="margin-top:10px;margin-bottom:20px;">
+                            <div id="hygienist-rating"></div>
+                            <div style="margin-top:6px;font-size:14px;"><b>${{hygienistRate}}/hr</b>
+                                {{#if bonus}}
+                                <span style="color:#6cc644;font-weight:bold;font-size:14px;">+${{bonus}}/hr</span>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <img id="hygienist-profile-photo" src="img/hygienist.png" width="70px" />
+                    </div>
                 </div>
-            </div>
 
-            <table cellpadding="0" cellspacing="0" style="font-size:14px;">
-                <tr class="heading">
-                    <td>Date</td>
-                    <td style="text-align:left;">Hours</td>
-                </tr>
+                <table cellpadding="0" cellspacing="0" style="font-size:14px;">
+                    <tr class="heading">
+                        <td>Date</td>
+                        <td style="text-align:left;">Hours</td>
+                    </tr>
 
-                {{#each shifts}}
-                <tr class="item">
-                    <td>{{date_format shiftDate}}</td>
-                    <td style="text-align:left;">
-                        {{time_format postedStart}} - {{time_format postedEnd}}
-                    </td>
-                </tr>
-                {{/each}}
+                    {{#each shifts}}
+                    <tr class="item">
+                        <td>{{date_format shiftDate}}</td>
+                        <td style="text-align:left;">
+                            {{time_format postedStart}} - {{time_format postedEnd}}
+                        </td>
+                    </tr>
+                    {{/each}}
 
-                <tr colspan="2"><td>&nbsp;</td></tr>
-            </table>
+                    <tr colspan="2"><td>&nbsp;</td></tr>
+                </table>
 
-            <!-- <div class="login-screen-title" style="font-size:16px;margin:0 50px 35px 50px;padding:10px">Hourly Rate: ${{hourlyRate}}/hr</div> -->
+                <!-- <div class="login-screen-title" style="font-size:16px;margin:0 50px 35px 50px;padding:10px">Hourly Rate: ${{hourlyRate}}/hr</div> -->
+                <div style="padding-bottom: 20px;">This hygienist is booked and confirmed for this job. You don't have to do anything else.</div>
 
             </div>
 

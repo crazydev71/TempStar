@@ -11,3 +11,22 @@
 	color: #ba322c;
     font-size: 1.0rem;
 }
+
+.hygienist-name {
+	width: 100%;
+	text-align: center;
+    font-size: 1.4rem;
+}
+
+.hygienist-details-wrapper {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	margin-top: 10px;
+}
+
+.hygienist-details {
+	flex: 1;
+	text-align: center;
+    margin-top: 10px;
+}

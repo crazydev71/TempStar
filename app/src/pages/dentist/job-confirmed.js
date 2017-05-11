@@ -6,6 +6,10 @@ TempStars.Pages.Dentist.JobConfirmed = (function() {
 
     function init() {
         app.onPageBeforeInit( 'dentist-job-confirmed', function( page ) {
+            if ( job.hygienist.photoUrl ) {
+                $$('#hygienist-profile-photo').attr('src', job.hygienist.photoUrl);
+            }
+
             $$('#dentist-job-confirmed-cancel-button').show();
             $$('#dentist-job-confirmed-break-button').hide();
 
