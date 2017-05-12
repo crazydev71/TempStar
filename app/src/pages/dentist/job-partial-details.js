@@ -43,7 +43,7 @@ TempStars.Pages.Dentist.JobPartialDetails = (function() {
     function refreshExpireTime() {
         var createdTime = job.selOffer.createdOn;
         var curDate = new Date();
-        var duration = moment.utc(createdTime).add(14, 'hour').valueOf() - moment.utc(curDate).valueOf();
+        var duration = moment.utc(createdTime).add(12, 'hour').valueOf() - moment.utc(curDate).valueOf();
 
         if (duration < 0)
             return;

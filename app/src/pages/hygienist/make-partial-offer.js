@@ -243,7 +243,7 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
                         .utc()
                         .format('YYYY-MM-DD HH:mm');
 
-        var now = moment().format('YYYY-MM-DD HH:mm:ss');
+        var now = moment().utc().format('YYYY-MM-DD HH:mm:ss');
 
         data = {
             hourlyRate: formData.rate,
