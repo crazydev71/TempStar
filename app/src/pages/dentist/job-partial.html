@@ -5,7 +5,7 @@
                 <span class="ti-angle-left"></span> back
             </a>
         </div>
-        <div class="center sliding">Job with Partial Offers</div>
+        <div class="center sliding">Custom Offers</div>
         <div class="right">
             <a href="#" data-panel="right" class="link icon-only open-panel">
                 <span class="ti-menu"></span>
@@ -19,11 +19,25 @@
         <div class="content-block">
             <div class="job-box">
 
-            <h3 style="margin-bottom:10px;">Posted Job</h3>
+            <div class="login-screen-title" style="margin-bottom:0px;">{{date_format_day startDate}}</div>
+            <hr>
+            <div class="center-box" style="font-size:125%;font-weight:bold;padding-top:0px;">
+            {{dentist.practiceName}}
+            </div>
+            <div class="center-box" style="padding:0px;">
+            {{dentist.address}}
+            </div>
+            <div class="center-box" style="padding:0px;">
+            {{dentist.city}}, {{dentist.province}}
+            </div>
+            <div class="center-box" style="padding-bottom:10px;">
+            {{dentist.postalCode}}
+            </div>
+
             <table cellpadding="0" cellspacing="0">
                 <tr class="heading">
-                    <td>Date</td>
-                    <td style="text-align:left;">Hours</td>
+                    <td>Posted Hours</td>
+                    <td style="text-align:left;"></td>
                 </tr>
 
                 {{#each shifts}}
@@ -35,6 +49,7 @@
                 </tr>
                 {{/each}}
 
+                <!--
                 {{#if hasBonus}}
                 <tr>
                     <td colspan="2">
@@ -51,9 +66,37 @@
                     <td><a href="#" id="dentist-job-partial-offer-incentive-button" data-id="{{id}}" class="button button-round button-small">Offer Incentive</a></td>
                     <td>&nbsp;</td>
                 </tr>
+                -->
 
             </table>
 
+            <div class="row" style="margin: 20px 0px;">
+                <div class="col-15">&nbsp;</div>
+                <div class="col-70">
+                    <a href="#" id="dentist-job-partial-modify-button" data-id="{{id}}" class="button button-round">Modify Job Details</a>
+                </div>
+                <div class="col-15">&nbsp;</div>
+            </div>
+
+            <table style="border-top: 1px solid #EEE;">
+                {{#each partialOffers}}
+                <tr data-id="{{id}}" class="dentist-partial-job-row item">
+                    <td>
+                        {{hygienist.firstName}} {{hygienist.lastName}}
+                        <br>
+                        ${{hourlyRate}}/hr
+                    </td>
+                    <td style="text-align: left;">
+                        {{time_format offeredStartTime}} - {{time_format offeredEndTime}}
+                    </td>
+                    <td style="text-align: right;">
+                        <img src="./img/arrow-right.png" width="18px" />
+                    </td>
+                </tr>
+                {{/each}}
+            </table>
+
+            <!--
             <h3 style="margin-bottom:10px;margin-top:30px;">Partial Offers</h3>
             <table cellpadding="0" cellspacing="0">
                 <tr class="heading">
@@ -102,7 +145,7 @@
 
                 <tr colspan="2"><td>&nbsp;</td></tr>
             </table>
-
+            -->
             </div>
         </div>
     </div>

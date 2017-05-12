@@ -11,14 +11,26 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
             console.log(page);
             job = page.context.job;
             $$('#hygienist-available-job-accept-button').on( 'click', acceptButtonHandler );
-            $$('#hygienist-available-job-partial-button').on( 'click', partialButtonHandler );
+            $$('#hygienist-available-job-custom-button').on( 'click', customButtonHandler );
+            $$('#hygienist-available-job-custom-button-tooltip').on( 'click', tooltipButtonHandler );
+
             TempStars.Analytics.track( 'Viewed Available Job Detail' );
             $$('.popover-map').on('open', displayMap );
+
+            if (job.shifts[0].type === 2) {
+                $$('#hygienist-available-job-tooltip').show();
+                $$('#hygienist-available-job-accept-button').hide();
+            }
+            else {
+                $$('#hygienist-available-job-tooltip').hide();
+                $$('#hygienist-available-job-accept-button').show();
+            }
         });
 
         app.onPageBeforeRemove( 'hygienist-available-job', function( page ) {
             $$('#hygienist-available-job-accept-button').off( 'click', acceptButtonHandler );
-            $$('#hygienist-available-job-partial-button').off( 'click', partialButtonHandler );
+            $$('#hygienist-available-job-custom-button').off( 'click', customButtonHandler );
+            $$('#hygienist-available-job-custom-button-tooltip').off( 'click', tooltipButtonHandler );
             $$('.popover-map').off('open', displayMap );
         });
     }
@@ -46,10 +58,55 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
         });
     }
 
-    function partialButtonHandler( e ) {
-        TempStars.Hygienist.Router.goForwardPage('make-partial-offer', {}, job );
+    function customButtonHandler( e ) {
+        var hygienist = TempStars.User.getCurrentUser().hygienist;
+        if (hygienist && hygienist.resumeUrl) {
+            TempStars.Hygienist.Router.goForwardPage('make-partial-offer', {}, job );
+        }
+        else {
+            var info = "";
+            info = "Custom Offers require you to have a resume uploaded." + "<br><br>" +
+                   "Would you like to add your resume to your profile now?" + "<br><br>" +
+                   "Note: You must be on your" + "<br>" +
+                   "computer(Mac/PC/Laptop)" + "<br>" +
+                   "to upload your resume.";
+            app.modal({
+                text: info,
+                title: 'Custom Offers Need a Resume',
+                buttons: [
+                    {
+                        text: 'Go To Profile',
+                        onClick: function() {
+                            TempStars.Hygienist.Router.goForwardPage('profile');
+                        }
+                    },
+                    {
+                        text: 'Later',
+                        onClick: function() {
+                        }
+                    }
+                ]
+            });
+        }
     }
 
+    function tooltipButtonHandler( e ) {
+        var tooltipInfo = "";
+        tooltipInfo = "Now you can set your own hourly rate!" + "<br>" +
+                      "Submit a custom offer to this office at your preferred $/hr rate. They will receive the offer with the option to accept/decline it.";
+        app.modal({
+            text: tooltipInfo,
+            title: 'Custom Offer',
+            buttons: [
+                {
+                    text: 'OK',
+                    bold: true,
+                    onClick: function() {
+                    }
+                }
+            ]
+        });
+    }
 
     function bookJob() {
         app.showPreloader('Booking Job');
@@ -100,7 +157,6 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
         init: init,
         getData: function( params ) {
             var hygienistId = TempStars.User.getCurrentUser().hygienistId;
-            
             
             return new Promise( function( resolve, reject ) {
                 var rate;

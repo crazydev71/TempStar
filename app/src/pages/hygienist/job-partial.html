@@ -5,7 +5,7 @@
                 <span class="ti-angle-left"></span> back
             </a>
         </div>
-        <div class="center sliding">Partial Offer</div>
+        <div class="center sliding">Custom Offer</div>
         <div class="right">
             <a href="#" data-panel="right" class="link icon-only open-panel">
                 <span class="ti-menu"></span>
@@ -19,54 +19,59 @@
         <div class="content-block">
             <div class="job-box">
 
-            <div class="login-screen-title" style="margin-bottom:20px;">{{dentist.practiceName}}</div>
+                <div class="login-screen-title" style="margin-bottom:20px;">{{dentist.practiceName}}</div>
 
-            <h3 style="margin-bottom:10px;">Posted Job</h3>
-            <table cellpadding="0" cellspacing="0">
-                <tr class="heading">
-                    <td>Date</td>
-                    <td style="text-align:left;">Hours</td>
-                </tr>
+                <h3 style="margin-bottom:10px;">Posted Job</h3>
+                <table cellpadding="0" cellspacing="0">
+                    <tr class="heading">
+                        <td>Date</td>
+                        <td style="text-align:left;">Hours</td>
+                    </tr>
 
-                {{#each shifts}}
-                <tr class="item">
-                    <td>{{date_format ../startDate}}</td>
-                    <td style="text-align:left;">
-                        {{time_format postedStart}} - {{time_format postedEnd}}
-                    </td>
-                </tr>
-                {{/each}}
-            </table>
+                    {{#each shifts}}
+                    <tr class="item">
+                        <td>{{date_format ../startDate}}</td>
+                        <td style="text-align:left;">
+                            {{time_format postedStart}} - {{time_format postedEnd}}
+                        </td>
+                    </tr>
+                    {{/each}}
+                </table>
 
-            <h3 style="margin-bottom:10px;margin-top:30px;">Your Partial Offer</h3>
-            <table cellpadding="0" cellspacing="0">
-                <tr class="heading">
-                    <td>Date</td>
-                    <td style="text-align:left;">Hours</td>
-                </tr>
+                <h3 style="margin-bottom:10px;margin-top:30px;">Your Custom Offer</h3>
+                <table cellpadding="0" cellspacing="0">
+                    <tr class="heading">
+                        <td>Date</td>
+                        <td style="text-align:left;">Hours</td>
+                    </tr>
 
-                {{#each partialOffers}}
-                <tr>
-                    <td>{{date_format ../startDate}}</td>
-                    <td style="text-align:left;">
-                        {{time_format offeredStartTime}} - {{time_format offeredEndTime}}
-                    </td>
-                </tr>
-                {{else}}
-                <tr><td colspan="2">No partial offers</td></tr>
-                {{/each}}
+                    {{#each partialOffers}}
+                    <tr>
+                        <td>{{date_format ../startDate}}</td>
+                        <td style="text-align:left;">
+                            {{time_format offeredStartTime}} - {{time_format offeredEndTime}}
+                        </td>
+                    </tr>
+                    {{else}}
+                    <tr><td colspan="2">No custom offers</td></tr>
+                    {{/each}}
 
-            </table>
+                </table>
 
-            <div class="row" style="margin-top:20px">
-                <div class="col-20">&nbsp;</div>
-                <div class="col-60">
-                    <a href="#" id="hygienist-job-partial-modify-button" data-id="{{id}}" class="button button-round">Modify Partial Offer</a>
-                    <br>
-                    <a href="#" id="hygienist-job-partial-cancel-button" data-id="{{id}}" class="button button-round">Cancel Partial Offer</a>
+                <div style="margin-top: 5px; font-size: 1rem; padding-left: 5px;">Your Rate: ${{partialOffers[0].hourlyRate}}/hr</div>
+                <div id="hygienist-job-partial-expire-time" style="margin: 10px 0px; font-size: 1rem; text-align: center;">This offer will expire in:</div>
+
+                <div class="row" style="margin-top: 40px;">
+                    <div class="col-20">&nbsp;</div>
+                    <div class="col-60" style="text-align: center;">
+                        <!--
+                        <a href="#" id="hygienist-job-partial-modify-button" data-id="{{id}}" class="button button-round">Modify Partial Offer</a>
+                        <br>
+                        -->
+                        <a href="#" id="hygienist-job-partial-cancel-button" data-id="{{id}}">Remove Custom Offer</a>
+                    </div>
+                    <div class="col-20">&nbsp;</div>
                 </div>
-                <div class="col-20">&nbsp;</div>
-            </div>
 
             </div>
         </div>

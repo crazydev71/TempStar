@@ -3,23 +3,47 @@ TempStars.Pages.Hygienist.JobPartial = (function() {
     'use strict';
 
     var job;
-    var initialized = false;
+    var interval;
 
     function init() {
 
         app.onPageBeforeInit( 'hygienist-job-partial', function( page ) {
-            TempStars.Analytics.track( 'Viewed Partial Job Details' );
+            TempStars.Analytics.track( 'Viewed Custom Job Details' );
+            $$('#hygienist-job-partial-modify-button').on( 'click', modifyButtonHandler );
+            $$('#hygienist-job-partial-cancel-button').on( 'click', cancelButtonHandler );
+
+            refreshExpireTime();
+            interval = setInterval( refreshExpireTime, 60000 );
         });
 
-        if ( ! initialized ) {
+        app.onPageBeforeRemove( 'hygienist-job-partial', function( page ) {
+            $$('#hygienist-job-partial-modify-button').off( 'click', modifyButtonHandler );
+            $$('#hygienist-job-partial-cancel-button').off( 'click', cancelButtonHandler );
 
-            app.onPageBeforeInit( 'hygienist-job-partial', function( page ) {
-                $$('#hygienist-job-partial-modify-button').on( 'click', modifyButtonHandler );
-                $$('#hygienist-job-partial-cancel-button').on( 'click', cancelButtonHandler );
-            });
+            clearInterval( interval );
+        });
+    }
 
-            initialized = true;
-        }
+    function refreshExpireTime() {
+        var createdTime = job.partialOffers[0].createdOn;
+        var curDate = new Date();
+        var duration = moment.utc(createdTime).add(14, 'hour').valueOf() - moment.utc(curDate).valueOf();
+
+        if (duration < 0)
+            return;
+
+        var hh = parseInt(duration / 3600000);
+        var mm = parseInt((duration - hh * 3600000) / 60000);
+        var expireTime = '';
+
+        if (hh === 0)
+            expireTime = mm + 'min';
+        else if (hh === 1)
+            expireTime = hh + 'hr ' + mm + 'min';
+        else
+            expireTime = hh + 'hrs ' + mm + 'min';
+
+        $$('#hygienist-job-partial-expire-time').html('This offer will expire in: ' + expireTime);
     }
 
     function modifyButtonHandler( e ) {
@@ -36,29 +60,37 @@ TempStars.Pages.Hygienist.JobPartial = (function() {
     function cancelButtonHandler( e ) {
         e.preventDefault();
 
-        var cancelMessage = 'Are you sure?';
+        var cancelMessage = 'There is no penalty for removing a custom offer before it is accepted. Are you sure?';
 
         app.modal({
-          title:  'Cancel Partial Offer',
-          text: cancelMessage,
-          buttons: [
-              { text: 'No' },
-              { text: 'Yes', bold: true, onClick: cancelPartialOffer }
+            title: 'Remove Custom Offer',
+            text: cancelMessage,
+            buttons: [
+                { text: 'Yes', bold: true, onClick: cancelPartialOffer },
+                { text: 'No' }
           ]
         });
     }
 
     function cancelPartialOffer() {
-        app.showPreloader('Cancelling Partial Offer');
+        app.showPreloader('Removing Custom Offer');
         TempStars.Api.cancelPartialOffer( TempStars.User.getCurrentUser().hygienistId, job.id, job.partialOffers[0].id )
         .then( function() {
             app.hidePreloader();
-            TempStars.Analytics.track( 'Cancelled Partial Offer' );
-            TempStars.Hygienist.Router.goBackPage();
+            app.modal({
+                title: 'Your Custom Offer Has Been Removed',
+                text: '',
+                buttons: [
+                    { text: 'OK', bold: true, onClick: function() {
+                        TempStars.Analytics.track( 'Removed Custom Offer' );
+                        TempStars.Hygienist.Router.goBackPage();
+                    } }
+              ]
+            });
         })
         .catch( function( err ) {
             app.hidePreloader();
-            app.alert( 'Error cancelling partial offer. Please try again.' );
+            app.alert( 'Error removing custom offer. Please try again.' );
         });
     }
 

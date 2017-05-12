@@ -5,3 +5,29 @@
 .page[data-page="hygienist-make-partial-offer"] .content-block {
     margin:0px 0px 20px 0px;
 }
+
+.rate-row td {
+	padding: 10px 0px !important;
+}
+
+.rate-row select {
+	width: 120px;
+    background: none;
+    -webkit-appearance: none;
+	border: none;
+    border-bottom: 1px solid #DDD;
+    border-radius: 0px;
+    padding-bottom: 5px;
+}
+
+.rate-row input {
+    width: 120px;
+	border: none;
+    border-bottom: 1px solid #DDD;
+    padding-bottom: 5px;
+}
+
+.rate-row .rate-error-msg {
+    margin-top: 2px;
+    margin-bottom: 0px;
+}

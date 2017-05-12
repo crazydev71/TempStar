@@ -468,7 +468,20 @@ TempStars.Pages.Hygienist.Profile = (function() {
                 formData.append( 'resume', blob, fileName );
                 TempStars.Ajax.upload( uploadURL, formData, TempStars.Api.getAuthToken() )
                 .then( function( result ) {
-                    resolve( TempStars.Config.bucket.baseUrl + fileName );
+                    app.hidePreloader();
+                    app.modal({
+                        text: '',
+                        title: 'Resume Was Uploaded',
+                        buttons: [
+                            {
+                                text: 'OK',
+                                onClick: function() {
+                                    app.showPreloader('Saving Profile');
+                                    resolve( TempStars.Config.bucket.baseUrl + fileName );
+                                }
+                            }
+                        ]
+                    });
                 })
                 .catch( function( err ) {
                     reject( err );

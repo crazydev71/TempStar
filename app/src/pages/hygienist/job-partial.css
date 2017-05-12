@@ -1,3 +1,9 @@
 #hygienist-job-partial-table tr {
     margin-bottom: 20px;
 }
+
+#hygienist-job-partial-cancel-button {
+	color: #ba322c;
+    font-size: 1rem;
+    font-weight: bold;
+}

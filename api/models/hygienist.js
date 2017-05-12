@@ -599,7 +599,7 @@ console.log( 'hourlyRate: ' + hourlyRate );
             return Promise.map( pos, function( po ) {
                 pj = po.toJSON();
                 if ( po.hygienistId != job.hygienistId ) {
-                    var msg = 'Your partial offer on ';
+                    var msg = 'Your custom offer on ';
                     msg += moment(jj.startDate).format('ddd MMM Do');
                     msg += ' has been declined.';
                     push.send( msg, pj.hygienist.user.platform, pj.hygienist.user.registrationId )
@@ -610,7 +610,7 @@ console.log( 'hourlyRate: ' + hourlyRate );
                                     to: pj.hygienist.user.email,
                                     from: app.get('emailFrom'),
                                     bcc:  app.get('emailBcc'),
-                                    subject: 'Partial Offer for ' + moment(jj.startDate).format('ddd MMM D, YYYY') + ' declined',
+                                    subject: 'Custom Offer for ' + moment(jj.startDate).format('ddd MMM D, YYYY') + ' declined',
                                     text: msg
                                 }, function( err ) {
                                     if ( err ) {
@@ -640,7 +640,7 @@ console.log( 'hourlyRate: ' + hourlyRate );
 
     Hygienist.makePartialOffer = function( hygienistId, jobId, data, callback ) {
 
-        console.log( 'make partial offer' );
+        console.log( 'make a custom offer' );
 
         var Job = app.models.Job;
         var PartialOffer = app.models.PartialOffer;
@@ -694,7 +694,7 @@ console.log( 'hourlyRate: ' + hourlyRate );
                 jobId: job.id,
                 hygienistId: hygienistId,
                 status: 0,
-                hourlyRate: hourlyRate,
+                hourlyRate: data.hourlyRate,
                 offeredStartTime: data.offeredStartTime,
                 offeredEndTime: data.offeredEndTime,
                 createdOn: data.createdOn
@@ -728,11 +728,11 @@ console.log( 'hourlyRate: ' + hourlyRate );
             });
         })
         .then( function() {
-            console.log( 'make partial offer worked!' );
+            console.log( 'make a custom offer worked!' );
             callback( null, {} );
         })
         .catch( function( err ) {
-            console.log( 'make partial offer error!' );
+            console.log( 'make a custom offer error!' );
             callback( err );
         });
     };
@@ -749,7 +749,7 @@ console.log( 'hourlyRate: ' + hourlyRate );
 
     Hygienist.cancelPartialOffer = function( hygienistId, jobId, partialOfferId, callback ) {
 
-        console.log( 'cancel partial offer' );
+        console.log( 'cancel custom offer' );
 
         var Job = app.models.Job;
         var PartialOffer = app.models.PartialOffer;
@@ -782,11 +782,11 @@ console.log( 'hourlyRate: ' + hourlyRate );
             }
         })
         .then( function() {
-            console.log( 'cancel partial offer worked!' );
+            console.log( 'cancel custom offer worked!' );
             callback( null, {} );
         })
         .catch( function( err ) {
-            console.log( 'cancel partial offer error!' );
+            console.log( 'cancel custom offer error!' );
             callback( err );
         });
     };

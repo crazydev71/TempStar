@@ -307,6 +307,7 @@ module.exports = function( Dentist ) {
                 s.shiftDate = shift.shiftDate;
                 s.postedStart = shift.startTime;
                 s.postedEnd = shift.endTime;
+                s.type = shift.type;
                 return Shift.create( s );
             });
         })
@@ -409,7 +410,7 @@ module.exports = function( Dentist ) {
 
                     // Notify hygienists
                     jj = job.toJSON();
-                    msg = 'Your partial offer for the job on  ';
+                    msg = 'Your custom offer for the job on  ';
                     msg += moment(jj.startDate).format('ddd MMM D, YYYY');
                     msg += ' with ' + jj.dentist.practiceName;
                     msg += ' has been removed since the job was cancelled.';
@@ -422,7 +423,7 @@ module.exports = function( Dentist ) {
                                         to: po.hygienist.user.email,
                                         from: app.get('emailFrom'),
                                         bcc:  app.get('emailBcc'),
-                                        subject: 'Partial Offer for ' + moment(jj.startDate).format('ddd MMM D, YYYY') + ' removed',
+                                        subject: 'Custom Offer for ' + moment(jj.startDate).format('ddd MMM D, YYYY') + ' removed',
                                         text: msg
                                     }, function( err ) {
                                         if ( err ) {
@@ -655,7 +656,7 @@ module.exports = function( Dentist ) {
 
                     // Notify hygienists
                     jj = job.toJSON();
-                    msg = 'The job for your partial offer on  ';
+                    msg = 'The job for your custom offer on  ';
                     msg += moment(jj.startDate).format('ddd MMM D, YYYY');
                     msg += ' with ' + jj.dentist.practiceName;
                     msg += ' has been modified.';
@@ -668,7 +669,7 @@ module.exports = function( Dentist ) {
                                         to: po.hygienist.user.email,
                                         from: app.get('emailFrom'),
                                         bcc:  app.get('emailBcc'),
-                                        subject: 'Partial Offer for ' + moment(jj.startDate).format('ddd MMM D, YYYY') + ' changed',
+                                        subject: 'Custom Offer for ' + moment(jj.startDate).format('ddd MMM D, YYYY') + ' changed',
                                         text: msg
                                     }, function( err ) {
                                         if ( err ) {

@@ -6,7 +6,7 @@
                     <span class="ti-angle-left"></span> back
                 </a>
             </div>
-            <div class="center sliding">Make Partial Offer</div>
+            <div class="center sliding">Make a Custom Offer</div>
             <div class="right">
                 <a href="#" data-panel="right" class="link icon-only open-panel">
                     <span class="ti-menu"></span>
@@ -37,6 +37,7 @@
 
             <div class="invoice-box">
 
+                <form id="hygienist-make-partial-offer-form" style="margin-top:-1px">
                 <table cellpadding="0" cellspacing="0">
                     <tr class="heading">
                         <td colspan="2">Posted Hours</td>
@@ -53,11 +54,57 @@
                     {{/each}}
 
                     <tr class="heading">
-                        <td colspan="2">Offered Hours</td>
+                        <td colspan="2">Your Rate</td>
+                    </tr>
+
+                    <tr class="item rate-row">
+                        <td style="text-align: right;">
+                            {{#js_compare "Template7.global.web == true"}}
+                            <select name="rate" id="hygienist-make-partial-offer-rate">
+                                <option value="">Select your rate</option>
+                                <option value="35">35</option>
+                                <option value="36">36</option>
+                                <option value="37">37</option>
+                                <option value="38">38</option>
+                                <option value="39">39</option>
+                                <option value="40">40</option>
+                                <option value="41">41</option>
+                                <option value="42">42</option>
+                                <option value="43">43</option>
+                                <option value="44">44</option>
+                                <option value="45">45</option>
+                                <option value="46">46</option>
+                                <option value="47">47</option>
+                                <option value="48">48</option>
+                                <option value="49">49</option>
+                                <option value="50">50</option>
+                                <option value="51">51</option>
+                                <option value="52">52</option>
+                                <option value="53">53</option>
+                                <option value="54">54</option>
+                                <option value="55">55</option>
+                                <option value="56">56</option>
+                                <option value="57">57</option>
+                                <option value="58">58</option>
+                                <option value="59">59</option>
+                                <option value="60">60</option>
+                            </select>
+                            {{else}}
+                            <input type="text" placeholder="enter your rate" name="rate" readonly id="hygienist-make-partial-offer-rate">
+                            {{/js_compare}}
+                            <div class="field-error-msg rate-error-msg"></div>
+                        </td>
+                        <td style="text-align: left; padding-left: 10px !important;">
+                            $/hr
+                        </td>
+                    </tr>
+
+                    <tr class="heading">
+                        <td colspan="2">Offered Hours (Optional)</td>
                     </tr>
                 </table>
 
-                <form id="hygienist-make-partial-offer-form" style="margin-top:-1px">
+                
                     <div class="form-error-msg"></div>
                     <div class="list-block" style="margin:0;">
                       <ul>
@@ -256,7 +303,7 @@
                 <div class="row">
                     <div class="col-15">&nbsp;</div>
                     <div class="col-70">
-                        <a href="#" id="hygienist-make-partial-offer-submit-button" class="button button-round">Submit Partial Offer</a>
+                        <a href="#" id="hygienist-make-partial-offer-submit-button" class="button button-round">Submit Custom Offer</a>
                     </div>
                     <div class="col-15">&nbsp;</div>
                 </div>

@@ -4,6 +4,7 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
     'use strict';
 
     var job,
+        ratePicker,
         startTimePicker,
         endTimePicker,
         unpaidTimePicker,
@@ -20,71 +21,93 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
             job = page.context;
 
             if ( ! Template7.global.web ) {
+                ratePicker = app.picker({
+                    input: '#hygienist-make-partial-offer-rate',
+                    toolbar: true,
+                    toolbarTemplate: '<div class="toolbar">' +
+                    '<div class="toolbar-inner">' +
+                        'Select your rate' +
+                        '<a href="#" class="link close-picker">{{closeText}}</a>' +
+                    '</div>' +
+                    '</div>',
 
-            startTimePicker = app.picker({
-                input: '#hygienist-make-partial-offer-starttime',
-                toolbar: true,
-                toolbarTemplate: '<div class="toolbar">' +
-                '<div class="toolbar-inner">' +
-                    'Select Offered Start Time' +
-                    '<a href="#" class="link close-picker">{{closeText}}</a>' +
-                '</div>' +
-                '</div>',
-
-                rotateEffect: false,
-                cols: [
-                    { values: (function() {
-                            var vals = [],
-                                timeStr;
-                            for ( var i = 5; i < 23; i++ ) {
-                                for ( var j = 0; j <  60; j = j + 15 ) {
-                                    timeStr = moment().hours(i).minutes(j).format('h:mm a');
-                                    vals.push( timeStr );
+                    rotateEffect: false,
+                    cols: [
+                        { values: (function() {
+                                var vals = [];
+                                for ( var i = 35; i <= 60; i++ ) {
+                                    vals.push( i );
                                 }
+                                return vals;
                             }
-                            return vals;
-                        })()
-                }],
-                onOpen: function( picker ) {
-                    if ( picker.cols[0].activeIndex == 0 ) {
-                        var fullTime = page.context.shifts[0].postedStart;
-                        var timeStr = moment.utc( fullTime ).local().format('h:mm a');
-                        picker.setValue( [ timeStr ], 0 );
-                    }
-                }
-            });
+                        )()
+                    }]
+                });
 
-            endTimePicker = app.picker({
-                input: '#hygienist-make-partial-offer-endtime',
-                toolbar: true,
-                toolbarTemplate: '<div class="toolbar">' +
-                '<div class="toolbar-inner">' +
-                    'Select Offered End Time' +
-                    '<a href="#" class="link close-picker">{{closeText}}</a>' +
-                '</div>' +
-                '</div>',
-                rotateEffect: false,
-                cols: [
-                    { values: (function() {
-                            var vals = [],
-                                timeStr;
-                            for ( var i = 5; i < 23; i++ ) {
-                                for ( var j = 0; j <  60; j = j + 15 ) {
-                                    timeStr = moment().hours(i).minutes(j).format('h:mm a');
-                                    vals.push( timeStr );
+                startTimePicker = app.picker({
+                    input: '#hygienist-make-partial-offer-starttime',
+                    toolbar: true,
+                    toolbarTemplate: '<div class="toolbar">' +
+                    '<div class="toolbar-inner">' +
+                        'Select Offered Start Time' +
+                        '<a href="#" class="link close-picker">{{closeText}}</a>' +
+                    '</div>' +
+                    '</div>',
+
+                    rotateEffect: false,
+                    cols: [
+                        { values: (function() {
+                                var vals = [],
+                                    timeStr;
+                                for ( var i = 5; i < 23; i++ ) {
+                                    for ( var j = 0; j <  60; j = j + 15 ) {
+                                        timeStr = moment().hours(i).minutes(j).format('h:mm a');
+                                        vals.push( timeStr );
+                                    }
                                 }
-                            }
-                            return vals;
-                        })()
-                }],
-                onOpen: function( picker ) {
-                    if ( picker.cols[0].activeIndex == 0 ) {
-                        var fullTime = page.context.shifts[0].postedEnd;
-                        var timeStr = moment.utc( fullTime ).local().format('h:mm a');
-                        picker.setValue( [ timeStr ], 0 );
+                                return vals;
+                            })()
+                    }],
+                    onOpen: function( picker ) {
+                        if ( picker.cols[0].activeIndex == 0 ) {
+                            var fullTime = page.context.shifts[0].postedStart;
+                            var timeStr = moment.utc( fullTime ).local().format('h:mm a');
+                            picker.setValue( [ timeStr ], 0 );
+                        }
                     }
-                }
-            });
+                });
+
+                endTimePicker = app.picker({
+                    input: '#hygienist-make-partial-offer-endtime',
+                    toolbar: true,
+                    toolbarTemplate: '<div class="toolbar">' +
+                    '<div class="toolbar-inner">' +
+                        'Select Offered End Time' +
+                        '<a href="#" class="link close-picker">{{closeText}}</a>' +
+                    '</div>' +
+                    '</div>',
+                    rotateEffect: false,
+                    cols: [
+                        { values: (function() {
+                                var vals = [],
+                                    timeStr;
+                                for ( var i = 5; i < 23; i++ ) {
+                                    for ( var j = 0; j <  60; j = j + 15 ) {
+                                        timeStr = moment().hours(i).minutes(j).format('h:mm a');
+                                        vals.push( timeStr );
+                                    }
+                                }
+                                return vals;
+                            })()
+                    }],
+                    onOpen: function( picker ) {
+                        if ( picker.cols[0].activeIndex == 0 ) {
+                            var fullTime = page.context.shifts[0].postedEnd;
+                            var timeStr = moment.utc( fullTime ).local().format('h:mm a');
+                            picker.setValue( [ timeStr ], 0 );
+                        }
+                    }
+                });
             }
 
             $$('#hygienist-make-partial-offer-submit-button').on( 'click', submitButtonHandler );
@@ -97,14 +120,17 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
     function submitButtonHandler( e ) {
 
         var constraints = {
-            offeredStart: {
-                presence: true,
-                time: true
-            },
-            offeredEnd: {
-                presence: true,
-                time: true
+            rate: {
+                presence: true
             }
+            // offeredStart: {
+            //     presence: true,
+            //     time: true
+            // },
+            // offeredEnd: {
+            //     presence: true,
+            //     time: true
+            // }
         };
 
         // Clear errors
@@ -115,6 +141,9 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
         var errors = validate( formData, constraints );
 
         if ( errors ) {
+            if ( errors.rate ) {
+                $$('#hygienist-make-partial-offer-rate').addClass('error').next().html( errors.rate[0] );
+            }
             if ( errors.offeredStart ) {
                 $$('#hygienist-make-partial-offer-starttime').addClass('error').next().html( errors.offeredStart[0] );
             }
@@ -162,21 +191,24 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
             return;
         }
 
-        app.modal({
-            title:  'Make Partial Offer',
-            text: 'If the dentist accepts your offer, you are committing to work at:<br>' +
-                job.dentist.practiceName + '<br>' +
-                moment( job.startDate ).format('ddd MMM D, YYYY') + '<br>' +
-                formData.offeredStart + ' - ' +
-                formData.offeredEnd + '<br><br>' +
-                '<b>There are penalties for<br>cancelling booked shifts.</b><br><br>' +
+        var text = "";
+        text = job.dentist.practiceName + '<br>' +
+               moment( job.startDate ).format('ddd MMM D, ') + formData.offeredStart + ' - ' + formData.offeredEnd + '<br>' +
+               formData.rate + '$/hr' + '<br><br>' +
+               'By tapping/clicking “Yes, I Am”, you are committing to work this shift if your offer is accepted.' + '<br><br>' +
+               'Your custom offer will expire in 12hrs.' + '<br><br>' +
+               'You can cancel your Custom Offer before it is accepted by tapping on that job date.' + '<br><br>' +
+               'If it is accepted, you have an important commitment to go to the office as scheduled.' + '<br><br>' +
+               'Are you committing to submitting this offer and keeping it if accepted?';
 
-                '<b>Are you sure?</b>',
+        app.modal({
+            title:  'Custom Offer - Read Carefully!',
+            text: text,
             buttons: [
-              { text: 'No' },
-              { text: 'Yes', bold: true, onClick: function() {
-                  makePartialOffer( formData );
-              } }
+                { text: 'Yes, I Am', bold: true, onClick: function() {
+                    makePartialOffer( formData );
+                }},
+                { text: 'No' }
             ]
         });
     }
@@ -190,7 +222,7 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
             hours,
             minutes;
 
-        app.showPreloader('Making Partial Offer');
+        app.showPreloader('Making a Custom Offer');
 
         hygienistId = TempStars.User.getCurrentUser().hygienistId;
 
@@ -211,9 +243,10 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
                         .utc()
                         .format('YYYY-MM-DD HH:mm');
 
-        var now = moment.utc().format('YYYY-MM-DD HH:mm:ss');
+        var now = moment.format('YYYY-MM-DD HH:mm:ss');
 
         data = {
+            hourlyRate: formData.rate,
             offeredStartTime: fullStartTime,
             offeredEndTime: fullEndTime,
             createdOn: now
@@ -223,15 +256,27 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
         TempStars.Api.makePartialOffer( hygienistId, job.id, data )
         .then( function() {
             app.hidePreloader();
-            app.alert( 'Partial Offer Submitted!', function() {
-                TempStars.Analytics.track( 'Made Partial Offer' );
 
-                TempStars.Hygienist.Router.goForwardPage('home');
+            var text = "";
+            text = 'You will be notified when your offer is accepted/declined or expires.' + '<br><br>' +
+                   'You can remove your Custom Offer by tapping on the job date and tapping “Remove Custom Offer”.'  + '<br><br>' +
+                   'If Accepted, you are booked, confirmed and committed to going to that shift as scheduled.' + '<br><br>' +
+                   'Remember: Breaking commitments results in being blocked from viewing Available Jobs';
+
+            app.modal({
+                title:  'Custom Offer Sent',
+                text: text,
+                buttons: [
+                    { text: 'OK', bold: true, onClick: function() {
+                        TempStars.Analytics.track( 'Made Custom Offer' );
+                        TempStars.Hygienist.Router.goForwardPage('home');
+                    }}
+                ]
             });
         })
         .catch( function( err ) {
             app.hidePreloader();
-            app.alert( 'Error submitting partial offer: ' + err.error.message, function() {
+            app.alert( 'Error submitting custom offer: ' + err.error.message, function() {
                 if ( err.error.message == 'Job is no longer available.' ) {
                     TempStars.Hygienist.Router.goBackPage('available-jobs');
                 }

@@ -121,7 +121,7 @@ TempStars.Pages.Dentist.ModifyJob = (function() {
                             + ' will be notified.';
         }
         else if ( job.status == TempStars.Job.status.PARTIAL ) {
-            confirmMessage += '<br>The hygienists who submitted<br>partial offers will be notified.';
+            confirmMessage += '<br>The hygienists who submitted<br>custom offers will be notified.';
         }
 
         app.confirm( confirmMessage, 'Modify Job?', function() {

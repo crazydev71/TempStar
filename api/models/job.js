@@ -36,7 +36,7 @@ module.exports = function( Job ){
 
     Job.acceptPartialOffer = function( jobId, poId, callback ) {
 
-        console.log( 'accept partial offer' );
+        console.log( 'accept custom offer' );
 
         // change PO status to accepted, update hygienist
         // change job status to confirmed, update hygienist
@@ -85,7 +85,7 @@ module.exports = function( Job ){
             }
 
             if ( jj.status != jobStatus.PARTIAL ) {
-                throw new Error( 'Job is no longer accepting partial offers');
+                throw new Error( 'Job is no longer accepting custom offers');
                 return;
             }
 
@@ -144,10 +144,10 @@ module.exports = function( Job ){
         })
         .then( function() {
             // Notify accepted hygienist
-            msg = 'Your partial offer on ';
+            msg = 'Your Custom Offer for ';
             msg += moment(jj.startDate).format('ddd MMM Do');
-            msg += ' with ' + jj.dentist.practiceName;
-            msg += ' has been accepted, booked, and confirmed.';
+            // msg += ' with ' + jj.dentist.practiceName;
+            msg += ' has been accepted. You are now booked and confirmed for that shift.';
             return push.send( msg, poJSON.hygienist.user.platform, poJSON.hygienist.user.registrationId );
         })
         .then( function( response ) {
@@ -157,7 +157,7 @@ module.exports = function( Job ){
                         to: poJSON.hygienist.user.email,
                         from: app.get('emailFrom'),
                         bcc:  app.get('emailBcc'),
-                        subject: 'Partial Offer on ' + moment(jj.startDate).format('ddd MMM D, YYYY') + ' accepted',
+                        subject: 'Custom Offer on ' + moment(jj.startDate).format('ddd MMM D, YYYY') + ' accepted',
                         text: msg
                     }, function( err ) {
                         if ( err ) {
@@ -185,11 +185,11 @@ module.exports = function( Job ){
         //     });
         // })
         .then( function() {
-            console.log( 'accept partial offer worked!' );
+            console.log( 'accept custom offer worked!' );
             callback( null, {} );
         })
         .catch( function( err ) {
-            console.log( 'accept partial offer error!' );
+            console.log( 'accept custom offer error!' );
             callback( err );
         });
     };
@@ -204,7 +204,7 @@ module.exports = function( Job ){
 
     Job.rejectPartialOffer = function( jobId, poId, callback ) {
 
-        console.log( 'reject partial offer' );
+        console.log( 'reject custom offer' );
 
         // change PO status to rejected
         // if no other partial offers, change job status to POSTED
@@ -241,9 +241,9 @@ module.exports = function( Job ){
         .then( function( job ) {
             // Notify hygienist
             jj = job.toJSON();
-            msg = 'Your partial offer on ';
+            msg = 'Your Custom Offer for ';
             msg += moment(jj.startDate).format('ddd MMM Do');
-            msg += ' with ' + jj.dentist.practiceName;
+            // msg += ' with ' + jj.dentist.practiceName;
             msg += ' has been declined.';
             return push.send( msg, pj.hygienist.user.platform, pj.hygienist.user.registrationId );
         })
@@ -253,7 +253,7 @@ module.exports = function( Job ){
                     from: app.get('emailFrom'),
                     to: pj.hygienist.user.email,
                     bcc:  app.get('emailBcc'),
-                    subject: 'Partial Offer on ' + moment(jj.startDate).format('ddd MMM D, YYYY') +  ' declined',
+                    subject: 'Custom Offer on ' + moment(jj.startDate).format('ddd MMM D, YYYY') +  ' declined',
                     text: msg
                 }, function( err ) {
                     if ( err ) {

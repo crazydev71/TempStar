@@ -6,20 +6,32 @@ TempStars.Pages.Dentist.JobPosted = (function() {
 
     function init() {
         app.onPageBeforeInit( 'dentist-job-posted', function( page ) {
+            $$('#dentist-job-posted-cancel-button').show();
+            $$('#dentist-job-posted-break-button').hide();
+
             $$('#dentist-job-posted-modify-button').on( 'click', modifyButtonHandler );
             $$('#dentist-job-posted-cancel-button').on( 'click', cancelButtonHandler );
+            $$('#dentist-job-posted-break-button').on( 'click', breakButtonHandler );
+            $$('#dentist-job-posted-save-button').on( 'click', saveButtonHandler );
+
             $$('#dentist-job-posted-remove-incentive-button').on( 'click', removeIncentiveButtonHandler );
             $$('#dentist-job-posted-offer-incentive-button').on( 'click', offerIncentiveButtonHandler );
             TempStars.Analytics.track( 'Viewed Posted Job' );
 
+            updateCheckmark();
         });
 
         app.onPageBeforeRemove( 'dentist-job-posted', function( page ) {
             $$('#dentist-job-posted-modify-button').off( 'click', modifyButtonHandler );
             $$('#dentist-job-posted-cancel-button').off( 'click', cancelButtonHandler );
+            $$('#dentist-job-posted-break-button').off( 'click', breakButtonHandler );
+            $$('#dentist-job-posted-save-button').off( 'click', saveButtonHandler );
+
             $$('#dentist-job-posted-remove-incentive-button').off( 'click', removeIncentiveButtonHandler );
             $$('#dentist-job-posted-offer-incentive-button').off( 'click', offerIncentiveButtonHandler );
         });
+
+        $$(document).on( 'click', '.dentist-job-posted-check-type .checkmark-text', checkmarkButtonHandler );
     }
 
     function removeIncentiveButtonHandler( e ) {
@@ -100,6 +112,12 @@ TempStars.Pages.Dentist.JobPosted = (function() {
 
     function cancelButtonHandler( e ) {
         e.preventDefault();
+        $$('#dentist-job-posted-cancel-button').hide();
+        $$('#dentist-job-posted-break-button').show();
+    }
+
+    function breakButtonHandler( e ) {
+        e.preventDefault();
         app.modal({
           title:  'Cancel Job',
           text: 'Are you sure?',
@@ -122,6 +140,53 @@ TempStars.Pages.Dentist.JobPosted = (function() {
             app.hidePreloader();
             app.alert( 'Error cancelling job. Please try again.' );
         });
+    }
+
+    function saveButtonHandler( e ) {
+        e.preventDefault();
+
+        app.showPreloader('Saving Changes');
+
+        var dentistId = TempStars.User.getCurrentUser().dentistId;
+        var data = {
+            type: job.shifts[0].type
+        };
+
+        TempStars.Api.modifyJob( dentistId, job.id, data )
+        .then( function() {
+            app.hidePreloader();
+            TempStars.Analytics.track( 'Modified Job' );
+            app.modal({
+                title:  'Changes Saved!',
+                text: '',
+                buttons: [
+                    { text: 'OK', bold: true, onClick: function() {
+                        TempStars.Dentist.Router.goBackPage('home');
+                    }}
+                ]
+            });
+        })
+        .catch( function( err ) {
+            app.hidePreloader();
+            app.alert( 'Error modifying job. Please try again.' );
+        });
+    }
+
+    function checkmarkButtonHandler( e ) {
+        var type = parseInt($$(this).attr('data-id'));
+        job.shifts[0].type = type;
+
+        updateCheckmark();
+    }
+
+    function updateCheckmark() {
+        $$('#dentist-job-posted-checkmark-1').css('background-image', "");
+        $$('#dentist-job-posted-checkmark-2').css('background-image', "");
+        
+        if (job.shifts[0].type === 1)
+            $$('#dentist-job-posted-checkmark-1').css('background-image', "url('../img/checkmark.png')");
+        else if (job.shifts[0].type === 2)
+            $$('#dentist-job-posted-checkmark-2').css('background-image', "url('../img/checkmark.png')");
     }
 
     function removeIncentive() {
@@ -167,7 +232,7 @@ TempStars.Pages.Dentist.JobPosted = (function() {
                         reject( err );
                     });
                 }
-                else {
+                else if (params.date) {
                     TempStars.Dentist.getJobsByDate( params.date )
                     .then( function( jobs ) {
                         job = jobs[0];
@@ -180,6 +245,8 @@ TempStars.Pages.Dentist.JobPosted = (function() {
                         reject( err );
                     });
                 }
+                else
+                    reslove( job );
 
             });
         }

@@ -4,6 +4,7 @@ TempStars.Pages.Dentist.PostJob = (function() {
     'use strict';
 
     var jobDate;
+    var jobType = 0;
 
     function init() {
 
@@ -91,6 +92,55 @@ TempStars.Pages.Dentist.PostJob = (function() {
             TempStars.Analytics.track( 'Viewed Post Job' );
 
         });
+
+        $$(document).on( 'click', '.dentist-post-job-check-type .checkmark-text', checkmarkButtonHandler );
+        $$(document).on( 'click', '.dentist-post-job-check-type .tooltip-text', tooltipButtonHandler );
+    }
+
+    function checkmarkButtonHandler( e ) {
+        var type = parseInt($$(this).attr('data-id'));
+        console.log(type);
+        jobType = type;
+
+        $$('#dentist-post-job-checkmark-1').css('background-image', "");
+        $$('#dentist-post-job-checkmark-2').css('background-image', "");
+        
+        if (jobType === 1)
+            $$('#dentist-post-job-checkmark-1').css('background-image', "url('../img/checkmark.png')");
+        else if (jobType === 2)
+            $$('#dentist-post-job-checkmark-2').css('background-image', "url('../img/checkmark.png')");
+    }
+
+    function tooltipButtonHandler( e ) {
+        var type = parseInt($$(this).attr('data-id'));
+        var title = "", text = "";
+
+        if (type === 1) {
+            title = "Automatically Book the Best Available Hygienist";
+            text = "The fastest and easiest way to find a good hygienist - the system automatically finds and books the best available hygienist for your job posting." + "<br><br>" +
+                   "Once the hygienist accepts your job, she is automatically booked and confirmed - you don’t have to do anything else." + "<br><br>" +
+                   "Custom Offers are still permitted with this option.";
+        }
+        else if (type === 2) {
+            title = "Custom Offers";
+            text = "For offices wanting to review hygienists before they are booked, this feature prevents auto-booking and allows you to review and approve a hygienist before booking her." + "<br><br>" +
+                   "Note: Checking this box slows down the speed and lowers the success rate of placements, but gives you a bit more control over who comes in.";
+        }
+        else
+            return;
+
+        app.modal({
+            title: title,
+            text: text,
+            buttons: [
+                {
+                    text: 'Got it!',
+                    bold: true,
+                    onClick: function() {
+                    }
+                }
+            ]
+        });
     }
 
     function getJobDate( job ) {
@@ -141,7 +191,32 @@ TempStars.Pages.Dentist.PostJob = (function() {
             return;
         }
 
-        TempStars.Job.checkIncentives( formData, confirmJob );
+        if (jobType === 2) {
+            var text = "";
+            text = "<b>" + formData.startDate + "<br>" +
+                   formData.postedStart + ' - ' + formData.postedEnd + "</b><br><br>" +
+                   "You have selected to only allow Custom Offers." + "<br>" +
+                   "Remember: this gives you a bit more control but slows down and lowers the placement success rate." + "<br><br>" +
+                   "You’ll receive a notification when you receive a Custom Offer from a hygienist.";
+            app.modal({
+                title: 'Post This Job?',
+                text: text,
+                buttons: [
+                    {
+                        text: 'Post This Job',
+                        bold: true,
+                        onClick: function() {
+                            postJob( formData );
+                        }
+                    },
+                    {
+                        text: 'Cancel'
+                    }
+                ]
+            });
+        }
+        else
+            TempStars.Job.checkIncentives( formData, confirmJob );
     }
 
     function confirmJob( formData ) {
@@ -215,7 +290,8 @@ TempStars.Pages.Dentist.PostJob = (function() {
                 {
                     shiftDate: moment( formData.startDate ).format('YYYY-MM-DD'),
                     startTime: fullStartTime,
-                    endTime: fullEndTime
+                    endTime: fullEndTime,
+                    type: jobType
                 }
             ]
         };
@@ -223,8 +299,29 @@ TempStars.Pages.Dentist.PostJob = (function() {
         TempStars.Api.postJob( dentistId, data )
         .then( function() {
             app.hidePreloader();
-            TempStars.Dentist.Router.goBackPage('home');
             TempStars.Analytics.track( 'Posted Job' );
+
+            if (jobType === 2) {
+                var text = "";
+                text = "When you have Custom Offers, you’ll receive a notification and there will be a" + "<img src='./img/custom-offer.png' style='width: 20px; position: relative; top: 6px; padding: 0px 3px;' />" + "on your job date." + "<br><br>" +
+                       "Tap the target on your job date to view your offers." + "<br><br>" +
+                       "You can also modify the job to allow auto-booking by tapping on the job date.";
+                app.modal({
+                    title: 'Your Job Has Been Posted',
+                    text: text,
+                    buttons: [
+                        {
+                            text: 'Got it!',
+                            bold: true,
+                            onClick: function() {
+                                TempStars.Dentist.Router.goBackPage('home');
+                            }
+                        }
+                    ]
+                });                
+            }
+            else
+                TempStars.Dentist.Router.goBackPage('home');
         })
         .catch( function( err ) {
             app.hidePreloader();
@@ -243,6 +340,7 @@ TempStars.Pages.Dentist.PostJob = (function() {
 
                 // Default date in form
                 data.defaultDate = (params.date) ? params.date : null;
+                data.jobType = 0;
 
                 // Get all existing jobs so they can be disabled in the calendar
                 TempStars.Dentist.getAllJobs()

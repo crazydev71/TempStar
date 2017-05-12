@@ -1,0 +1,90 @@
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="left sliding">
+            <a href="#" class="dentist-internal-back">
+                <span class="ti-angle-left"></span> back
+            </a>
+        </div>
+        <div class="center sliding">Custom Offer Details</div>
+        <div class="right">
+            <a href="#" data-panel="right" class="link icon-only open-panel">
+                <span class="ti-menu"></span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div data-page="dentist-job-partial-details" class="page">
+    <div class="page-content">
+        <div class="content-block">
+            <div class="job-box">
+
+                <div class="hygienist-name">{{selOffer.hygienist.firstName}} {{selOffer.hygienist.lastName}}, RDH</div>
+                <div class="hygienist-details-wrapper">
+                    <div class="hygienist-details">
+                        {{#if selOffer.hygienist.graduationYear}}
+                        Graduated: {{selOffer.hygienist.graduationYear}}
+                        {{/if}}
+
+                        {{#if selOffer.hygienist.school}}
+                        <br>
+                        {{selOffer.hygienist.school}}
+                        {{/if}}
+                        <div style="margin-top: 10px;">
+                            <div id="hygienist-rating"></div>
+                            <!--
+                            <div style="margin-top:6px;font-size:14px;"><b>${{selOffer.hourlyRate}}/hr</b>
+                                {{#if bonus}}
+                                <span style="color:#6cc644;font-weight:bold;font-size:14px;">+${{bonus}}/hr</span>
+                                {{/if}}
+                            </div>
+                            -->
+                        </div>
+                    </div>
+                    <div>
+                        <img id="hygienist-profile-photo" src="img/hygienist.png" width="70px" />
+                    </div>
+                </div>
+
+                <table cellpadding="0" cellspacing="0" style="font-size: 14px; margin-top: 20px;">
+                    <tr class="heading">
+                        <td>Date</td>
+                        <td style="text-align:left;">Hours</td>
+                    </tr>
+
+                    <tr class="item">
+                        <td>{{date_format selOffer.offeredStartTime}}</td>
+                        <td style="text-align:left;">
+                            {{time_format selOffer.offeredStartTime}} - {{time_format selOffer.offeredEndTime}}
+                        </td>
+                    </tr>
+
+                    <tr colspan="2">
+                        <td>Rate: ${{selOffer.hourlyRate}}/hr</td>
+                    </tr>
+                </table>
+
+            </div>
+
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-20">&nbsp;</div>
+                <div class="col-60">
+                    <a id="dentist-job-partial-details-view-resume" href="#" class="button button-round">View Resume</a>
+                </div>
+                <div class="col-20">&nbsp;</div>
+            </div>
+
+            <div style="padding: 20px 0px; text-align: center;">This Custom Offer expires in: <span id="dentist-job-partial-details-expire-time"></span></div>
+
+            <div class="row">
+                <div class="col-50">
+                    <a id="dentist-job-partial-details-accept-button" href="#" class="button button-round button-small">Accept</a>
+                </div>
+                <div class="col-50">
+                    <a id="dentist-job-partial-details-decline-button" href="#" class="button button-round button-small">Decline</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

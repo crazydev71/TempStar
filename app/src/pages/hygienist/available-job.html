@@ -99,26 +99,21 @@
                   </ul>
                 </div>
 
-                <div class="row" style="margin-top:20px">
-                    <div class="col-20">&nbsp;</div>
-                    <div class="col-60">
-                        <a id="hygienist-available-job-accept-button" href="#" data-id="{{job.id}}" class="button button-round">
-                        Book This Job
-                        </a>
-                    </div>
-                    <div class="col-20">&nbsp;</div>
+                <div id="hygienist-available-job-tooltip" style="text-align: center;">This office is only accepting Custom Offers for this posting.</div>
+                <div class="available-button-row">
+                    <a id="hygienist-available-job-accept-button" href="#" data-id="{{job.id}}" class="button button-round">
+                    Book This Job
+                    </a>
                 </div>
-                <!--
-                <div class="row" style="margin-top:20px">
-                    <div class="col-20">&nbsp;</div>
-                    <div class="col-60" style="text-align:center;">
-                        <a id="hygienist-available-job-partial-button" href="#" data-id="{{job.id}}" class="button button-round">
-                            Make Partial Offer
-                        </a>
+                <div class="available-button-row">
+                    <a id="hygienist-available-job-custom-button" href="#" data-id="{{job.id}}" class="button button-round">
+                        Make a Custom Offer
+                    </a>
+                    <div class="hygienist-available-job-custom-button-tooltip-wrapper">
+                        <img src="./img/new.png" width="35px" />
+                        <a id="hygienist-available-job-custom-button-tooltip">What's this?</a>
                     </div>
-                    <div class="col-20">&nbsp;</div>
                 </div>
-                -->
             </div>
         </div>
     </div>
