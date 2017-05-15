@@ -73,7 +73,7 @@
                     </tr>
 
                     <tr class="heading">
-                        <td colspan="2">Offered Hours (Optional)</td>
+                        <td colspan="2">Offered Hours <span style="font-size:0.8rem; font-weight: normal;">(Optional)</span></td>
                     </tr>
                 </table>
 
@@ -84,12 +84,12 @@
 
                         {{#each shifts}}
                         <li>
-                          <div class="item-content" style="padding-left:0;">
-                            <div class="item-inner">
+                          <div class="item-content" style="padding-left: 0px;">
+                            <div class="item-inner" style="padding-right: 0px;">
                               <div class="item-title label"><span style="color:red">&bull;</span> Start Time</div>
-                              <div class="item-input" style="margin-left: 30px;">
+                              <div class="item-input">
                                   {{#js_compare "Template7.global.web == true"}}
-                                  <select style="width: 150px"  name="offeredStart" id="hygienist-make-partial-offer-starttime">
+                                  <select name="offeredStart" id="hygienist-make-partial-offer-starttime">
                                     <option value="">Select Starting Time &dtrif;</option>
                                     <option value="5:00 am">5:00 am</option>
                                     <option value="5:15 am">5:15 am</option>
@@ -165,8 +165,9 @@
                                     <option value="10:45 pm">10:45 pm</option>
                                   </select>
                                   {{else}}
-                                <input type="text" placeholder="enter offered start time" name="offeredStart" readonly id="hygienist-make-partial-offer-starttime">
+                                <input type="text" style="width: 120px;" placeholder="Select Starting Time" name="offeredStart" readonly id="hygienist-make-partial-offer-starttime">
                                 {{/js_compare}}
+                                <span class="hygienist-make-partial-offer-label">(Optional)</span>
                                 <div class="field-error-msg"></div>
                               </div>
                             </div>
@@ -174,12 +175,12 @@
                         </li>
 
                         <li>
-                            <div class="item-content" style="padding-left:0;">
-                            <div class="item-inner">
+                            <div class="item-content" style="padding-left: 0px;">
+                            <div class="item-inner" style="padding-right: 0px;">
                               <div class="item-title label"><span style="color:red">&bull;</span> End Time</div>
-                              <div class="item-input" style="margin-left: 30px;">
+                              <div class="item-input">
                                   {{#js_compare "Template7.global.web == true"}}
-                                  <select style="width: 150px" name="offeredEnd" id="hygienist-make-partial-offer-endtime">
+                                  <select name="offeredEnd" id="hygienist-make-partial-offer-endtime">
                                     <option value="">Select Ending Time &dtrif;</option>
                                     <option value="5:00 am">5:00 am</option>
                                     <option value="5:15 am">5:15 am</option>
@@ -255,8 +256,9 @@
                                     <option value="10:45 pm">10:45 pm</option>
                                   </select>
                                   {{else}}
-                                  <input type="text" placeholder="enter offered end time" name="offeredEnd" readonly id="hygienist-make-partial-offer-endtime">
+                                  <input type="text" style="width: 120px;" placeholder="Select Ending Time" name="offeredEnd" readonly id="hygienist-make-partial-offer-endtime">
                                   {{/js_compare}}
+                                  <span class="hygienist-make-partial-offer-label">(Optional)</span>
                                   <div class="field-error-msg"></div>
                               </div>
                             </div>

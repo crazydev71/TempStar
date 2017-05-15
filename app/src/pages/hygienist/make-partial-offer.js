@@ -167,8 +167,13 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
             return;
         }
 
+        if (!formData.offeredStart)
+            formData.offeredStart = moment.utc(job.shifts[0].postedStart).local().format('h:mm a');
+        if (!formData.offeredEnd)
+            formData.offeredEnd = moment.utc(job.shifts[0].postedEnd).local().format('h:mm a');
+
         // Validate start time is before end time
-        if ( moment(formData.offeredStart, 'hh:mm a').toDate().getTime() >= moment(formData.offeredEnd, 'hh:mm a').toDate().getTime() ) {
+        if ( moment(formData.offeredStart).toDate().getTime() >= moment(formData.offeredEnd).toDate().getTime() ) {
             $$('#hygienist-make-partial-offer-form .form-error-msg')
                 .html('<span class="ti-alert"></span> Start time must be before end time.')
                 .show();
@@ -198,17 +203,17 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
         }
 
         // Validate offer is not same as posted hours
-        if ( offeredStartMin == postedStartMin && offeredEndMin == postedEndMin ) {
-            $$('#hygienist-make-partial-offer-form .form-error-msg')
-                .html('<span class="ti-alert"></span> Offered times can\'t be the same as the posted times.')
-                .show();
-            return;
-        }
+        // if ( offeredStartMin == postedStartMin && offeredEndMin == postedEndMin ) {
+        //     $$('#hygienist-make-partial-offer-form .form-error-msg')
+        //         .html('<span class="ti-alert"></span> Offered times can\'t be the same as the posted times.')
+        //         .show();
+        //     return;
+        // }
 
         var text = "";
         text = job.dentist.practiceName + '<br>' +
                moment( job.startDate ).format('ddd MMM D, ') + formData.offeredStart + ' - ' + formData.offeredEnd + '<br>' +
-               formData.rate + '$/hr' + '<br><br>' +
+               '$' + formData.rate + '/hr' + '<br><br>' +
                'By tapping/clicking “Yes, I Am”, you are committing to work this shift if your offer is accepted.' + '<br><br>' +
                'Your custom offer will expire in 12hrs.' + '<br><br>' +
                'You can cancel your Custom Offer before it is accepted by tapping on that job date.' + '<br><br>' +

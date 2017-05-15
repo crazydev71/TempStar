@@ -31,3 +31,13 @@
     margin-top: 2px;
     margin-bottom: 0px;
 }
+
+#hygienist-make-partial-offer-starttime, #hygienist-make-partial-offer-endtime {
+    display: inline-block;
+    width: 140px;
+}
+
+.hygienist-make-partial-offer-label {
+    font-weight: normal;
+    font-size: 0.7rem;
+}
