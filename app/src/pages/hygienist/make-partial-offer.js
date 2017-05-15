@@ -36,7 +36,7 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
                         { values: (function() {
                                 var vals = [];
                                 for ( var i = 35; i <= 60; i++ ) {
-                                    vals.push( i );
+                                    vals.push( '$' + i + '/hr' );
                                 }
                                 return vals;
                             }
@@ -109,6 +109,14 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
                     }
                 });
             }
+            else {
+                var options = "";
+                options = '<option value="" disabled selected></option>';
+                for (var i = 35; i <= 60; i++) {
+                    options += '<option value="' + i + '">$' + i + '/hr</option>';
+                }
+                $$('#hygienist-make-partial-offer-rate').html(options);
+            }
 
             $$('#hygienist-make-partial-offer-submit-button').on( 'click', submitButtonHandler );
             TempStars.Analytics.track( 'Viewed Make Partial Offer' );
@@ -139,6 +147,12 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
 
         var formData = app.formToJSON('#hygienist-make-partial-offer-form');
         var errors = validate( formData, constraints );
+
+        if (formData.rate[0] === "$") {
+            formData.rate = formData.rate.substr(1);    // remove "$""
+            formData.rate = formData.rate.substr(0, formData.rate.indexOf("/hr"));  // remove "/hr"
+            console.log(formData.rate);
+        }
 
         if ( errors ) {
             if ( errors.rate ) {
