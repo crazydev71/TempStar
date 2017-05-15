@@ -89,33 +89,36 @@ module.exports = function( Job ){
                 return;
             }
 
-            if ( hygienist.starScore == 5 ) {
-                rateAdjustment = 4;
-            }
-            else if ( hygienist.starScore < 5 && hygienist.starScore >= 4) {
-                rateAdjustment = 2;
-            }
-            else if ( hygienist.starScore < 4 && hygienist.starScore >= 3) {
-                rateAdjustment = 0;
-            }
-            else if ( hygienist.starScore < 3 && hygienist.starScore >= 2) {
-                rateAdjustment = -2;
-            }
-            else if ( hygienist.starScore < 2 ) {
-                rateAdjustment = -4;
-            }
-            hourlyRate = jj.hourlyRate + rateAdjustment;
+            // if ( hygienist.starScore == 5 ) {
+            //     rateAdjustment = 4;
+            // }
+            // else if ( hygienist.starScore < 5 && hygienist.starScore >= 4) {
+            //     rateAdjustment = 2;
+            // }
+            // else if ( hygienist.starScore < 4 && hygienist.starScore >= 3) {
+            //     rateAdjustment = 0;
+            // }
+            // else if ( hygienist.starScore < 3 && hygienist.starScore >= 2) {
+            //     rateAdjustment = -2;
+            // }
+            // else if ( hygienist.starScore < 2 ) {
+            //     rateAdjustment = -4;
+            // }
+            // hourlyRate = jj.hourlyRate + rateAdjustment;
 
             // Add incentives
-            hourlyRate += (jj.short) ? 2 : 0;
-            hourlyRate += (jj.urgent) ? 2 : 0;
-            hourlyRate += (jj.weekend) ? 2 : 0;
+            // hourlyRate += (jj.short) ? 2 : 0;
+            // hourlyRate += (jj.urgent) ? 2 : 0;
+            // hourlyRate += (jj.weekend) ? 2 : 0;
+
+            hourlyRate = partialOffer.hourlyRate;
 
             return job.updateAttributes({
                 status: jobStatus.CONFIRMED,
                 hygienistId: partialOffer.hygienistId,
                 bookedOn: moment.utc().format('YYYY-MM-DD HH:mm:ss'),
-                hourlyRate: hourlyRate
+                hourlyRate: hourlyRate,
+                bonus: 0
             });
         })
         .then( function() {
