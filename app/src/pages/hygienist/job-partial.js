@@ -43,7 +43,7 @@ TempStars.Pages.Hygienist.JobPartial = (function() {
         else
             expireTime = hh + 'hrs ' + mm + 'min';
 
-        $$('#hygienist-job-partial-expire-time').html('This offer will expire in: ' + expireTime);
+        $$('#hygienist-job-partial-expire-time').html('Your offer will expire in: ' + expireTime);
     }
 
     function modifyButtonHandler( e ) {
