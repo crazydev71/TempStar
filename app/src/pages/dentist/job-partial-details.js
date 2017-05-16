@@ -152,19 +152,20 @@ TempStars.Pages.Dentist.JobPartialDetails = (function() {
 
     function resumeButtonHandler( e ) {
         e.preventDefault();
+        window.open(job.selOffer.hygienist.resumeUrl, '_system');
 
-        var text = "";
-        text = "We’ll have to figure out a way to view resumes. If they’re on their PC/Mac, it’s fine for it to just download the file to their desktop.<br><br>But on mobile, is there a way to view the document? If so, what would be the required file format?";
+        // var text = "";
+        // text = "We’ll have to figure out a way to view resumes. If they’re on their PC/Mac, it’s fine for it to just download the file to their desktop.<br><br>But on mobile, is there a way to view the document? If so, what would be the required file format?";
 
-        app.modal({
-            title:  "Developer’s Notes",
-            text: text,
-            buttons: [
-                { text: 'OK', bold: true, onClick: function() {
-                    window.open(job.selOffer.hygienist.resumeUrl, '_system');
-                }}
-            ]
-        });
+        // app.modal({
+        //     title:  "Developer’s Notes",
+        //     text: text,
+        //     buttons: [
+        //         { text: 'OK', bold: true, onClick: function() {
+        //             window.open(job.selOffer.hygienist.resumeUrl, '_system');
+        //         }}
+        //     ]
+        // });
      }
 
     return {
