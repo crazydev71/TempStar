@@ -156,7 +156,7 @@ TempStars.Job = (function() {
                             }
                         },
                         {
-                            text: 'No Thanks',
+                            text: 'No Incentive',
                             bold: false,
                             onClick: function() {
                                 confirmJob( formData );
