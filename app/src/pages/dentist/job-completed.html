@@ -31,7 +31,11 @@
                 <tr class="item">
                     <td>{{date_format shiftDate}}</td>
                     <td style="text-align:left;">
-                        {{time_format actualStart}} - {{time_format actualEnd}}
+                        {{#if hasInvoice}}
+                            {{time_format actualStart}} - {{time_format actualEnd}}
+                        {{else}}
+                            {{time_format postedStart}} - {{time_format postedEnd}}
+                        {{/if}}
                     </td>
                 </tr>
                 {{/each}}
