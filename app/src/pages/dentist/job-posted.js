@@ -179,14 +179,19 @@ TempStars.Pages.Dentist.JobPosted = (function() {
         updateCheckmark();
     }
 
-    function updateCheckmark() {
-        $$('#dentist-job-posted-checkmark-1').css('background-image', "");
-        $$('#dentist-job-posted-checkmark-2').css('background-image', "");
-        
-        if (job.shifts[0].type === 1)
-            $$('#dentist-job-posted-checkmark-1').css('background-image', "url('../img/checkmark.png')");
-        else if (job.shifts[0].type === 2)
-            $$('#dentist-job-posted-checkmark-2').css('background-image', "url('../img/checkmark.png')");
+    function updateCheckmark() {        
+        if (job.shifts[0].type === 1) {
+            $$('#dentist-job-posted-checkmark-1').css('background-image', "url('../img/radio-on.svg')");
+            $$('#dentist-job-posted-checkmark-2').css('background-image', "url('../img/radio-off.svg')");
+        }
+        else if (job.shifts[0].type === 2) {
+            $$('#dentist-job-posted-checkmark-1').css('background-image', "url('../img/radio-off.svg')");
+            $$('#dentist-job-posted-checkmark-2').css('background-image', "url('../img/radio-on.svg')");
+        }
+        else {
+            $$('#dentist-job-posted-checkmark-1').css('background-image', "url('../img/radio-off.svg')");
+            $$('#dentist-job-posted-checkmark-2').css('background-image', "url('../img/radio-off.svg')");
+        }
     }
 
     function removeIncentive() {
