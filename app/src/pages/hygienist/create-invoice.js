@@ -45,7 +45,7 @@ TempStars.Pages.Hygienist.CreateInvoice = (function() {
                 onOpen: function( picker ) {
                     if ( picker.cols[0].activeIndex == 0 ) {
                         var fullTime = page.context.shifts[0].postedStart;
-                        var timeStr = moment.utc( fullTime ).local().format('h:mm a');
+                        var timeStr = moment.utc( fullTime ).subtract(2, 'hour').local().format('h:mm a');
                         picker.setValue( [ timeStr ], 0 );
                     }
                 },
@@ -80,7 +80,7 @@ TempStars.Pages.Hygienist.CreateInvoice = (function() {
                 onOpen: function( picker ) {
                     if ( picker.cols[0].activeIndex == 0 ) {
                         var fullTime = page.context.shifts[0].postedEnd;
-                        var timeStr = moment.utc( fullTime ).local().format('h:mm a');
+                        var timeStr = moment.utc( fullTime ).subtract(2, 'hour').local().format('h:mm a');
                         picker.setValue( [ timeStr ], 0 );
                     }
                 },
