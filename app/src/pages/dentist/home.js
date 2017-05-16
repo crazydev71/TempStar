@@ -60,6 +60,7 @@ TempStars.Pages.Dentist.Home = (function() {
 
         var text =
             (data.jobs[surveyJobs[idx]].hygienist ? data.jobs[surveyJobs[idx]].hygienist.firstName + ' ' + data.jobs[surveyJobs[idx]].hygienist.lastName + '<br>' : '') +
+            (data.jobs[surveyJobs[idx]].hygienist.photoUrl ? '<img src="' + data.jobs[surveyJobs[idx]].hygienist.photoUrl + '" width="60px" style="margin-top: 5px;" /><br>' : '') +
             moment( data.jobs[surveyJobs[idx]].shifts[0].shiftDate ).local().format('ddd, MMM D, YYYY') + '<br>' +
             moment.utc( data.jobs[surveyJobs[idx]].shifts[0].postedStart ).local().format('h:mm a') + ' - ' +
             moment.utc( data.jobs[surveyJobs[idx]].shifts[0].postedEnd ).local().format('h:mm a') + '<br>' +
