@@ -91,6 +91,8 @@ TempStars.Pages.Dentist.PostJob = (function() {
             $$('#dentist-post-job-button').on( 'click', postJobHandler );
             TempStars.Analytics.track( 'Viewed Post Job' );
 
+            $$('#dentist-post-job-checkmark-1').css('background-image', "url('../img/radio-off.svg')");
+            $$('#dentist-post-job-checkmark-2').css('background-image', "url('../img/radio-off.svg')");
         });
 
         $$(document).on( 'click', '.dentist-post-job-check-type .checkmark-text', checkmarkButtonHandler );
@@ -102,13 +104,14 @@ TempStars.Pages.Dentist.PostJob = (function() {
         console.log(type);
         jobType = type;
 
-        $$('#dentist-post-job-checkmark-1').css('background-image', "");
-        $$('#dentist-post-job-checkmark-2').css('background-image', "");
-        
-        if (jobType === 1)
-            $$('#dentist-post-job-checkmark-1').css('background-image', "url('../img/checkmark.png')");
-        else if (jobType === 2)
-            $$('#dentist-post-job-checkmark-2').css('background-image', "url('../img/checkmark.png')");
+        if (jobType === 1) {
+            $$('#dentist-post-job-checkmark-1').css('background-image', "url('../img/radio-on.svg')");
+            $$('#dentist-post-job-checkmark-2').css('background-image', "url('../img/radio-off.svg')");
+        }
+        else if (jobType === 2) {
+            $$('#dentist-post-job-checkmark-1').css('background-image', "url('../img/radio-off.svg')");
+            $$('#dentist-post-job-checkmark-2').css('background-image', "url('../img/radio-on.svg')");
+        }
     }
 
     function tooltipButtonHandler( e ) {

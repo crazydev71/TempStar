@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128px" height="128px" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>android-radio-button-on</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="android-radio-button-on" fill-rule="nonzero">
+            <path d="M64,0 C28.8003077,0 0,28.8003077 0,64 C0,99.1996923 28.8003077,128 64,128 C99.1996923,128 128,99.1996923 128,64 C128,28.8003077 99.1996923,0 64,0 Z M64,115.2 C35.8406154,115.2 12.8,92.1590769 12.8,64 C12.8,35.8409231 35.8406154,12.8 64,12.8 C92.1593846,12.8 115.2,35.8406154 115.2,64 C115.2,92.1593846 92.1593846,115.2 64,115.2 Z" id="Shape" fill="#6D6D72"></path>
+            <path d="M64,32 C46.4,32 32,46.4 32,64 C32,81.6 46.4,96 64,96 C81.6,96 96,81.6 96,64 C96,46.4 81.6,32 64,32 Z" id="Shape" fill="#007AFF"></path>
+        </g>
+    </g>
+</svg>
