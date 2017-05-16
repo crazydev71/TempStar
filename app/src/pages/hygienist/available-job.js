@@ -12,7 +12,8 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
             job = page.context.job;
             $$('#hygienist-available-job-accept-button').on( 'click', acceptButtonHandler );
             $$('#hygienist-available-job-custom-button').on( 'click', customButtonHandler );
-            $$('#hygienist-available-job-custom-button-tooltip').on( 'click', tooltipButtonHandler );
+            $$('#hygienist-available-job-tooltip-desc').on( 'click', tooltipDescButtonHandler );
+            $$('#hygienist-available-job-custom-button-tooltip').on( 'click', customTooltipButtonHandler );
 
             TempStars.Analytics.track( 'Viewed Available Job Detail' );
             $$('.popover-map').on('open', displayMap );
@@ -30,7 +31,8 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
         app.onPageBeforeRemove( 'hygienist-available-job', function( page ) {
             $$('#hygienist-available-job-accept-button').off( 'click', acceptButtonHandler );
             $$('#hygienist-available-job-custom-button').off( 'click', customButtonHandler );
-            $$('#hygienist-available-job-custom-button-tooltip').off( 'click', tooltipButtonHandler );
+            $$('#hygienist-available-job-tooltip-desc').off( 'click', tooltipDescButtonHandler );
+            $$('#hygienist-available-job-custom-button-tooltip').off( 'click', customTooltipButtonHandler );
             $$('.popover-map').off('open', displayMap );
         });
     }
@@ -90,7 +92,24 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
         }
     }
 
-    function tooltipButtonHandler( e ) {
+    function tooltipDescButtonHandler( e ) {
+        var tooltipInfo = "";
+        tooltipInfo = "This office prefers to view and review details of a hygienist before booking the placement. Please submit a Custom Offer for this job for their review.";
+        app.modal({
+            text: tooltipInfo,
+            title: 'Custom Offer',
+            buttons: [
+                {
+                    text: 'OK',
+                    bold: true,
+                    onClick: function() {
+                    }
+                }
+            ]
+        });
+    }
+
+    function customTooltipButtonHandler( e ) {
         var tooltipInfo = "";
         tooltipInfo = "Now you can set your own hourly rate!" + "<br>" +
                       "Submit a custom offer to this office at your preferred $/hr rate. They will receive the offer with the option to accept/decline it.";

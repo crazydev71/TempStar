@@ -11,6 +11,16 @@
     margin-left: 20%;
 }
 
+#hygienist-available-job-tooltip {
+    display: block;
+    text-align: center;
+}
+
+#hygienist-available-job-tooltip-desc {
+    margin-left: 3px;
+    cursor: pointer;
+}
+
 #hygienist-available-job-custom-button {
     float: left;
     height: 40px;
