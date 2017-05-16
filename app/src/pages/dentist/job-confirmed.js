@@ -97,11 +97,13 @@ TempStars.Pages.Dentist.JobConfirmed = (function() {
                     TempStars.Dentist.getJob( params.id )
                     .then( function( j ) {
                         job = j;
-                        TempStars.Api.getHygienistRate( job.hygienistId )
-                        .then( function( r ) {
-                            job.hygienistRate = r.result.rate;
-                            resolve( job );
-                        });
+                        job.hygienistRate = job.hourlyRate - job.bonus;
+                        resolve( job );
+                        // TempStars.Api.getHygienistRate( job.hygienistId )
+                        // .then( function( r ) {
+                        //     job.hygienistRate = r.result.rate;
+                        //     resolve( job );
+                        // });
                     })
                     .catch( function( err ) {
                         reject( err );
@@ -111,11 +113,13 @@ TempStars.Pages.Dentist.JobConfirmed = (function() {
                     TempStars.Dentist.getJobsByDate( params.date )
                     .then( function( jobs ) {
                         job = jobs[0];
-                        TempStars.Api.getHygienistRate( job.hygienistId )
-                        .then( function( r ) {
-                            job.hygienistRate = r.result.rate;
-                            resolve( job );
-                        });
+                        job.hygienistRate = job.hourlyRate - job.bonus;
+                        resolve( job );
+                        // TempStars.Api.getHygienistRate( job.hygienistId )
+                        // .then( function( r ) {
+                        //     job.hygienistRate = r.result.rate;
+                        //     resolve( job );
+                        // });
                     })
                     .catch( function( err ) {
                         reject( err );

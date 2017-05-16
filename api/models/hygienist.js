@@ -448,9 +448,8 @@ module.exports = function( Hygienist ) {
             //inviteStatusUpdate(user[0].id,invites);
 
             var baseRate = getAdjustedRate( rate.rate, hygienist.starScore );
-            hourlyRate = baseRate;
+            hourlyRate = baseRate + inviteBonus;
 
-            //hourlyRate = getAdjustedRate( r.rate, hygienist.starScore );
             return Job.findById( jobId );
         })
         .then( function( j ) {
