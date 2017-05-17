@@ -321,7 +321,24 @@ TempStars.Pages.Dentist.PostJob = (function() {
                             }
                         }
                     ]
-                });                
+                });
+            }
+            else if (jobType === 1) {
+                var text = "";
+                text = "Our sophisticated algorithm is ranking and prioritizing notifications to find the best available hygienist for your job posting. When the best hygienist is booked for your job, you will be notified that the job is booked and confirmed. You won’t have to do anything else. To add or modify an Incentive Bonus to this job posting, tap on the job date from your calendar.";
+                app.modal({
+                    title: "We're On It!",
+                    text: text,
+                    buttons: [
+                        {
+                            text: 'Got it!',
+                            bold: true,
+                            onClick: function() {
+                                TempStars.Dentist.Router.goBackPage('home');
+                            }
+                        }
+                    ]
+                });
             }
             else
                 TempStars.Dentist.Router.goBackPage('home');
