@@ -127,7 +127,7 @@ TempStars.Pages.Dentist.PostJob = (function() {
         else if (type === 2) {
             title = "Custom Offers";
             text = "For offices wanting to review hygienists before they are booked, this feature prevents auto-booking and allows you to review and approve a hygienist before booking her." + "<br><br>" +
-                   "Note: Checking this box slows down the speed and lowers the success rate of placements, but gives you a bit more control over who comes in.";
+                   "Note: Checking this box slows down the speed and lowers the success rate of placements, but gives you more control over who comes in.";
         }
         else
             return;
