@@ -120,7 +120,7 @@ TempStars.Pages.Dentist.PostJob = (function() {
 
         if (type === 1) {
             title = "Automatically Book the Best Available Hygienist";
-            text = "The fastest and easiest way to find a good hygienist - the system automatically finds and books the best available hygienist for your job posting." + "<br><br>" +
+            text = "The fastest and easiest way to find a good hygienist - our sophisticated algorithm automatically finds, ranks, prioritizes and books the best available hygienist for your job posting." + "<br><br>" +
                    "Once the hygienist accepts your job, she is automatically booked and confirmed - you don’t have to do anything else." + "<br><br>" +
                    "Custom Offers are still permitted with this option.";
         }
