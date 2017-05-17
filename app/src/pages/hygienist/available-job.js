@@ -61,35 +61,46 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
     }
 
     function customButtonHandler( e ) {
-        var hygienist = TempStars.User.getCurrentUser().hygienist;
-        if (hygienist && hygienist.resumeUrl) {
-            TempStars.Hygienist.Router.goForwardPage('make-partial-offer', {}, job );
-        }
-        else {
-            var info = "";
-            info = "Custom Offers require you to have a resume uploaded." + "<br><br>" +
-                   "Would you like to add your resume to your profile now?" + "<br><br>" +
-                   "Note: You must be on your" + "<br>" +
-                   "computer(Mac/PC/Laptop)" + "<br>" +
-                   "to upload your resume.";
-            app.modal({
-                text: info,
-                title: 'Custom Offers Need a Resume',
-                buttons: [
-                    {
-                        text: 'Go To Profile',
-                        onClick: function() {
-                            TempStars.Hygienist.Router.goForwardPage('profile');
+        app.modal({
+            text: "Word or PDF files are the best for offices to view. You an upload other file types but offices may not be able to view them.",
+            title: '',
+            buttons: [
+                {
+                    text: 'Got it!',
+                    onClick: function() {
+                        var hygienist = TempStars.User.getCurrentUser().hygienist;
+                        if (hygienist && hygienist.resumeUrl) {
+                            TempStars.Hygienist.Router.goForwardPage('make-partial-offer', {}, job );
                         }
-                    },
-                    {
-                        text: 'Later',
-                        onClick: function() {
+                        else {
+                            var info = "";
+                            info = "Custom Offers require you to have a resume uploaded." + "<br><br>" +
+                                   "Would you like to add your resume to your profile now?" + "<br><br>" +
+                                   "Note: You must be on your" + "<br>" +
+                                   "computer(Mac/PC/Laptop)" + "<br>" +
+                                   "to upload your resume.";
+                            app.modal({
+                                text: info,
+                                title: 'Custom Offers Need a Resume',
+                                buttons: [
+                                    {
+                                        text: 'Go To Profile',
+                                        onClick: function() {
+                                            TempStars.Hygienist.Router.goForwardPage('profile');
+                                        }
+                                    },
+                                    {
+                                        text: 'Later',
+                                        onClick: function() {
+                                        }
+                                    }
+                                ]
+                            });
                         }
                     }
-                ]
-            });
-        }
+                }
+            ]
+        });
     }
 
     function tooltipDescButtonHandler( e ) {
