@@ -143,32 +143,49 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
         TempStars.Api.bookJob( TempStars.User.getCurrentUser().hygienistId, job.id, job.modifiedOn )
         .then( function() {
             app.hidePreloader();
-            app.alert( 'You\'re confirmed!', function() {
-                var officeInfo = "";
-                officeInfo = "Arrival: " + job.dentist.detail.hygienistArrival + "<br>" +
-                             "Primary Contact: " + job.dentist.detail.primaryContact + "<br>" +
-                             "Parking: " + job.dentist.detail.parking + "<br>" +
-                             "Payment: " + job.dentist.detail.payment + "<br>" +
-                             "Radiography: " + job.dentist.detail.radiography + "<br>" +
-                             "Ultrasonic: " + job.dentist.detail.ultrasonic + "<br>" +
-                             "Avg Recall: " + job.dentist.detail.avgApptTime + "<br>" +
-                             "Charting: " + job.dentist.detail.charting + "<br>" +
-                             "Software: " + job.dentist.detail.software + "<br>";
+            var text = "";
+            text = "You are now confirmed for <br>" + job.dentist.practiceName + '<br>' +
+                   moment( job.startDate ).format('ddd MMM D, YYYY') + '<br>' +
+                   moment.utc( job.shifts[0].postedStart ).local().format('h:mm a')  + ' - ' +
+                   moment.utc( job.shifts[0].postedEnd ).local().format('h:mm a') + '<br><br>' +
+                   "The office is now counting on and expecting you. The office doesn’t contact you to confirm.";
 
-                app.modal({
-                    text: officeInfo,
-                    title: 'Office Information',
-                    buttons: [
-                        {
-                            text: 'Got it!',
-                            bold: true,
-                            onClick: function() {
-                                TempStars.Analytics.track( 'Booked Job' );
-                                TempStars.Hygienist.Router.goForwardPage('home');
-                            }
+            app.modal({
+                title:  '',
+                text: text,
+                buttons: [
+                    { 
+                        text: 'OK',
+                        bold: true,
+                        onClick: function() {
+                            var officeInfo = "";
+                            officeInfo = "Arrival: " + job.dentist.detail.hygienistArrival + "<br>" +
+                                         "Primary Contact: " + job.dentist.detail.primaryContact + "<br>" +
+                                         "Parking: " + job.dentist.detail.parking + "<br>" +
+                                         "Payment: " + job.dentist.detail.payment + "<br>" +
+                                         "Radiography: " + job.dentist.detail.radiography + "<br>" +
+                                         "Ultrasonic: " + job.dentist.detail.ultrasonic + "<br>" +
+                                         "Avg Recall: " + job.dentist.detail.avgApptTime + "<br>" +
+                                         "Charting: " + job.dentist.detail.charting + "<br>" +
+                                         "Software: " + job.dentist.detail.software + "<br>";
+
+                            app.modal({
+                                text: officeInfo,
+                                title: 'Office Information',
+                                buttons: [
+                                    {
+                                        text: 'Got it!',
+                                        bold: true,
+                                        onClick: function() {
+                                            TempStars.Analytics.track( 'Booked Job' );
+                                            TempStars.Hygienist.Router.goForwardPage('home');
+                                        }
+                                    }
+                                ]
+                            });
                         }
-                    ]
-                });
+                    }
+                ]
             });
         })
         .catch( function( err ) {
