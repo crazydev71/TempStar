@@ -112,8 +112,16 @@ TempStars.Pages.Dentist.JobPosted = (function() {
 
     function cancelButtonHandler( e ) {
         e.preventDefault();
-        $$('#dentist-job-posted-cancel-button').hide();
-        $$('#dentist-job-posted-break-button').show();
+        // $$('#dentist-job-posted-cancel-button').hide();
+        // $$('#dentist-job-posted-break-button').show();
+        app.modal({
+          title:  'Cancel Job',
+          text: 'Are you sure?',
+          buttons: [
+              { text: 'No' },
+              { text: 'Yes', bold: true, onClick: cancelJob }
+          ]
+        });
     }
 
     function breakButtonHandler( e ) {
