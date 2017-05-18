@@ -29,8 +29,10 @@ TempStars.Pages.Hygienist.JobPartial = (function() {
         var curDate = new Date();
         var duration = moment.utc(createdTime).add(12, 'hour').valueOf() - moment.utc(curDate).valueOf();
 
-        if (duration < 0)
+        if (duration < 0) {
+            $$('#hygienist-job-partial-expire-time').html('Your offer was expired');
             return;
+        }
 
         var hh = parseInt(duration / 3600000);
         var mm = parseInt((duration - hh * 3600000) / 60000);

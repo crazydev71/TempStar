@@ -22,6 +22,11 @@
 	border-color: #e02936;
 }
 
+#dentist-job-partial-details-expire-time {
+	padding: 20px 0px;
+	text-align: center;
+}
+
 .hygienist-name {
 	width: 100%;
 	text-align: center;

@@ -45,8 +45,10 @@ TempStars.Pages.Dentist.JobPartialDetails = (function() {
         var curDate = new Date();
         var duration = moment.utc(createdTime).add(12, 'hour').valueOf() - moment.utc(curDate).valueOf();
 
-        if (duration < 0)
+        if (duration < 0) {
+            $$('#dentist-job-partial-details-expire-time').html("This Custom Offer was expired");
             return;
+        }
 
         var hh = parseInt(duration / 3600000);
         var mm = parseInt((duration - hh * 3600000) / 60000);
@@ -59,7 +61,7 @@ TempStars.Pages.Dentist.JobPartialDetails = (function() {
         else
             expireTime = hh + 'hrs ' + mm + 'min';
 
-        $$('#dentist-job-partial-details-expire-time').html(expireTime);
+        $$('#dentist-job-partial-details-expire-time').html("This Custom Offer expires in: " + expireTime + " or less");
     }
 
     function acceptButtonHandler( e ) {
