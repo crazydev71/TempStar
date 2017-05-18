@@ -3,6 +3,7 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
     'use strict';
 
     var job,
+        baseRate,
         workHistory;
 
     function init() {
@@ -10,6 +11,8 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
         app.onPageBeforeInit( 'hygienist-available-job', function( page ) {
             console.log(page);
             job = page.context.job;
+            baseRate = page.context.baseRate;
+
             $$('#hygienist-available-job-accept-button').on( 'click', acceptButtonHandler );
             $$('#hygienist-available-job-custom-button').on( 'click', customButtonHandler );
             $$('#hygienist-available-job-tooltip-desc').on( 'click', tooltipDescButtonHandler );
@@ -50,12 +53,12 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
                 job.dentist.practiceName + '<br>' +
                 moment( job.startDate ).format('ddd MMM D, YYYY') + '<br>' +
                 moment.utc( job.shifts[0].postedStart ).local().format('h:mm a')  + ' - ' +
-                moment.utc( job.shifts[0].postedEnd ).local().format('h:mm a') + '<br><br>' +
-                '<b>You are making a commitment.<br>There are penalties for<br>cancelling booked shifts.</b><br><br>' +
-                '<b>Are you sure?</b>',
+                moment.utc( job.shifts[0].postedEnd ).local().format('h:mm a') + '<br>' +
+                '$' + (parseFloat(baseRate) + parseFloat(job.bonus)) + '/hr<br><br>' +
+                '<b>The office and patients will be counting on you.<br>If you cancel a booked shift you’ll be blocked from viewing Available Jobs. Do you promise to keep this commitment and work this scheduled shift?</b>',
             buttons: [
-              { text: 'Book This Shift', bold: true, onClick: bookJob },
-              { text: 'Cancel' }
+              { text: "I Promise", bold: true, onClick: bookJob },
+              { text: "I can't promise" }
             ]
         });
     }
