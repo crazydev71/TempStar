@@ -111,7 +111,7 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
             }
             else {
                 var options = "";
-                options = '<option value="" disabled selected></option>';
+                options = '<option value="" disabled selected>Select your rate</option>';
                 for (var i = 35; i <= 60; i++) {
                     options += '<option value="' + i + '">$' + i + '/hr</option>';
                 }

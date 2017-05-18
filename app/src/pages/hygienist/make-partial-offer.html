@@ -53,31 +53,30 @@
                     </tr>
                     {{/each}}
 
+                </table>
+
+                <table cellpadding="0" cellspacing="0">
                     <tr class="heading">
-                        <td colspan="2">Hourly Rate</td>
+                        <td>Hourly Rate</td>
                     </tr>
 
                     <tr class="item rate-row">
-                        <td style="text-align: left; padding-left: 10px !important;">
-                            Select your rate
-                        </td>
-                        <td style="text-align: left;">
+                        <td style="text-align: center;">
                             {{#js_compare "Template7.global.web == true"}}
                             <select name="rate" id="hygienist-make-partial-offer-rate">
                             </select>
                             {{else}}
-                            <input type="text" placeholder="" name="rate" readonly id="hygienist-make-partial-offer-rate">
+                            <input type="text" placeholder="Select your rate" name="rate" readonly id="hygienist-make-partial-offer-rate">
                             {{/js_compare}}
                             <div class="field-error-msg rate-error-msg"></div>
                         </td>
                     </tr>
 
                     <tr class="heading">
-                        <td colspan="2">Offered Hours <span style="font-size:0.8rem; font-weight: normal;">(Optional)</span></td>
+                        <td>Offered Hours <span style="font-size:0.8rem; font-weight: normal;">(Optional)</span></td>
                     </tr>
                 </table>
 
-                
                     <div class="form-error-msg"></div>
                     <div class="list-block" style="margin:0;">
                       <ul>
