@@ -598,9 +598,9 @@ console.log( 'hourlyRate: ' + hourlyRate );
             return Promise.map( pos, function( po ) {
                 pj = po.toJSON();
                 if ( po.hygienistId != job.hygienistId ) {
-                    var msg = 'Your custom offer on ';
+                    var msg = 'Your Custom Offer on ';
                     msg += moment(jj.startDate).format('ddd MMM Do');
-                    msg += ' has been declined.';
+                    msg += ' was declined.';
                     push.send( msg, pj.hygienist.user.platform, pj.hygienist.user.registrationId )
                     .then( function( response ) {
                         return new Promise( function( resolve, reject ) {
@@ -700,7 +700,7 @@ console.log( 'hourlyRate: ' + hourlyRate );
             });
         })
         .then( function( po ) {
-            msg = 'You have a new offer for your job on  ';
+            msg = 'You have received a new Custom Offer for your job posting on  ';
             msg += moment(jj.startDate).format('ddd MMM Do');
             msg += '.';
             return push.send( msg, jj.dentist.user.platform, jj.dentist.user.registrationId );
