@@ -31,7 +31,7 @@ TempStars.Pages.Dentist.JobPosted = (function() {
             $$('#dentist-job-posted-offer-incentive-button').off( 'click', offerIncentiveButtonHandler );
         });
 
-        $$(document).on( 'click', '.dentist-job-posted-check-type .checkmark-text', checkmarkButtonHandler );
+        $$(document).on( 'click', '.dentist-job-posted-check-type .checkmark-row', checkmarkButtonHandler );
     }
 
     function removeIncentiveButtonHandler( e ) {

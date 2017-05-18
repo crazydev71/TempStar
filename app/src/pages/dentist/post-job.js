@@ -4,7 +4,7 @@ TempStars.Pages.Dentist.PostJob = (function() {
     'use strict';
 
     var jobDate;
-    var jobType = 0;
+    var jobType = 1;
 
     function init() {
 
@@ -91,19 +91,22 @@ TempStars.Pages.Dentist.PostJob = (function() {
             $$('#dentist-post-job-button').on( 'click', postJobHandler );
             TempStars.Analytics.track( 'Viewed Post Job' );
 
-            $$('#dentist-post-job-checkmark-1').css('background-image', "url('./img/radio-off.svg')");
-            $$('#dentist-post-job-checkmark-2').css('background-image', "url('./img/radio-off.svg')");
+            jobType = 1;
+            updateCheckmark();
         });
 
-        $$(document).on( 'click', '.dentist-post-job-check-type .checkmark-text', checkmarkButtonHandler );
+        $$(document).on( 'click', '.dentist-post-job-check-type .checkmark-wrapper', checkmarkButtonHandler );
         $$(document).on( 'click', '.dentist-post-job-check-type .tooltip-text', tooltipButtonHandler );
     }
 
     function checkmarkButtonHandler( e ) {
         var type = parseInt($$(this).attr('data-id'));
-        console.log(type);
         jobType = type;
 
+        updateCheckmark();
+    }
+
+    function updateCheckmark() {
         if (jobType === 1) {
             $$('#dentist-post-job-checkmark-1').css('background-image', "url('./img/radio-on.svg')");
             $$('#dentist-post-job-checkmark-2').css('background-image', "url('./img/radio-off.svg')");

@@ -11,10 +11,19 @@
 	padding: 0px;
 }
 
+.dentist-post-job-check-type .check-mark-row-wrapper {
+    display: block;
+    text-align: center;
+}
+
 .dentist-post-job-check-type .checkmark-row {
 	display: inline-block;
     width: 320px;
     text-align: left;
+}
+
+.dentist-post-job-check-type .checkmark-wrapper {
+    display: inline-block;
 }
 
 .dentist-post-job-check-type .checkmark-image {
