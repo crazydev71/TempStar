@@ -390,7 +390,19 @@ TempStars.Pages.Hygienist.Profile = (function() {
         e.preventDefault();
 
         if ( ! window.cordova ) {
-            $$('#hygienist-profile-web-resume').click();
+            app.modal({
+                text: "Word or PDF files are the best for offices to view. You an upload other file types but offices may not be able to view them.",
+                title: '',
+                buttons: [
+                    {
+                        text: 'Got it!',
+                        bold: true,
+                        onClick: function() {
+                            $$('#hygienist-profile-web-resume').click();
+                        }
+                    }
+                ]
+            });
         }
         else {
             app.alert( 'Resum&eacute;s can\'t be uploaded from your phone/tablet. Sign in to your account from your computer to upload your resum&eacute;.' );
