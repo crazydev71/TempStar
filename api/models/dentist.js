@@ -472,6 +472,91 @@ module.exports = function( Dentist ) {
         });
     };
 
+    /**
+    * Cancel job
+    *
+    * if job status is posted, delete job and shifts
+    * if job status is partial, delete job, shifts, and partial offers and notify
+    * if job status is confirmed delete job, shifts, and notify
+    * if job status is complete, don't do anything
+    */
+    Dentist.expireJob = function( jobId, callback ) {
+
+        var Job = app.models.Job;
+        var Email = app.models.Email;
+        var Notification = app.models.Notification;
+
+        var job;
+
+        console.log( 'expire job' );
+        // Get the job
+        Job.findById( jobId )
+        .then( function( j ) {
+            var jj, msg;
+
+            job = j;
+            console.log( 'got job with status:' + job.status );
+
+           console.log( 'expire partial offer job' );
+
+            // Notify hygienists
+            jj = job.toJSON();
+            msg = 'Your custom offer for the job on  ';
+            msg += moment(jj.startDate).format('ddd MMM D, YYYY');
+            msg += ' with ' + jj.dentist.practiceName;
+            msg += ' has expired.';
+            _.map( jj.partialOffers, function( po ) {
+                push.send( msg, po.hygienist.user.platform, po.hygienist.user.registrationId )
+                .then( function( response ) {
+                    return new Promise( function( resolve, reject ) {
+                        if ( ! response.success ) {
+                            Email.send({
+                                to: po.hygienist.user.email,
+                                from: app.get('emailFrom'),
+                                bcc:  app.get('emailBcc'),
+                                subject: 'Custom Offer for ' + moment(jj.startDate).format('ddd MMM D, YYYY') + ' expired',
+                                text: msg
+                            }, function( err ) {
+                                if ( err ) {
+                                    console.log( err.message );
+                                }
+                                resolve();
+                            });
+                        }
+                        else {
+                            resolve();
+                        }
+                    });
+                });
+            });
+
+            // Delete partial offers
+            return job.partialOffers.destroyAll();
+        })
+        .then( function() {
+            // Delete job and shifts
+            console.log( 'delete shifts' );
+            return job.shifts.destroyAll();
+        })
+        .then( function() {
+            // Delete notifications
+            console.log( 'delete notifications' );
+            return Notification.destroyAll( { jobId: jobId } );
+        })
+        .then( function() {
+            console.log( 'delete job' );
+            return Job.deleteById( jobId );
+        })
+        .then( function() {
+            console.log( 'expire job worked!' );
+            callback( null, {} );
+        })
+        .catch( function( err ) {
+            console.log( 'expire job error!' );
+            callback( err );
+        });
+    };
+
     Dentist.remoteMethod( 'saveHygienistRating', {
         accepts: [
             {arg: 'dentistId', type: 'number', required: true},
