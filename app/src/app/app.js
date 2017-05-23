@@ -178,10 +178,17 @@ TempStars.App = (function() {
                 TempStars.Api.getMinVersion()
                 .then( function( response ) {
                     var minVersion = response.version;
-                    // If the app version is less than the minimum version, then it's no good
-                    if ( compareVersions( TempStars.version, minVersion ) === -1 ) {
-                        console.log( 'version is NOT ok' );
-                        resolve( false );
+                    console.log('platform: ' + window.device.platform);
+                    if ( window.device.platform == 'iOS' || window.device.platform == 'Android' ) {
+                        // If the app version is less than the minimum version, then it's no good
+                        if ( compareVersions( TempStars.version, minVersion ) === -1 ) {
+                            console.log( 'version is NOT ok' );
+                            resolve( false );
+                        }
+                        else {
+                            console.log( 'version is ok' );
+                            resolve( true );
+                        }
                     }
                     else {
                         console.log( 'version is ok' );
