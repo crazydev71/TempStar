@@ -294,9 +294,23 @@ TempStars.Pages.Hygienist.CreateInvoice = (function() {
                     app.hidePreloader();
                     TempStars.Analytics.track( 'Marked Job as Complete' );
 
-                    app.alert( 'Invoice Sent', function() {
-                        TempStars.Analytics.track( 'Sent Invoice' );
-                        TempStars.Hygienist.Router.goBackPage('', {id: job.id, invoiceSubmitted: true} );
+                    var text = "";
+                    text = "You have been e-mailed a copy of the invoice." + "<br><br>" +
+                           "View/track your invoices from the Invoices tab in the side menu." + "<br><br>" +
+                           "Remind the office to complete their evaluation survey - good reviews boost your hourly rate and give you priority when viewing Available Jobs!";
+                    app.modal({
+                        title: 'Invoice Sent',
+                        text: text,
+                        buttons: [
+                            {
+                                text: 'OK',
+                                bold: true,
+                                onClick: function() {
+                                    TempStars.Analytics.track( 'Sent Invoice' );
+                                    TempStars.Hygienist.Router.goBackPage('', {id: job.id, invoiceSubmitted: true} );
+                                }
+                            }
+                        ]
                     });
                 })
                 .catch( function( err ) {
