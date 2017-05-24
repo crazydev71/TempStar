@@ -216,13 +216,17 @@ TempStars.Pages.Hygienist.CreateInvoice = (function() {
             return;
         }
 
-        app.confirm(
-            'To: ' + job.dentist.practiceName + '<br>' +
-            'For: $' + $$('#hygienist-create-invoice-total-invoice').html(),
-            'Create &amp; Send Invoice?', function() {
-            createInvoice( formData );
+        app.modal({
+            title: 'Create &amp; Send Invoice?',
+            text: 'To: ' + job.dentist.practiceName + '<br>' +
+                'For: $' + $$('#hygienist-create-invoice-total-invoice').html() + '<br>' +
+                'Have you confirmed these details with office management?',
+            buttons: [
+              { text: "YES", bold: true, onClick: function() { createInvoice( formData ); } },
+              { text: "No" }
+            ]
         });
-    }
+     }
 
     function createInvoice( formData ) {
 
