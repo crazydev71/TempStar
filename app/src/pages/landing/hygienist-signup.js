@@ -23,8 +23,7 @@ TempStars.Pages.HygienistSignup = (function() {
             userAccount = TempStars.User.getCurrentUser();
             $$( '#hygienist-signup-email').html( userAccount.email );
             var formData = app.formToJSON('#hygienist-signup-form');
-            if (formData.province !== "" && formData.province !== null)
-                updateCDHOField(formData.province);
+            updateCDHOField(formData.province);
 
             TempStars.Analytics.track( 'Viewed Hygienist Signup Page' );
         });
@@ -86,12 +85,22 @@ TempStars.Pages.HygienistSignup = (function() {
             CDHOLabel = 'CDHO Reg';
             $$('#hygienist-signup-cdho-label').html('CDHO Reg. #');
             $$('#hygienist-signup-cdho-value').attr('placeholder', 'CDHO Reg');
+
+            $$('#hygienist-signup-school').hide();
+            $$('#hygienist-signup-graduation-year').hide();
         }
-        else {
+        else if (value === 'BC') {
             maxCDHOLength = 6;
             CDHOLabel = 'CDHBC Reg';
             $$('#hygienist-signup-cdho-label').html('CDHBC Reg. #');
             $$('#hygienist-signup-cdho-value').attr('placeholder', 'CDHBC Reg');
+
+            $$('#hygienist-signup-school').show();
+            $$('#hygienist-signup-graduation-year').show();
+        }
+        else {
+            $$('#hygienist-signup-school').hide();
+            $$('#hygienist-signup-graduation-year').hide();
         }
     }
 
@@ -138,6 +147,20 @@ TempStars.Pages.HygienistSignup = (function() {
         $$('#hygienist-signup-form .field-error-msg').removeClass( 'error' ).html('');
 
         var formData = app.formToJSON('#hygienist-signup-form');
+
+        if (formData.province === 'BC') {
+            constraints.school = {
+                presence: true
+            };
+            constraints.graduationYear = {
+                presence: true
+            };
+        }
+        else {
+            delete formData['school'];
+            delete formData['graduationYear'];
+        }
+
         var errors = validate(formData, constraints );
 
         // Check province
@@ -182,6 +205,12 @@ TempStars.Pages.HygienistSignup = (function() {
                 var msg = errors.CDHONumber[0].replace( /CDHONumber/i, CDHOLabel);
                 $$('#hygienist-signup-form input[name="CDHONumber"]').addClass('error').next().html( msg );
             }
+            if ( errors.school ) {
+                $$('#hygienist-signup-form input[name="school"]').addClass('error').next().html( errors.school[0] );
+            }
+            if ( errors.graduationYear ) {
+                $$('#hygienist-signup-form input[name="graduationYear"]').addClass('error').next().html( errors.graduationYear[0] );
+            }            
             if ( errors.placements ) {
                 $$('#hygienist-signup-form select[name="placements"]').addClass('error').next().html( errors.placements[0] );
             }
