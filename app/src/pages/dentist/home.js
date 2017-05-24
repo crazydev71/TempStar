@@ -74,7 +74,7 @@ TempStars.Pages.Dentist.Home = (function() {
                 {
                     text: 'Very Happy',
                     onClick: function() {
-                        app.alert('Great, they will be added to your favourites.', function() {
+                        app.alert('Great! They are now one of your Favourites and will have exclusive first access to your future job postings.', function() {
                             saveSurvey( idx, TempStars.Rating.VERY_HAPPY );
                         });
                     }
