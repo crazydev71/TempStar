@@ -219,7 +219,7 @@ TempStars.Pages.Hygienist.CreateInvoice = (function() {
         app.modal({
             title: 'Create &amp; Send Invoice?',
             text: 'To: ' + job.dentist.practiceName + '<br>' +
-                'For: $' + $$('#hygienist-create-invoice-total-invoice').html() + '<br>' +
+                'For: $' + $$('#hygienist-create-invoice-total-invoice').html() + '<br><br>' +
                 'Have you confirmed these details with office management?',
             buttons: [
               { text: "YES", bold: true, onClick: function() { createInvoice( formData ); } },
