@@ -88,7 +88,7 @@ TempStars.Pages.HygienistSignup = (function() {
             $$('#hygienist-signup-cdho-value').attr('placeholder', 'CDHO Reg');
         }
         else {
-            maxCDHOLength = 4;
+            maxCDHOLength = 6;
             CDHOLabel = 'CDHBC Reg';
             $$('#hygienist-signup-cdho-label').html('CDHBC Reg. #');
             $$('#hygienist-signup-cdho-value').attr('placeholder', 'CDHBC Reg');
