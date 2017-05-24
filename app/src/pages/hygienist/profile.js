@@ -104,12 +104,22 @@ TempStars.Pages.Hygienist.Profile = (function() {
             CDHOLabel = 'CDHO Reg';
             $$('#hygienist-profile-cdho-label').html('CDHO Reg. #');
             $$('#hygienist-profile-cdho-value').attr('placeholder', 'CDHO Reg');
+
+            $$('#hygienist-profile-school').hide();
+            $$('#hygienist-profile-graduation-year').hide();
         }
-        else {
-            maxCDHOLength = 4;
+        else if (value === 'BC') {
+            maxCDHOLength = 6;
             CDHOLabel = 'CDHBC Reg';
             $$('#hygienist-profile-cdho-label').html('CDHBC Reg. #');
             $$('#hygienist-profile-cdho-value').attr('placeholder', 'CDHBC Reg');
+
+            $$('#hygienist-profile-school').show();
+            $$('#hygienist-profile-graduation-year').show();
+        }
+        else {
+            $$('#hygienist-profile-school').hide();
+            $$('#hygienist-profile-graduation-year').hide();
         }
     }
 
@@ -156,6 +166,19 @@ TempStars.Pages.Hygienist.Profile = (function() {
             }
         };
 
+        if (formData.province === 'BC') {
+            constraints.school = {
+                presence: true
+            };
+            constraints.graduationYear = {
+                presence: true
+            };
+        }
+        else {
+            delete formData['school'];
+            delete formData['graduationYear'];
+        }
+
         // Clear errors
         $$('#hygienist-profile-form .form-error-msg').html('');
         $$('#hygienist-profile-form .field-error-msg').removeClass( 'error' ).html('');
@@ -190,6 +213,12 @@ TempStars.Pages.Hygienist.Profile = (function() {
                 // Make field name more readable
                 var msg = errors.CDHONumber[0].replace( /CDHONumber/i, CDHOLabel);
                 $$('#hygienist-profile-form input[name="CDHONumber"]').addClass('error').next().html( msg );
+            }
+            if ( errors.school ) {
+                $$('#hygienist-profile-form input[name="school"]').addClass('error').next().html( errors.school[0] );
+            }
+            if ( errors.graduationYear ) {
+                $$('#hygienist-profile-form input[name="graduationYear"]').addClass('error').next().html( errors.graduationYear[0] );
             }
             return;
         }

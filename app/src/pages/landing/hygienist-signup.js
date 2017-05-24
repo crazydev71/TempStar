@@ -210,7 +210,7 @@ TempStars.Pages.HygienistSignup = (function() {
             }
             if ( errors.graduationYear ) {
                 $$('#hygienist-signup-form input[name="graduationYear"]').addClass('error').next().html( errors.graduationYear[0] );
-            }            
+            }
             if ( errors.placements ) {
                 $$('#hygienist-signup-form select[name="placements"]').addClass('error').next().html( errors.placements[0] );
             }
