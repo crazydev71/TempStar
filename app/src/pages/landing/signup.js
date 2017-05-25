@@ -91,6 +91,8 @@ TempStars.Pages.Signup = (function() {
 
         app.showPreloader('Creating Account');
 
+        formData.email = formData.email.toLowerCase();
+
         if(formData.inviteCode != ''){
             
             TempStars.User.checkUserInviteCode( formData.inviteCode )

@@ -46,6 +46,8 @@ TempStars.Pages.Index = (function() {
             return;
         }
 
+        formData.email = formData.email.toLowerCase();
+
         app.showPreloader('Logging In');
         TempStars.User.login( formData.email, formData.password )
         .then(function() {
