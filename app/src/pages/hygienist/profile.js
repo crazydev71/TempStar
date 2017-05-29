@@ -5,6 +5,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
 
     var data;
     var initialized = false;
+    var minCDHOLength = 6;
     var maxCDHOLength = 6;
     var CDHOLabel = 'CDHO Reg';
 
@@ -100,6 +101,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
 
     function updateCDHOField(value) {
         if (value === 'ON') {
+            minCDHOLength = 6;
             maxCDHOLength = 6;
             CDHOLabel = 'CDHO Reg';
             $$('#hygienist-profile-cdho-label').html('CDHO Reg. #');
@@ -109,6 +111,7 @@ TempStars.Pages.Hygienist.Profile = (function() {
             $$('#hygienist-profile-graduation-year').hide();
         }
         else if (value === 'BC') {
+            minCDHOLength = 4;
             maxCDHOLength = 6;
             CDHOLabel = 'CDHBC Reg';
             $$('#hygienist-profile-cdho-label').html('CDHBC Reg. #');
@@ -161,7 +164,8 @@ TempStars.Pages.Hygienist.Profile = (function() {
                   strict: false
                 },
                 length: {
-                    is: maxCDHOLength
+                    minimum: minCDHOLength,
+                    maximum: maxCDHOLength
                 }
             }
         };
