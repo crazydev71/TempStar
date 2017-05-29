@@ -70,17 +70,19 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
         }
         else {
             var info = "";
-            info = "Custom Offers require you to have a resume uploaded." + "<br><br>" +
-                   "Would you like to add your resume to your profile now?" + "<br><br>" +
-                   "Note: You must be on your" + "<br>" +
-                   "computer(Mac/PC/Laptop)" + "<br>" +
+            info = "It's not required but most dental " + "<br>" +
+                   "offices want to see your resume before " + "<br>" +
+                   "they will Accept a custom offer.  Would " + "<br>" +
+                   "you like to go to your profile and " + "<br>" +
+                   "upload your resume?" + "<br><br>" +
+                   "Note: You need to be on your computer(Mac/PC/Laptop)" + "<br>" +
                    "to upload your resume.";
             app.modal({
                 text: info,
-                title: 'Custom Offers Need a Resume',
+                title: 'Upload Resume?',
                 buttons: [
                     {
-                        text: 'Go To Profile',
+                        text: 'Upload Resume',
                         onClick: function() {
                             TempStars.Hygienist.Router.goForwardPage('profile');
                         }
@@ -88,6 +90,7 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
                     {
                         text: 'Later',
                         onClick: function() {
+                            TempStars.Hygienist.Router.goForwardPage('make-partial-offer', {}, job );
                         }
                     }
                 ]
