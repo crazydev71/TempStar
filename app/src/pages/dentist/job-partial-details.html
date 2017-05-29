@@ -69,7 +69,11 @@
             <div class="row" style="margin-top: 20px;">
                 <div class="col-20">&nbsp;</div>
                 <div class="col-60">
-                    <a id="dentist-job-partial-details-view-resume" href="#" class="button button-round">View Resume</a>
+                    {{#if selOffer.hygienist.resumeUrl}}
+                        <a id="dentist-job-partial-details-view-resume" href="#" class="button button-round">View Resume</a>
+                    {{else}}
+                        <div style="font-size: 16px;">No resume on file.</div>
+                    {{/if}}
                 </div>
                 <div class="col-20">&nbsp;</div>
             </div>

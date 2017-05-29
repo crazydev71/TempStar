@@ -70,13 +70,8 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
         }
         else {
             var info = "";
-            info = "It's not required but most dental " + "<br>" +
-                   "offices want to see your resume before " + "<br>" +
-                   "they will Accept a custom offer.  Would " + "<br>" +
-                   "you like to go to your profile and " + "<br>" +
-                   "upload your resume?" + "<br><br>" +
-                   "Note: You need to be on your computer(Mac/PC/Laptop)" + "<br>" +
-                   "to upload your resume.";
+            info = "It's not required but most dental offices want to see your resume before they will Accept a custom offer.  Would you like to go to your profile and upload your resume?" + "<br><br>" +
+                   "Note: You need to be on your computer(Mac/PC/Laptop) to upload your resume.";
             app.modal({
                 text: info,
                 title: 'Upload Resume?',
