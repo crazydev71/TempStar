@@ -705,6 +705,7 @@ module.exports = function( Dentist ) {
                     msg += moment(jj.startDate).format('ddd MMM D, YYYY');
                     msg += ' with ' + jj.dentist.practiceName;
                     msg += ' has been modified.';
+                    msg += ' The shift hours are now ' + moment(data.postedStart).format('HH:mm') + ' - ' + moment(data.postedEnd).format('HH:mm');
                     push.send( msg, jj.hygienist.user.platform, jj.hygienist.user.registrationId )
                     .then( function( response ) {
                         return new Promise( function( resolve, reject ) {
@@ -745,6 +746,7 @@ module.exports = function( Dentist ) {
                     msg += moment(jj.startDate).format('ddd MMM D, YYYY');
                     msg += ' with ' + jj.dentist.practiceName;
                     msg += ' has been modified.';
+                    msg += ' The shift hours are now ' + moment(data.postedStart).format('HH:mm') + ' - ' + moment(data.postedEnd).format('HH:mm');
                     _.map( jj.partialOffers, function( po ) {
                         push.send( msg, po.hygienist.user.platform, po.hygienist.user.registrationId )
                         .then( function( response ) {
