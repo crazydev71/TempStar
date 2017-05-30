@@ -85,15 +85,14 @@ $sql = "
           INNER JOIN User AS U ON J.dentistId = U.dentistId
           INNER JOIN Shift AS S ON J.id = S.jobId)
         UNION ALL
-        (SELECT P.submitTimestamp as postedOn, J.id, CONCAT(H.firstName, ' ', H.lastName) AS name, H.city, U.email, 'submitted custom offer' as action, D.practiceName as dName, D.city as dCity, DU.email as dEmail, S.shiftDate, '' as postedStart, '' as postedEnd, S.actualStart as offerStart, S.actualEnd as offerEnd, '' as starScore, J.hourlyRate, '' as graduationYear, '' as school, '' as CDHONumber, '' as inviteBonus
+        (SELECT P.submitTimestamp as postedOn, J.id, CONCAT(H.firstName, ' ', H.lastName) AS name, H.city, U.email, 'submitted custom offer' as action, D.practiceName as dName, D.city as dCity, DU.email as dEmail, S.shiftDate, '' as postedStart, '' as postedEnd, S.actualStart as offerStart, S.actualEnd as offerEnd, '' as starScore, P.hourlyRate, '' as graduationYear, '' as school, '' as CDHONumber, '' as inviteBonus
           FROM PartialOffer AS P
           INNER JOIN Job AS J ON J.id = P.jobId
-          INNER JOIN Hygienist AS H ON J.hygienistId = H.id
-          INNER JOIN User AS U ON J.hygienistId = U.hygienistId
+          INNER JOIN Hygienist AS H ON P.hygienistId = H.id
+          INNER JOIN User AS U ON P.hygienistId = U.hygienistId
           INNER JOIN Shift AS S ON J.id = S.jobId
           INNER JOIN Dentist AS D ON J.dentistId = D.id
-          INNER JOIN User AS DU ON J.dentistId = DU.dentistId
-          WHERE P.status = 1)
+          INNER JOIN User AS DU ON J.dentistId = DU.dentistId)
         UNION ALL
         (SELECT J.acceptTimestamp as postedOn, J.id, D.practiceName AS name, D.city, DU.email, 'accepted custom offer' as action, CONCAT(H.firstName, ' ', H.lastName) as dName, H.city as dCity, U.email as dEmail, S.shiftDate, '' as postedStart, '' as postedEnd, S.actualStart as offerStart, S.actualEnd as offerEnd, '' as starScore, J.hourlyRate, '' as graduationYear, '' as school, '' as CDHONumber, '' as inviteBonus
           FROM Job AS J
