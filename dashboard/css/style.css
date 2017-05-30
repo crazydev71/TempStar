@@ -1,0 +1,134 @@
+@charset "utf-8";
+
+body {
+	position: absolute;
+    width: 100%;
+    height: 100%;
+	margin: 0px;
+	padding: 0px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+div, input {
+	box-sizing: border-box;
+}
+
+h2 {
+	text-align: center;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+th, td {
+	text-align: center;
+	padding: 8px;
+}
+
+tr:nth-child(even) {
+	background-color: #f2f2f2
+}
+
+th {
+	background-color: #4CAF50;
+	color: white;
+	font-size: 12px;
+}
+
+td {
+	color: black;
+	font-size: 12px;
+}
+
+#main {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+    width: auto;
+    height: auto;
+    min-width: 100%;
+    min-height: 100%;
+    background-color: #EEE;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;	
+    text-align: center;
+}
+
+.login-form {
+	display: inline-block;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    padding: 0px 20px;
+    margin-top: 60px;
+    box-sizing: border-box;
+}
+
+#login_wraper {
+    margin: 0 auto;
+	width: 50%;
+    max-width: 400px;
+    min-width: 250px;
+}
+
+#login_box {
+   	width: 100%;
+    background: none;
+    border: none;
+    box-shadow: none;
+    color: black;
+}
+
+.field-wrapper {
+	padding: 0px;
+	margin-bottom: 20px;
+	font-weight: bold;
+}
+
+.input-title {
+	width: 100%;
+	text-align: left;
+}
+
+.input-field {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    padding: 0px 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 4px;
+    box-shadow: inset 0px 0px 3px 0px rgba(119, 119, 119, 0.75);
+    -moz-box-shadow: inset 0px 0px 3px 0px rgba(119, 119, 119, 0.75);
+    -webkit-box-shadow: inset 0px 0px 3px 0px rgba(119, 119, 119, 0.75);
+}
+
+.dlg_btn{
+	width: 100%;
+	text-align: center;
+	padding: 12px 0;
+	font-size: 18px;
+	font-weight: bold;
+	color: #FFF;
+	background: #00529b;
+	margin-bottom: 10px;
+}
+
+.dlg_btn a {
+	text-decoration: none;
+	color:#FFF;
+	text-shadow: -1px 1px 0px #660d1a;
+}
+
+#login_message {
+	color: red;
+	text-align: center;
+	margin: 20px 0px;
+	min-height: 18px;
+}
