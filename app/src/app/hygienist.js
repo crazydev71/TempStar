@@ -100,7 +100,7 @@ TempStars.Hygienist = (function() {
 
         gotoInvoicePage: function gotoInvoicePage(invoiceData) {
             app.modal({
-                text: 'When creating your invoice, bill only for the hours you worked. To prevent misunderstandings, confirm your invoice details with the office manager before submitting your invoice.',
+                text: 'When creating your invoice, bill only for the hours you worked. To prevent misunderstandings, confirm your invoice details with the office manager before submitting your invoice.  Invite bonuses are paid directly by TempStars, not included in the job invoice rate.',
                 title: 'Important:',
                 buttons: [
                     {
