@@ -101,20 +101,23 @@
 
                 <div id="hygienist-available-job-tooltip">
                     <span>This office is only accepting Custom Offers for this posting.</span>
-                    <a id="hygienist-available-job-tooltip-desc">why?</a>
+                    <img id="hygienist-available-job-tooltip-desc" src="img/info-icon.svg" width="25px" />
                 </div>
                 <div class="available-button-row">
                     <a id="hygienist-available-job-accept-button" href="#" data-id="{{job.id}}" class="button button-round">
                     Book This Job
                     </a>
                 </div>
-                <div class="available-button-row">
-                    <a id="hygienist-available-job-custom-button" href="#" data-id="{{job.id}}" class="button button-round">
-                        Make a Custom Offer
-                    </a>
-                    <div class="hygienist-available-job-custom-button-tooltip-wrapper">
-                        <img src="./img/new.png" width="35px" />
+                <div class="available-button-row" style="text-align: center;">
+                    <div class="hygienist-available-job-custom-wrapper">
+                        <img src="./img/new.png" class="hygienist-available-job-custom-button-image" />
+                        <a id="hygienist-available-job-custom-button" href="#" data-id="{{job.id}}" class="button button-round">
+                            Make a Custom Offer
+                        </a>
+                        <img id="hygienist-available-job-custom-button-tooltip" src="img/info-icon.svg" width="25px" />
+                        <!--
                         <a id="hygienist-available-job-custom-button-tooltip">What's this?</a>
+                        -->
                     </div>
                 </div>
             </div>

@@ -4,6 +4,7 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
 
     var job,
         baseRate,
+        inviteAdjustment,
         workHistory;
 
     function init() {
@@ -12,6 +13,11 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
             console.log(page);
             job = page.context.job;
             baseRate = page.context.baseRate;
+            inviteAdjustment = page.context.inviteAdjustment;
+
+            var totalRate = parseFloat(baseRate) + parseFloat(inviteAdjustment) + parseFloat(job.bonus);
+            console.log('total rate: ' + totalRate);
+            $$('#hygienist-available-job-accept-button').html('Book This Job @ $' + totalRate + '/hr');
 
             $$('#hygienist-available-job-accept-button').on( 'click', acceptButtonHandler );
             $$('#hygienist-available-job-custom-button').on( 'click', customButtonHandler );
@@ -138,8 +144,7 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
                    moment( job.startDate ).format('ddd MMM D, YYYY') + '<br>' +
                    moment.utc( job.shifts[0].postedStart ).local().format('h:mm a')  + ' - ' +
                    moment.utc( job.shifts[0].postedEnd ).local().format('h:mm a') + '<br><br>' +
-                   "The office is now counting on and expecting you. The office doesn’t contact you to confirm. <br>" +
-                    "Invite Bonuses are paid directly by TempStars and don't show in the job hourly rate or invoice.";
+                   "The office is now counting on and expecting you. The office doesn’t contact you to confirm.";
 
             app.modal({
                 title:  '',
@@ -195,6 +200,7 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
         init: init,
         getData: function( params ) {
             var hygienistId = TempStars.User.getCurrentUser().hygienistId;
+            debugger;
             
             return new Promise( function( resolve, reject ) {
                 var rate;
@@ -240,7 +246,7 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
                     })
                     .then( function( jobs ) {
                         if ( jobs.length == 0 ) {
-                            resolve( { job: {}, workHistory:{}, rate: rate.result.hourlyRate, baseRate: rate.result.baseRate, inviteAdjustment: rate.result.inviteAdjustment } );
+                            resolve( { job: {}, workHistory:{}, rate: rate.result.hourlyRate, baseRate: rate.result.baseRate, inviteAdjustment: rate.result.inviteAdjustment} );
                             return;
                         }
                         job = jobs[0];

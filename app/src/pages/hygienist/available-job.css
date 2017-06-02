@@ -4,11 +4,11 @@
 
 .available-button-row {
 	margin-top: 20px;
+    text-align: center;
 }
 
 .available-button-row a {
     width: 60%;
-    margin-left: 18%;
 }
 
 #hygienist-available-job-tooltip {
@@ -21,27 +21,35 @@
     cursor: pointer;
 }
 
+#hygienist-available-job-accept-button {
+    display: inline-block !important;
+    min-width: 270px;
+}
+
+.hygienist-available-job-custom-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 60%;
+    min-width: 270px;
+}
+
 #hygienist-available-job-custom-button {
     float: left;
+    display: inline-block;
+    width: calc(100% - 70px);
     height: 40px;
     line-height: 37px;
     border-radius: 10px;
-}
-
-.hygienist-available-job-custom-button-tooltip-wrapper {
-    display: inline-block;
-    position: relative;
-    top: -10px;
-	text-align: left;
+    margin-left: 0px;
 }
 
 #hygienist-available-job-custom-button-tooltip {
-    display: block;
-	position: relative;
-    top: -5px;
-    width: 120%;
-    font-size: 0.6rem;
-    margin-left: 0px;
-    padding-left: 5px;
     cursor: pointer;
+}
+
+.hygienist-available-job-custom-button-image {
+    float: left;
+    margin-right: 3px;
+    margin-top: 3px;
+    width: 35px;
 }
