@@ -113,7 +113,7 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
     function customTooltipButtonHandler( e ) {
         var tooltipInfo = "";
         tooltipInfo = "Now you can set your own hourly rate!" + "<br>" +
-                      "Submit a Custom Offer to the office at your preferred $/hr rate. They will be notified of your offer, review your resume and have the option to Accept or Decline your offer. Submitted Custom Offers expire after 12 hours.";
+                      "Submit a Custom Offer to the office at your preferred $/hr rate. They will be notified of your offer, review your resume and have the option to Accept or Decline your offer. Submitted Custom Offers expire after " + TempStars.App.getExpiryPeriod() + " hours.";
         app.modal({
             text: tooltipInfo,
             title: 'Custom Offers',

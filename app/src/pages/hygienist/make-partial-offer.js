@@ -215,7 +215,7 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
                moment( job.startDate ).format('ddd MMM D, ') + formData.offeredStart + ' - ' + formData.offeredEnd + '<br>' +
                '$' + formData.rate + '/hr' + '<br><br>' +
                'By tapping/clicking “Yes, I Am”, you are committing to work this shift if your offer is accepted.' + '<br><br>' +
-               'Your custom offer will expire in 12hrs.' + '<br><br>' +
+               'Your custom offer will expire in ' + TempStars.App.getExpiryPeriod() + 'hrs.' + '<br><br>' +
                'You can cancel your Custom Offer before it is accepted by tapping on that job date.' + '<br><br>' +
                'If it is accepted, you have an important commitment to go to the office as scheduled.' + '<br><br>' +
                'Are you committing to submitting this offer and keeping it if accepted?';

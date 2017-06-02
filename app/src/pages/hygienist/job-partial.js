@@ -27,7 +27,7 @@ TempStars.Pages.Hygienist.JobPartial = (function() {
     function refreshExpireTime() {
         var createdTime = job.partialOffers[0].createdOn;
         var curDate = new Date();
-        var duration = moment.utc(createdTime).add(12, 'hour').valueOf() - moment.utc(curDate).valueOf();
+        var duration = moment.utc(createdTime).add(TempStars.App.getExpiryPeriod(), 'hour').valueOf() - moment.utc(curDate).valueOf();
 
         if (duration < 0) {
             $$('#hygienist-job-partial-expire-time').html('Your offer was expired');
