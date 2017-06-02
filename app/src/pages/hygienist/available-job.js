@@ -15,8 +15,14 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
             baseRate = page.context.baseRate;
             inviteAdjustment = page.context.inviteAdjustment;
 
-            var totalRate = parseFloat(baseRate) + parseFloat(inviteAdjustment) + parseFloat(job.bonus);
-            console.log('total rate: ' + totalRate);
+            var totalRate = 0;
+            if (baseRate)
+                totalRate += parseFloat(baseRate);
+            if (inviteAdjustment)
+                totalRate += parseFloat(inviteAdjustment);
+            if (job.bonus)
+                totalRate += parseFloat(job.bonus);
+
             $$('#hygienist-available-job-accept-button').html('Book This Job @ $' + totalRate + '/hr');
 
             $$('#hygienist-available-job-accept-button').on( 'click', acceptButtonHandler );
