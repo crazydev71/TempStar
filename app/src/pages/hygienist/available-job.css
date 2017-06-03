@@ -22,7 +22,7 @@
 }
 
 #hygienist-available-job-accept-button {
-    display: inline-block !important;
+    display: inline-block;
     min-width: 270px;
 }
 
@@ -37,8 +37,8 @@
     float: left;
     display: inline-block;
     width: calc(100% - 70px);
-    height: 40px;
-    line-height: 37px;
+    height: 30px;
+    line-height: 26px;
     border-radius: 10px;
     margin-left: 0px;
 }
@@ -50,6 +50,5 @@
 .hygienist-available-job-custom-button-image {
     float: left;
     margin-right: 3px;
-    margin-top: 3px;
     width: 35px;
 }

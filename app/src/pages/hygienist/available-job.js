@@ -35,11 +35,11 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
 
             if (job.shifts[0].type === 2) {
                 $$('#hygienist-available-job-tooltip').show();
-                $$('#hygienist-available-job-accept-button').hide();
+                $$('#hygienist-available-job-accept-button').css('display', 'none');
             }
             else {
                 $$('#hygienist-available-job-tooltip').hide();
-                $$('#hygienist-available-job-accept-button').show();
+                $$('#hygienist-available-job-accept-button').css('display', 'inline-block');
             }
         });
 
