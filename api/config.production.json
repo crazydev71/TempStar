@@ -29,5 +29,5 @@
   "pushEnv": "prod",
   "emailFrom": "no-reply@tempstars.ca",
   "emailBcc": "drjyounger@hotmail.com",
-  "minVersion": "2.2.10"
+  "minVersion": "2.2.9"
 }
