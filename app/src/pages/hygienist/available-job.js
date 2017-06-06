@@ -150,7 +150,8 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
                    moment( job.startDate ).format('ddd MMM D, YYYY') + '<br>' +
                    moment.utc( job.shifts[0].postedStart ).local().format('h:mm a')  + ' - ' +
                    moment.utc( job.shifts[0].postedEnd ).local().format('h:mm a') + '<br><br>' +
-                   "The office is now counting on and expecting you. The office doesn’t contact you to confirm.";
+                   "The office is now counting on and expecting you. The office doesn’t contact you to confirm." +
+                    "98% of TempStars hygienists keep their shift commitments.";
 
             app.modal({
                 title:  '',
