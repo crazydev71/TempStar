@@ -35,11 +35,11 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
 
             if (job.shifts[0].type === 2) {
                 $$('#hygienist-available-job-tooltip').show();
-                $$('#hygienist-available-job-accept-button').css('display', 'none');
+                $$('.hygienist-available-job-accept-wrapper').css('display', 'none');
             }
             else {
                 $$('#hygienist-available-job-tooltip').hide();
-                $$('#hygienist-available-job-accept-button').css('display', 'inline-block');
+                $$('.hygienist-available-job-accept-wrapper').css('display', 'inline-block');
             }
         });
 
@@ -207,7 +207,6 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
         init: init,
         getData: function( params ) {
             var hygienistId = TempStars.User.getCurrentUser().hygienistId;
-            debugger;
             
             return new Promise( function( resolve, reject ) {
                 var rate;

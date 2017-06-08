@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-
-<widget id="ca.version1.TempStars" version="2.2.10" ios-CFBundleVersion="14" android-versionCode="140000" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-
 <!--
-<widget id="ca.tempstars.app2" version="2.2.9" ios-CFBundleVersion="1" android-versionCode="11000" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="ca.version1.TempStars" version="2.2.11" ios-CFBundleVersion="2" android-versionCode="12000" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
 -->
+
+<widget id="ca.tempstars.app2" version="2.2.11" ios-CFBundleVersion="2" android-versionCode="12000" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+
     <name>TempStars</name>
     <description>
         Hygienist Temping done right

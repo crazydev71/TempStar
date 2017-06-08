@@ -98,12 +98,15 @@
                     <img id="hygienist-available-job-tooltip-desc" src="img/info-icon.svg" width="25px" />
                 </div>
                 <div class="available-button-row">
-                    <a id="hygienist-available-job-accept-button" href="#" data-id="{{job.id}}" class="button button-round">
-                    Book This Job
-                    </a>
-                    <a href="#" class="open-popover" data-popover=".popover-rate">
-                                <img src="img/info-icon.svg" width="25px" style="margin-bottom:5px"/>
-                            </a>
+                    <div class="hygienist-available-job-accept-wrapper">
+                        <img src="./img/new.png" class="hygienist-available-job-custom-button-image" style="opacity: 0;" />
+                        <a id="hygienist-available-job-accept-button" href="#" data-id="{{job.id}}" class="button button-round">
+                        Book This Job
+                        </a>
+                        <a href="#" class="open-popover" data-popover=".popover-rate">
+                            <img src="img/info-icon.svg" width="25px" style="margin-bottom:5px"/>
+                        </a>
+                    </div>
                 </div>
                 <div class="available-button-row" style="text-align: center;">
                     <div class="hygienist-available-job-custom-wrapper">
