@@ -496,7 +496,7 @@ module.exports = function( Hygienist ) {
         .then( function() {
             msg = 'Your job on ';
             msg += moment(jj.startDate).format('ddd MMM Do');
-            msg += ' has been filled.';
+            msg += ' has been filled. Tap on the job date in the app to view details.';
             return push.send( msg, jj.dentist.user.platform, jj.dentist.user.registrationId );
         })
         .then( function( response ) {
@@ -702,7 +702,8 @@ console.log( 'hourlyRate: ' + hourlyRate );
         .then( function( po ) {
             msg = 'You have received a new Custom Offer for your job posting on  ';
             msg += moment(jj.startDate).format('ddd MMM Do');
-            msg += '.';
+            msg += '. In the TempStars app, tap the target icon on the job ';
+            msg += 'date to view the Custom Offer details.';
             return push.send( msg, jj.dentist.user.platform, jj.dentist.user.registrationId );
         })
         .then( function( response ) {
@@ -712,7 +713,7 @@ console.log( 'hourlyRate: ' + hourlyRate );
                         to: jj.dentist.user.email,
                         from: app.get('emailFrom'),
                         bcc:  app.get('emailBcc'),
-                        subject: 'New offer for job on ' + moment(jj.startDate).format('ddd MMM D, YYYY'),
+                        subject: 'You have a new Custom Offer for your job on ' + moment(jj.startDate).format('ddd MMM D, YYYY'),
                         text: msg
                     }, function( err ) {
                         if ( err ) {
@@ -848,7 +849,7 @@ console.log( 'hourlyRate: ' + hourlyRate );
             msg += jj.hygienist.firstName + ' ' + jj.hygienist.lastName;
             msg += ', has cancelled for your job on ';
             msg += moment(jj.startDate).format('ddd MMM Do');
-            msg += '. Don\'t worry, it has automatically been re-posted to the system for other hygienists.';
+            msg += '. It has automatically been re-posted to the system for other hygienists to book.';
             msg += 'You\'ll receive a status update when your job is re-filled.';
             return push.send( msg, jj.dentist.user.platform, jj.dentist.user.registrationId );
         })
@@ -1219,14 +1220,14 @@ console.log( 'hourlyRate: ' + hourlyRate );
             var capitcalhygienistFirstName = hygienistFirstName.charAt(0).toUpperCase() + hygienistFirstName.slice(1);
 
             var emailMsg = '<p>Hi '+capitcalFirstName +',</p>';
-            emailMsg += '<p>Someone really likes you!  '+capitcalhygienistFirstName +' is a member of TempStars and invited you to join as well. </p>';
+            emailMsg += '<p>Someone really likes you!  '+capitcalhygienistFirstName +' is a member of TempStars and invited you to join.  And is giving your a bonus +$2.00/hr on your first placement! </p>';
             emailMsg += '<p>TempStars is Canada’s premium dental hygiene temping service.  We use cutting-edge mobile technology to make fast and easy connections between hygienists and dental offices.  </p>';
             emailMsg += '<p>It’s totally free for hygienists to join and use.</p>';
             emailMsg += '<p>Earn a bonus +$2/hr on your first placement when you join using '+capitcalhygienistFirstName +'’s Invite Code: <strong>'+theUser[0].inviteCode +'</strong> </p>';
             emailMsg += '<p><a href="https://app2.tempstars.ca">Join TempStars using '+capitcalhygienistFirstName +'’s Invite Code <strong>'+theUser[0].inviteCode +'</strong></a></p>';
-            emailMsg += '<p>Find out more about TempStars and how it give you a busy, flexible professional lifestyle.</p>';
+            emailMsg += '<p>Find out more about TempStars helps you live an empowered professional lifestyle.</p>';
             emailMsg += '<br/>';
-            emailMsg += '<p><a href="http://www.tempstars.ca/hygienists2/">Learn More</a></p>'
+            emailMsg += '<p><a href="http://www.tempstars.ca/hygienists/">Learn More</a></p>'
             emailMsg += '<br/>';
             emailMsg += '<p>Over 180 hygienists trust TempStars to connect them with dental offices for their temping placements.  When you join, be sure to use '+capitcalhygienistFirstName +'’s Invite Code to earn your bonus +$2/hr on your first job.</p>';
             emailMsg += '<p><a href="https://app2.tempstars.ca">Join TempStars using '+capitcalhygienistFirstName +'’s Invite Code <strong>'+theUser[0].inviteCode +'</strong></a></p>';

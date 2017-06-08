@@ -374,7 +374,7 @@ module.exports = function( Dentist ) {
                     msg = 'Your job on ';
                     msg += moment(jj.startDate).format('ddd MMM D, YYYY');
                     msg += ' with ' + jj.dentist.practiceName;
-                    msg += ' has been cancelled.';
+                    msg += ' has been cancelled by the office.';
                     push.send( msg, jj.hygienist.user.platform, jj.hygienist.user.registrationId )
                     .then( function( response ) {
                         return new Promise( function( resolve, reject ) {
@@ -413,7 +413,7 @@ module.exports = function( Dentist ) {
                     msg = 'Your custom offer for the job on  ';
                     msg += moment(jj.startDate).format('ddd MMM D, YYYY');
                     msg += ' with ' + jj.dentist.practiceName;
-                    msg += ' has been removed since the job was cancelled.';
+                    msg += ' has been removed - the job was cancelled by the office.';
                     _.map( jj.partialOffers, function( po ) {
                         push.send( msg, po.hygienist.user.platform, po.hygienist.user.registrationId )
                         .then( function( response ) {
@@ -742,7 +742,7 @@ module.exports = function( Dentist ) {
 
                     // Notify hygienists
                     jj = job.toJSON();
-                    msg = 'The job for your custom offer on  ';
+                    msg = 'The job for your Custom Offer on  ';
                     msg += moment(jj.startDate).format('ddd MMM D, YYYY');
                     msg += ' with ' + jj.dentist.practiceName;
                     msg += ' has been modified.';
