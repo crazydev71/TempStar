@@ -221,40 +221,40 @@ TempStars.Pages.Dentist.PostJob = (function() {
                 ]
             });
         }
-        else
+        else 
             TempStars.Job.checkIncentives( formData, confirmJob );
     }
 
     function confirmJob( formData ) {
 
         var text =
-            formData.startDate + '<br>' +
+            "<b>" + formData.startDate + '<br>' +
             formData.postedStart + ' - ' +
-            formData.postedEnd + '<br>';
+            formData.postedEnd + '<br></b>';
 
-        //var boost = TempStars.Job.getHourlyRateBoost( formData );
         if ( formData.bonus > 0 ) {
-            text += '<br>+$' + formData.bonus + '/hr incentive bonus<br>';
+            text += '<b>Incentive Bonus: +$' + formData.bonus + '/hr</b><br>';
         }
 
         if (jobType === 1) {
-            postJob( formData );
-        }
-        else if (jobType === 2) {
-            app.confirm( text, 'Post Job?', function() {
-                app.modal({
-                    text: 'Our system is alerting our best available hygienists for this job. You’ll receive confirmation when this shift is filled. To add/modify an incentive bonus, tap the job date on the calendar.',
-                    title: 'We\'re on it.',
-                    buttons: [
-                        {
-                            text: 'Got it!',
-                            bold: true,
-                            onClick: function() {
-                                postJob( formData );
-                            }
+            text += "<br>" + "You have selected:" + "<br><br>" +
+                    "Auto-booking The Best Available Hygienist" + "<br><br>" +
+                    "To view or modify these job details after posting, tap on the job date in the calendar.";
+            app.modal({
+                title: 'Post This Job?',
+                text: text,
+                buttons: [
+                    {
+                        text: 'Post This Job',
+                        bold: true,
+                        onClick: function() {
+                            postJob( formData );
                         }
-                    ]
-                });
+                    },
+                    {
+                        text: 'Cancel'
+                    }
+                ]
             });
         }
     }
