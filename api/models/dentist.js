@@ -682,6 +682,10 @@ module.exports = function( Dentist ) {
         Job.findById( jobId )
         .then( function( j ) {
             job = j;
+            if (typeof data.bonus !== 'undefined') {
+                job.updateAttributes( { bonus: data.bonus } )
+                delete data.bonus;
+            }
             jj = job.toJSON();
             shiftId = jj.shifts[0].id;
             return Shift.findById( shiftId );
