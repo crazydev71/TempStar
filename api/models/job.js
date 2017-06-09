@@ -142,6 +142,19 @@ module.exports = function( Job ){
             });
         })
         .then( function() {
+            // Accept the real partial offer
+            return PartialOffer.find( { where: { hygienistId: partialOffer.hygienistId, status: 0}} );
+        })
+        .then( function( pendintPartialOffers ) {
+            var pendingIDs = [];
+            for (var i = 0; i < pendintPartialOffers.length; i++) {
+                if (moment(pendintPartialOffers[i].offeredStartTime).format('YYYY-MM-DD') === jj.startDate) {
+                    pendingIDs.push(pendintPartialOffers[i].id);
+                }
+            }
+            return PartialOffer.updateAll( {id: {inq: pendingIDs}}, { status: 1 } );
+        })
+        .then( function() {
             // bump the number of booked jobs
             return hygienist.updateAttributes({ numBooked: numBooked });
         })

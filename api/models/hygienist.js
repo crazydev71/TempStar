@@ -164,6 +164,7 @@ module.exports = function( Hygienist ) {
         var Hygienist = app.models.Hygienist;
         var BlockedHygienist = app.models.BlockedHygienist;
         var BlockedDentist = app.models.BlockedDentist;
+        var PartialOffer = app.models.PartialOffer;
         var hygienist,
             hygienistLocation,
             distance,
@@ -206,6 +207,33 @@ module.exports = function( Hygienist ) {
                     return false;
                 }
                 else {
+                    return true;
+                }
+            });
+        })
+        .then( function( js ) {
+            jobs = js;
+            console.log('available jobs: ' + jobs.length);
+            return PartialOffer.find( { where: { hygienistId: id }} );
+        })
+        .then( function( partialOffers ) {
+            var confirmedPartialOffers = [];
+            for (var i = 0; i < partialOffers.length; i++) {
+                if (partialOffers[i].status === 2) {
+                    confirmedPartialOffers.push(partialOffers[i]);
+                }
+            }
+
+            return _.filter( jobs, function( job ) {
+                if ( _.find( partialOffers, { 'jobId': job.id} ) ) {
+                    // If hygienist already made custom offer for that job, want to remove it
+                    return false;
+                }
+                else {
+                    for (var i = 0; i < confirmedPartialOffers.length; i++) {
+                        if (job.startDate === moment(confirmedPartialOffers[i].offeredStartTime).format('YYYY-MM-DD'))
+                            return false;
+                    }
                     return true;
                 }
             });
