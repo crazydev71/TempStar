@@ -151,6 +151,7 @@ module.exports = function( Job ){
             msg += moment(jj.startDate).format('ddd MMM Do');
             // msg += ' with ' + jj.dentist.practiceName;
             msg += ' has been accepted. You are now booked and confirmed for that shift.';
+            msg += ' The office and patients are now counting on you to keep your commitment.';
             return push.send( msg, poJSON.hygienist.user.platform, poJSON.hygienist.user.registrationId );
         })
         .then( function( response ) {
