@@ -283,7 +283,7 @@ TempStars.Pages.Hygienist.MakePartialOffer = (function() {
                    'Remember: Breaking commitments results in being blocked from viewing Available Jobs';
 
             app.modal({
-                title:  'Custom Offer Sent',
+                title:  'Custom Offer Sent Successfully!',
                 text: text,
                 buttons: [
                     { text: 'OK', bold: true, onClick: function() {
