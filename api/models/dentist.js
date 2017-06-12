@@ -497,38 +497,38 @@ module.exports = function( Dentist ) {
             job = j;
             console.log( 'got job with status:' + job.status );
 
-           console.log( 'expire partial offer job' );
+            console.log( 'expire partial offer job' );
 
             // Notify hygienists
-            jj = job.toJSON();
-            msg = 'Your custom offer for the job on  ';
-            msg += moment(jj.startDate).format('ddd MMM D, YYYY');
-            msg += ' with ' + jj.dentist.practiceName;
-            msg += ' has expired.';
-            _.map( jj.partialOffers, function( po ) {
-                push.send( msg, po.hygienist.user.platform, po.hygienist.user.registrationId )
-                .then( function( response ) {
-                    return new Promise( function( resolve, reject ) {
-                        if ( ! response.success ) {
-                            Email.send({
-                                to: po.hygienist.user.email,
-                                from: app.get('emailFrom'),
-                                bcc:  app.get('emailBcc'),
-                                subject: 'Custom Offer for ' + moment(jj.startDate).format('ddd MMM D, YYYY') + ' expired',
-                                text: msg
-                            }, function( err ) {
-                                if ( err ) {
-                                    console.log( err.message );
-                                }
-                                resolve();
-                            });
-                        }
-                        else {
-                            resolve();
-                        }
-                    });
-                });
-            });
+            // jj = job.toJSON();
+            // msg = 'Your custom offer for the job on  ';
+            // msg += moment(jj.startDate).format('ddd MMM D, YYYY');
+            // msg += ' with ' + jj.dentist.practiceName;
+            // msg += ' has expired.';
+            // _.map( jj.partialOffers, function( po ) {
+            //     push.send( msg, po.hygienist.user.platform, po.hygienist.user.registrationId )
+            //     .then( function( response ) {
+            //         return new Promise( function( resolve, reject ) {
+            //             if ( ! response.success ) {
+            //                 Email.send({
+            //                     to: po.hygienist.user.email,
+            //                     from: app.get('emailFrom'),
+            //                     bcc:  app.get('emailBcc'),
+            //                     subject: 'Custom Offer for ' + moment(jj.startDate).format('ddd MMM D, YYYY') + ' expired',
+            //                     text: msg
+            //                 }, function( err ) {
+            //                     if ( err ) {
+            //                         console.log( err.message );
+            //                     }
+            //                     resolve();
+            //                 });
+            //             }
+            //             else {
+            //                 resolve();
+            //             }
+            //         });
+            //     });
+            // });
 
             // Delete partial offers
             return job.partialOffers.destroyAll();
