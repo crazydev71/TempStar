@@ -10,6 +10,8 @@ var moment   = require( 'moment' );
 var location = require( 'location' );
 var push     = require( 'push' );
 var notifier = require( 'notifier' );
+var MailChimp = require( 'mailchimp-api-v3');
+var mailChimp = new MailChimp(app.get('mailChimpAPIKey'));
 
 
 push.init(
@@ -65,6 +67,37 @@ module.exports = function( Dentist ) {
                 photoUrl: data.p1.photoUrl,
                 isComplete: 1
             });
+        })
+        .then (function (d) {
+            dentist = d;
+            app.models.TSUser.find({where:{dentistId: dentist.id}})
+            .then(function (users) {
+                console.log(users);
+                if (!users.length)
+                    return false;
+
+                var user = users[0];
+
+                console.log("Subscribing Dentist Members List...");
+                
+                if (user.emailVerified | true) { // always true for Local Test
+                    mailChimp.post('/lists/911283325a/members', {
+                        "email_address":user.email,
+                        "status":"subscribed",
+                        "merge_fields": {
+                            "PRACNAME": dentist.practiceName,
+                            "EMAIL": user.email
+                        }
+                    }, function(err, res) {
+                        if (err)
+                            console.log(err);
+                        console.log(res);
+                    });
+                
+                }
+                
+            })
+            return dentist;
         })
         .then( function( d ) {
             dentist = d;
@@ -374,7 +407,7 @@ module.exports = function( Dentist ) {
                     msg = 'Your job on ';
                     msg += moment(jj.startDate).format('ddd MMM D, YYYY');
                     msg += ' with ' + jj.dentist.practiceName;
-                    msg += ' has been cancelled.';
+                    msg += ' has been cancelled by the office.';
                     push.send( msg, jj.hygienist.user.platform, jj.hygienist.user.registrationId )
                     .then( function( response ) {
                         return new Promise( function( resolve, reject ) {
@@ -413,7 +446,7 @@ module.exports = function( Dentist ) {
                     msg = 'Your custom offer for the job on  ';
                     msg += moment(jj.startDate).format('ddd MMM D, YYYY');
                     msg += ' with ' + jj.dentist.practiceName;
-                    msg += ' has been removed since the job was cancelled.';
+                    msg += ' has been removed - the job was cancelled by the office.';
                     _.map( jj.partialOffers, function( po ) {
                         push.send( msg, po.hygienist.user.platform, po.hygienist.user.registrationId )
                         .then( function( response ) {
@@ -682,6 +715,10 @@ module.exports = function( Dentist ) {
         Job.findById( jobId )
         .then( function( j ) {
             job = j;
+            if (typeof data.bonus !== 'undefined') {
+                job.updateAttributes( { bonus: data.bonus } )
+                delete data.bonus;
+            }
             jj = job.toJSON();
             shiftId = jj.shifts[0].id;
             return Shift.findById( shiftId );
@@ -742,7 +779,7 @@ module.exports = function( Dentist ) {
 
                     // Notify hygienists
                     jj = job.toJSON();
-                    msg = 'The job for your custom offer on  ';
+                    msg = 'The job for your Custom Offer on  ';
                     msg += moment(jj.startDate).format('ddd MMM D, YYYY');
                     msg += ' with ' + jj.dentist.practiceName;
                     msg += ' has been modified.';

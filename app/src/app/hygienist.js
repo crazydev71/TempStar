@@ -57,7 +57,7 @@ TempStars.Hygienist = (function() {
         },
 
         surveyButtonHandler: function surveyButtonHandler( e, job ) {
-            var title = "Rate Dental Office";
+            var title = "Rate the Dental Office";
             var text = 
                 job.dentist.practiceName + '<br>' +
                 moment( job.shifts[0].shiftDate ).local().format('MMM D, ') + 
@@ -73,7 +73,7 @@ TempStars.Hygienist = (function() {
                     {
                         text: 'Very Happy',
                         onClick: function() {
-                            app.alert('Great, they will be added to your favourites.', function() {
+                            app.alert('Great, they will be added to your Favourites!', function() {
                                 TempStars.Hygienist.saveDentistRating( job.id, TempStars.Rating.VERY_HAPPY );
                             });
                         }
@@ -81,7 +81,7 @@ TempStars.Hygienist = (function() {
                     {
                         text: 'Pleased',
                         onClick: function() {
-                            app.alert('Thanks, all set.', function() {
+                            app.alert('Good to hear!', function() {
                                 TempStars.Hygienist.saveDentistRating( job.id, TempStars.Rating.PLEASED );
                             });
                         }
@@ -89,7 +89,7 @@ TempStars.Hygienist = (function() {
                     {
                         text: 'No Thank You!',
                         onClick: function() {
-                            app.alert('Sorry, they will be added to your blocked list.', function() {
+                            app.alert('Sorry to hear that, we will not sent you any of their future job posting notifications.', function() {
                                 TempStars.Hygienist.saveDentistRating( job.id, TempStars.Rating.NO_THANK_YOU );
                             });
                         }
@@ -100,7 +100,7 @@ TempStars.Hygienist = (function() {
 
         gotoInvoicePage: function gotoInvoicePage(invoiceData) {
             app.modal({
-                text: 'When creating your invoice, bill only for the hours you worked. To prevent misunderstandings, confirm your invoice details with the office manager before submitting your invoice.',
+                text: 'When creating your invoice, bill only for the hours you worked. To prevent misunderstandings, confirm your invoice details with the office manager before submitting your invoice.  Invite Bonuses are paid directly by TempStars, not included in the job invoice rate.',
                 title: 'Important:',
                 buttons: [
                     {

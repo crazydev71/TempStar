@@ -39,11 +39,8 @@
                 {{/each}}
                 <hr>
                 <div class="center-box" style="font-size:125%;font-weight:bold;padding:0px;">
-                {{job.dentist.practiceName}}
-                </div>
-                <div class="center-box" style="padding:0px;">
-                {{job.dentist.address}}
-                </div>
+ -                {{job.dentist.practiceName}}
+ -              </div>
                 <div class="center-box" style="padding:0px;">
                 {{job.dentist.city}}, {{job.dentist.province}}
                 </div>
@@ -57,9 +54,6 @@
 
                 <div xxclass="job-box">
 
-                <div class="center-box" style="padding:2px;">
-                phone: &nbsp; <a href="tel:{{phone_format job.dentist.phone}}" class="external">{{phone_format job.dentist.phone}}</a>
-                </div>
 
                 <div class="list-block" style="margin:14px 0;">
                   <ul>
@@ -101,20 +95,29 @@
 
                 <div id="hygienist-available-job-tooltip">
                     <span>This office is only accepting Custom Offers for this posting.</span>
-                    <a id="hygienist-available-job-tooltip-desc">why?</a>
+                    <img id="hygienist-available-job-tooltip-desc" src="img/info-icon.svg" width="25px" />
                 </div>
                 <div class="available-button-row">
-                    <a id="hygienist-available-job-accept-button" href="#" data-id="{{job.id}}" class="button button-round">
-                    Book This Job
-                    </a>
+                    <div class="hygienist-available-job-accept-wrapper">
+                        <img src="./img/new.png" class="hygienist-available-job-custom-button-image" style="opacity: 0;" />
+                        <a id="hygienist-available-job-accept-button" href="#" data-id="{{job.id}}" class="button button-round">
+                        Book This Job
+                        </a>
+                        <a href="#" class="open-popover" data-popover=".popover-rate">
+                            <img src="img/info-icon.svg" width="25px" style="margin-bottom:5px"/>
+                        </a>
+                    </div>
                 </div>
-                <div class="available-button-row">
-                    <a id="hygienist-available-job-custom-button" href="#" data-id="{{job.id}}" class="button button-round">
-                        Make a Custom Offer
-                    </a>
-                    <div class="hygienist-available-job-custom-button-tooltip-wrapper">
-                        <img src="./img/new.png" width="35px" />
+                <div class="available-button-row" style="text-align: center;">
+                    <div class="hygienist-available-job-custom-wrapper">
+                        <img src="./img/new.png" class="hygienist-available-job-custom-button-image" />
+                        <a id="hygienist-available-job-custom-button" href="#" data-id="{{job.id}}" class="button button-round">
+                            Make a Custom Offer
+                        </a>
+                        <img id="hygienist-available-job-custom-button-tooltip" src="img/info-icon.svg" width="25px" />
+                        <!--
                         <a id="hygienist-available-job-custom-button-tooltip">What's this?</a>
+                        -->
                     </div>
                 </div>
             </div>

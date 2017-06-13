@@ -21,6 +21,7 @@
   },
   "legacyExplorer": false,
   "stripeSecretKey": "sk_live_cjRvWqrIhEQaL5Yo1pG1wMWN",
+  "mailChimpAPIKey": "api-key-for-prod-env",
   "resetPasswordLink": "https://api.tempstars.ca/reset-password",
   "gcmApiKey": "AIzaSyBpqJVshqasod9SEdJoCSIHX5aqRkY-zg8",
   "apnKey": "sys/APNSAuthKey_4W5923BGDZ.p8",
@@ -29,5 +30,5 @@
   "pushEnv": "prod",
   "emailFrom": "no-reply@tempstars.ca",
   "emailBcc": "drjyounger@hotmail.com",
-  "minVersion": "2.2.6"
+  "minVersion": "2.2.11"
 }

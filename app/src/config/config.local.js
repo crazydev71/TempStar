@@ -9,7 +9,7 @@ TempStars.Config = (function() {
         server: {
             authUserName: '',
             authPassword: '',
-            baseUrl: 'http://0.0.0.0:3000/v2/'
+            baseUrl: 'http://127.0.0.1:3000/v2/'
         },
         bucket: {
             baseUrl: 'https://s3.amazonaws.com/tempstars.ca/'

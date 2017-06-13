@@ -21,8 +21,9 @@
   },
   "legacyExplorer": false,
   "stripeSecretKey": "sk_test_6RfrY1kO3xkVyDrKgvumnnFX",
+  "mailChimpAPIKey": "6b7386daf94e788ba564671baf6aa8be-us13",
   "resetPasswordLink": "http://0.0.0.0:3000/reset-password",
   "pushEnv": "local",
-  "emailBcc": "drjyounger@hotmail.com",
-  "emailFrom": "no-reply@tempstars.net"
+  "emailFrom": "no-reply@tempstars.net",
+  "emailBcc": "drjyounger@hotmail.com"
 }

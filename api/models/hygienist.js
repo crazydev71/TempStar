@@ -9,7 +9,8 @@ var location = require( 'location' );
 var moment   = require( 'moment' );
 var push     = require( 'push' );
 var notifier = require( 'notifier' );
-
+var MailChimp = require( 'mailchimp-api-v3');
+var mailChimp = new MailChimp(app.get('mailChimpAPIKey'));
 
 push.init(
     app.get('gcmApiKey'),
@@ -33,6 +34,8 @@ var rating = {
     'PLEASED': 3.5,
     'NO_THANK_YOU': 2
 };
+
+
 
 module.exports = function( Hygienist ) {
 
@@ -109,6 +112,57 @@ module.exports = function( Hygienist ) {
             hygienist = h;
             return hygienist.updateAttributes( data );
         })
+        .then (function (h) {
+            hygienist = h;
+            app.models.TSUser.find({where:{hygienistId: hygienist.id}})
+            .then(function (users) {
+                console.log(users);
+                if (!users.length)
+                    return false;
+
+                var user = users[0];
+
+                if (user.emailVerified | true) { // always true for Local Test
+                    var prefix = hygienist.postalCode.substr(0,1);
+                    
+                    if (prefix == 'V') {
+                        console.log("Subscribing Vancouver's Hygienist List...");
+                        // In case the hygienist is in Vancuber
+                        mailChimp.post('/lists/e1c0d37310/members', {
+                            "email_address":user.email,
+                            "status":"subscribed",
+                            "merge_fields": {
+                                "FNAME": hygienist.firstName,
+                                "LNAME": hygienist.lastName,
+                                "EMAIL": user.email
+                            }
+                        }, function(err, res) {
+                            if (err)
+                                console.log(err);
+                            console.log(res);
+                        });
+                    } else {
+                        console.log("Hygienist Members List...");
+                        // In case the hygienist is not in Vancuber
+                        mailChimp.post('/lists/2e1ea40483/members', {
+                            "email_address":user.email,
+                            "status":"subscribed",
+                            "merge_fields": {
+                                "FNAME": hygienist.firstName,
+                                "LNAME": hygienist.lastName,
+                                "EMAIL": user.email
+                            }
+                        }, function(err, res) {
+                            if (err)
+                                console.log(err);
+                            console.log(res);
+                        });
+                    }
+                }
+                
+            })
+            return hygienist;
+        })
         .then( function( h ) {
             hygienist = h;
             return new Promise( function( resolve, reject ) {
@@ -164,6 +218,7 @@ module.exports = function( Hygienist ) {
         var Hygienist = app.models.Hygienist;
         var BlockedHygienist = app.models.BlockedHygienist;
         var BlockedDentist = app.models.BlockedDentist;
+        var PartialOffer = app.models.PartialOffer;
         var hygienist,
             hygienistLocation,
             distance,
@@ -206,6 +261,33 @@ module.exports = function( Hygienist ) {
                     return false;
                 }
                 else {
+                    return true;
+                }
+            });
+        })
+        .then( function( js ) {
+            jobs = js;
+            console.log('available jobs: ' + jobs.length);
+            return PartialOffer.find( { where: { hygienistId: id }} );
+        })
+        .then( function( partialOffers ) {
+            var confirmedPartialOffers = [];
+            for (var i = 0; i < partialOffers.length; i++) {
+                if (partialOffers[i].status === 2) {
+                    confirmedPartialOffers.push(partialOffers[i]);
+                }
+            }
+
+            return _.filter( jobs, function( job ) {
+                if ( _.find( partialOffers, { 'jobId': job.id} ) ) {
+                    // If hygienist already made custom offer for that job, want to remove it
+                    return false;
+                }
+                else {
+                    for (var i = 0; i < confirmedPartialOffers.length; i++) {
+                        if (job.startDate === moment(confirmedPartialOffers[i].offeredStartTime).format('YYYY-MM-DD'))
+                            return false;
+                    }
                     return true;
                 }
             });
@@ -496,7 +578,7 @@ module.exports = function( Hygienist ) {
         .then( function() {
             msg = 'Your job on ';
             msg += moment(jj.startDate).format('ddd MMM Do');
-            msg += ' has been filled.';
+            msg += ' has been filled. Tap on the job date in the app to view details.';
             return push.send( msg, jj.dentist.user.platform, jj.dentist.user.registrationId );
         })
         .then( function( response ) {
@@ -702,7 +784,8 @@ console.log( 'hourlyRate: ' + hourlyRate );
         .then( function( po ) {
             msg = 'You have received a new Custom Offer for your job posting on  ';
             msg += moment(jj.startDate).format('ddd MMM Do');
-            msg += '.';
+            msg += '. In the TempStars app, tap the target icon on the job ';
+            msg += 'date to view the Custom Offer details.';
             return push.send( msg, jj.dentist.user.platform, jj.dentist.user.registrationId );
         })
         .then( function( response ) {
@@ -712,7 +795,7 @@ console.log( 'hourlyRate: ' + hourlyRate );
                         to: jj.dentist.user.email,
                         from: app.get('emailFrom'),
                         bcc:  app.get('emailBcc'),
-                        subject: 'New offer for job on ' + moment(jj.startDate).format('ddd MMM D, YYYY'),
+                        subject: 'You have a new Custom Offer for your job on ' + moment(jj.startDate).format('ddd MMM D, YYYY'),
                         text: msg
                     }, function( err ) {
                         if ( err ) {
@@ -848,7 +931,7 @@ console.log( 'hourlyRate: ' + hourlyRate );
             msg += jj.hygienist.firstName + ' ' + jj.hygienist.lastName;
             msg += ', has cancelled for your job on ';
             msg += moment(jj.startDate).format('ddd MMM Do');
-            msg += '. Don\'t worry, it has automatically been re-posted to the system for other hygienists.';
+            msg += '. It has automatically been re-posted to the system for other hygienists to book.';
             msg += 'You\'ll receive a status update when your job is re-filled.';
             return push.send( msg, jj.dentist.user.platform, jj.dentist.user.registrationId );
         })
@@ -1219,14 +1302,14 @@ console.log( 'hourlyRate: ' + hourlyRate );
             var capitcalhygienistFirstName = hygienistFirstName.charAt(0).toUpperCase() + hygienistFirstName.slice(1);
 
             var emailMsg = '<p>Hi '+capitcalFirstName +',</p>';
-            emailMsg += '<p>Someone really likes you!  '+capitcalhygienistFirstName +' is a member of TempStars and invited you to join as well. </p>';
+            emailMsg += '<p>Someone really likes you!  '+capitcalhygienistFirstName +' is a member of TempStars and invited you to join.  And is giving your a bonus +$2.00/hr on your first placement! </p>';
             emailMsg += '<p>TempStars is Canada’s premium dental hygiene temping service.  We use cutting-edge mobile technology to make fast and easy connections between hygienists and dental offices.  </p>';
             emailMsg += '<p>It’s totally free for hygienists to join and use.</p>';
             emailMsg += '<p>Earn a bonus +$2/hr on your first placement when you join using '+capitcalhygienistFirstName +'’s Invite Code: <strong>'+theUser[0].inviteCode +'</strong> </p>';
             emailMsg += '<p><a href="https://app2.tempstars.ca">Join TempStars using '+capitcalhygienistFirstName +'’s Invite Code <strong>'+theUser[0].inviteCode +'</strong></a></p>';
-            emailMsg += '<p>Find out more about TempStars and how it give you a busy, flexible professional lifestyle.</p>';
+            emailMsg += '<p>Find out more about TempStars helps you live an empowered professional lifestyle.</p>';
             emailMsg += '<br/>';
-            emailMsg += '<p><a href="http://www.tempstars.ca/hygienists2/">Learn More</a></p>'
+            emailMsg += '<p><a href="http://www.tempstars.ca/hygienists/">Learn More</a></p>'
             emailMsg += '<br/>';
             emailMsg += '<p>Over 180 hygienists trust TempStars to connect them with dental offices for their temping placements.  When you join, be sure to use '+capitcalhygienistFirstName +'’s Invite Code to earn your bonus +$2/hr on your first job.</p>';
             emailMsg += '<p><a href="https://app2.tempstars.ca">Join TempStars using '+capitcalhygienistFirstName +'’s Invite Code <strong>'+theUser[0].inviteCode +'</strong></a></p>';

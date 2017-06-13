@@ -21,6 +21,7 @@
   },
   "legacyExplorer": false,
   "stripeSecretKey": "sk_test_6RfrY1kO3xkVyDrKgvumnnFX",
+  "mailChimpAPIKey": "api-key-for-dev-env",
   "resetPasswordLink": "https://api.tempstars.net/reset-password",
   "pushEnv": "dev",
   "emailFrom": "no-reply@tempstars.net",

@@ -18,6 +18,8 @@ app.use('/v2/minVersion', function( req, res, next ) {
 var push     = require( 'push' );
 var notifier = require( 'notifier' );
 
+var expirePeriod = 18;  // hrs
+
 // push.init(
 //     app.get('gcmApiKey'),
 //     {
@@ -59,7 +61,7 @@ function checkExpirePartialOffers() {
     var curTime = moment.utc();
     for (var i = 0; i < offers.length; i++) {
       var createdTime = offers[i].createdOn;
-      var duration = moment.utc(createdTime).add(12, 'hour').valueOf() - curTime.valueOf();
+      var duration = moment.utc(createdTime).add(expirePeriod, 'hour').valueOf() - curTime.valueOf();
 
       if (offers[i].status === 0 && duration <= 0) {
         console.log('expired offer: ' + offers[i].id);

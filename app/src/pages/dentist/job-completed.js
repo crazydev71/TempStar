@@ -42,7 +42,6 @@ TempStars.Pages.Dentist.JobCompleted = (function() {
     }
 
     function viewSurveyHandler( e ) {
-        debugger;
         var text =
             (job.hygienist ? job.hygienist.firstName + ' ' + job.hygienist.lastName + '<br>' : '') +
             (job.hygienist.photoUrl ? '<img src="' + job.hygienist.photoUrl + '" width="60px" style="margin-top: 5px;" /><br>' : '') +

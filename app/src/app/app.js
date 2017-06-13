@@ -200,6 +200,10 @@ TempStars.App = (function() {
                     reject( err );
                 });
             });
+        },
+
+        getExpiryPeriod: function getExpiryPeriod() {
+            return 18;
         }
     };
 

@@ -4,6 +4,7 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
 
     var job,
         baseRate,
+        inviteAdjustment,
         workHistory;
 
     function init() {
@@ -12,6 +13,17 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
             console.log(page);
             job = page.context.job;
             baseRate = page.context.baseRate;
+            inviteAdjustment = page.context.inviteAdjustment;
+
+            var totalRate = 0;
+            if (baseRate)
+                totalRate += parseFloat(baseRate);
+            if (inviteAdjustment)
+                totalRate += parseFloat(inviteAdjustment);
+            if (job.bonus)
+                totalRate += parseFloat(job.bonus);
+
+            $$('#hygienist-available-job-accept-button').html('Book This Job @ $' + totalRate + '/hr');
 
             $$('#hygienist-available-job-accept-button').on( 'click', acceptButtonHandler );
             $$('#hygienist-available-job-custom-button').on( 'click', customButtonHandler );
@@ -23,11 +35,11 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
 
             if (job.shifts[0].type === 2) {
                 $$('#hygienist-available-job-tooltip').show();
-                $$('#hygienist-available-job-accept-button').hide();
+                $$('.hygienist-available-job-accept-wrapper').css('display', 'none');
             }
             else {
                 $$('#hygienist-available-job-tooltip').hide();
-                $$('#hygienist-available-job-accept-button').show();
+                $$('.hygienist-available-job-accept-wrapper').css('display', 'inline-block');
             }
         });
 
@@ -70,7 +82,7 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
         }
         else {
             var info = "";
-            info = "It's not required but most dental offices want to see your resume before they will Accept a custom offer.  Would you like to go to your profile and upload your resume?" + "<br><br>" +
+            info = "It's not required, but most dental offices won't Accept a Custom Offer without a resume.  Would you like to go to your profile and upload your resume?" + "<br><br>" +
                    "Note: You need to be on your computer(Mac/PC/Laptop) to upload your resume.";
             app.modal({
                 text: info,
@@ -113,7 +125,7 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
     function customTooltipButtonHandler( e ) {
         var tooltipInfo = "";
         tooltipInfo = "Now you can set your own hourly rate!" + "<br>" +
-                      "Submit a Custom Offer to the office at your preferred $/hr rate. They will be notified of your offer, review your resume and have the option to Accept or Decline your offer. Submitted Custom Offers expire after 12 hours.";
+                      "Submit a Custom Offer to the office at your preferred $/hr rate. They will be notified of your offer, review your resume and have the option to Accept or Decline your offer. Submitted Custom Offers expire after " + TempStars.App.getExpiryPeriod() + " hours.";
         app.modal({
             text: tooltipInfo,
             title: 'Custom Offers',
@@ -138,7 +150,8 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
                    moment( job.startDate ).format('ddd MMM D, YYYY') + '<br>' +
                    moment.utc( job.shifts[0].postedStart ).local().format('h:mm a')  + ' - ' +
                    moment.utc( job.shifts[0].postedEnd ).local().format('h:mm a') + '<br><br>' +
-                   "The office is now counting on and expecting you. The office doesn’t contact you to confirm.";
+                   "The office is now counting on and expecting you. The office doesn’t contact you to confirm." +
+                    "98% of TempStars hygienists keep their shift commitments.";
 
             app.modal({
                 title:  '',
@@ -239,7 +252,7 @@ TempStars.Pages.Hygienist.AvailableJob = (function() {
                     })
                     .then( function( jobs ) {
                         if ( jobs.length == 0 ) {
-                            resolve( { job: {}, workHistory:{}, rate: rate.result.hourlyRate, baseRate: rate.result.baseRate, inviteAdjustment: rate.result.inviteAdjustment } );
+                            resolve( { job: {}, workHistory:{}, rate: rate.result.hourlyRate, baseRate: rate.result.baseRate, inviteAdjustment: rate.result.inviteAdjustment} );
                             return;
                         }
                         job = jobs[0];
