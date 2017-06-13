@@ -244,7 +244,7 @@ module.exports = function (grunt) {
                 stdout:true,
                 stderror:true
             },
-            create_version: './create-version.sh'
+            create_version: 'create-version.sh'
         },
 
         connect: {
