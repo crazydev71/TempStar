@@ -26,6 +26,7 @@
     "loopback-connector-mysql": "https://registry.npmjs.org/loopback-connector-mysql/-/loopback-connector-mysql-2.3.0.tgz",
     "loopback-datasource-juggler": "2.53.1",
     "loopback-jwt": "^1.0.1",
+    "mailchimp-api-v3": "^1.7.0",
     "moment": "^2.15.1",
     "nodemailer-ses-transport": "^1.4.0",
     "notifier": "file:local_modules/notifier",
