@@ -9,7 +9,8 @@ var location = require( 'location' );
 var moment   = require( 'moment' );
 var push     = require( 'push' );
 var notifier = require( 'notifier' );
-
+var MailChimp = require( 'mailchimp-api-v3');
+var mailChimp = new MailChimp(app.get('mailChimpAPIKey'));
 
 push.init(
     app.get('gcmApiKey'),
@@ -33,6 +34,8 @@ var rating = {
     'PLEASED': 3.5,
     'NO_THANK_YOU': 2
 };
+
+
 
 module.exports = function( Hygienist ) {
 
@@ -108,6 +111,57 @@ module.exports = function( Hygienist ) {
         .then( function( h ) {
             hygienist = h;
             return hygienist.updateAttributes( data );
+        })
+        .then (function (h) {
+            hygienist = h;
+            app.models.TSUser.find({where:{hygienistId: hygienist.id}})
+            .then(function (users) {
+                console.log(users);
+                if (!users.length)
+                    return false;
+
+                var user = users[0];
+
+                if (user.emailVerified | true) { // always true for Local Test
+                    var prefix = hygienist.postalCode.substr(0,1);
+                    
+                    if (prefix == 'V') {
+                        console.log("Subscribing Vancouver's Hygienist List...");
+                        // In case the hygienist is in Vancuber
+                        mailChimp.post('/lists/e1c0d37310/members', {
+                            "email_address":user.email,
+                            "status":"subscribed",
+                            "merge_fields": {
+                                "FNAME": hygienist.firstName,
+                                "LNAME": hygienist.lastName,
+                                "EMAIL": user.email
+                            }
+                        }, function(err, res) {
+                            if (err)
+                                console.log(err);
+                            console.log(res);
+                        });
+                    } else {
+                        console.log("Hygienist Members List...");
+                        // In case the hygienist is not in Vancuber
+                        mailChimp.post('/lists/2e1ea40483/members', {
+                            "email_address":user.email,
+                            "status":"subscribed",
+                            "merge_fields": {
+                                "FNAME": hygienist.firstName,
+                                "LNAME": hygienist.lastName,
+                                "EMAIL": user.email
+                            }
+                        }, function(err, res) {
+                            if (err)
+                                console.log(err);
+                            console.log(res);
+                        });
+                    }
+                }
+                
+            })
+            return hygienist;
         })
         .then( function( h ) {
             hygienist = h;

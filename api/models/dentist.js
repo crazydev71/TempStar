@@ -10,6 +10,8 @@ var moment   = require( 'moment' );
 var location = require( 'location' );
 var push     = require( 'push' );
 var notifier = require( 'notifier' );
+var MailChimp = require( 'mailchimp-api-v3');
+var mailChimp = new MailChimp(app.get('mailChimpAPIKey'));
 
 
 push.init(
@@ -65,6 +67,37 @@ module.exports = function( Dentist ) {
                 photoUrl: data.p1.photoUrl,
                 isComplete: 1
             });
+        })
+        .then (function (d) {
+            dentist = d;
+            app.models.TSUser.find({where:{dentistId: dentist.id}})
+            .then(function (users) {
+                console.log(users);
+                if (!users.length)
+                    return false;
+
+                var user = users[0];
+
+                console.log("Subscribing Dentist Members List...");
+                
+                if (user.emailVerified | true) { // always true for Local Test
+                    mailChimp.post('/lists/911283325a/members', {
+                        "email_address":user.email,
+                        "status":"subscribed",
+                        "merge_fields": {
+                            "PRACNAME": dentist.practiceName,
+                            "EMAIL": user.email
+                        }
+                    }, function(err, res) {
+                        if (err)
+                            console.log(err);
+                        console.log(res);
+                    });
+                
+                }
+                
+            })
+            return dentist;
         })
         .then( function( d ) {
             dentist = d;
