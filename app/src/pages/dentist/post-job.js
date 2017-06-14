@@ -9,6 +9,11 @@ TempStars.Pages.Dentist.PostJob = (function() {
     function init() {
 
         app.onPageBeforeAnimation( 'dentist-post-job', function( page ) {
+            var dentist = TempStars.User.getCurrentUser().dentist;
+            if (dentist && dentist.province === "BC")
+                $$('#dentist-post-job-rate-desc').html("Hygienist rates are $48/hr and under.");
+            else
+                $$('#dentist-post-job-rate-desc').html("Hygienist rates are $40/hr and under.");
 
             var defaultDate = (page.context.defaultDate) ? page.context.defaultDate : null;
 

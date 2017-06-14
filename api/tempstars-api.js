@@ -65,16 +65,17 @@ function checkExpirePartialOffers() {
 
       if (offers[i].status === 0 && duration <= 0) {
         console.log('expired offer: ' + offers[i].id);
-        expirePartialOffer(createdTime, offers[i].hygienistId, offers[i].jobId, offers[i].id);
+        var shiftDate = moment(offers[i].offeredStartTime).format('ddd MMM D, YYYY')
+        expirePartialOffer(shiftDate, offers[i].hygienistId, offers[i].jobId, offers[i].id);
       }
     }
   })
   .catch( function( err ) {
-    console.log( 'expire custom offer error!' );
+    console.log('expire custom offer error!', err);
   });
 }
 
-function expirePartialOffer(createdTime, hygienistId, jobId, offerId) {
+function expirePartialOffer(shiftDate, hygienistId, jobId, offerId) {
   var Hygienist = app.models.Hygienist;
   var Email = app.models.Email;
   var messge = "";
@@ -86,7 +87,7 @@ function expirePartialOffer(createdTime, hygienistId, jobId, offerId) {
       hygienist = h.toJSON();
       console.log(hygienist.user.platform + ' : ' + hygienist.user.registrationId);
 
-      messge = "Your Custom Offer for " + moment(createdTime).format('ddd MMM D, YYYY') + " has expired.";
+      messge = "Your Custom Offer for " + shiftDate + " has expired.";
       console.log(messge);
       return push.send( messge, hygienist.user.platform, hygienist.user.registrationId );
     })
@@ -96,7 +97,7 @@ function expirePartialOffer(createdTime, hygienistId, jobId, offerId) {
           from: app.get('emailFrom'),
           to: hygienist.user.email,
           bcc:  app.get('emailBcc'),
-          subject: 'Custom Offer for ' + moment(createdTime).format('ddd MMM D, YYYY') + ' expired',
+          subject: 'Custom Offer for ' + shiftDate + ' expired',
           text: messge
         }, function( err ) {
           if ( err ) {
@@ -132,7 +133,7 @@ function checkExpireJobs() {
     }
   })
   .catch( function( err ) {
-    console.log( 'expire job error!' );
+    console.log('expire job error!', err);
   });
 
 }
