@@ -22,6 +22,7 @@
   "legacyExplorer": false,
   "stripeSecretKey": "sk_test_6RfrY1kO3xkVyDrKgvumnnFX",
   "mailChimpAPIKey": "6014e9d4c4125a0bdd9f95430588af75-us13",
+  "MandrillAPIKey" : "JU5g4ITqFLWKQii_wogs0A",
   "resetPasswordLink": "https://api.tempstars.net/reset-password",
   "pushEnv": "dev",
   "emailFrom": "no-reply@tempstars.net",

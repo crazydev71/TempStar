@@ -4,7 +4,8 @@ var Promise  = require( 'bluebird' );
 var moment   = require( 'moment' );
 var app      = require('../tempstars-api.js' );
 var push     = require( 'push' );
-
+var mandrill = require('mandrill-api/mandrill');
+var mandrill_client = new mandrill.Mandrill(app.get('MandrillAPIKey'));
 
 push.init(
     app.get('gcmApiKey'),
@@ -202,6 +203,188 @@ module.exports = function( Job ){
         // })
         .then( function() {
             console.log( 'accept custom offer worked!' );
+            
+            var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            var shift_start = moment(partialOffer.offeredStartTime);
+            var shift_end = moment(partialOffer.offeredEndTime);
+            // send email to dentist
+            var dentist_tpl_name = "Dentist Books a Job";
+            var message = {
+                "subject": dentist_tpl_name,
+                "from_email": app.get('emailFrom'),
+                "to": [{
+                        "email": jj.dentist.user.email,
+                        "name": jj.dentist.practiceName,
+                        "type": "to"
+                    }],
+                "headers": {
+                    "Reply-To": app.get('emailFrom')
+                },
+                "important": false,
+                "track_opens": null,
+                "track_clicks": null,
+                "auto_text": null,
+                "auto_html": null,
+                "inline_css": null,
+                "url_strip_qs": null,
+                "preserve_recipients": null,
+                "view_content_link": null,
+                "bcc_address": app.get('emailBcc'),
+                "tracking_domain": null,
+                "signing_domain": null,
+                "return_path_domain": null,
+                "merge": true,
+                "merge_language": "mailchimp",
+                "global_merge_vars": [{
+                        "name": "pracname",
+                        "content": jj.dentist.practiceName
+                    },
+                    {
+                        "name": "hygienistFirstName",
+                        "content": jj.hygienist.firstName
+                    },
+                    {
+                        "name": "hygienistLastName",
+                        "content": jj.hygienist.lastName
+                    },
+                    {
+                        "name": "gradYear",
+                        "content": jj.hygienist.graduationYear
+                    },
+                    {
+                        "name": "school",
+                        "content": jj.hygienist.school
+                    },
+                    {
+                        "name": "CDHO",
+                        "content": jj.hygienist.CDHONumber
+                    },
+                    {
+                        "name": "dayOfWeek",
+                        "content": weekdays[shift_start.day()]
+                    },
+                    {
+                        "name": "shiftDate",
+                        "content": shift_start.format('YYYY-MM-DD')
+                    },
+                    {
+                        "name": "startTime",
+                        "content": shift_start.format('HH:mm:ss')
+                    },
+                    {
+                        "name": "endTime",
+                        "content": shift_end.format('HH:mm:ss')
+                    },
+                    {
+                        "name": "rate",
+                        "content": hourlyRate
+                    }
+                ],
+                "tags": [
+                    "booking"
+                ],
+                "subaccount": "Development",
+                "google_analytics_domains": [
+                    "tempstars.ca"
+                ],
+                "metadata": {
+                    "website": "www.tempstars.ca"
+                }
+            };
+            mandrill_client.messages.sendTemplate({
+                "template_name": dentist_tpl_name, 
+                "template_content": [], 
+                "message": message, 
+                "async": false
+            }, function(result) {
+                console.log('confirm email result: ', result);
+            }, function(e) {
+                // Mandrill returns the error as an object with name and message keys
+                console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
+                // A mandrill error occurred: Unknown_Subaccount - No subaccount exists with the id 'customer-123'
+            });
+
+            // send email to hygienist
+            var hygienist_tpl_name = "Hygienist Books a Job";
+            var message = {
+                "subject": hygienist_tpl_name,
+                "from_email": app.get('emailFrom'),
+                "to": [{
+                        "email": jj.hygienist.user.email,
+                        "name": jj.hygienist.firstName + ' ' + jj.hygienist.lastName,
+                        "type": "to"
+                    }],
+                "headers": {
+                    "Reply-To": app.get('emailFrom')
+                },
+                "important": false,
+                "track_opens": null,
+                "track_clicks": null,
+                "auto_text": null,
+                "auto_html": null,
+                "inline_css": null,
+                "url_strip_qs": null,
+                "preserve_recipients": null,
+                "view_content_link": null,
+                "bcc_address": app.get('emailBcc'),
+                "tracking_domain": null,
+                "signing_domain": null,
+                "return_path_domain": null,
+                "merge": true,
+                "merge_language": "mailchimp",
+                "global_merge_vars": [{
+                        "name": "fname",
+                        "content": jj.hygienist.firstName
+                    },
+                    {
+                        "name": "practiceName",
+                        "content": jj.dentist.practiceName
+                    },
+                    {
+                        "name": "dayOfWeek",
+                        "content": weekdays[shift_start.day()]
+                    },
+                    {
+                        "name": "shiftDate",
+                        "content": shift_start.format('YYYY-MM-DD')
+                    },
+                    {
+                        "name": "startTime",
+                        "content": shift_start.format('HH:mm:ss')
+                    },
+                    {
+                        "name": "endTime",
+                        "content": shift_end.format('HH:mm:ss')
+                    },
+                    {
+                        "name": "rate",
+                        "content": hourlyRate
+                    }
+                ],
+                "tags": [
+                    "booking"
+                ],
+                "subaccount": "Development",
+                "google_analytics_domains": [
+                    "tempstars.ca"
+                ],
+                "metadata": {
+                    "website": "www.tempstars.ca"
+                }
+            };
+            mandrill_client.messages.sendTemplate({
+                "template_name": hygienist_tpl_name, 
+                "template_content": [], 
+                "message": message, 
+                "async": false
+            }, function(result) {
+                console.log('confirm email result: ', result);
+            }, function(e) {
+                // Mandrill returns the error as an object with name and message keys
+                console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
+                // A mandrill error occurred: Unknown_Subaccount - No subaccount exists with the id 'customer-123'
+            });
+
             callback( null, {} );
         })
         .catch( function( err ) {

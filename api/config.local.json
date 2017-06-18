@@ -22,8 +22,9 @@
   "legacyExplorer": false,
   "stripeSecretKey": "sk_test_6RfrY1kO3xkVyDrKgvumnnFX",
   "mailChimpAPIKey": "6b7386daf94e788ba564671baf6aa8be-us13",
+  "MandrillAPIKey" : "JU5g4ITqFLWKQii_wogs0A",
   "resetPasswordLink": "http://0.0.0.0:3000/reset-password",
   "pushEnv": "local",
-  "emailFrom": "no-reply@tempstars.net",
+  "emailFrom": "no-reply@tempstars.ca",
   "emailBcc": "drjyounger@hotmail.com"
 }
