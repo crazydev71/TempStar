@@ -619,11 +619,10 @@ module.exports = function( Hygienist ) {
             // send email to dentist
             var dentist_tpl_name = "Dentist Books a Job";
             var message = {
-                "subject": "Dentist books a job",
+                "subject": "Your TempStars job booking details - read carefully",
                 "from_email": app.get('emailFrom'),
                 "to": [{
-                        // "email": jj.dentist.user.email,
-                        email: 'mrkwng7@gmail.com',
+                        "email": jj.dentist.user.email,
                         "name": jj.dentist.practiceName,
                         "type": "to"
                     }],
@@ -718,11 +717,10 @@ module.exports = function( Hygienist ) {
             // send email to hygienist
             var hygienist_tpl_name = "Hygienist Books a Job";
             var message = {
-                "subject": hygienist_tpl_name,
+                "subject": 'Your TempStars job booking details - read carefully',
                 "from_email": app.get('emailFrom'),
                 "to": [{
-                        // "email": hygienistJSON.user.email,
-                        email: 'mrkwng7@gmail.com',
+                        "email": hygienistJSON.user.email,
                         "name": hygienistJSON.firstName + ' ' + hygienistJSON.lastName,
                         "type": "to"
                     }],

@@ -207,10 +207,14 @@ module.exports = function( Job ){
             var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
             var shift_start = moment(partialOffer.offeredStartTime);
             var shift_end = moment(partialOffer.offeredEndTime);
+
+            console.log('partial offer: ', poJSON);
+            console.log('job detail: ', jj);
+
             // send email to dentist
             var dentist_tpl_name = "Dentist Books a Job";
             var message = {
-                "subject": dentist_tpl_name,
+                "subject": 'Your TempStars job booking details - read carefully',
                 "from_email": app.get('emailFrom'),
                 "to": [{
                         "email": jj.dentist.user.email,
@@ -241,23 +245,23 @@ module.exports = function( Job ){
                     },
                     {
                         "name": "hygienistFirstName",
-                        "content": jj.hygienist.firstName
+                        "content": poJSON.hygienist.firstName
                     },
                     {
                         "name": "hygienistLastName",
-                        "content": jj.hygienist.lastName
+                        "content": poJSON.hygienist.lastName
                     },
                     {
                         "name": "gradYear",
-                        "content": jj.hygienist.graduationYear
+                        "content": poJSON.hygienist.graduationYear
                     },
                     {
                         "name": "school",
-                        "content": jj.hygienist.school
+                        "content": poJSON.hygienist.school
                     },
                     {
                         "name": "CDHO",
-                        "content": jj.hygienist.CDHONumber
+                        "content": poJSON.hygienist.CDHONumber
                     },
                     {
                         "name": "dayOfWeek",
@@ -307,11 +311,11 @@ module.exports = function( Job ){
             // send email to hygienist
             var hygienist_tpl_name = "Hygienist Books a Job";
             var message = {
-                "subject": hygienist_tpl_name,
+                "subject": 'Your TempStars job booking details - read carefully',
                 "from_email": app.get('emailFrom'),
                 "to": [{
-                        "email": jj.hygienist.user.email,
-                        "name": jj.hygienist.firstName + ' ' + jj.hygienist.lastName,
+                        "email": poJSON.hygienist.user.email,
+                        "name": poJSON.hygienist.firstName + ' ' + poJSON.hygienist.lastName,
                         "type": "to"
                     }],
                 "headers": {
@@ -334,7 +338,7 @@ module.exports = function( Job ){
                 "merge_language": "mailchimp",
                 "global_merge_vars": [{
                         "name": "fname",
-                        "content": jj.hygienist.firstName
+                        "content": poJSON.hygienist.firstName
                     },
                     {
                         "name": "practiceName",
