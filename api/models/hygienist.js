@@ -614,8 +614,9 @@ module.exports = function( Hygienist ) {
             console.log( 'booked job worked!' );
 
             var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-            var shift_start = moment(jj.shifts[0].postedStart).utcOffset(-4);
-            var shift_end = moment(jj.shifts[0].postedEnd).utcOffset(-4);
+            var utcOffset = moment().utcOffset();
+            var shift_start = moment(jj.shifts[0].postedStart).utcOffset(utcOffset);
+            var shift_end = moment(jj.shifts[0].postedEnd).utcOffset(utcOffset);
             // send email to dentist
             var dentist_tpl_name = "Dentist Books a Job";
             var message = {
