@@ -622,7 +622,8 @@ module.exports = function( Hygienist ) {
                 "subject": "Dentist books a job",
                 "from_email": app.get('emailFrom'),
                 "to": [{
-                        "email": jj.dentist.user.email,
+                        // "email": jj.dentist.user.email,
+                        email: 'mrkwng7@gmail.com',
                         "name": jj.dentist.practiceName,
                         "type": "to"
                     }],
@@ -670,11 +671,19 @@ module.exports = function( Hygienist ) {
                     },
                     {
                         "name": "dayOfWeek",
-                        "content": hygienist.lastName
+                        "content": weekdays[shift_start.day()]
                     },
                     {
                         "name": "shiftDate",
-                        "content": moment(shift_start).format('YYYY-MM-DD')
+                        "content": moment(shift_start).format('MMMM D')
+                    },
+                    {
+                        "name": "startTime",
+                        "content": shift_start.format('h:mm a')
+                    },
+                    {
+                        "name": "endTime",
+                        "content": shift_end.format('h:mm a')
                     },
                     {
                         "name": "rate",
@@ -705,14 +714,16 @@ module.exports = function( Hygienist ) {
                 // A mandrill error occurred: Unknown_Subaccount - No subaccount exists with the id 'customer-123'
             });
 
+            var hygienistJSON = hygienist.toJSON();
             // send email to hygienist
             var hygienist_tpl_name = "Hygienist Books a Job";
             var message = {
                 "subject": hygienist_tpl_name,
                 "from_email": app.get('emailFrom'),
                 "to": [{
-                        "email": jj.hygienist.user.email,
-                        "name": hygienist.firstName + ' ' + hygienist.lastName,
+                        // "email": hygienistJSON.user.email,
+                        email: 'mrkwng7@gmail.com',
+                        "name": hygienistJSON.firstName + ' ' + hygienistJSON.lastName,
                         "type": "to"
                     }],
                 "headers": {
@@ -735,7 +746,7 @@ module.exports = function( Hygienist ) {
                 "merge_language": "mailchimp",
                 "global_merge_vars": [{
                         "name": "fname",
-                        "content": hygienist.firstName
+                        "content": hygienistJSON.firstName
                     },
                     {
                         "name": "practiceName",
@@ -747,19 +758,19 @@ module.exports = function( Hygienist ) {
                     },
                     {
                         "name": "shiftDate",
-                        "content": shift_start.format('YYYY-MM-DD')
+                        "content": shift_start.format('MMMM D')
                     },
                     {
                         "name": "startTime",
-                        "content": shift_start.format('HH:mm:ss')
+                        "content": shift_start.format('h:mm a')
                     },
                     {
                         "name": "endTime",
-                        "content": shift_end.format('HH:mm:ss')
+                        "content": shift_end.format('h:mm a')
                     },
                     {
                         "name": "rate",
-                        "content": hourlyRate
+                        "content": hourlyRate.toFixed(2)
                     }
                 ],
                 "tags": [

@@ -265,15 +265,15 @@ module.exports = function( Job ){
                     },
                     {
                         "name": "shiftDate",
-                        "content": shift_start.format('YYYY-MM-DD')
+                        "content": shift_start.format('MMMM D')
                     },
                     {
                         "name": "startTime",
-                        "content": shift_start.format('HH:mm:ss')
+                        "content": shift_start.format('h:mm a')
                     },
                     {
                         "name": "endTime",
-                        "content": shift_end.format('HH:mm:ss')
+                        "content": shift_end.format('h:mm a')
                     },
                     {
                         "name": "rate",
@@ -346,19 +346,19 @@ module.exports = function( Job ){
                     },
                     {
                         "name": "shiftDate",
-                        "content": shift_start.format('YYYY-MM-DD')
+                        "content": shift_start.format('MMMM D')
                     },
                     {
                         "name": "startTime",
-                        "content": shift_start.format('HH:mm:ss')
+                        "content": shift_start.format('h:mm a')
                     },
                     {
                         "name": "endTime",
-                        "content": shift_end.format('HH:mm:ss')
+                        "content": shift_end.format('h:mm a')
                     },
                     {
                         "name": "rate",
-                        "content": hourlyRate
+                        "content": hourlyRate.toFixed(2)
                     }
                 ],
                 "tags": [
