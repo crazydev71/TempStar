@@ -25,6 +25,6 @@
   "MandrillAPIKey" : "JU5g4ITqFLWKQii_wogs0A",
   "resetPasswordLink": "https://api.tempstars.net/reset-password",
   "pushEnv": "dev",
-  "emailFrom": "no-reply@tempstars.net",
+  "emailFrom": "no-reply@tempstars.ca",
   "emailBcc": "drjyounger@hotmail.com"
 }
