@@ -703,7 +703,7 @@ console.log( 'hourlyRate: ' + hourlyRate );
             msg = 'You have received a new Custom Offer for your job posting on  ';
             msg += moment(jj.startDate).format('ddd MMM Do');
             msg += '. In the TempStars app, tap the target icon on the job ';
-            msg += 'date to view the Custom Offer details.';
+            msg += 'date to view the Custom Offer details.  This Custom Offer will expire in 18 hours';
             return push.send( msg, jj.dentist.user.platform, jj.dentist.user.registrationId );
         })
         .then( function( response ) {
