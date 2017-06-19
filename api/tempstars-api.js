@@ -12,7 +12,7 @@ app.set( 'view engine', 'handlebars');
 app.use( bodyParser.urlencoded({extended: true}));
 
 app.use('/v2/minVersion', function( req, res, next ) {
-    res.json({ version: app.get('minVersion') });
+  res.json({ version: app.get('minVersion') });
 });
 
 var push     = require( 'push' );

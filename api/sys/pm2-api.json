@@ -3,6 +3,7 @@
     "name": "TempStars API",
     "script": "tempstars-api.js",
     "cwd": "../",
+    "node_args": ["--debug=7000"],
     "watch": true,
     "env_local": {
       "NODE_ENV": "local"

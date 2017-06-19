@@ -27,6 +27,7 @@
     "loopback-datasource-juggler": "2.53.1",
     "loopback-jwt": "^1.0.1",
     "mailchimp-api-v3": "https://registry.npmjs.org/mailchimp-api-v3/-/mailchimp-api-v3-1.7.0.tgz",
+    "mandrill-api": "^1.0.45",
     "moment": "^2.15.1",
     "nodemailer-ses-transport": "^1.4.0",
     "notifier": "file:local_modules/notifier",

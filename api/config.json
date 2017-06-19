@@ -28,5 +28,6 @@
   "pushEnv": "prod",
   "emailFrom": "no-reply@tempstars.ca",
   "emailBcc": "drjyounger@hotmail.com",
-  "minVersion": "2.2.11"
+  "minVersion": "2.2.11",
+  "mandrillAPIKey" : "JU5g4ITqFLWKQii_wogs0A"
 }
