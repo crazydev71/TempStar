@@ -205,11 +205,8 @@ module.exports = function( Job ){
             console.log( 'accept custom offer worked!' );
             
             var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-            var shift_start = moment(partialOffer.offeredStartTime);
-            var shift_end = moment(partialOffer.offeredEndTime);
-
-            console.log('partial offer: ', poJSON);
-            console.log('job detail: ', jj);
+            var shift_start = moment(partialOffer.offeredStartTime).utcOffset(-4);
+            var shift_end = moment(partialOffer.offeredEndTime).utcOffset(-4);
 
             // send email to dentist
             var dentist_tpl_name = "Dentist Books a Job";
